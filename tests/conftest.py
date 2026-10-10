@@ -34,3 +34,9 @@ def bhsa_api() -> Any:
     if directory.name != BHSA_VERSION or not (directory / "otype.tf").exists():
         pytest.fail(f"{BHSA_ENV} must point at a BHSA tf/{BHSA_VERSION} directory: {directory}")
     return load_api(directory, features="sp gn nu lex prs function typ verse")
+
+
+@pytest.fixture(scope="session")
+def bhsa_dir(bhsa_api: Any) -> Path:
+    """The BHSA 2021 directory (same opt-in as ``bhsa_api``)."""
+    return Path(os.environ[BHSA_ENV]).expanduser()

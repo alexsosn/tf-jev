@@ -66,6 +66,8 @@ Candidate approaches to research:
 
 Candidate retrieval must be measurable independently from the model.
 
+Findings (#4): [docs/research/corpus-schema.md](docs/research/corpus-schema.md) gives per-(feature, object type) cardinalities on BHSA 2021, the missing-value and empty-string semantics, bounded-choice thresholds, corpus identity, and the proposed `CorpusSchema` contract.
+
 ## Evaluation hypothesis
 
 Exact query-string match is insufficient because multiple native TF queries may be result-equivalent. The benchmark should therefore distinguish:
