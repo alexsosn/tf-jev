@@ -1,0 +1,179 @@
+# Text-Fabric search grammar and validation surface
+
+Research for issue #2. Researched 2026-10-10.
+
+- **Text-Fabric:** `text-fabric==13.1.0` (the version resolved by `text-fabric>=13.1,<14`).
+- **Real corpus:** BHSA data version **2021**, the latest. It ships in `ETCBC/bhsa` release v1.8.1 (2023-10-28), with `otext.tf` `@dateWritten=2021-12-09`.
+- **Evidence:** every claim below is backed by an executable test:
+  - [`tests/conformance/test_tf_search_grammar.py`](../../tests/conformance/test_tf_search_grammar.py) runs in CI on a tiny synthetic corpus.
+  - [`tests/conformance/test_tf_search_grammar_bhsa.py`](../../tests/conformance/test_tf_search_grammar_bhsa.py) runs on BHSA 2021 and is opt-in through `TF_JEV_BHSA_DIR`.
+- **Sources:** code references are to the installed `tf` package. The narrative docs (`tf.about.searchusage`) are not shipped in the wheel. The parser code is the authority here.
+
+## 1. Pipeline inside Text-Fabric
+
+`S.search(template)` builds `tf.search.searchexe.SearchExe` and runs these stages:
+
+| Stage | Code | Rejects |
+|---|---|---|
+| syntax / tokenize | `search/syntax.py` `_tokenize`, `parseLine`, `parseFeatureVals` | unrecognized lines, illegal names, malformed feature conditions, non-numeric limits, bad regexes, quantifier structure |
+| semantics / grammar | `search/semantics.py` `_grammar` | indentation errors, lonely relations, relations on undefined names |
+| semantics / validation | `search/semantics.py` `_validation` | unknown object types, missing node/edge features, value-type mismatches, unknown relations, values on valueless edges |
+| connectedness | `search/graph.py` `connectedness` | empty templates, disconnected query graphs |
+| spin atoms | `search/spin.py` `spinAtoms` → `_doQuantifier` | **quantifier bodies are only parsed here** |
+| stitch / fetch | `search/stitch.py`, `searchexe.fetch` | result-limit overflow ("cut off at N results") |
+
+## 2. Template grammar (13.1.0)
+
+A template is a sequence of lines (`\n`-separated). Blank lines are ignored, and so are lines whose first non-blank character is `%` (comments).
+
+### 2.1 Atom lines
+
+```
+[indent][op ]name:otype [feature-conditions...]
+[indent][op ]otype [feature-conditions...]
+```
+
+- **`otype`** is a corpus object type, or a named set when `sets=` is passed, or `.` for "any type". Matching is case-sensitive (`Word` is rejected).
+- **`name`** must match `[A-Za-z0-9_.-]+`; other names fail with `Illegal name`. The value `..` is reserved as the parent reference inside quantifiers.
+- **Name/type shadowing.** If an atom's `otype` equals the name of a previously named node, TF resolves it as a reference to that node. It does **not** treat it as the object type, and the query stays valid. Test: `test_node_name_equal_to_an_otype_silently_shadows_that_otype`. ⇒ Generated names must be disjoint from every object type and set name.
+- **Indentation** expresses embedding: a deeper-indented atom gets an implicit `child ]] parent` edge. Outdenting must return to a previously used indent level.
+- **Optional `op` prefix** (`<: word`) relates the *previous sibling atom* to this one.
+
+### 2.2 Node-feature conditions
+
+Conditions are separated by whitespace. They appear either on the atom line or on following lines that contain only conditions. Feature names match `[a-zA-Z0-9-@_]+` and are case-sensitive.
+
+| Form | Meaning | Type constraints |
+|---|---|---|
+| `f=v` | value equals `v` | int features: `v` must be an integer literal |
+| `f=v1\|v2` | value in set | same |
+| `f#v`, `f#v1\|v2` | value not in set (nodes without a value **match**) | same |
+| `f` | has a value | — |
+| `f#` | has no value | — |
+| `f*` | no constraint (loads the feature) | — |
+| `f>n`, `f<n` | strict integer comparison; `n` matches `-?[0-9]+` | rejected on str features |
+| `f~re` | Python `re.search` on the value | rejected on int features |
+
+Additional points:
+
+- **Unknown values are not errors.** `sp=nonesuch` parses and returns 0 results. Value validity must be checked against the corpus schema (#4 and #5).
+- **Corpus conventions are data, not grammar.** In BHSA, `prs#` returns 0, because "no suffix" is the literal string value `absent`.
+
+### 2.3 Value escaping (the critical part)
+
+`_esc` maps exactly six two-character sequences to sentinels `chr(0)`…`chr(5)` before any matching. `_unesc` maps them back to their **second character**:
+
+| Written | Value char | Note |
+|---|---|---|
+| `\\` | `\` | |
+| `\ ` | space | an unescaped space ends the condition (`lex=a b` → `Missing feature "b"`) |
+| `\|` | `\|` | an unescaped `\|` means alternation |
+| `\=` | `=` | optional: `=` inside a value is already literal |
+| `\t` | **`t`** | not a tab |
+| `\n` | **`n`** | not a newline |
+
+Consequences, all tested:
+
+- A lone backslash not followed by one of these characters is literal (`a\b` matches `a\b`).
+- `#`, `<`, `>`, `/`, `~`, `%` and `:` are literal inside a value after the operator.
+- **Inexpressible as equality values:** the empty string, any value containing tab or newline, and any value containing `chr(0)`–`chr(5)`, which collide with the escape sentinels.
+- Unicode values work verbatim (BHSA `g_word_utf8`, Hebrew in the fixture).
+- Inside `~` regexes, `\|` and `\=` stay backslash-escaped (`inRe=True`). The other four escapes behave as above.
+
+The canonical escaping for a compiler is: backslash → `\\`, then space → `\ `, then `|` → `\|`. Values containing a C0 control character (U+0000–U+001F) are rejected, as is the empty value. The other three escapes are never emitted.
+
+### 2.4 Relation lines and operators
+
+A relation line has the form `name op name`, with names matching `[A-Za-z0-9_.-]+`. It may appear anywhere; TF sorts relations after atoms. The full legend (from `relationLegend`):
+
+| Group | Operators |
+|---|---|
+| node identity | `=` `#` |
+| canonical order | `<` `>` |
+| slot sets | `==` same slots, `&&` overlap, `##` different slot sets, `\|\|` disjoint, `[[` embeds, `]]` embedded in |
+| slot order | `<<` `>>` completely before/after; `<:` `:>` immediately before/after |
+| boundaries | `=:` same start, `:=` same end, `::` same start and end |
+| k-near | `=k:` `:k=` `:k:` `<k:` `:k>`. `k` is a gap tolerance: `<0:` behaves like `<:`, and `<1:` allows one intervening slot |
+| feature comparison | `.f.`, `.f=g.`, `.f#g.`, `.f<g.`, `.f>g.` (int only), `.f~re~g.` (str only). Missing values count as unequal for `#` |
+| edge features | `-e>` forward, `<e-` backward, `<e>` either direction. Valued edges also accept `-e=v>`, `-e>n>`, and similar |
+
+Additional points:
+
+- **Direction matters and is not checked:** `w [[ c` (a word embeds a clause) is valid and returns 0.
+- `oslots` and `omap` edges cannot be used.
+- A value on an edge feature without `edgeValues` is rejected.
+
+### 2.5 Quantifiers
+
+A quantifier follows an atom at the same indentation and ends with `/-/`:
+
+- `/without/ T /-/`
+- `/where/ A /have/ H /-/`
+- `/with/ T1 /or/ T2 … /-/`
+
+Inside the body, `..` refers to the parent atom. Nesting is allowed. Structure errors are syntax errors (`Unterminated`, `Can not start with "/have/:"`).
+
+**Fail-open hazard.** A quantifier body is parsed only during atom spinning, by a nested `SearchExe` that shares the message cache. If the body is invalid, the nested search returns ∅. For `/without/`, the result is then `universe − ∅`: **every** parent node passes, and the outer `exe.good` stays `True`. Only the collected error messages show the problem. On BHSA, a misspelled feature inside `/without/` returns all 88,131 clauses. Tests: `test_invalid_quantifier_body_fails_open_without_message_check` and `test_bhsa_quantifier_body_error_is_reported`.
+
+## 3. Validation surface
+
+There are three usable entry points:
+
+1. **`S.search(t, here=False, limit=n, _msgCache=[])`.** Returns `(results, status, html, exe)`. This is exactly how TF's own `A.search` (`tf/advanced/search.py`) calls it. **Validity = no error-flagged message tuples**, which covers the outer template *and* the quantifier bodies. This is the authoritative check, and the test harness uses it. It executes the query, so always pass `limit`.
+2. **`SearchExe(api, t, _msgCache=[])._parse(); ._prepare()`.** These are private. They run syntax, semantics and connectedness **without** spinning or fetching: about 10–40 ms on BHSA, versus 0.3–0.7 s for a `limit=10` search and up to about 40 s for an unbounded one. They do *not* validate quantifier bodies, though the bodies are available as deContexted templates on `exe.qnodes[q][3]` and could be checked recursively the same way `spin._doQuantifier` builds them.
+3. **`S.study(t)`.** This spins the atoms, which costs about as much as execution, and prints messages unless silenced. It is not useful as a cheap validator.
+
+**Parse validity ≠ cardinality.** A valid query can return 0 results (unknown values, the wrong relation direction) or explode: `phrase < phrase` on BHSA hits the fail limit (`SEARCH_FAIL_FACTOR × maxNode` = 5,787,324) and emits an **error** message ("cut off at … results"). Validation must classify that message as a result-size condition, not a grammar error, or must pass an explicit `limit`.
+
+Recommendation for #3:
+
+- Validate compiled queries statically with (2) plus a recursive check of the quantifier bodies.
+- Use (1) with a `limit` as the integration oracle.
+- Guard the private API with these conformance tests and the existing `text-fabric<14` pin.
+
+## 4. Prototype grammar subset
+
+The compiler for #3 emits only the following. It covers nontrivial morphology plus relation queries, for example "feminine plural verbs immediately followed by a noun inside the same clause, in clauses without a predicate phrase".
+
+| Construct | Canonical emitted form |
+|---|---|
+| atom | `nK:otype` on its own line, with **every atom named** and names generated disjoint from all object types and set names |
+| equality / alternatives | `f=v`, `f=v1\|v2` (values escaped per §2.3; int features take integer literals only) |
+| inequality | `f#v`, `f#v1\|v2` |
+| presence / absence | `f`, `f#` |
+| integer bounds | `f>n`, `f<n` (int features only) |
+| embedding | explicit relation lines `a [[ b` / `a ]] b` rather than indentation |
+| slot relations | `==` `&&` `\|\|` `=:` `:=` `::` |
+| order | `<<` `>>` `<:` `:>` `<k:` `:k>` (k a small non-negative int) |
+| edge features | `-e>`, `<e-`, `<e>` (valueless form only) |
+| negation | a single `/without/ … /-/` attached to an atom, its body in the same canonical form, referring to the parent through `..` |
+
+All atom lines sit at indent 0, followed by relation lines in a deterministic order. This flat form is equivalent to the indented form (indentation only adds `]]` edges) and avoids the outdent rules entirely.
+
+### Deferred (explicit)
+
+| Construct | Reason |
+|---|---|
+| `~` regex conditions | a regex is free-form syntax a model must not author; revisit only as a retrieval-produced, deterministic pattern |
+| `f*` | no query semantics |
+| `.` any-type atoms | weakly typed; no benchmark need yet |
+| `=`/`#` node identity, canonical `<`/`>`, `##`, k-variants other than `<k:`/`:k>` | rarely needed; `<`/`>` semantics (canonical node order) are unintuitive in natural language |
+| feature-comparison relations `.f.` … | useful later (agreement queries); needs its own IR design |
+| edge values `-e=v>` | needs edge-value schema research (#4) |
+| `/where/ /have/`, `/with/ /or/`, nested quantifiers | disjunction and universal quantification enlarge the IR and evaluation surface |
+| named sets (`sets=`) | depends on app-level configuration |
+| indentation-based nesting and `op`-prefixed atoms | equivalent to explicit relations; not emitted |
+
+## 5. Invariants derived for the compiler (#3)
+
+1. Escape values per §2.3, and reject empty values and values containing control characters with a dedicated *unrepresentable value* error.
+2. Never emit a generated name equal to an object type or set name.
+3. Feature, object type and edge names are emitted only if they match TF's name patterns *and* are present in the schema. A feature name containing `.` or another character outside `[a-zA-Z0-9-@_]` is inexpressible.
+4. Relation operators come from a closed enum, never from strings.
+5. A query is accepted only when TF reports zero error messages, quantifier bodies included.
+6. Every TF call that executes a query passes an explicit `limit`.
+
+## 6. Follow-up risks
+
+- **TF fail-open on invalid quantifier bodies.** Tracked as TF-1 in [docs/upstream-bugs.md](../upstream-bugs.md), to be filed upstream together with a fix PR.
+- **Private validation API.** `_parse` and `_prepare` may change across TF minor versions. The conformance suite is the tripwire.
