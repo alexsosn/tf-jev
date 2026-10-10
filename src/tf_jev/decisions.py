@@ -12,11 +12,11 @@ See docs/research/jev-decision-backend.md for the research behind this contract.
 from __future__ import annotations
 
 import math
+import numbers
 import unicodedata
-from collections.abc import Mapping
+from collections.abc import Iterable, Iterator, Mapping
 from dataclasses import dataclass, field
-from types import MappingProxyType
-from typing import Protocol, runtime_checkable
+from typing import Protocol, TypeVar, runtime_checkable
 
 # Absolute slack for float arithmetic when checking probability sums.
 _EPS = 1e-6
@@ -25,6 +25,38 @@ _EPS = 1e-6
 # controls, format (zero-width, bidi), line/paragraph separators, surrogates,
 # private use and unassigned code points.
 _FORBIDDEN_CATEGORIES = frozenset({"Cc", "Cf", "Zl", "Zp", "Cs", "Co", "Cn"})
+
+# Prose (user requests, descriptions, prompts) may contain what real pasted text
+# contains: tab, LF, CR, and the joiners/marks used by RTL and Indic scripts
+# (ZWNJ, ZWJ, LRM, RLM). Bidi embeddings, overrides and isolates stay forbidden.
+_PROSE_ALLOWED = frozenset("\t\n\r\u200c\u200d\u200e\u200f")
+
+K = TypeVar("K")
+V = TypeVar("V")
+
+
+class _FrozenMap(Mapping[K, V]):
+    """Read-only mapping that, unlike ``MappingProxyType``, pickles and deep-copies."""
+
+    __slots__ = ("_data",)
+
+    def __init__(self, data: Mapping[K, V]) -> None:
+        self._data = dict(data)
+
+    def __getitem__(self, key: K) -> V:
+        return self._data[key]
+
+    def __iter__(self) -> Iterator[K]:
+        return iter(self._data)
+
+    def __len__(self) -> int:
+        return len(self._data)
+
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}({self._data!r})"
+
+    def __reduce__(self) -> tuple[type[_FrozenMap[K, V]], tuple[dict[K, V]]]:
+        return (type(self), (self._data,))
 
 
 class DecisionContractError(ValueError):
@@ -46,23 +78,37 @@ def _check_symbol(value: object, what: str) -> str:
     return value
 
 
-def _check_prose(value: object, what: str) -> str:
-    """Lenient check for free text sent to a backend: newlines and tabs allowed."""
+def _check_prose(value: object, what: str, *, visible: bool = False) -> str:
+    """Lenient check for free text sent to a backend (see ``_PROSE_ALLOWED``).
+
+    Prose is passed on byte-for-byte; it is never normalized.
+    """
     if type(value) is not str:
         raise DecisionContractError(f"{what} must be a str, got {type(value).__name__}")
     for ch in value:
-        if ch in "\n\t":
+        if ch in _PROSE_ALLOWED:
             continue
         if unicodedata.category(ch) in _FORBIDDEN_CATEGORIES:
             raise DecisionContractError(f"{what} contains forbidden character {ch!r}")
+    if visible and not any(not unicodedata.category(ch).startswith(("Z", "C")) for ch in value):
+        raise DecisionContractError(f"{what} must contain a visible character")
     return value
 
 
+def _check_resolution(value: object) -> float:
+    if isinstance(value, bool) or not isinstance(value, numbers.Real):
+        raise DecisionContractError("probability resolution must be a real number")
+    number = float(value)
+    if not (math.isfinite(number) and 0.0 <= number < 1.0):
+        raise DecisionContractError(f"probability resolution {value} must be in [0, 1)")
+    return number
+
+
 def _check_probability(value: object, where: str) -> float:
-    if type(value) not in (int, float):
-        raise DecisionContractError(f"{where}: probability must be an int or float")
+    if isinstance(value, bool) or not isinstance(value, numbers.Real):
+        raise DecisionContractError(f"{where}: probability must be a real number")
     try:
-        number = float(value)  # type: ignore[arg-type]
+        number = float(value)
     except OverflowError as error:
         raise DecisionContractError(f"{where}: probability is not finite") from error
     if not math.isfinite(number):
@@ -77,7 +123,13 @@ def _check_probability(value: object, where: str) -> float:
 
 @dataclass(frozen=True)
 class Option:
-    """One selectable option. ``label`` is an opaque id chosen by tf-jev."""
+    """One selectable option.
+
+    ``label`` is an opaque tf-jev id, never a corpus value: corpus values may be
+    non-NFC (BHSA ``voc_lex_utf8``, ``g_word_utf8``) and must reach the compiler
+    byte-for-byte, so they belong in ``description`` and in the caller's own
+    id → value table, and are never normalized.
+    """
 
     label: str
     description: str | None = None
@@ -94,7 +146,7 @@ class ChoiceQuestion:
     options: tuple[Option, ...]
 
     def __post_init__(self) -> None:
-        _check_symbol(self.prompt, "question prompt")
+        _check_prose(self.prompt, "question prompt", visible=True)
         object.__setattr__(self, "options", tuple(self.options))
         if not self.options:
             raise DecisionContractError("a choice needs at least one option")
@@ -116,7 +168,7 @@ class BinaryQuestion:
     prompt: str
 
     def __post_init__(self) -> None:
-        _check_symbol(self.prompt, "question prompt")
+        _check_prose(self.prompt, "question prompt", visible=True)
 
 
 Question = ChoiceQuestion | BinaryQuestion
@@ -149,8 +201,8 @@ class DecisionRequest:
             raise DecisionContractError("a request needs at least one question")
         # Copy into read-only views so later mutation of the caller's dicts
         # cannot change a request that has already been checked.
-        object.__setattr__(self, "context", MappingProxyType(context))
-        object.__setattr__(self, "questions", MappingProxyType(questions))
+        object.__setattr__(self, "context", _FrozenMap(context))
+        object.__setattr__(self, "questions", _FrozenMap(questions))
 
 
 # --- raw answers (what a backend adapter produces) ---------------------------
@@ -175,17 +227,31 @@ RawAnswer = RawChoice | RawBinary
 
 @dataclass(frozen=True)
 class ChoiceDecision:
+    """A selected option with its distribution.
+
+    Construction enforces the whole answer invariant, so a hand-built decision is
+    held to the same rules as a validated backend answer: plain-str labels,
+    probabilities in [0, 1], sums explainable by ``resolution`` rounding, and a
+    selected option of highest probability.
+    """
+
     selected: str
     probabilities: Mapping[str, float]
+    resolution: float = 0.0
 
     def __post_init__(self) -> None:
+        resolution = _check_resolution(self.resolution)
         probabilities = {
             _check_symbol(label, "option label"): _check_probability(value, label)
             for (label, value) in self.probabilities.items()
         }
-        if self.selected not in probabilities:
+        if type(self.selected) is not str or self.selected not in probabilities:
             raise DecisionContractError(f"selected {self.selected!r} has no probability")
-        object.__setattr__(self, "probabilities", MappingProxyType(probabilities))
+        _check_sums(probabilities.values(), resolution)
+        if probabilities[self.selected] < max(probabilities.values()):
+            raise DecisionContractError("selected option is not a highest-probability one")
+        object.__setattr__(self, "resolution", resolution)
+        object.__setattr__(self, "probabilities", _FrozenMap(probabilities))
 
     @property
     def top_probability(self) -> float:
@@ -193,9 +259,9 @@ class ChoiceDecision:
 
     @property
     def margin(self) -> float:
-        """Top probability minus the runner-up (1.0 for a single option)."""
-        ranked = sorted(self.probabilities.values(), reverse=True)
-        return ranked[0] - (ranked[1] if len(ranked) > 1 else 0.0)
+        """Selected probability minus the best other option (1.0 for a single option)."""
+        others = [p for (label, p) in self.probabilities.items() if label != self.selected]
+        return self.top_probability - max(others, default=0.0)
 
     @property
     def confidence(self) -> float:
@@ -236,6 +302,7 @@ def validate_answers(
     (0.01 for Jev 1.13, 0.0 for exact backends). Each reported value may then be
     off by at most ``resolution / 2``, which bounds every partial sum.
     """
+    resolution = _check_resolution(resolution)
     missing = sorted(set(request.questions) - set(answers))
     if missing:
         raise DecisionContractError(f"missing answer(s): {', '.join(missing)}")
@@ -275,26 +342,32 @@ def _validate_choice(
         label: _check_probability(answer.probabilities[label], f"{name}[{label}]")
         for label in labels
     }
+    selected = labels[labels.index(answer.selected)]
+    try:
+        # Request order, and the requested label objects, never the backend's.
+        return ChoiceDecision(selected=selected, probabilities=values, resolution=resolution)
+    except DecisionContractError as error:
+        raise DecisionContractError(f"{name}: {error}") from error
 
-    # Rounding moves each value by at most resolution/2, so the k largest values
-    # can exceed 1 by at most k * resolution/2, and the full sum can fall short of
-    # 1 by at most n * resolution/2. Anything beyond that is not rounding.
+
+def _check_sums(values: Iterable[float], resolution: float) -> None:
+    """Reject distributions that rounding to ``resolution`` cannot explain.
+
+    Rounding moves each value by at most resolution/2, so the k largest values
+    can exceed 1 by at most k * resolution/2, and the full sum can fall short of
+    1 by at most n * resolution/2.
+    """
     half_step = resolution / 2
     partial = 0.0
-    for k, value in enumerate(sorted(values.values(), reverse=True), start=1):
+    ranked = sorted(values, reverse=True)
+    for k, value in enumerate(ranked, start=1):
         partial += value
         if partial > 1.0 + k * half_step + _EPS:
             raise DecisionContractError(
-                f"{name}: top-{k} probabilities sum to {partial:.4f}, more than rounding allows"
+                f"top-{k} probabilities sum to {partial:.4f}, more than rounding allows"
             )
-    if partial < 1.0 - len(values) * half_step - _EPS:
-        raise DecisionContractError(f"{name}: probabilities sum to {partial:.4f}, not 1")
-
-    selected = labels[labels.index(answer.selected)]
-    if values[selected] < max(values.values()):
-        raise DecisionContractError(f"{name}: selected option is not a highest-probability one")
-    # Request order, and the requested label objects, never the backend's.
-    return ChoiceDecision(selected=selected, probabilities=values)
+    if partial < 1.0 - len(ranked) * half_step - _EPS:
+        raise DecisionContractError(f"probabilities sum to {partial:.4f}, not 1")
 
 
 # --- backends ----------------------------------------------------------------
@@ -307,7 +380,12 @@ class Capabilities:
     max_options: int | None = None
     max_questions: int | None = None
     probability_resolution: float = 0.0
-    """Rounding step of reported probabilities; 0.0 means exact."""
+    """Rounding step of reported probabilities in [0, 1); 0.0 means exact."""
+
+    def __post_init__(self) -> None:
+        object.__setattr__(
+            self, "probability_resolution", _check_resolution(self.probability_resolution)
+        )
 
 
 @dataclass(frozen=True)

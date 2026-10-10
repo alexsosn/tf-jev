@@ -366,3 +366,93 @@ def test_scripted_backend_carries_its_probability_resolution() -> None:
 
     assert backend.capabilities.probability_resolution == 0.01
     assert backend.decide(request()).decisions["gn"].selected == "f"  # type: ignore[union-attr]
+
+
+# --- review round 2 (PR #16) -------------------------------------------------
+
+
+@pytest.mark.parametrize("bad", [math.nan, math.inf, 10.0, 1.0, -0.01])
+def test_resolution_must_be_finite_and_in_unit_interval(bad: float) -> None:
+    from tf_jev.decisions import Capabilities
+
+    forged: dict[str, RawAnswer] = {
+        "gn": RawChoice("f", {"m": 0.0, "f": 1.0, "none": 1.0}),
+        "neg": RawBinary(0.1),
+    }
+    with pytest.raises(DecisionContractError, match="resolution"):
+        validate_answers(request(), forged, resolution=bad)
+    with pytest.raises(DecisionContractError, match="resolution"):
+        Capabilities(probability_resolution=bad)
+    with pytest.raises(DecisionContractError, match="resolution"):
+        ScriptedBackend(forged, probability_resolution=bad).decide(request())
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "find ‏בָּרָא‏ verbs",  # RLM from pasted RTL text
+        "می‌خواهم",  # Persian with ZWNJ
+        "line one\r\nline two",  # Windows newline
+    ],
+)
+def test_context_accepts_real_pasted_user_text(text: str) -> None:
+    DecisionRequest(context={"request": text}, questions={"q": BinaryQuestion("?")})
+
+
+@pytest.mark.parametrize("ch", ["‮", "‪", "⁦", "⁩", "\x00", " "])
+def test_context_still_rejects_bidi_embeddings_and_controls(ch: str) -> None:
+    with pytest.raises(DecisionContractError, match="context"):
+        DecisionRequest(context={"request": f"a{ch}b"}, questions={"q": BinaryQuestion("?")})
+
+
+def test_prompts_are_prose_but_need_visible_text() -> None:
+    BinaryQuestion("Line one.\nLine two?")
+    with pytest.raises(DecisionContractError, match="prompt"):
+        BinaryQuestion(" \n ")
+
+
+def test_hand_built_choice_decision_must_select_a_maximum() -> None:
+    with pytest.raises(DecisionContractError, match="highest"):
+        ChoiceDecision("a", {"a": 0.0, "b": 1.0})
+
+
+def test_margin_is_relative_to_the_selected_option() -> None:
+    decision = ChoiceDecision("a", {"a": 0.5, "b": 0.5})
+
+    assert decision.margin == 0.0
+
+
+def test_hand_built_choice_decision_rejects_impossible_sums() -> None:
+    with pytest.raises(DecisionContractError, match="sum"):
+        ChoiceDecision("a", {"a": 1.0, "b": 1.0})
+
+
+def test_decisions_and_requests_survive_pickle_and_deepcopy() -> None:
+    import copy
+    import pickle
+
+    batch_decisions = validate_answers(
+        request(),
+        {"gn": RawChoice("f", {"m": 0.0, "f": 1.0, "none": 0.0}), "neg": RawBinary(0.1)},
+    )
+    for value in (request(), batch_decisions["gn"]):
+        assert pickle.loads(pickle.dumps(value)) == value
+        assert copy.deepcopy(value) == value
+
+
+class _Float(float):
+    pass
+
+
+def test_real_number_subclasses_are_accepted_as_probabilities() -> None:
+    decisions = validate_answers(
+        request(),
+        {
+            "gn": RawChoice("f", {"m": _Float(0.0), "f": _Float(1.0), "none": 0.0}),
+            "neg": RawBinary(_Float(0.25)),
+        },
+    )
+
+    neg = decisions["neg"]
+    assert isinstance(neg, BinaryDecision)
+    assert type(neg.probability) is float and neg.probability == 0.25
