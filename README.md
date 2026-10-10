@@ -70,6 +70,12 @@ python -m mypy
 python -m pytest -q
 ```
 
+Real-corpus conformance tests are opt-in and run against BHSA 2021 (no download in CI):
+
+```bash
+TF_JEV_BHSA_DIR=~/text-fabric-data/github/ETCBC/bhsa/tf/2021 python -m pytest -q tests/conformance
+```
+
 Repository development is issue-driven. Coding agents must start with [AGENTS.md](AGENTS.md) and follow the research → plan/design → RED-first TDD → implementation → exact-head verification → logically independent adversarial review loop.
 
 See [research.md](research.md), [design.md](design.md), [plan.md](plan.md), and [docs/agentic-dev-loop.md](docs/agentic-dev-loop.md).

@@ -32,6 +32,8 @@ Research must inspect the current Text-Fabric search implementation/documentatio
 
 The IR should cover a deliberately chosen prototype subset first. Do not claim complete TF grammar coverage without tests.
 
+Findings (#2): [docs/research/tf-search-grammar.md](docs/research/tf-search-grammar.md) — grammar, escaping, validation surface and the chosen prototype subset, pinned by `tests/conformance/`.
+
 ## Jev questions to verify from the current API
 
 Before implementing any Jev client/adapter, first survey maintained Python Jev clients/toolkits (including `docxology/daf-jev` as an identified candidate) and prefer reuse when their contract is adequate. Then verify:
@@ -76,6 +78,8 @@ Exact query-string match is insufficient because multiple native TF queries may 
 ## Candidate first corpus
 
 BHSA is a strong candidate for the first benchmark because it exposes rich node/feature structure and supports realistic linguistic queries. This is a research preference, not yet a hard package dependency.
+
+Pinned version: BHSA data version **2021** (latest; `ETCBC/bhsa` release v1.8.1). Older versions (`c`, `2017`, …) must not be mixed into benchmark or conformance evidence.
 
 ## Non-goals for the first prototype
 
