@@ -77,11 +77,12 @@ Consequences, all tested:
 
 - A lone backslash not followed by one of these characters is literal (`a\b` matches `a\b`).
 - `#`, `<`, `>`, `/`, `~`, `%` and `:` are literal inside a value after the operator.
-- **Inexpressible as equality values:** the empty string, any value containing tab or newline, and any value containing `chr(0)`–`chr(5)`, which collide with the escape sentinels.
+- **The empty string is expressible only as an empty alternative.** TF splits the value on `|`, so `f=|` is the set `{""}`, and `f=|H` is `{"", "H"}`. A bare `f=` is a syntax error. `f#|` excludes the empty string but still matches nodes that have *no* value. (Corrected in #4; measured on BHSA in `tests/research/test_bhsa_schema.py`.)
+- **Inexpressible as values:** any value containing tab or newline, and any value containing `chr(0)`–`chr(5)`, which collide with the escape sentinels.
 - Unicode values work verbatim (BHSA `g_word_utf8`, Hebrew in the fixture).
 - Inside `~` regexes, `\|` and `\=` stay backslash-escaped (`inRe=True`). The other four escapes behave as above.
 
-The canonical escaping for a compiler is: backslash → `\\`, then space → `\ `, then `|` → `\|`. Values containing a C0 control character (U+0000–U+001F) are rejected, as is the empty value. The other three escapes are never emitted.
+The canonical escaping for a compiler is: backslash → `\\`, then space → `\ `, then `|` → `\|`. Values containing a C0 control character (U+0000–U+001F) are rejected. The empty string is rendered as an empty alternative, placed first in a sorted value set: `f=|` or `f=|H`. The other three escapes are never emitted.
 
 ### 2.4 Relation lines and operators
 
@@ -185,7 +186,7 @@ All atom lines sit at indent 0, followed by relation lines in a deterministic or
 
 ## 5. Invariants derived for the compiler (#3)
 
-1. Escape values per §2.3, and reject empty values and values containing control characters with a dedicated *unrepresentable value* error.
+1. Escape values per §2.3. Render the empty string as an empty alternative (`f=|…`). Reject values containing control characters with a dedicated *unrepresentable value* error.
 2. Never emit a generated name equal to an object type or set name.
 3. Feature, object type and edge names are emitted only if they match TF's name patterns *and* are present in the schema. A feature name containing `.` or another character outside `[a-zA-Z0-9-@_]` is inexpressible, and so is a name starting with `-` (a continuation line `  -x=a\ b` is parsed as an op line). The warp features `oslots`, `otype` and all `omap@…` features are excluded even though every schema contains them.
 4. Relation operators come from a closed enum, never from strings. `k` is bounded by the compiler.

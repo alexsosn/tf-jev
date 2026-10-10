@@ -56,6 +56,17 @@ def build_tiny_corpus(directory: Path) -> None:
     for feature in ("lex", "sp", "gn", "nu", "rank"):
         node_features[feature] = {n: w[feature] for (n, w) in WORDS.items() if feature in w}
     node_features["gloss"] = {1: "t", 2: "tab\there"}
+    # empty-string values and a feature whose domain differs per object type
+    node_features["suffix"] = {1: "", 2: "H", 3: "", 4: "JM"}
+    node_features["typ"] = {
+        9: "PP",
+        10: "VP",
+        11: "NP",
+        12: "NP",
+        13: "AdjP",
+        14: "xQt0",
+        15: "NmCl",
+    }
     node_features["function"] = {n: f for (n, (_, f)) in PHRASES.items()}
     node_features["number"] = {n: i for (i, n) in enumerate([SENTENCE, *CLAUSES], start=1)}
 
@@ -76,6 +87,8 @@ def build_tiny_corpus(directory: Path) -> None:
         "gn": str_meta,
         "nu": str_meta,
         "gloss": str_meta,
+        "suffix": str_meta,
+        "typ": str_meta,
         "function": str_meta,
         "rank": int_meta,
         "number": int_meta,
