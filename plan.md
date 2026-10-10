@@ -1,0 +1,47 @@
+# Prototype development plan
+
+The bootstrap establishes the autonomous repository contract. Behavior is split into focused issues so every change can follow research → plan → RED → implementation → exact-head verification → independent adversarial review.
+
+## Wave 0 — bootstrap
+
+- #1 — bootstrap package metadata, autonomous workflow, CI, research/design framing and backlog.
+
+## Wave 1 — establish native boundaries
+
+- #2 — research the current Text-Fabric search grammar and validation hooks;
+- #3 — define the first typed QueryIR and deterministic native-TF compiler;
+- #4 — research corpus schema/value discovery from actual Text-Fabric APIs and a real corpus;
+- #5 — implement CorpusSchema extraction and schema-grounded symbol validation.
+
+No model-backed parsing should be merged before these boundaries are tested.
+
+## Wave 2 — semantic parsing prerequisites
+
+- #6 — research the current Jev API, existing Python clients, limits, cost and confidence semantics and define a backend-neutral decision interface;
+- #7 — implement deterministic high-cardinality candidate retrieval/narrowing;
+- #8 — implement the Jev DecisionBackend adapter;
+- #10 — build and freeze a versioned BHSA NL ↔ native-TF benchmark with a held-out partition.
+
+## Wave 3 — semantic parser and evaluation
+
+- #9 — implement schema-aware NL → QueryIR orchestration with explicit ambiguity/abstention against the pre-existing benchmark;
+- #11 — add end-to-end evaluation for parse accuracy, TF validity/result equivalence, latency and cost;
+- #12 — compare Jev with at least one baseline parser/backend before treating it as the default.
+
+## Wave 4 — ergonomics
+
+- #13 — expose a stable Python API and diagnostic CLI after the evaluation gates justify it.
+
+Documentation and examples should evolve with the implementing tickets rather than being postponed into a disconnected final pass.
+
+## Prototype success criteria
+
+The approach is worth continuing only if the benchmark demonstrates that:
+
+- supported requests compile to syntactically valid native TF queries by construction;
+- semantic parse accuracy is useful on nontrivial structural/morphological queries;
+- ambiguous/unsupported requests fail safely rather than producing plausible wrong queries;
+- model-backed parsing is materially cheaper than a reasonable generative-LLM baseline;
+- deterministic compiler/schema layers remain usable independently of Jev.
+
+If these conditions do not hold, preserve the benchmark and compiler work and reconsider the semantic backend rather than forcing Jev deeper into the architecture.
