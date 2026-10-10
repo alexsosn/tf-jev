@@ -56,7 +56,7 @@ VALID: dict[str, tuple[str, R]] = {
     "unescaped_pipe_is_alternation": ("word lex=a|b", ()),
     "escaped_backslash": (r"word lex=a\\b", ones(7)),
     "lone_backslash_is_literal": (r"word lex=a\b", ones(7)),
-    "backslash_t_is_letter_t_not_tab": (r"word lex=\t", ()),
+    "backslash_t_is_letter_t_not_tab": (r"word gloss=\t", ones(1)),
     "escaped_pipe_in_regex": (r"word lex~^a\|b$", ones(6)),
     # --- embedding --------------------------------------------------------
     "indent_embeds": ("clause\n  phrase function=Pred", rows((14, 10))),
@@ -69,7 +69,10 @@ VALID: dict[str, tuple[str, R]] = {
     "adjacent_named": ("a:word sp=subs\nb:word sp=verb\na <: b", rows((2, 3), (5, 6))),
     "adjacent_converse": ("a:word sp=subs\nb:word sp=verb\nb :> a", rows((2, 3), (5, 6))),
     "k_near_before_k1": ("a:word sp=prep\nb:word sp=verb\na <1: b", rows((1, 3))),
-    "k_near_before_k0_is_adjacent": ("a:word sp=prep\nb:word sp=verb\na <0: b", ()),
+    "k_near_before_k0_equals_adjacent": (
+        "a:word sp=subs\nb:word sp=verb\na <0: b",
+        rows((2, 3), (5, 6)),
+    ),
     "canonical_before": (
         "a:phrase function=Pred\nb:phrase\na < b",
         rows((10, 11), (10, 12), (10, 13)),
@@ -112,6 +115,17 @@ VALID: dict[str, tuple[str, R]] = {
         "clause\n/with/\n  phrase function=Pred\n/or/\n  phrase function=PreC\n/-/",
         ones(14, 15),
     ),
+    # Canonical quantifier form: parent conditions on a continuation line, body at
+    # the indentation of the quantifier keyword, parent referenced only via `..`.
+    "without_canonical_flat_body": (
+        "n1:word sp=verb\n/without/\nw:word sp=adjv\n.. <: w\n/-/",
+        ones(3, 8),
+    ),
+    "without_canonical_escaped_parent_value": (
+        "n1:word\n  lex=a\\|b\n/without/\nw:word sp=adjv\n.. <: w\n/-/",
+        (),
+    ),
+    "empty_without_body_excludes_everything": ("word\n/without/\n/-/", ()),
     "parent_reference": ("clause\n/without/\n  w:word sp=adjv\n  .. [[ w\n/-/", ones(14)),
 }
 
@@ -139,7 +153,23 @@ INVALID: dict[str, tuple[str, str]] = {
     # connectedness stage
     "empty_template": ("", "Search without instructions"),
     "disconnected": ("clause\nphrase", "More than one connected components (2)"),
+    # failures raised as exceptions rather than messages
+    "warp_edge_oslots": ("a:word\nb:phrase\na <oslots> b", "KeyError"),
+    "featcmp_unknown_feature": ("a:word\nb:word\na .lexx. b\na <: b", "AttributeError"),
+    "featcmp_bad_regex": ("a:word\nb:word\na .lex~[~lex. b\na <: b", "error"),
     # quantifier sub-search
+    "quantifier_where_antecedent_error": (
+        "phrase\n/where/\n  word spx=verb\n/have/\n  word\n/-/",
+        'Missing feature "spx"',
+    ),
+    "quantifier_have_error": (
+        "phrase\n/where/\n  w:word sp=verb\n/have/\n  w gnx=f\n/-/",
+        'Missing feature "gnx"',
+    ),
+    "quantifier_with_bad_alternative": (
+        "clause\n/with/\n  phrase function=Pred\n/or/\n  phrase functionx=PreC\n/-/",
+        'Missing feature "functionx"',
+    ),
     "quantifier_body_unknown_feature": (
         "clause\n/without/\n  phrase functionx=Pred\n/-/",
         'Missing feature "functionx"',
@@ -204,3 +234,58 @@ def test_limit_bounds_results_without_changing_validity(tiny_api: Any) -> None:
 
     assert outcome.ok
     assert outcome.results == rows((1, 2), (1, 3), (1, 4))
+
+
+def test_escaped_value_on_quantified_atom_line_is_unescaped_in_the_sub_search(
+    tiny_api: Any,
+) -> None:
+    """TF-2: the parent atom line is regenerated *unescaped* for the sub-search.
+
+    ``a\\|b`` becomes the alternation ``a|b`` inside /without/, nothing is
+    excluded, and no message reveals it. Word 6 (lex ``a|b``) is immediately
+    followed by an adjective, so the honest answer is empty.
+    """
+    template = "n1:word lex=a\\|b\n/without/\nw:word sp=adjv\n.. <: w\n/-/"
+    outcome = run_template(tiny_api, template)
+
+    assert outcome.ok
+    assert outcome.results == ones(6)
+
+
+def test_indented_quantifier_body_is_embedded_in_the_parent(tiny_api: Any) -> None:
+    """Body lines keep their indentation, which adds an implicit ``]] parent`` edge.
+
+    A word cannot be embedded in another word, so the indented body matches
+    nothing and excludes nothing: verb 6 survives although it precedes an adjective.
+    """
+    indented = run_template(
+        tiny_api, "n1:word sp=verb\n/without/\n  w:word sp=adjv\n  .. <: w\n/-/"
+    )
+    flat = run_template(tiny_api, "n1:word sp=verb\n/without/\nw:word sp=adjv\n.. <: w\n/-/")
+
+    assert indented.ok and indented.results == ones(3, 6, 8)
+    assert flat.ok and flat.results == ones(3, 8)
+
+
+def test_result_overflow_is_reported_even_without_limit(tiny_api: Any) -> None:
+    """Fail limit on the tiny corpus is 4 * 16 = 64 results; this query has 392."""
+    template = "a:word\nb:word\nc:word\na # b\nb # c"
+
+    unbounded = run_template(tiny_api, template)
+    bounded = run_template(tiny_api, template, limit=1000)
+
+    assert not unbounded.ok
+    assert "cut off at 64 results" in unbounded.error_text()
+    assert bounded.ok and bounded.results is not None and len(bounded.results) == 392
+
+
+def test_explicit_limit_truncates_silently(tiny_api: Any) -> None:
+    outcome = run_template(tiny_api, "a:word\nb:word\na < b", limit=3)
+
+    assert outcome.ok and outcome.results is not None and len(outcome.results) == 3
+
+
+def test_large_k_is_accepted_and_matches_everything(tiny_api: Any) -> None:
+    outcome = run_template(tiny_api, "a:word\nb:word\na <99999999999999999999: b")
+
+    assert outcome.ok and outcome.results is not None and (1, 1) in outcome.results

@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from tf.core.helpers import wrapMessages
 from tf.fabric import Fabric
 
 # A tiny, fully synthetic corpus. Values are chosen to exercise escaping,
@@ -54,6 +55,7 @@ def build_tiny_corpus(directory: Path) -> None:
     node_features: dict[str, dict[int, Any]] = {"otype": otype}
     for feature in ("lex", "sp", "gn", "nu", "rank"):
         node_features[feature] = {n: w[feature] for (n, w) in WORDS.items() if feature in w}
+    node_features["gloss"] = {1: "t", 2: "tab\there"}
     node_features["function"] = {n: f for (n, (_, f)) in PHRASES.items()}
     node_features["number"] = {n: i for (i, n) in enumerate([SENTENCE, *CLAUSES], start=1)}
 
@@ -73,6 +75,7 @@ def build_tiny_corpus(directory: Path) -> None:
         "sp": str_meta,
         "gn": str_meta,
         "nu": str_meta,
+        "gloss": str_meta,
         "function": str_meta,
         "rank": int_meta,
         "number": int_meta,
@@ -100,7 +103,8 @@ class Outcome:
     """Result of running one template through real Text-Fabric search.
 
     ``ok`` is False whenever Text-Fabric reported *any* error, including
-    errors from quantifier sub-searches that do not flip ``exe.good``.
+    errors from quantifier sub-searches that do not flip ``exe.good``, result
+    overflow ("cut off"), and invalid templates that make TF raise.
     """
 
     ok: bool
@@ -113,17 +117,20 @@ class Outcome:
 
 def run_template(api: Any, template: str, limit: int | None = None) -> Outcome:
     messages: list[Any] = []
-    (results, status, _html, exe) = api.S.search(
-        template, here=False, limit=limit, silent="deep", _msgCache=messages
-    )
+    try:
+        (results, _status, _html, exe) = api.S.search(
+            template, here=False, limit=limit, silent="deep", _msgCache=messages
+        )
+        # Without a limit, results is a generator and the overflow error is only
+        # appended to messages while it is consumed: materialize before judging.
+        rows = tuple(sorted(tuple(r) for r in results))
+    except Exception as error:  # TF raises on some invalid templates
+        return Outcome(ok=False, results=None, errors=(f"{type(error).__name__}: {error}",))
+    (status, _html) = wrapMessages(messages)
     errors = tuple(
         text
         for (is_error, _nl, raw) in (m for m in messages if isinstance(m, tuple))
         if is_error and (text := raw.strip())
     )
     ok = bool(status) and exe.good and not errors
-    return Outcome(
-        ok=ok,
-        results=tuple(sorted(tuple(r) for r in results)) if ok else None,
-        errors=errors,
-    )
+    return Outcome(ok=ok, results=rows if ok else None, errors=errors)

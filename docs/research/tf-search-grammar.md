@@ -93,14 +93,14 @@ A relation line has the form `name op name`, with names matching `[A-Za-z0-9_.-]
 | slot sets | `==` same slots, `&&` overlap, `##` different slot sets, `\|\|` disjoint, `[[` embeds, `]]` embedded in |
 | slot order | `<<` `>>` completely before/after; `<:` `:>` immediately before/after |
 | boundaries | `=:` same start, `:=` same end, `::` same start and end |
-| k-near | `=k:` `:k=` `:k:` `<k:` `:k>`. `k` is a gap tolerance: `<0:` behaves like `<:`, and `<1:` allows one intervening slot |
+| k-near | `=k:` `:k=` `:k:` `<k:` `:k>`. `k` is a gap tolerance: `<0:` returns the same rows as `<:`, and `<1:` allows one intervening slot. **`k` is unbounded**: `<99999999999999999999:` is accepted and matches every pair, even a node with itself |
 | feature comparison | `.f.`, `.f=g.`, `.f#g.`, `.f<g.`, `.f>g.` (int only), `.f~re~g.` (str only). Missing values count as unequal for `#` |
 | edge features | `-e>` forward, `<e-` backward, `<e>` either direction. Valued edges also accept `-e=v>`, `-e>n>`, and similar |
 
 Additional points:
 
 - **Direction matters and is not checked:** `w [[ c` (a word embeds a clause) is valid and returns 0.
-- `oslots` and `omap` edges cannot be used.
+- `oslots` and `omap` edges cannot be used, and TF does **not** reject them with a message: `a <oslots> b` **raises** `KeyError` (`relations.py` `add_V_Relations`). Feature comparisons on a feature that isn't loaded (`.lexx.`) raise `AttributeError`, and a bad regex in `.f~r~g.` raises `re.error`. Tests: `warp_edge_oslots`, `featcmp_unknown_feature`, `featcmp_bad_regex`.
 - A value on an edge feature without `edgeValues` is rejected.
 
 ### 2.5 Quantifiers
@@ -113,21 +113,39 @@ A quantifier follows an atom at the same indentation and ends with `/-/`:
 
 Inside the body, `..` refers to the parent atom. Nesting is allowed. Structure errors are syntax errors (`Unterminated`, `Can not start with "/have/:"`).
 
-**Fail-open hazard.** A quantifier body is parsed only during atom spinning, by a nested `SearchExe` that shares the message cache. If the body is invalid, the nested search returns ∅. For `/without/`, the result is then `universe − ∅`: **every** parent node passes, and the outer `exe.good` stays `True`. Only the collected error messages show the problem. On BHSA, a misspelled feature inside `/without/` returns all 88,131 clauses. Tests: `test_invalid_quantifier_body_fails_open_without_message_check` and `test_bhsa_quantifier_body_error_is_reported`.
+`spin._doQuantifier` builds each sub-search as `cleanParent(parent line)` followed by the body lines. That construction has three consequences, all tested:
+
+- **The body's indentation is kept.** A body line indented deeper than the quantifier keyword is a *child* of the parent, which adds an implicit `]] parent` edge. `n1:word` with an indented `w:word` body matches nothing, because a word can't embed a word, so nothing is excluded. Bodies must sit at the keyword's indentation. Test: `test_indented_quantifier_body_is_embedded_in_the_parent`.
+- **The parent atom line is regenerated *unescaped* (TF-2).** `cleanParent` calls `_genLine`, and `_genLine` calls `_unesc`. So `n1:word lex=a\|b` becomes the alternation `lex=a|b` in the sub-search, and `lex=a\ b` becomes `Missing feature "b"`. The first case produces silently wrong results that no message reveals. Conditions placed on a **continuation line** under the parent are not copied into the sub-search; they still constrain the outer universe, so the result is correct. The same unescaping applies to `..`-typed atom lines inside the body. Tests: `test_escaped_value_on_quantified_atom_line_is_unescaped_in_the_sub_search`, `without_canonical_escaped_parent_value`.
+- **An empty body is valid.** `word /without/ /-/` excludes every node, with no message. Test: `empty_without_body_excludes_everything`.
+
+**Invalid bodies don't fail the outer search (TF-1).** A quantifier body is parsed only during atom spinning, by a nested `SearchExe` that shares the message cache. When that parse fails, the nested search returns an empty result, and each quantifier treats the empty result as data:
+
+| Branch | Effect of an invalid sub-template |
+|---|---|
+| `/without/` body | `universe − ∅`: **every** parent passes (fail-open). On BHSA a misspelled feature returns all 88,131 clauses. |
+| `/where/` antecedent | the empty antecedent returns the yarn unchanged: every parent passes (fail-open) |
+| `/have/` consequent | every parent that matched the antecedent is **excluded** (wrong, but not open) |
+| `/with/` or `/or/` alternative | that alternative is dropped silently; the others still contribute |
+
+In every case the outer `exe.good` stays `True`, and only the error messages reveal the problem. The message check (§3) catches all four. Tests: `test_invalid_quantifier_body_fails_open_without_message_check`, `quantifier_where_antecedent_error`, `quantifier_have_error`, `quantifier_with_bad_alternative`, and `test_bhsa_quantifier_body_error_is_reported`.
 
 ## 3. Validation surface
 
 There are three usable entry points:
 
-1. **`S.search(t, here=False, limit=n, _msgCache=[])`.** Returns `(results, status, html, exe)`. This is exactly how TF's own `A.search` (`tf/advanced/search.py`) calls it. **Validity = no error-flagged message tuples**, which covers the outer template *and* the quantifier bodies. This is the authoritative check, and the test harness uses it. It executes the query, so always pass `limit`.
+1. **`S.search(t, here=False, limit=n, _msgCache=[])`.** Returns `(results, status, html, exe)`. This is exactly how TF's own `A.search` (`tf/advanced/search.py`) calls it. It is the authoritative check, and the test harness uses it. Three rules apply:
+   - **Validity = no error-flagged messages *and* no exception.** This covers the outer template and the quantifier bodies. Some invalid templates raise instead of logging (§2.4), so the call must be wrapped.
+   - **Judge only after the results are consumed.** Without a `limit`, `results` is a generator. The returned `status` is computed before it runs, and the overflow error ("cut off at N results") is appended only while the generator is consumed. The harness materializes the results and then re-derives the status with `wrapMessages`. Test: `test_result_overflow_is_reported_even_without_limit`.
+   - **An explicit `limit` truncates silently,** with no message. Detect overflow by asking for `limit = n + 1`. Test: `test_explicit_limit_truncates_silently`.
 2. **`SearchExe(api, t, _msgCache=[])._parse(); ._prepare()`.** These are private. They run syntax, semantics and connectedness **without** spinning or fetching: about 10–40 ms on BHSA, versus 0.3–0.7 s for a `limit=10` search and up to about 40 s for an unbounded one. They do *not* validate quantifier bodies, though the bodies are available as deContexted templates on `exe.qnodes[q][3]` and could be checked recursively the same way `spin._doQuantifier` builds them.
 3. **`S.study(t)`.** This spins the atoms, which costs about as much as execution, and prints messages unless silenced. It is not useful as a cheap validator.
 
-**Parse validity ≠ cardinality.** A valid query can return 0 results (unknown values, the wrong relation direction) or explode: `phrase < phrase` on BHSA hits the fail limit (`SEARCH_FAIL_FACTOR × maxNode` = 5,787,324) and emits an **error** message ("cut off at … results"). Validation must classify that message as a result-size condition, not a grammar error, or must pass an explicit `limit`.
+**Parse validity ≠ cardinality.** A valid query can return 0 results (unknown values, the wrong relation direction) or explode: `phrase < phrase` on BHSA hits the fail limit (`SEARCH_FAIL_FACTOR × maxNode` = 5,787,324) and emits an **error** message ("cut off at … results") once the results are consumed. Validation must classify that message as a result-size condition, not a grammar error. The cleaner option is an explicit `limit` with an `n + 1` overflow probe.
 
 Recommendation for #3:
 
-- Validate compiled queries statically with (2) plus a recursive check of the quantifier bodies.
+- Validate compiled queries statically with (2) plus a recursive check of the quantifier bodies, treating any exception as invalid.
 - Use (1) with a `limit` as the integration oracle.
 - Guard the private API with these conformance tests and the existing `text-fabric<14` pin.
 
@@ -144,11 +162,11 @@ The compiler for #3 emits only the following. It covers nontrivial morphology pl
 | integer bounds | `f>n`, `f<n` (int features only) |
 | embedding | explicit relation lines `a [[ b` / `a ]] b` rather than indentation |
 | slot relations | `==` `&&` `\|\|` `=:` `:=` `::` |
-| order | `<<` `>>` `<:` `:>` `<k:` `:k>` (k a small non-negative int) |
+| order | `<<` `>>` `<:` `:>` `<k:` `:k>`, where `0 ≤ k ≤ K_MAX` and the compiler fixes the bound (TF imposes none) |
 | edge features | `-e>`, `<e-`, `<e>` (valueless form only) |
-| negation | a single `/without/ … /-/` attached to an atom, its body in the same canonical form, referring to the parent through `..` |
+| negation | a single `/without/ … /-/` attached to a **bare** atom line `nK:otype`; the parent's conditions go on a following continuation line (TF-2); a **non-empty** body sits at the keyword's indentation (0), so nothing is implicitly embedded; the body refers to the parent **only** through `..` in relation lines, never through a `..`-typed atom |
 
-All atom lines sit at indent 0, followed by relation lines in a deterministic order. This flat form is equivalent to the indented form (indentation only adds `]]` edges) and avoids the outdent rules entirely.
+All atom lines sit at indent 0, followed by relation lines in a deterministic order. Only continuation lines for the conditions of a quantified atom are indented. This flat form is equivalent to the indented form (indentation only adds `]]` edges) and avoids the outdent rules entirely.
 
 ### Deferred (explicit)
 
@@ -168,12 +186,13 @@ All atom lines sit at indent 0, followed by relation lines in a deterministic or
 
 1. Escape values per §2.3, and reject empty values and values containing control characters with a dedicated *unrepresentable value* error.
 2. Never emit a generated name equal to an object type or set name.
-3. Feature, object type and edge names are emitted only if they match TF's name patterns *and* are present in the schema. A feature name containing `.` or another character outside `[a-zA-Z0-9-@_]` is inexpressible.
-4. Relation operators come from a closed enum, never from strings.
-5. A query is accepted only when TF reports zero error messages, quantifier bodies included.
-6. Every TF call that executes a query passes an explicit `limit`.
+3. Feature, object type and edge names are emitted only if they match TF's name patterns *and* are present in the schema. A feature name containing `.` or another character outside `[a-zA-Z0-9-@_]` is inexpressible. The warp features `oslots`, `otype` and all `omap@…` features are excluded even though every schema contains them.
+4. Relation operators come from a closed enum, never from strings. `k` is bounded by the compiler.
+5. A query is accepted only when TF reports zero error messages *after* its results are consumed (or a limit is given), quantifier bodies included, and no exception is raised.
+6. Every TF call that executes a query passes an explicit `limit`, probing with `n + 1` to detect overflow.
+7. A quantified atom line carries no conditions, quantifier bodies are non-empty and sit at the keyword's indentation, and the parent is referenced only through `..` relation lines.
 
 ## 6. Follow-up risks
 
-- **TF fail-open on invalid quantifier bodies.** Tracked as TF-1 in [docs/upstream-bugs.md](../upstream-bugs.md), to be filed upstream together with a fix PR.
+- **Upstream defects** TF-1 (invalid quantifier bodies don't fail the search) and TF-2 (the quantified parent line is unescaped) are tracked in [docs/upstream-bugs.md](../upstream-bugs.md), to be filed upstream together with fix PRs.
 - **Private validation API.** `_parse` and `_prepare` may change across TF minor versions. The conformance suite is the tripwire.
