@@ -4,37 +4,35 @@ The bootstrap establishes the autonomous repository contract. Behavior is split 
 
 ## Wave 0 — bootstrap
 
-- Python package metadata and importable `tf_jev` namespace;
-- authoritative agent instructions and autonomous loop;
-- pytest, Ruff and strict mypy;
-- CI across the supported Python matrix;
-- initial research/design documents;
-- prioritized GitHub issue backlog.
+- #1 — bootstrap package metadata, autonomous workflow, CI, research/design framing and backlog.
 
 ## Wave 1 — establish native boundaries
 
-1. research the current Text-Fabric search grammar and validation hooks;
-2. research corpus schema/value discovery from actual Text-Fabric APIs and a real corpus;
-3. define and implement the first typed query IR plus deterministic compiler for a deliberately small grammar subset.
+- #2 — research the current Text-Fabric search grammar and validation hooks;
+- #3 — define the first typed QueryIR and deterministic native-TF compiler;
+- #4 — research corpus schema/value discovery from actual Text-Fabric APIs and a real corpus;
+- #5 — implement CorpusSchema extraction and schema-grounded symbol validation.
 
 No model-backed parsing should be merged before these boundaries are tested.
 
 ## Wave 2 — semantic parsing primitives
 
-4. research the current Jev API, limits, cost and confidence semantics and define a backend-neutral decision interface;
-5. implement deterministic high-cardinality candidate retrieval/narrowing;
-6. implement Jev-backed semantic decisions and NL → IR orchestration with explicit ambiguity/abstention.
+- #6 — research the current Jev API, limits, cost and confidence semantics and define a backend-neutral decision interface;
+- #7 — implement deterministic high-cardinality candidate retrieval/narrowing;
+- #8 — implement the Jev bounded-decision backend;
+- #9 — implement schema-aware NL → QueryIR orchestration with explicit ambiguity/abstention.
 
 ## Wave 3 — evaluation
 
-7. build a versioned NL ↔ native-TF benchmark on a real corpus;
-8. add end-to-end evaluation for parse accuracy, TF validity/result equivalence, latency and cost;
-9. compare Jev with at least one baseline parser/backend before treating it as the default.
+- #10 — build a versioned BHSA NL ↔ native-TF benchmark;
+- #11 — add end-to-end evaluation for parse accuracy, TF validity/result equivalence, latency and cost;
+- #12 — compare Jev with at least one baseline parser/backend before treating it as the default.
 
 ## Wave 4 — ergonomics
 
-10. expose a stable Python API and minimal CLI, with diagnostics that show IR, compiled query, confidence and unsupported reasons;
-11. document corpus integration and add examples for simple morphology, structural relations and quantifier cases.
+- #13 — expose a stable Python API and diagnostic CLI after the evaluation gates justify it.
+
+Documentation and examples should evolve with the implementing tickets rather than being postponed into a disconnected final pass.
 
 ## Prototype success criteria
 
