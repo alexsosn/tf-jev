@@ -108,3 +108,8 @@ The package should target an explicit supported Text-Fabric version range and te
 The initial compiler contract (#3) is specified in
 [docs/design/typed-compiler.md](docs/design/typed-compiler.md). It uses a narrow
 `SymbolSchema` protocol until #5 implements the immutable corpus snapshot.
+
+The schema extraction contract (#5) is specified in
+[docs/design/corpus-schema.md](docs/design/corpus-schema.md). CorpusSchema
+implements SymbolSchema while retaining full exact value membership locally,
+separate from bounded summaries and later retrieval/model decisions.

@@ -84,7 +84,12 @@ The typed compiler subset is available independently of any model:
 `tf_jev.ir` defines frozen query records and closed operator enums;
 `tf_jev.compiler.compile_query(query, schema)` validates and renders native TF
 search text. Its `SymbolSchema` protocol is the boundary for corpus-grounded
-symbol/value checks; production extraction is tracked in #5. See the
+symbol/value checks; `tf_jev.schema.extract_schema(api)` extracts an immutable
+`CorpusSchema` from a loaded Text-Fabric core API. Extraction loads admissible
+local features and retains exact membership, with high-cardinality inventories
+kept out of its JSON summary. See the
+[schema contract](docs/design/corpus-schema.md) for identity, lookup and retrieval
+handles. See the
 [compiler contract](docs/design/typed-compiler.md) for supported constructs,
 explicit errors and native quantifier workarounds. Compilation does not execute
 or evaluate the resulting query.
