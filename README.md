@@ -79,3 +79,12 @@ TF_JEV_BHSA_DIR=~/text-fabric-data/github/ETCBC/bhsa/tf/2021 python -m pytest -q
 Repository development is issue-driven. Coding agents must start with [AGENTS.md](AGENTS.md) and follow the research → plan/design → RED-first TDD → implementation → exact-head verification → logically independent adversarial review loop.
 
 See [research.md](research.md), [design.md](design.md), [plan.md](plan.md), and [docs/agentic-dev-loop.md](docs/agentic-dev-loop.md).
+
+The typed compiler subset is available independently of any model:
+`tf_jev.ir` defines frozen query records and closed operator enums;
+`tf_jev.compiler.compile_query(query, schema)` validates and renders native TF
+search text. Its `SymbolSchema` protocol is the boundary for corpus-grounded
+symbol/value checks; production extraction is tracked in #5. See the
+[compiler contract](docs/design/typed-compiler.md) for supported constructs,
+explicit errors and native quantifier workarounds. Compilation does not execute
+or evaluate the resulting query.
