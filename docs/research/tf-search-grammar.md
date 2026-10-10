@@ -56,6 +56,7 @@ Conditions are separated by whitespace. They appear either on the atom line or o
 
 Additional points:
 
+- **Repeated conditions on one feature overwrite silently: the last one wins.** `parseFeatureVals` stores conditions in a dict keyed by feature name (`syntax.py`), and continuation lines are merged with `dict.update` (`semantics.py`). So `word rank>2 rank<5` means only `rank<5`, `word sp=verb sp=subs` means only `sp=subs`, and `word sp#verb` followed by `  sp#a\ b` drops the first exclusion. The query is valid and no message is emitted. A range is expressible only with two atoms joined by node identity: `a:word rank>2` / `b:word rank<5` / `a = b`. Tests: `repeated_*_last_wins`, `range_via_two_atoms_and_identity`.
 - **Unknown values are not errors.** `sp=nonesuch` parses and returns 0 results. Value validity must be checked against the corpus schema (#4 and #5).
 - **Corpus conventions are data, not grammar.** In BHSA, `prs#` returns 0, because "no suffix" is the literal string value `absent`.
 
@@ -159,7 +160,7 @@ The compiler for #3 emits only the following. It covers nontrivial morphology pl
 | equality / alternatives | `f=v`, `f=v1\|v2` (values escaped per §2.3; int features take integer literals only) |
 | inequality | `f#v`, `f#v1\|v2` |
 | presence / absence | `f`, `f#` |
-| integer bounds | `f>n`, `f<n` (int features only) |
+| integer bounds | `f>n` or `f<n` (int features only). Only **one** per feature per atom; a two-sided range uses a second atom joined by `a = b` (§2.2, invariant 8) |
 | embedding | explicit relation lines `a [[ b` / `a ]] b` rather than indentation |
 | slot relations | `==` `&&` `\|\|` `=:` `:=` `::` |
 | order | `<<` `>>` `<:` `:>` `<k:` `:k>`, where `0 ≤ k ≤ K_MAX` and the compiler fixes the bound (TF imposes none) |
@@ -186,11 +187,12 @@ All atom lines sit at indent 0, followed by relation lines in a deterministic or
 
 1. Escape values per §2.3, and reject empty values and values containing control characters with a dedicated *unrepresentable value* error.
 2. Never emit a generated name equal to an object type or set name.
-3. Feature, object type and edge names are emitted only if they match TF's name patterns *and* are present in the schema. A feature name containing `.` or another character outside `[a-zA-Z0-9-@_]` is inexpressible. The warp features `oslots`, `otype` and all `omap@…` features are excluded even though every schema contains them.
+3. Feature, object type and edge names are emitted only if they match TF's name patterns *and* are present in the schema. A feature name containing `.` or another character outside `[a-zA-Z0-9-@_]` is inexpressible, and so is a name starting with `-` (a continuation line `  -x=a\ b` is parsed as an op line). The warp features `oslots`, `otype` and all `omap@…` features are excluded even though every schema contains them.
 4. Relation operators come from a closed enum, never from strings. `k` is bounded by the compiler.
 5. A query is accepted only when TF reports zero error messages *after* its results are consumed (or a limit is given), quantifier bodies included, and no exception is raised.
 6. Every TF call that executes a query passes an explicit `limit`, probing with `n + 1` to detect overflow.
 7. A quantified atom line carries no escaped condition. Escaped value conditions go on one indented continuation line, which never begins with a bare presence condition, because `  gn …` is parsed as an atom of type `gn` (test `test_continuation_line_starting_with_bare_presence_is_parsed_as_an_atom`). Quantifier bodies are non-empty and sit at the keyword's indentation, and the parent is referenced only through `..` relation lines.
+8. At most one condition per feature per atom, counting the atom line and its continuation line together. The compiler merges `=`/`#` value sets for the same feature, and it either expresses a two-sided bound with a second atom plus `=` or rejects it. Mixing `=` and `#` on one feature is folded into a single set or rejected.
 
 ## 6. Follow-up risks
 

@@ -62,6 +62,8 @@ Discuss these upstream only if a fix PR makes the case. They are recorded for co
   - `a <oslots> b` raises `KeyError`;
   - `.f.` on a feature that isn't loaded or doesn't exist raises `AttributeError`;
   - a bad regex in `.f~r~g.` raises `re.error`.
+- **Repeated conditions on one feature silently overwrite each other** (the last one wins). This applies within a line and across continuation lines, so `word rank>2 rank<5` loses `>2` without any message. A warning, or a conjunction, would be expected.
+- **A feature name starting with `-` turns a condition line into an op line** (`  -x=a\ b`).
 - **A condition line starting with a bare feature name is parsed as an atom** of that "type" (`parseLine` tries `atomRe` before falling back to a feature line).
 - **An empty quantifier body is valid** (`word /without/ /-/` excludes everything).
 - **`k` in the k-near relations is unbounded.** `<99999999999999999999:` is accepted.

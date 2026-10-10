@@ -45,6 +45,18 @@ VALID: dict[str, tuple[str, R]] = {
     "int_lt": ("word rank<2", ones(1)),
     "int_eq_alternatives": ("word rank=3|4", ones(3, 4)),
     "regex": ("word lex~^BR", ones(3)),
+    # Repeated conditions on one feature of one atom: the last one silently wins.
+    "repeated_feature_last_wins": ("word sp=verb sp=subs", ones(2, 4, 5)),
+    "repeated_bound_last_wins": ("word rank>2 rank<5", ones(1, 2, 3, 4)),
+    "repeated_bound_across_lines_last_wins": ("word rank>2\n  rank<5", ones(1, 2, 3, 4)),
+    "repeated_exclusion_across_lines_last_wins": (
+        "word sp#verb\n  sp#a\\ b",
+        ones(1, 2, 3, 4, 5, 6, 7, 8),
+    ),
+    "range_via_two_atoms_and_identity": (
+        "a:word rank>2\nb:word rank<5\na = b",
+        rows((3, 3), (4, 4)),
+    ),
     "feature_on_continuation_line": ("word\n  sp=verb", ones(3, 6, 8)),
     "comment_line": ("% comment\nword sp=verb", ones(3, 6, 8)),
     "unknown_value_is_silently_empty": ("word sp=nonesuch", ()),
@@ -316,3 +328,11 @@ def test_continuation_line_starting_with_bare_presence_is_parsed_as_an_atom(
     assert not bare_first.ok
     assert "Does not immediately follow an atom at the same level" in bare_first.error_text()
     assert value_first.ok and value_first.results == ones(3, 8)
+
+
+def test_condition_line_starting_with_dash_feature_is_parsed_as_an_op_line() -> None:
+    """Feature names may start with ``-``; such a continuation line becomes an op line."""
+    from tf.search.syntax import parseLine
+
+    assert parseLine("  -x=a\\ b")[0] == "op"
+    assert parseLine("  x=a\\ b")[0] == "feat"
