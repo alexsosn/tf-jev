@@ -174,7 +174,7 @@ INVALID: dict[str, tuple[str, str]] = {
     "featcmp_unknown_feature": ("a:word\nb:word\na .lexx. b\na <: b", "AttributeError"),
     "featcmp_bad_regex": (
         "a:word\nb:word\na .lex~[~lex. b\na <: b",
-        "error: unterminated character set",
+        "unterminated character set",  # re.error, renamed PatternError in 3.13
     ),
     # quantifier sub-search
     "quantifier_where_antecedent_error": (
