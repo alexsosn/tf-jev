@@ -34,7 +34,7 @@ The IR should cover a deliberately chosen prototype subset first. Do not claim c
 
 ## Jev questions to verify from the current API
 
-Before implementing a Jev client, verify:
+Before implementing any Jev client/adapter, first survey maintained Python Jev clients/toolkits (including `docxology/daf-jev` as an identified candidate) and prefer reuse when their contract is adequate. Then verify:
 
 - supported primitive output types and limits;
 - maximum practical `choice` cardinality;
