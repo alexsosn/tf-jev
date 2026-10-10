@@ -12,33 +12,64 @@ See docs/research/jev-decision-backend.md for the research behind this contract.
 from __future__ import annotations
 
 import math
+import unicodedata
 from collections.abc import Mapping
 from dataclasses import dataclass, field
+from types import MappingProxyType
 from typing import Protocol, runtime_checkable
 
-# Jev 1.13 returns probabilities rounded to two decimals, so a sum may drift by up
-# to 0.005 per option. The tolerance is absolute and deliberately loose for small
-# option sets; anything further off is a malformed response.
-_SUM_TOLERANCE_PER_OPTION = 0.005
-_MIN_SUM_TOLERANCE = 0.02
+# Absolute slack for float arithmetic when checking probability sums.
+_EPS = 1e-6
+
+# Unicode categories that are invisible, reorder text, or separate lines:
+# controls, format (zero-width, bidi), line/paragraph separators, surrogates,
+# private use and unassigned code points.
+_FORBIDDEN_CATEGORIES = frozenset({"Cc", "Cf", "Zl", "Zp", "Cs", "Co", "Cn"})
 
 
 class DecisionContractError(ValueError):
     """A question, request or backend answer violates the decision contract."""
 
 
-def _check_text(value: str, what: str) -> None:
-    if not value.strip():
-        raise DecisionContractError(f"{what} must be non-empty")
-    if any(ord(ch) < 0x20 or ord(ch) == 0x7F for ch in value):
-        raise DecisionContractError(f"{what} must not contain control characters: {value!r}")
+def _check_symbol(value: object, what: str) -> str:
+    """Strict check for labels and ids: visible, NFC, no invisible or bidi characters."""
+    if type(value) is not str:
+        raise DecisionContractError(f"{what} must be a str, got {type(value).__name__}")
+    for ch in value:
+        category = unicodedata.category(ch)
+        if category in _FORBIDDEN_CATEGORIES or (category == "Zs" and ch != " "):
+            raise DecisionContractError(f"{what} contains forbidden character {ch!r}: {value!r}")
+    if not any(not unicodedata.category(ch).startswith("Z") for ch in value):
+        raise DecisionContractError(f"{what} must contain a visible character: {value!r}")
+    if unicodedata.normalize("NFC", value) != value:
+        raise DecisionContractError(f"{what} must be in Unicode NFC form: {value!r}")
+    return value
 
 
-def _check_probability(value: float, where: str) -> None:
-    if isinstance(value, bool) or not isinstance(value, int | float) or not math.isfinite(value):
+def _check_prose(value: object, what: str) -> str:
+    """Lenient check for free text sent to a backend: newlines and tabs allowed."""
+    if type(value) is not str:
+        raise DecisionContractError(f"{what} must be a str, got {type(value).__name__}")
+    for ch in value:
+        if ch in "\n\t":
+            continue
+        if unicodedata.category(ch) in _FORBIDDEN_CATEGORIES:
+            raise DecisionContractError(f"{what} contains forbidden character {ch!r}")
+    return value
+
+
+def _check_probability(value: object, where: str) -> float:
+    if type(value) not in (int, float):
+        raise DecisionContractError(f"{where}: probability must be an int or float")
+    try:
+        number = float(value)  # type: ignore[arg-type]
+    except OverflowError as error:
+        raise DecisionContractError(f"{where}: probability is not finite") from error
+    if not math.isfinite(number):
         raise DecisionContractError(f"{where}: probability must be a finite number")
-    if not 0.0 <= value <= 1.0:
-        raise DecisionContractError(f"{where}: probability {value} outside [0, 1]")
+    if not 0.0 <= number <= 1.0:
+        raise DecisionContractError(f"{where}: probability {number} outside [0, 1]")
+    return number
 
 
 # --- questions --------------------------------------------------------------
@@ -52,7 +83,9 @@ class Option:
     description: str | None = None
 
     def __post_init__(self) -> None:
-        _check_text(self.label, "option label")
+        _check_symbol(self.label, "option label")
+        if self.description is not None:
+            _check_prose(self.description, "option description")
 
 
 @dataclass(frozen=True)
@@ -61,11 +94,14 @@ class ChoiceQuestion:
     options: tuple[Option, ...]
 
     def __post_init__(self) -> None:
-        _check_text(self.prompt, "question prompt")
+        _check_symbol(self.prompt, "question prompt")
+        object.__setattr__(self, "options", tuple(self.options))
         if not self.options:
             raise DecisionContractError("a choice needs at least one option")
         seen: set[str] = set()
         for option in self.options:
+            if not isinstance(option, Option):
+                raise DecisionContractError("choice options must be Option instances")
             if option.label in seen:
                 raise DecisionContractError(f"duplicate option label: {option.label!r}")
             seen.add(option.label)
@@ -80,7 +116,7 @@ class BinaryQuestion:
     prompt: str
 
     def __post_init__(self) -> None:
-        _check_text(self.prompt, "question prompt")
+        _check_symbol(self.prompt, "question prompt")
 
 
 Question = ChoiceQuestion | BinaryQuestion
@@ -99,10 +135,22 @@ class DecisionRequest:
     questions: Mapping[str, Question]
 
     def __post_init__(self) -> None:
-        if not self.questions:
+        context = {
+            _check_symbol(key, "context key"): _check_prose(value, f"context value {key!r}")
+            for (key, value) in self.context.items()
+        }
+        questions = {}
+        for name, question in self.questions.items():
+            _check_symbol(name, "question id")
+            if not isinstance(question, ChoiceQuestion | BinaryQuestion):
+                raise DecisionContractError(f"{name}: not a question: {type(question).__name__}")
+            questions[name] = question
+        if not questions:
             raise DecisionContractError("a request needs at least one question")
-        for name in self.questions:
-            _check_text(name, "question id")
+        # Copy into read-only views so later mutation of the caller's dicts
+        # cannot change a request that has already been checked.
+        object.__setattr__(self, "context", MappingProxyType(context))
+        object.__setattr__(self, "questions", MappingProxyType(questions))
 
 
 # --- raw answers (what a backend adapter produces) ---------------------------
@@ -129,6 +177,15 @@ RawAnswer = RawChoice | RawBinary
 class ChoiceDecision:
     selected: str
     probabilities: Mapping[str, float]
+
+    def __post_init__(self) -> None:
+        probabilities = {
+            _check_symbol(label, "option label"): _check_probability(value, label)
+            for (label, value) in self.probabilities.items()
+        }
+        if self.selected not in probabilities:
+            raise DecisionContractError(f"selected {self.selected!r} has no probability")
+        object.__setattr__(self, "probabilities", MappingProxyType(probabilities))
 
     @property
     def top_probability(self) -> float:
@@ -158,6 +215,9 @@ class ChoiceDecision:
 class BinaryDecision:
     probability: float
 
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "probability", _check_probability(self.probability, "binary"))
+
     @property
     def confidence(self) -> float:
         """Distance from 0.5, scaled to [0, 1] (the two-option choice formula)."""
@@ -168,9 +228,14 @@ Decision = ChoiceDecision | BinaryDecision
 
 
 def validate_answers(
-    request: DecisionRequest, answers: Mapping[str, RawAnswer]
+    request: DecisionRequest, answers: Mapping[str, RawAnswer], resolution: float = 0.0
 ) -> dict[str, Decision]:
-    """Turn raw backend answers into typed decisions or fail loudly."""
+    """Turn raw backend answers into typed decisions or fail loudly.
+
+    ``resolution`` is the rounding step of the backend's reported probabilities
+    (0.01 for Jev 1.13, 0.0 for exact backends). Each reported value may then be
+    off by at most ``resolution / 2``, which bounds every partial sum.
+    """
     missing = sorted(set(request.questions) - set(answers))
     if missing:
         raise DecisionContractError(f"missing answer(s): {', '.join(missing)}")
@@ -184,32 +249,52 @@ def validate_answers(
         if isinstance(question, ChoiceQuestion):
             if not isinstance(answer, RawChoice):
                 raise DecisionContractError(f"{name}: expected a choice answer")
-            decisions[name] = _validate_choice(name, question, answer)
-        else:
+            decisions[name] = _validate_choice(name, question, answer, resolution)
+        elif isinstance(question, BinaryQuestion):
             if not isinstance(answer, RawBinary):
                 raise DecisionContractError(f"{name}: expected a binary answer")
-            _check_probability(answer.probability, name)
-            decisions[name] = BinaryDecision(probability=float(answer.probability))
+            decisions[name] = BinaryDecision(_check_probability(answer.probability, name))
+        else:  # pragma: no cover - DecisionRequest only admits the two kinds
+            raise DecisionContractError(f"{name}: unsupported question kind")
     return decisions
 
 
-def _validate_choice(name: str, question: ChoiceQuestion, answer: RawChoice) -> ChoiceDecision:
+def _validate_choice(
+    name: str, question: ChoiceQuestion, answer: RawChoice, resolution: float
+) -> ChoiceDecision:
     labels = question.labels
-    if answer.selected not in labels:
-        raise DecisionContractError(f"{name}: {answer.selected!r} is not a requested option")
-    if set(answer.probabilities) != set(labels):
+    if type(answer.selected) is not str or answer.selected not in labels:
+        raise DecisionContractError(
+            f"{name}: selected {answer.selected!r} is not a requested option"
+        )
+    if any(type(key) is not str for key in answer.probabilities) or set(
+        answer.probabilities
+    ) != set(labels):
         raise DecisionContractError(f"{name}: probabilities do not cover exactly the options")
-    for label, value in answer.probabilities.items():
-        _check_probability(value, f"{name}[{label}]")
-    total = sum(answer.probabilities.values())
-    tolerance = max(_MIN_SUM_TOLERANCE, _SUM_TOLERANCE_PER_OPTION * len(labels))
-    if abs(total - 1.0) > tolerance:
-        raise DecisionContractError(f"{name}: probabilities sum to {total:.4f}, not 1")
-    if answer.probabilities[answer.selected] < max(answer.probabilities.values()):
+    values = {
+        label: _check_probability(answer.probabilities[label], f"{name}[{label}]")
+        for label in labels
+    }
+
+    # Rounding moves each value by at most resolution/2, so the k largest values
+    # can exceed 1 by at most k * resolution/2, and the full sum can fall short of
+    # 1 by at most n * resolution/2. Anything beyond that is not rounding.
+    half_step = resolution / 2
+    partial = 0.0
+    for k, value in enumerate(sorted(values.values(), reverse=True), start=1):
+        partial += value
+        if partial > 1.0 + k * half_step + _EPS:
+            raise DecisionContractError(
+                f"{name}: top-{k} probabilities sum to {partial:.4f}, more than rounding allows"
+            )
+    if partial < 1.0 - len(values) * half_step - _EPS:
+        raise DecisionContractError(f"{name}: probabilities sum to {partial:.4f}, not 1")
+
+    selected = labels[labels.index(answer.selected)]
+    if values[selected] < max(values.values()):
         raise DecisionContractError(f"{name}: selected option is not a highest-probability one")
-    # Keep request order so downstream code never depends on backend dict order.
-    ordered = {label: float(answer.probabilities[label]) for label in labels}
-    return ChoiceDecision(selected=answer.selected, probabilities=ordered)
+    # Request order, and the requested label objects, never the backend's.
+    return ChoiceDecision(selected=selected, probabilities=values)
 
 
 # --- backends ----------------------------------------------------------------
@@ -221,6 +306,8 @@ class Capabilities:
 
     max_options: int | None = None
     max_questions: int | None = None
+    probability_resolution: float = 0.0
+    """Rounding step of reported probabilities; 0.0 means exact."""
 
 
 @dataclass(frozen=True)
@@ -270,17 +357,22 @@ class ScriptedBackend:
     answers: Mapping[str, RawAnswer]
     max_options: int | None = None
     max_questions: int | None = None
+    probability_resolution: float = 0.0
     requests: list[DecisionRequest] = field(default_factory=list)
 
     @property
     def capabilities(self) -> Capabilities:
-        return Capabilities(max_options=self.max_options, max_questions=self.max_questions)
+        return Capabilities(
+            max_options=self.max_options,
+            max_questions=self.max_questions,
+            probability_resolution=self.probability_resolution,
+        )
 
     def decide(self, request: DecisionRequest) -> DecisionBatch:
         check_capabilities(request, self.capabilities)
         self.requests.append(request)
         raw = {name: self.answers[name] for name in request.questions if name in self.answers}
         return DecisionBatch(
-            decisions=validate_answers(request, raw),
+            decisions=validate_answers(request, raw, self.probability_resolution),
             receipt=Receipt(backend="scripted", model="scripted"),
         )

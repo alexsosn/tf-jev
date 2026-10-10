@@ -79,8 +79,8 @@ No live-API test runs in CI. The live probe becomes an opt-in test in #8, gated 
 
 The contract is implemented and covered by RED-first tests in `tests/test_decisions.py`:
 
-- **Questions:** `ChoiceQuestion(prompt, options: tuple[Option, ...])` and `BinaryQuestion(prompt)`. Option labels are opaque ids that tf-jev chooses. They must be non-empty, contain no control characters, and be unique. Score is deliberately left out: no parser decision needs an ordinal rubric yet, and Jev's own docs advise against using score magnitudes numerically.
-- **Requests:** `DecisionRequest(context: Mapping[str, str], questions: Mapping[str, Question])`.
+- **Questions:** `ChoiceQuestion(prompt, options: tuple[Option, ...])` and `BinaryQuestion(prompt)`. Option labels, question ids, prompts and context keys are opaque ids that tf-jev chooses. They must be plain `str` in Unicode NFC form, contain at least one visible character, and be unique. They are rejected if they contain any control, format (zero-width or bidi), line- or paragraph-separator, surrogate, private-use or unassigned code point, or any space other than U+0020. NFC is required so that look-alike labels can't coexist. Descriptions and context values are prose: they may also contain newlines and tabs, but nothing else from those categories. Score is deliberately left out: no parser decision needs an ordinal rubric yet, and Jev's own docs advise against using score magnitudes numerically.
+- **Requests:** `DecisionRequest(context: Mapping[str, str], questions: Mapping[str, Question])`. A request copies both mappings into read-only views, so mutating the caller's dicts afterwards can't change a request that has already been checked. Validated decisions are immutable as well, and their `__post_init__` re-checks ranges, so an invalid decision can't be constructed by hand.
 - **Backends:** `DecisionBackend` is a protocol with `capabilities` and `decide(request) -> DecisionBatch(decisions, receipt)`. `check_capabilities` enforces `max_options` and `max_questions` **before** any call.
 - **The boundary:** `validate_answers(request, raw)` rejects any of these:
   - missing or unrequested answers;
@@ -88,10 +88,11 @@ The contract is implemented and covered by RED-first tests in `tests/test_decisi
   - a selected label that wasn't requested;
   - a probability set that doesn't match the requested labels;
   - a non-finite or out-of-range probability;
-  - sums off by more than the rounding tolerance;
+  - a non-`str` (or `str`-subclass) label or probability key, or a probability that isn't a real `int`/`float` (`bool`, strings and overflowing ints are rejected);
+  - sums that rounding can't explain. Each backend declares `Capabilities.probability_resolution`: 0.01 for Jev 1.13, 0.0 for exact backends. Since each value can be off by at most half a step, the top-*k* values may exceed 1 by at most *k*·step/2 for every *k*, and the full sum may fall short by at most *n*·step/2. This rejects forged answers such as two options at 1.0. A 255-option answer that is all zeros is still accepted, because rounding a uniform distribution produces exactly that, and its confidence is 0;
   - a selection that isn't a highest-probability option.
 
-  Because of this, **no backend can return text that wasn't in the request**, and query syntax can never come from a model.
+  The returned `selected` is the request's **own label object**, never the backend's value. Because of this, **no backend can return text that wasn't in the request**, and query syntax can never come from a model.
 - **Confidence is computed locally**, so Jev and baseline backends (#12) are compared on one scale:
   - `ChoiceDecision.confidence` uses Jev's documented Choice formula;
   - `top_probability` and `margin` (top minus runner-up) are also exposed, as `confidence.md` recommends;
