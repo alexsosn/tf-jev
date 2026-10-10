@@ -59,3 +59,16 @@ connectivity, references and quantifier scope. Native tests compare exact tiny
 corpus results and selected BHSA 2021 gold queries, including escaped parents.
 Full lint/types/unit/conformance tests run on a frozen commit, followed by a
 separate skeptical review with independently constructed adversarial cases.
+
+## Adversarial review amendment
+
+Review of 4b1f95d found another native-parser ambiguity: `noneRe` is tested
+before `identRe`, and `parseFeatureVals` restores escaped space sentinels
+before matching it. Consequently a singleton `f#\ ` (or several spaces)
+means absence instead of exclusion. The value is present in real TF data.
+Render a singleton whitespace-only exclusion as two identical alternatives,
+`f#\ |\ `, so the pipe forces value-set parsing without adding the empty
+string. Equality, non-whitespace values, and multi-value sets need no change.
+Eight native tests (plain and quantified, equality and inequality, one/two
+spaces) produced four RED failures before the fix. This invalidates the first
+review head and requires complete tests plus a fresh review on the fixed head.

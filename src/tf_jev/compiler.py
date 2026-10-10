@@ -78,6 +78,15 @@ def _predicate(predicate: Predicate, otype: str, schema: SymbolSchema) -> str:
     encoded = "|".join(_escape(v) if isinstance(v, str) else str(v) for v in values)
     if values == [""]:
         encoded = "|"
+    elif (
+        op is PredicateOp.NE
+        and len(values) == 1
+        and isinstance(values[0], str)
+        and values[0].isspace()
+    ):
+        # TF matches f# followed only by restored spaces as absence, before
+        # considering value sets. Duplicate alternatives preserve the set.
+        encoded = encoded + "|" + encoded
     return feature + str(op.value) + encoded
 
 

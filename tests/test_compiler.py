@@ -307,3 +307,32 @@ def test_schema_errors_do_not_echo_corpus_text(tiny_api: Any) -> None:
             Query((Atom("word", (pred("lex", P.EQ, "a b"),)),)), RejectingSymbols(tiny_api)
         )
     assert "sensitive" not in str(caught.value)
+
+
+@pytest.mark.parametrize("value", [" ", "  "])
+@pytest.mark.parametrize("op", [P.EQ, P.NE])
+@pytest.mark.parametrize("quantified", [False, True])
+def test_whitespace_only_value_keeps_native_meaning(
+    tmp_path: Any, value: str, op: P, quantified: bool
+) -> None:
+    from tests.conformance.tf_harness import build_tiny_corpus, load_api
+
+    build_tiny_corpus(tmp_path)
+    # Native TF retains spaces in feature data. Its parser's absence pattern
+    # also accepts trailing whitespace after #, before testing equality sets.
+    (tmp_path / "literal.tf").write_text("@node\n@valueType=str\n\n1\t \n3\t  \n5\tx\n")
+    api = load_api(tmp_path)
+    query = Query((Atom("word", (pred("literal", op, value),)),))
+    if quantified:
+        body = Query(
+            (Atom("word", (pred("sp", P.EQ, "adjv"),)),),
+            (Relation(Parent.REF, R.ADJACENT_BEFORE, 0),),
+        )
+        query = Query(query.atoms, without=(Without(0, body),))
+    expected = tuple(
+        (n,)
+        for n in range(1, 9)
+        if (api.Fs("literal").v(n) == value if op is P.EQ else api.Fs("literal").v(n) != value)
+        and (not quantified or n != 6)
+    )
+    assert execute(api, query) == expected
