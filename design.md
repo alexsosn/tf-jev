@@ -104,3 +104,7 @@ Do not collapse these into a generic "could not compile" error.
 ## Compatibility
 
 The package should target an explicit supported Text-Fabric version range and test that range. Corpus-specific adapters may exist later, but generic code must not depend on BHSA feature names or annotation conventions.
+
+The initial compiler contract (#3) is specified in
+[docs/design/typed-compiler.md](docs/design/typed-compiler.md). It uses a narrow
+`SymbolSchema` protocol until #5 implements the immutable corpus snapshot.

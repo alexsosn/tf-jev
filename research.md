@@ -92,3 +92,8 @@ Pinned version: BHSA data version **2021** (latest; `ETCBC/bhsa` release v1.8.1)
 - generating or modifying corpus annotations;
 - replacing Text-Fabric search execution;
 - supporting every TF query construct before a smaller benchmarked subset works.
+
+Compiler follow-through (#3): [typed compiler contract](docs/design/typed-compiler.md)
+records the schema protocol, runtime validation and quantifier workaround. Source
+inspection also found that TF tokenization uses Python `split()`: non-ASCII
+whitespace is unrepresentable as a literal value, so it is rejected before rendering.
