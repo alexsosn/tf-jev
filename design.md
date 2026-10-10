@@ -36,7 +36,7 @@ Retrieval and semantic ranking are separate concerns and must be benchmarked sep
 
 Backend-neutral interface for bounded semantic decisions.
 
-A backend may expose choice, binary/noul and score-like operations with probabilities. Jev will be the first implementation researched, but no backend may bypass IR validation.
+A backend may expose choice, binary/noul and score-like operations with probabilities. Jev will be the first implementation researched, but no backend may bypass IR validation. The Jev implementation should prefer a thin adapter over an existing vetted Python client/toolkit; tf-jev should not own generic HTTP/retry/auth machinery without evidence that available clients are inadequate.
 
 ### 5. Semantic parser
 
