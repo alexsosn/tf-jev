@@ -268,8 +268,18 @@ def _extract(api: Any) -> CorpusSchema:
     )
     node_types = dict(api.F.otype.items())
     totals = collections.Counter(node_types.values())
-    if set(totals) != {t.name for t in types}:
+    if set(totals) != {t.name for t in types} or len(types) != len(totals):
         raise SchemaError("inconsistent object types")
+    for object_type in types:
+        interval = api.F.otype.sInterval(object_type.name)
+        if (
+            len(interval) != 2
+            or interval[1] - interval[0] + 1 != totals[object_type.name]
+            or any(
+                node_types.get(n) != object_type.name for n in range(interval[0], interval[1] + 1)
+            )
+        ):
+            raise SchemaError("native type interval differs from raw node types")
     loaded_digest = hashlib.sha256()
     _digest_record(loaded_digest, [asdict(t) for t in types])
     _digest_record(loaded_digest, ("otype", sorted(node_types.items())))

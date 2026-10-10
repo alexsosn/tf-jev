@@ -88,3 +88,14 @@ and hashes their actual per-node/edge content; this is a deliberate one-time
 cost, not a compile operation. Performance optimization must preserve exact
 identity and domain semantics. Final checks/review are recorded on the PR at
 the exact head, rather than updating verification prose after freezing it.
+
+## Review amendment: native type intervals
+
+Adversarial review of 2614e36 used an actual corpus with clause nodes
+10, 14 and 15. TF loaded it, but `word`-style type selection through
+F.otype.s uses the min/max interval: `clause` returned 10 through 15, including
+phrase nodes. Merely checking that raw types and C.levels agree is insufficient.
+The regression first demonstrated this native mismatch, then failed because
+extraction did not raise. Extraction must verify each sInterval is exactly the
+raw type extent, with no gaps/foreign nodes, before certifying domains. The old
+review is invalidated; the fix receives full tests and independent re-review.

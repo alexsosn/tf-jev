@@ -244,3 +244,19 @@ def test_invalid_edge_endpoints_and_feature_load_failure(api: Any, tmp_path: Pat
     broken_api = tf.load("", silent="deep")
     with pytest.raises(SchemaError, match="load"):
         extract_schema(broken_api)
+
+
+def test_noncontiguous_types_are_rejected_before_compilation(tmp_path: Path) -> None:
+    build_tiny_corpus(tmp_path)
+    (tmp_path / "otype.tf").write_text(
+        "@node\n@valueType=str\n\n1-8\tword\n9\tphrase\n10\tclause\n11-13\tphrase\n14-15\tclause\n16\tsentence\n"
+    )
+    tf = Fabric(locations=str(tmp_path), silent="deep")
+    api = tf.load("", silent="deep")
+    assert api
+    raw = {n for n, t in api.F.otype.items() if t == "clause"}
+    outcome = run_template(api, "clause", limit=100)
+    assert outcome.ok and outcome.results is not None
+    assert {row[0] for row in outcome.results} != raw  # real native hazard
+    with pytest.raises(SchemaError, match="interval"):
+        extract_schema(api)
