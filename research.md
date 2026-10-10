@@ -47,6 +47,8 @@ Before implementing any Jev client/adapter, first survey maintained Python Jev c
 
 All API and pricing claims must be date/version grounded in the research ticket.
 
+Findings (#6): [docs/research/jev-decision-backend.md](docs/research/jev-decision-backend.md). Decision: thin adapter over the official `typesafe-sdk` (optional extra), pinned to `jev-1.13.0`; backend-neutral contract in `src/tf_jev/decisions.py`.
+
 ## High-cardinality value problem
 
 Some TF feature domains are small (for example grammatical categories), while others can contain thousands of lexemes, names or IDs. A bounded-choice backend should not receive an entire large vocabulary.
