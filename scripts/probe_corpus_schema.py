@@ -39,13 +39,26 @@ def bucket(k: int) -> str:
 
 
 def content_digest(directory: Path) -> str:
+    """SHA-256 over every ``*.tf`` file in one location, sorted by name.
+
+    Each name and each content is length-prefixed, so different file sets can
+    never produce the same input stream. Subdirectories (e.g. TF's ``.tf``
+    binary cache) are skipped; hidden ``*.tf`` files are included, as TF does.
+    """
     digest = hashlib.sha256()
     for path in sorted(p for p in directory.glob("*.tf") if p.is_file()):
-        digest.update(path.name.encode() + b"\0")
+        name = path.name.encode()
+        digest.update(len(name).to_bytes(8, "big") + name)
+        digest.update(path.stat().st_size.to_bytes(8, "big"))
         with path.open("rb") as handle:
             for chunk in iter(lambda: handle.read(1 << 20), b""):
                 digest.update(chunk)
     return digest.hexdigest()
+
+
+def corpus_identity(locations: list[Path]) -> tuple[tuple[str, str], ...]:
+    """Identity of a corpus loaded from several locations (base data + modules), in order."""
+    return tuple((str(location), content_digest(location)) for location in locations)
 
 
 def probe(directory: Path) -> list[str]:
@@ -53,6 +66,8 @@ def probe(directory: Path) -> list[str]:
     started = time.perf_counter()
     TF = Fabric(locations=str(directory), silent="deep")
     api: Any = TF.load("", silent="deep")
+    if not api:
+        raise SystemExit(f"{directory}: Text-Fabric could not load it; the probe requires otext")
     sets = TF.explore(silent="deep", show=True)
     explored = time.perf_counter()
     node_features = [f for f in sets["nodes"] if f != "otype"]
@@ -128,7 +143,7 @@ def probe(directory: Path) -> list[str]:
             for target in targets:
                 pairs[(otype_of(source), otype_of(target))] += 1
         meta = TF.features[edge]
-        shown = "; ".join(f"{a}→{b}: {n}" for (a, b), n in pairs.most_common(6))
+        shown = "; ".join(f"{a}→{b}: {n}" for (a, b), n in pairs.most_common())
         out.append(f"| `{edge}` | {bool(meta.edgeValues)} | {shown} |")
 
     out.append("\n## Hazards\n")

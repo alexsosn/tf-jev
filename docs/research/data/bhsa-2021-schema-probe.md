@@ -1,8 +1,8 @@
 # Schema probe: `BHSA` (2021)
 
 - text-fabric 13.1.0; written 2021-12-09T14:23:29Z
-- content sha256 of *.tf: `62807aecab9a9689c19f9e454a16709f9b093d185b76b3874e7037ff34ecf793`
-- metadata-only discovery 4.1s; loading all features 11.7s
+- content sha256 of *.tf: `226a3ce721cafb5de92130a41b77d2b968112ae29f633c6a983bbcb84ebd11d0`
+- metadata-only discovery 4.0s; loading all features 14.9s
 - slot type `word`, max node 1446831
 - object types: `book`, `chapter`, `lex`, `verse`, `half_verse`, `sentence`, `sentence_atom`, `clause`, `clause_atom`, `phrase`, `phrase_atom`, `subphrase`, `word`
 
@@ -173,9 +173,9 @@
 |---|---|---|
 | `distributional_parent` | False | word→phrase_atom: 426590; phrase_atom→clause_atom: 267532; clause_atom→sentence_atom: 90704 |
 | `functional_parent` | False | word→phrase: 426590; phrase_atom→phrase: 267532; phrase→clause: 253203; clause_atom→clause: 90704; clause→sentence: 88131; sentence_atom→sentence: 64514 |
-| `mother` | False | clause_atom→clause_atom: 89612; subphrase→word: 34989; subphrase→subphrase: 21936; clause→clause: 13917; phrase_atom→phrase_atom: 12498; clause→phrase: 5305 |
-| `omap@2017-2021` | True | word→word: 426590; phrase_atom→phrase_atom: 267490; phrase→phrase: 253184; subphrase→subphrase: 184500; clause_atom→clause_atom: 90706; clause→clause: 88168 |
-| `omap@c-2021` | True | word→word: 426590; phrase_atom→phrase_atom: 267527; phrase→phrase: 253190; subphrase→subphrase: 184814; clause_atom→clause_atom: 90697; clause→clause: 88138 |
+| `mother` | False | clause_atom→clause_atom: 89612; subphrase→word: 34989; subphrase→subphrase: 21936; clause→clause: 13917; phrase_atom→phrase_atom: 12498; clause→phrase: 5305; phrase_atom→word: 1831; clause→word: 1569; phrase→phrase: 552; phrase→clause: 52; phrase→word: 8 |
+| `omap@2017-2021` | True | word→word: 426590; phrase_atom→phrase_atom: 267490; phrase→phrase: 253184; subphrase→subphrase: 184500; clause_atom→clause_atom: 90706; clause→clause: 88168; sentence_atom→sentence_atom: 64465; sentence→sentence: 63687; half_verse→half_verse: 45109; verse→verse: 23014; lex→lex: 9040; chapter→chapter: 923; sentence_atom→subphrase: 238; verse→lex: 200; subphrase→verse: 199; sentence→sentence_atom: 105; phrase_atom→sentence: 99; phrase→phrase_atom: 86; clause_atom→half_verse: 71; half_verse→phrase: 70; clause→clause_atom: 36; book→book: 33; word→book: 6; book→chapter: 6; chapter→clause: 6 |
+| `omap@c-2021` | True | word→word: 426590; phrase_atom→phrase_atom: 267527; phrase→phrase: 253190; subphrase→subphrase: 184814; clause_atom→clause_atom: 90697; clause→clause: 88138; sentence_atom→sentence_atom: 64521; sentence→sentence: 63718; half_verse→half_verse: 45148; verse→verse: 23178; lex→lex: 9204; chapter→chapter: 923; verse→lex: 36; subphrase→verse: 35; book→book: 33; clause_atom→half_verse: 32; half_verse→phrase: 31; phrase→phrase_atom: 27; phrase_atom→sentence: 18; clause→clause_atom: 16; sentence→sentence_atom: 8; word→book: 6; book→chapter: 6; chapter→clause: 6; subphrase→sentence_atom: 3 |
 
 ## Hazards
 

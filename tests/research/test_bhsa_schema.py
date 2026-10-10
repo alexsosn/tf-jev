@@ -12,10 +12,10 @@ from typing import Any
 
 import pytest
 
-from scripts.probe_corpus_schema import content_digest
+from scripts.probe_corpus_schema import content_digest, probe
 from tests.conformance.tf_harness import run_template
 
-BHSA_2021_DIGEST = "62807aecab9a9689c19f9e454a16709f9b093d185b76b3874e7037ff34ecf793"
+BHSA_2021_DIGEST = "226a3ce721cafb5de92130a41b77d2b968112ae29f633c6a983bbcb84ebd11d0"
 
 
 def test_bhsa_content_digest_identifies_the_pinned_release(bhsa_dir: Path) -> None:
@@ -62,13 +62,35 @@ def test_bhsa_domains_differ_per_object_type(
     assert len(bhsa_api.Fs(feature).freqList({otype})) == distinct
 
 
-def test_bhsa_empty_string_values_need_the_empty_regex(bhsa_api: Any) -> None:
+@pytest.mark.parametrize(
+    "template, count",
+    [
+        ("word nme=|", 121983),
+        ("word nme~^$", 121983),
+        ("word nme=H", 8934),
+        ("word nme=|H", 130917),
+        ("word nme#|", 304607),
+        ("word nme#|H", 295673),
+        ("word nme#", 0),
+    ],
+)
+def test_bhsa_empty_string_is_an_empty_alternative(
+    bhsa_api: Any, template: str, count: int
+) -> None:
     bhsa_api.TF.load("nme", add=True, silent="deep")
-
     assert dict(bhsa_api.Fs("nme").freqList())[""] == 121983
-    empty = run_template(bhsa_api, "word nme~^$", limit=200000)
-    assert empty.results is not None and len(empty.results) == 121983
-    assert run_template(bhsa_api, "word nme#").results == ()
+
+    outcome = run_template(bhsa_api, template, limit=500000)
+
+    assert outcome.ok and outcome.results is not None and len(outcome.results) == count
+
+
+def test_bhsa_probe_lists_every_edge_endpoint_pair(bhsa_dir: Path) -> None:
+    report = "\n".join(probe(bhsa_dir))
+    mother = next(line for line in report.splitlines() if line.startswith("| `mother`"))
+
+    for pair in ("phrase_atom→word: 1831", "clause→word: 1569", "phrase→word: 8"):
+        assert pair in mother
 
 
 def test_bhsa_missing_values_are_mostly_sentinel_strings(bhsa_api: Any) -> None:

@@ -19,7 +19,7 @@ No production schema API is frozen here. §6 proposes the `CorpusSchema` contrac
 | enumerate | `TF.explore(show=True)` | **0.04 s** | Public. Loads **metadata only** for every feature and returns `{nodes, edges, configs, computeds}`. |
 | feature metadata | `TF.features[f].metaData`, `.dataType` (`str`/`int`), `.isEdge`, `.edgeValues` | free after `explore` | **Before `explore`, a feature that isn't loaded has empty metadata and `isEdge is None`** (pinned by a test). |
 | object types | `api.C.levels.data` | free | Ordered from largest to slot level, with average sizes. |
-| type extent | `F.otype.sInterval(t)` | free | Each type occupies one contiguous node range. |
+| type extent | `F.otype.sInterval(t)` | free | Each type occupies one contiguous node range (verified node by node on BHSA in review). |
 | value domain | `api.Fs(f).freqList(nodeTypes={t})` | 0.1–0.15 s per feature | Public. Returns `(value, count)` sorted by frequency. Needs the feature data loaded. |
 | load data | `TF.load(names, add=True)` | ~0.04 s per typical feature; 8.1 s for all 111 non-`omap` features; `omap@*` alone 5.5 s | |
 | edge structure | `api.Es(e).data` | free once loaded | Source → targets (with values when `edgeValues`). |
@@ -66,7 +66,7 @@ The full table has 146 (feature, type) pairs; see the probe output. Representati
 |---|---:|---:|---|
 | 1–8 | 31 | 0 | direct Choice |
 | 9–32 | 22 | 6 | direct Choice |
-| 33–255 | 43 | 5 | Choice is allowed, but narrow first (rounding, order bias) |
+| 33–255 | 43 | 5 | narrow to ≤ 32 first (rounding, order bias); never one wide Choice |
 | 256–2,000 | 6 | 9 | retrieval required |
 | >2,000 | 20 | 4 | retrieval required |
 
@@ -77,7 +77,7 @@ The full table has 146 (feature, type) pairs; see the probe output. Representati
   2. *Sentinel strings*: `NA`, `unknown`, `absent`, `n/a` and `<unknown>` are ordinary values (`gn`, `nu`, `ps`, `vt`, `vs`, `st`, `prs`, `pfm`, `rela`, `det`, `root`, `gloss`). For these, `f#` matches **nothing**. Example: `word prs#` returns 0 because "no suffix" is `absent`.
 
   What a sentinel means is a **corpus convention**. The generic schema must keep sentinels as ordinary values. Interpreting them, for example mapping "has no suffix" to `prs=absent`, belongs in a BHSA-specific description layer that is kept apart from the generic code.
-- **The empty string is a real and frequent value.** It covers 28 (feature, word) pairs: `nme` 121,983, `g_pfm` 381,594, `pfm` 11,438, `g_word_utf8` 6,488, and others. The #2 research found that `f=` (empty) is a syntax error and `f#` means "no value". **The only way to match an empty value is the regex `f~^$`.** This is pinned on the fixture and on BHSA (121,983 rows). *Amendment to the grammar subset:* the compiler may emit exactly the constant regexes `~^$` (empty) and `~.` (non-empty) for these cases. Neither is ever produced from model output. Everything else in the `~` space stays deferred.
+- **The empty string is a real and frequent value.** It covers 28 (feature, word) pairs: `nme` 121,983, `g_pfm` 381,594, `pfm` 11,438, `g_word_utf8` 6,488, and others. A bare `f=` is a syntax error and `f#` means "no value", but **the empty string is an ordinary member of a value set: `f=|` is `{""}`**, because TF splits values on `|`. On BHSA, `nme=|` matches the same 121,983 words as `nme~^$`, `nme=|H` matches 130,917 (121,983 + 8,934), and `nme#|` matches 304,607. Note that `f#|` excludes the empty string but still matches nodes that have *no* value. So the empty string fits the existing `=`/`#` value-set grammar, and it can be merged with other values under #2 invariant 8 (one condition per feature). **No regex amendment is needed.** A regex would actually be worse: the two constant regexes would collide under the last-condition-wins rule, and Python's `$` also matches before a trailing newline. (An earlier draft of this PR proposed `~^$`/`~.`; that was wrong, and adversarial review caught it.)
 - **Values that need escaping** (space, `|`, `\`): `label` (21,054 values), `gloss` (1,972), `voc_lex_utf8` (440), `lex_utf8` (438, multi-word place names such as `אבל בית מעכה`), `g_word_utf8` (305). The escaping from #2 §2.3 covers all of them. No control characters were found apart from the empty string.
 - **Non-NFC values are common** in pointed Hebrew (`g_*_utf8`, `voc_lex_utf8`, `qere_utf8`, `kq_hybrid_utf8`, and two `book@fa` names). Values must be kept and compiled **byte-for-byte**. They can never be decision labels (#6: labels are ids; values go in descriptions and in an id → value table).
 - **Integers** are true `int`s, negative ones included (`dist`). They have small value sets but meaningful *ranges*: a domain is better described by min, max and count than by an enumeration.
@@ -87,9 +87,9 @@ The full table has 146 (feature, type) pairs; see the probe output. Representati
 These combine the #6 findings with the measurements above. Jev limits Choice to 255 options, rounds probabilities to 2 decimals, and has a known first-option bias.
 
 - **≤ 32 values**: offer the whole domain in one Choice. This covers 53 of 146 pairs, including every core morphology feature.
-- **33–255 values**: a single Choice is allowed, but it should first be narrowed by type or category, or by a deterministic match on the request text. With 2-decimal probabilities, the tail of a large choice is all `0.0`.
-- **> 255 values**: deterministic retrieval (#7) must narrow the domain to at most 32 candidates before any model call. This is mandatory for `lex`, `voc_lex*`, `gloss`, `g_word*`, `root`, `label`, `pargr`, and for `number` on words.
-- **Integer features**: the number is extracted from the request deterministically (#6: no arithmetic in the model). The schema exposes min, max and count, which validate the extracted literal.
+- **33–255 values**: always narrow to ≤ 32 before the model decides, either with a deterministic prefilter (type or category, or a match on the request text) or with a hierarchical Choice. A single wide Choice is never used. With 2-decimal probabilities, the tail of a large choice is all `0.0`.
+- **> 255 values**: deterministic retrieval (#7) must narrow the domain to at most 32 candidates before any model call. This is mandatory for the string features `lex`, `voc_lex*`, `gloss`, `g_word*`, `root`, `label` and `pargr`.
+- **Integer features are always `IntRange`, whatever their cardinality** (e.g. `number` on words, with 29,736 values). The number is extracted from the request deterministically (#6: no arithmetic in the model), and the schema's min, max and count validate the extracted literal. Retrieval never applies to integers.
 
 The thresholds are policy constants for #5 and #7, not facts about Text-Fabric.
 
@@ -101,7 +101,7 @@ The thresholds are policy constants for #5 and #7, not facts about Text-Fabric.
 | dataset id | `otext` metadata `dataset` (`BHSA`) and the directory name (`2021`) | Readable identity |
 | written date | `otext` `@dateWritten` (`2021-12-09T14:23:29Z`) | Readable identity |
 | release marker | `__checkout__.txt` (`v1.8.1`, `gb112c16…`), present only when TF downloaded the data | Provenance, when available |
-| **content digest** | SHA-256 over every `*.tf` file name and its bytes, sorted (directories skipped) | **The cache key.** BHSA 2021: `62807aec…f793`, 173 MB in about 0.55 s. Pinned by a test. |
+| **content digest** | per location: SHA-256 over the length-prefixed name and content of every `*.tf` file, sorted by name. Subdirectories (TF's `.tf` cache) are skipped; hidden `*.tf` files are included, as TF's own discovery does | **The cache key.** A corpus loaded from several locations (base data plus feature modules) is identified by the **ordered tuple of (location, digest)** (`corpus_identity`). BHSA 2021: `226a3ce7…11d0`, 173 MB in about 0.55 s. Pinned by a test. |
 
 A digest over file headers only takes 5 ms, but it misses changes to the data, so it is rejected as a cache key. The full digest is cheap enough to compute once per `CorpusSchema` extraction.
 
@@ -119,14 +119,24 @@ CorpusSchema
                   domains: tuple[ValueDomain])     # one per object type carrying it
   edge_features: tuple[EdgeFeature]               # omap@*, oslots excluded
       EdgeFeature(name, has_values: bool, description,
-                  endpoints: tuple[(from_type, to_type, count)])
+                  endpoints: tuple[(from_type, to_type, count)])   # all pairs, never truncated
+                  # edge-value domains: out of scope (edge values are deferred in #2)
   ValueDomain(object_type, node_count, missing_count,
-              kind: Enumerated(values: tuple[(value, count)])        # ≤ ENUM_LIMIT
-                  | Large(distinct, retrieval_handle)               # > ENUM_LIMIT, values via #7
-                  | IntRange(min, max, distinct),
+              kind: Enumerated(values: tuple[(value, count)])        # str, ≤ ENUM_LIMIT
+                  | Large(distinct, retrieval_handle)               # str, > ENUM_LIMIT, via #7
+                  | IntRange(min, max, distinct),                  # every int feature
               has_empty_string: bool, non_nfc_count: int)
   reserved_names: frozenset[str]                  # object types (and sets): never node names (#2 inv. 2)
+  type_named_features: frozenset[str]             # features sharing a type name (BHSA: book,
+                                                  #   chapter, lex, verse): never bare first token
+                                                  #   on a continuation line (#2 inv. 7)
 ```
+
+Determinism rules:
+
+- `Enumerated.values` is sorted by **value**, ascending by code point. It is not sorted by frequency (`freqList` order), so ties can't depend on counts.
+- `IntRange` holds only integers.
+- Everything is serialized as JSON with `sort_keys=True`, `ensure_ascii=False` and `separators=(",", ":")`, with values written byte-for-byte. Byte-identical output is then part of the #5 tests.
 
 Validation helpers for #5:
 
@@ -156,4 +166,4 @@ Under the default TypeSafe account terms (#6), retention is unspecified and zero
 
 - **#5** implements §6 on the fixture and BHSA. Thresholds (§4) and exclusions (§1) are constants with tests.
 - **#7** owns `Large` domains, retrieval handles, and normalization (e.g. NFC or dediacritized matching keys mapped back to the exact original bytes).
-- **#3** (compiler) gets two inputs from here: the empty and non-empty constant regexes (§3), and the two ways a value can be missing.
+- **#3** (compiler) gets two inputs from here: the empty string as a value-set member (`f=|…`, §3), and the two ways a value can be missing (no value is matched by `f#`; sentinels are ordinary values).
