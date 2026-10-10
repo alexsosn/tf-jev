@@ -15,16 +15,16 @@ The bootstrap establishes the autonomous repository contract. Behavior is split 
 
 No model-backed parsing should be merged before these boundaries are tested.
 
-## Wave 2 — semantic parsing primitives
+## Wave 2 — semantic parsing prerequisites
 
-- #6 — research the current Jev API, limits, cost and confidence semantics and define a backend-neutral decision interface;
+- #6 — research the current Jev API, existing Python clients, limits, cost and confidence semantics and define a backend-neutral decision interface;
 - #7 — implement deterministic high-cardinality candidate retrieval/narrowing;
-- #8 — implement the Jev bounded-decision backend;
-- #9 — implement schema-aware NL → QueryIR orchestration with explicit ambiguity/abstention.
+- #8 — implement the Jev DecisionBackend adapter;
+- #10 — build and freeze a versioned BHSA NL ↔ native-TF benchmark with a held-out partition.
 
-## Wave 3 — evaluation
+## Wave 3 — semantic parser and evaluation
 
-- #10 — build a versioned BHSA NL ↔ native-TF benchmark;
+- #9 — implement schema-aware NL → QueryIR orchestration with explicit ambiguity/abstention against the pre-existing benchmark;
 - #11 — add end-to-end evaluation for parse accuracy, TF validity/result equivalence, latency and cost;
 - #12 — compare Jev with at least one baseline parser/backend before treating it as the default.
 
