@@ -97,3 +97,8 @@ Compiler follow-through (#3): [typed compiler contract](docs/design/typed-compil
 records the schema protocol, runtime validation and quantifier workaround. Source
 inspection also found that TF tokenization uses Python `split()`: non-ASCII
 whitespace is unrepresentable as a literal value, so it is rejected before rendering.
+
+Schema implementation follow-through (#5): [extraction contract](docs/design/corpus-schema.md)
+records location/module override identity, effective loaded-data hashing, exact
+sparse-integer membership and all-missing per-type domains, verified against
+Text-Fabric 13.1.0 source before implementation.
