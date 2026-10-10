@@ -116,7 +116,7 @@ Inside the body, `..` refers to the parent atom. Nesting is allowed. Structure e
 `spin._doQuantifier` builds each sub-search as `cleanParent(parent line)` followed by the body lines. That construction has three consequences, all tested:
 
 - **The body's indentation is kept.** A body line indented deeper than the quantifier keyword is a *child* of the parent, which adds an implicit `]] parent` edge. `n1:word` with an indented `w:word` body matches nothing, because a word can't embed a word, so nothing is excluded. Bodies must sit at the keyword's indentation. Test: `test_indented_quantifier_body_is_embedded_in_the_parent`.
-- **The parent atom line is regenerated *unescaped* (TF-2).** `cleanParent` calls `_genLine`, and `_genLine` calls `_unesc`. So `n1:word lex=a\|b` becomes the alternation `lex=a|b` in the sub-search, and `lex=a\ b` becomes `Missing feature "b"`. The first case produces silently wrong results that no message reveals. Conditions placed on a **continuation line** under the parent are not copied into the sub-search; they still constrain the outer universe, so the result is correct. The same unescaping applies to `..`-typed atom lines inside the body. Tests: `test_escaped_value_on_quantified_atom_line_is_unescaped_in_the_sub_search`, `without_canonical_escaped_parent_value`.
+- **The parent atom line is regenerated *unescaped* (TF-2).** `cleanParent` calls `_genLine`, and `_genLine` calls `_unesc`. So `n1:word lex=a\|b` becomes the alternation `lex=a|b` in the sub-search, and `lex=a\ b` becomes `Missing feature "b"`. The first case produces silently wrong results that no message reveals. Conditions placed on a **continuation line** under the parent are not copied into the sub-search. They still constrain the outer universe, and `/with/` intersects with that universe, so the result is correct in every branch. A continuation line must not *start* with a bare presence condition (`  gn …`), because `parseLine` tries the atom pattern first and reads it as an atom of type `gn`. The same unescaping applies to `..`-typed atom lines inside the body. Tests: `test_escaped_value_on_quantified_atom_line_is_unescaped_in_the_sub_search`, `without_canonical_escaped_parent_value`.
 - **An empty body is valid.** `word /without/ /-/` excludes every node, with no message. Test: `empty_without_body_excludes_everything`.
 
 **Invalid bodies don't fail the outer search (TF-1).** A quantifier body is parsed only during atom spinning, by a nested `SearchExe` that shares the message cache. When that parse fails, the nested search returns an empty result, and each quantifier treats the empty result as data:
@@ -164,7 +164,7 @@ The compiler for #3 emits only the following. It covers nontrivial morphology pl
 | slot relations | `==` `&&` `\|\|` `=:` `:=` `::` |
 | order | `<<` `>>` `<:` `:>` `<k:` `:k>`, where `0 ≤ k ≤ K_MAX` and the compiler fixes the bound (TF imposes none) |
 | edge features | `-e>`, `<e-`, `<e>` (valueless form only) |
-| negation | a single `/without/ … /-/` attached to a **bare** atom line `nK:otype`; the parent's conditions go on a following continuation line (TF-2); a **non-empty** body sits at the keyword's indentation (0), so nothing is implicitly embedded; the body refers to the parent **only** through `..` in relation lines, never through a `..`-typed atom |
+| negation | a single `/without/ … /-/` attached to an atom `nK:otype`. On that atom line, conditions whose rendering needs no escape stay on the atom line; conditions with escaped values go on one following **indented** continuation line, which therefore always starts with `f=`/`f#` and never with a bare `f` (a line starting with a bare name is parsed as an atom). This works around TF-2; a **non-empty** body sits at the keyword's indentation (0), so nothing is implicitly embedded; the body refers to the parent **only** through `..` in relation lines, never through a `..`-typed atom |
 
 All atom lines sit at indent 0, followed by relation lines in a deterministic order. Only continuation lines for the conditions of a quantified atom are indented. This flat form is equivalent to the indented form (indentation only adds `]]` edges) and avoids the outdent rules entirely.
 
@@ -190,7 +190,7 @@ All atom lines sit at indent 0, followed by relation lines in a deterministic or
 4. Relation operators come from a closed enum, never from strings. `k` is bounded by the compiler.
 5. A query is accepted only when TF reports zero error messages *after* its results are consumed (or a limit is given), quantifier bodies included, and no exception is raised.
 6. Every TF call that executes a query passes an explicit `limit`, probing with `n + 1` to detect overflow.
-7. A quantified atom line carries no conditions, quantifier bodies are non-empty and sit at the keyword's indentation, and the parent is referenced only through `..` relation lines.
+7. A quantified atom line carries no escaped condition. Escaped value conditions go on one indented continuation line, which never begins with a bare presence condition, because `  gn …` is parsed as an atom of type `gn` (test `test_continuation_line_starting_with_bare_presence_is_parsed_as_an_atom`). Quantifier bodies are non-empty and sit at the keyword's indentation, and the parent is referenced only through `..` relation lines.
 
 ## 6. Follow-up risks
 

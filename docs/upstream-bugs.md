@@ -49,7 +49,7 @@ Each entry gives the affected version, a minimal reproduction, the evidence in t
 - **Expected:** the sub-search sees the same constraint as the outer template.
 - **Likely fix:** in `_genLine`, re-escape the regenerated parts instead of unescaping them. Alternatively, keep the original escaped source text when building `cleanAtom`.
 - **Evidence:** `test_escaped_value_on_quantified_atom_line_is_unescaped_in_the_sub_search`.
-- **tf-jev mitigation:** the parent's conditions go on a continuation line, and `..`-typed atoms are never emitted (`docs/research/tf-search-grammar.md` §2.5 and §4).
+- **tf-jev mitigation:** escaped conditions of a quantified atom go on an indented continuation line that starts with a value condition, and `..`-typed atoms are never emitted (`docs/research/tf-search-grammar.md` §2.5 and §4).
 
 ## Candidates (behavior, not necessarily bugs)
 
@@ -62,6 +62,7 @@ Discuss these upstream only if a fix PR makes the case. They are recorded for co
   - `a <oslots> b` raises `KeyError`;
   - `.f.` on a feature that isn't loaded or doesn't exist raises `AttributeError`;
   - a bad regex in `.f~r~g.` raises `re.error`.
+- **A condition line starting with a bare feature name is parsed as an atom** of that "type" (`parseLine` tries `atomRe` before falling back to a feature line).
 - **An empty quantifier body is valid** (`word /without/ /-/` excludes everything).
 - **`k` in the k-near relations is unbounded.** `<99999999999999999999:` is accepted.
 - **Unhelpful message for a type-mismatched comparison.** For `lex<5` on a str feature, the message prints `<function _makeLimit.<locals>.<lambda> …>` instead of the condition.

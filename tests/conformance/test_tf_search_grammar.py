@@ -125,6 +125,10 @@ VALID: dict[str, tuple[str, R]] = {
         "n1:word\n  lex=a\\|b\n/without/\nw:word sp=adjv\n.. <: w\n/-/",
         (),
     ),
+    "without_canonical_split_conditions": (
+        "n1:word gn\n  lex=a\\|b\n/without/\nw:word sp=adjv\n.. <: w\n/-/",
+        (),
+    ),
     "empty_without_body_excludes_everything": ("word\n/without/\n/-/", ()),
     "parent_reference": ("clause\n/without/\n  w:word sp=adjv\n  .. [[ w\n/-/", ones(14)),
 }
@@ -156,7 +160,10 @@ INVALID: dict[str, tuple[str, str]] = {
     # failures raised as exceptions rather than messages
     "warp_edge_oslots": ("a:word\nb:phrase\na <oslots> b", "KeyError"),
     "featcmp_unknown_feature": ("a:word\nb:word\na .lexx. b\na <: b", "AttributeError"),
-    "featcmp_bad_regex": ("a:word\nb:word\na .lex~[~lex. b\na <: b", "error"),
+    "featcmp_bad_regex": (
+        "a:word\nb:word\na .lex~[~lex. b\na <: b",
+        "error: unterminated character set",
+    ),
     # quantifier sub-search
     "quantifier_where_antecedent_error": (
         "phrase\n/where/\n  word spx=verb\n/have/\n  word\n/-/",
@@ -289,3 +296,23 @@ def test_large_k_is_accepted_and_matches_everything(tiny_api: Any) -> None:
     outcome = run_template(tiny_api, "a:word\nb:word\na <99999999999999999999: b")
 
     assert outcome.ok and outcome.results is not None and (1, 1) in outcome.results
+
+
+def test_continuation_line_starting_with_bare_presence_is_parsed_as_an_atom(
+    tiny_api: Any,
+) -> None:
+    """``  gn sp=verb`` is an atom of type ``gn``, not a condition line.
+
+    The quantifier then no longer follows an atom at its level and the template is
+    rejected. With the presence condition later on the line, it is a condition line.
+    """
+    bare_first = run_template(
+        tiny_api, "n1:word\n  gn sp=verb\n/without/\nw:word sp=adjv\n.. <: w\n/-/"
+    )
+    value_first = run_template(
+        tiny_api, "n1:word\n  sp=verb gn\n/without/\nw:word sp=adjv\n.. <: w\n/-/"
+    )
+
+    assert not bare_first.ok
+    assert "Does not immediately follow an atom at the same level" in bare_first.error_text()
+    assert value_first.ok and value_first.results == ones(3, 8)
