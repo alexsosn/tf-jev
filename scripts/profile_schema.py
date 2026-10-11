@@ -64,11 +64,29 @@ def profile_schema(directory: Path, *, trace_python: bool = False) -> dict[str, 
     loaded_at = time.perf_counter()
     rss_at_load = _current_rss_bytes()
 
+    # Sampling is opt-in to the profiler; ordinary extract_schema(api) does
+    # not read process metrics or create profiling data.
+    phases: list[dict[str, object]] = []
+    previous = loaded_at
+
+    def observe(name: str) -> None:
+        nonlocal previous
+        now = time.perf_counter()
+        phases.append(
+            {
+                "name": name,
+                "seconds": round(now - previous, 6),
+                "rss_bytes": _current_rss_bytes(),
+                "peak_process_rss_bytes": _peak_rss_bytes(),
+            }
+        )
+        previous = now
+
     traced_peak: int | None = None
     if trace_python:
         tracemalloc.start()
     try:
-        schema = extract_schema(api)
+        schema = extract_schema(api, _phase_observer=observe)
         finished_at = time.perf_counter()
         if trace_python:
             traced_peak = tracemalloc.get_traced_memory()[1]
@@ -92,6 +110,7 @@ def profile_schema(directory: Path, *, trace_python: bool = False) -> dict[str, 
         "peak_process_rss_bytes": _peak_rss_bytes(),
         "trace_python": trace_python,
         "python_traced_peak_bytes": traced_peak,
+        "phases": phases,
     }
 
 
