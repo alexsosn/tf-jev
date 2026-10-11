@@ -35,6 +35,9 @@ def _catalog(cases: list[dict[str, Any]]) -> dict[str, Any]:
         "corpus": "ETCBC/bhsa",
         "data_version": "2021",
         "source_sha256": {"otype.tf": "a" * 64},
+        "source_git_blobs": {name: "a" * 40 for name in (
+            "otype.tf", "oslots.tf", "sp.tf", "gn.tf", "nu.tf", "function.tf", "mother.tf"
+        )},
         "cases": cases,
     }
 
@@ -86,6 +89,10 @@ def test_reject_wrong_root_shape(tmp_path: Path) -> None:
     doc["source_sha256"] = {"otype.tf": "z" * 64}
     with pytest.raises(ValueError):
         _load(tmp_path, doc)
+    doc["source_sha256"] = {"otype.tf": "a" * 64}
+    doc["source_git_blobs"]["sp.tf"] = "x" * 40
+    with pytest.raises(ValueError):
+        _load(tmp_path, doc)
 
 
 def test_abstention_never_contains_a_gold_query(tmp_path: Path) -> None:
@@ -97,13 +104,22 @@ def test_abstention_never_contains_a_gold_query(tmp_path: Path) -> None:
 
 
 def test_sha_pin_rejects_drift(tmp_path: Path) -> None:
-    (tmp_path / "otype.tf").write_bytes(b"sample corpus")
-    catalog = _load(tmp_path, _catalog([_record()]))
+    doc = _catalog([_record()])
+    hashes: dict[str, str] = {}
+    for name in doc["source_git_blobs"]:
+        raw = ("synthetic-" + name).encode()
+        (tmp_path / name).write_bytes(raw)
+        hashes[name] = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\\0" + raw).hexdigest()
+    doc["source_git_blobs"] = hashes
+    doc["source_sha256"] = {
+        "otype.tf": hashlib.sha256((tmp_path / "otype.tf").read_bytes()).hexdigest()
+    }
+    catalog = _load(tmp_path, doc)
+    verify_source(tmp_path, catalog)
+    # A feature edit must be detected even if otype.tf is unchanged.
+    (tmp_path / "sp.tf").write_bytes(b"forged feature")
     with pytest.raises(ValueError, match="source"):
         verify_source(tmp_path, catalog)
-    doc = _catalog([_record()])
-    doc["source_sha256"] = {"otype.tf": hashlib.sha256(b"sample corpus").hexdigest()}
-    verify_source(tmp_path, _load(tmp_path, doc))
 
 
 def test_native_gold_and_diagnostic_rejection(tiny_api: Any, tmp_path: Path) -> None:
