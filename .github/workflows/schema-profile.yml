@@ -83,6 +83,13 @@ jobs:
           assert info["object_types"] >= 2
           assert info["load_seconds"] >= 0
           assert info["extract_seconds"] > 0
+          expected = (
+            "discover", "load_features", "type_index", "warp_digest",
+            "node_features", "edge_features", "source_identity", "domains",
+          )
+          assert tuple(phase["name"] for phase in info["phases"]) == expected
+          assert abs(sum(p["seconds"] for p in info["phases"]) - info["extract_seconds"]) < 2
+          assert all(p["seconds"] >= 0 for p in info["phases"])
           assert info["peak_process_rss_bytes"] is not None
           assert not info["trace_python"]
           print(json.dumps(info, sort_keys=True))
