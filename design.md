@@ -113,3 +113,8 @@ The schema extraction contract (#5) is specified in
 [docs/design/corpus-schema.md](docs/design/corpus-schema.md). CorpusSchema
 implements SymbolSchema while retaining full exact value membership locally,
 separate from bounded summaries and later retrieval/model decisions.
+
+The retrieval contract (#7) is specified in
+[docs/design/candidate-retrieval.md](docs/design/candidate-retrieval.md). Local
+identity-bound indexes preserve raw strings, expose collision/overflow counts,
+and hand only complete sets of at most 32 opaque options to a decision backend.

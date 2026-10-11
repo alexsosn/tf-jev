@@ -102,3 +102,8 @@ Schema implementation follow-through (#5): [extraction contract](docs/design/cor
 records location/module override identity, effective loaded-data hashing, exact
 sparse-integer membership and all-missing per-type domains, verified against
 Text-Fabric 13.1.0 source before implementation.
+
+Candidate retrieval (#7): [real-domain findings](docs/research/candidate-retrieval.md)
+show why normalization must be explicit and prefix overflow must block ranking.
+The frozen [lookup benchmark](benchmarks/retrieval-v1/README.md) measures literal
+retrieval separately from semantic parser quality.

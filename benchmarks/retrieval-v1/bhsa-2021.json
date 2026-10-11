@@ -1,0 +1,528 @@
+{
+  "version": 1,
+  "corpus": "ETCBC/bhsa",
+  "data_version": "2021",
+  "cases": [
+    {
+      "id": "lex-0-exact",
+      "feature": "lex",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "<B/",
+      "gold": [
+        "<B/"
+      ]
+    },
+    {
+      "id": "lex-0-nfc",
+      "feature": "lex",
+      "normalization": "nfc",
+      "match": "exact",
+      "text": "<B/",
+      "gold": [
+        "<B/"
+      ]
+    },
+    {
+      "id": "lex-0-nfc_casefold",
+      "feature": "lex",
+      "normalization": "nfc_casefold",
+      "match": "exact",
+      "text": "<b/",
+      "gold": [
+        "<B/"
+      ]
+    },
+    {
+      "id": "lex-2192-exact",
+      "feature": "lex",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "CLB[",
+      "gold": [
+        "CLB["
+      ]
+    },
+    {
+      "id": "lex-2192-nfc",
+      "feature": "lex",
+      "normalization": "nfc",
+      "match": "exact",
+      "text": "CLB[",
+      "gold": [
+        "CLB["
+      ]
+    },
+    {
+      "id": "lex-2192-nfc_casefold",
+      "feature": "lex",
+      "normalization": "nfc_casefold",
+      "match": "exact",
+      "text": "clb[",
+      "gold": [
+        "CLB["
+      ]
+    },
+    {
+      "id": "lex-4384-exact",
+      "feature": "lex",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "LCN/",
+      "gold": [
+        "LCN/"
+      ]
+    },
+    {
+      "id": "lex-4384-nfc",
+      "feature": "lex",
+      "normalization": "nfc",
+      "match": "exact",
+      "text": "LCN/",
+      "gold": [
+        "LCN/"
+      ]
+    },
+    {
+      "id": "lex-4384-nfc_casefold",
+      "feature": "lex",
+      "normalization": "nfc_casefold",
+      "match": "exact",
+      "text": "lcn/",
+      "gold": [
+        "LCN/"
+      ]
+    },
+    {
+      "id": "lex-6576-exact",
+      "feature": "lex",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "QWH[",
+      "gold": [
+        "QWH["
+      ]
+    },
+    {
+      "id": "lex-6576-nfc",
+      "feature": "lex",
+      "normalization": "nfc",
+      "match": "exact",
+      "text": "QWH[",
+      "gold": [
+        "QWH["
+      ]
+    },
+    {
+      "id": "lex-6576-nfc_casefold",
+      "feature": "lex",
+      "normalization": "nfc_casefold",
+      "match": "exact",
+      "text": "qwh[",
+      "gold": [
+        "QWH["
+      ]
+    },
+    {
+      "id": "lex-8768-exact",
+      "feature": "lex",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "ZZ>/",
+      "gold": [
+        "ZZ>/"
+      ]
+    },
+    {
+      "id": "lex-8768-nfc",
+      "feature": "lex",
+      "normalization": "nfc",
+      "match": "exact",
+      "text": "ZZ>/",
+      "gold": [
+        "ZZ>/"
+      ]
+    },
+    {
+      "id": "lex-8768-nfc_casefold",
+      "feature": "lex",
+      "normalization": "nfc_casefold",
+      "match": "exact",
+      "text": "zz>/",
+      "gold": [
+        "ZZ>/"
+      ]
+    },
+    {
+      "id": "lex-missing",
+      "feature": "lex",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "__TF_JEV_ABSENT_2021__",
+      "gold": []
+    },
+    {
+      "id": "voc_lex_utf8-0-exact",
+      "feature": "voc_lex_utf8",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "אֱגֹוז",
+      "gold": [
+        "אֱגֹוז"
+      ]
+    },
+    {
+      "id": "voc_lex_utf8-0-nfc",
+      "feature": "voc_lex_utf8",
+      "normalization": "nfc",
+      "match": "exact",
+      "text": "אֱגֹוז",
+      "gold": [
+        "אֱגֹוז"
+      ]
+    },
+    {
+      "id": "voc_lex_utf8-0-nfc_casefold",
+      "feature": "voc_lex_utf8",
+      "normalization": "nfc_casefold",
+      "match": "exact",
+      "text": "אֱגֹוז",
+      "gold": [
+        "אֱגֹוז"
+      ]
+    },
+    {
+      "id": "voc_lex_utf8-2022-exact",
+      "feature": "voc_lex_utf8",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "זָר",
+      "gold": [
+        "זָר"
+      ]
+    },
+    {
+      "id": "voc_lex_utf8-2022-nfc",
+      "feature": "voc_lex_utf8",
+      "normalization": "nfc",
+      "match": "exact",
+      "text": "זָר",
+      "gold": [
+        "זָר"
+      ]
+    },
+    {
+      "id": "voc_lex_utf8-2022-nfc_casefold",
+      "feature": "voc_lex_utf8",
+      "normalization": "nfc_casefold",
+      "match": "exact",
+      "text": "זָר",
+      "gold": [
+        "זָר"
+      ]
+    },
+    {
+      "id": "voc_lex_utf8-4045-exact",
+      "feature": "voc_lex_utf8",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "מִשְׁקָל",
+      "gold": [
+        "מִשְׁקָל"
+      ]
+    },
+    {
+      "id": "voc_lex_utf8-4045-nfc",
+      "feature": "voc_lex_utf8",
+      "normalization": "nfc",
+      "match": "exact",
+      "text": "מִשְׁקָל",
+      "gold": [
+        "מִשְׁקָל"
+      ]
+    },
+    {
+      "id": "voc_lex_utf8-4045-nfc_casefold",
+      "feature": "voc_lex_utf8",
+      "normalization": "nfc_casefold",
+      "match": "exact",
+      "text": "מִשְׁקָל",
+      "gold": [
+        "מִשְׁקָל"
+      ]
+    },
+    {
+      "id": "voc_lex_utf8-6068-exact",
+      "feature": "voc_lex_utf8",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "פָּנֶה",
+      "gold": [
+        "פָּנֶה"
+      ]
+    },
+    {
+      "id": "voc_lex_utf8-6068-nfc",
+      "feature": "voc_lex_utf8",
+      "normalization": "nfc",
+      "match": "exact",
+      "text": "פָּנֶה",
+      "gold": [
+        "פָּנֶה"
+      ]
+    },
+    {
+      "id": "voc_lex_utf8-6068-nfc_casefold",
+      "feature": "voc_lex_utf8",
+      "normalization": "nfc_casefold",
+      "match": "exact",
+      "text": "פָּנֶה",
+      "gold": [
+        "פָּנֶה"
+      ]
+    },
+    {
+      "id": "voc_lex_utf8-8090-exact",
+      "feature": "voc_lex_utf8",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "תרגם",
+      "gold": [
+        "תרגם"
+      ]
+    },
+    {
+      "id": "voc_lex_utf8-8090-nfc",
+      "feature": "voc_lex_utf8",
+      "normalization": "nfc",
+      "match": "exact",
+      "text": "תרגם",
+      "gold": [
+        "תרגם"
+      ]
+    },
+    {
+      "id": "voc_lex_utf8-8090-nfc_casefold",
+      "feature": "voc_lex_utf8",
+      "normalization": "nfc_casefold",
+      "match": "exact",
+      "text": "תרגם",
+      "gold": [
+        "תרגם"
+      ]
+    },
+    {
+      "id": "voc_lex_utf8-missing",
+      "feature": "voc_lex_utf8",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "__TF_JEV_ABSENT_2021__",
+      "gold": []
+    },
+    {
+      "id": "gloss-0-exact",
+      "feature": "gloss",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "-elite",
+      "gold": [
+        "-elite"
+      ]
+    },
+    {
+      "id": "gloss-0-nfc",
+      "feature": "gloss",
+      "normalization": "nfc",
+      "match": "exact",
+      "text": "-elite",
+      "gold": [
+        "-elite"
+      ]
+    },
+    {
+      "id": "gloss-0-nfc_casefold",
+      "feature": "gloss",
+      "normalization": "nfc_casefold",
+      "match": "exact",
+      "text": "-elite",
+      "gold": [
+        "-elite"
+      ]
+    },
+    {
+      "id": "gloss-1533-exact",
+      "feature": "gloss",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "Laadah",
+      "gold": [
+        "Laadah"
+      ]
+    },
+    {
+      "id": "gloss-1533-nfc",
+      "feature": "gloss",
+      "normalization": "nfc",
+      "match": "exact",
+      "text": "Laadah",
+      "gold": [
+        "Laadah"
+      ]
+    },
+    {
+      "id": "gloss-1533-nfc_casefold",
+      "feature": "gloss",
+      "normalization": "nfc_casefold",
+      "match": "exact",
+      "text": "laadah",
+      "gold": [
+        "Laadah"
+      ]
+    },
+    {
+      "id": "gloss-3066-exact",
+      "feature": "gloss",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "bracelet",
+      "gold": [
+        "bracelet"
+      ]
+    },
+    {
+      "id": "gloss-3066-nfc",
+      "feature": "gloss",
+      "normalization": "nfc",
+      "match": "exact",
+      "text": "bracelet",
+      "gold": [
+        "bracelet"
+      ]
+    },
+    {
+      "id": "gloss-3066-nfc_casefold",
+      "feature": "gloss",
+      "normalization": "nfc_casefold",
+      "match": "exact",
+      "text": "bracelet",
+      "gold": [
+        "bracelet"
+      ]
+    },
+    {
+      "id": "gloss-4599-exact",
+      "feature": "gloss",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "morning",
+      "gold": [
+        "morning"
+      ]
+    },
+    {
+      "id": "gloss-4599-nfc",
+      "feature": "gloss",
+      "normalization": "nfc",
+      "match": "exact",
+      "text": "morning",
+      "gold": [
+        "morning"
+      ]
+    },
+    {
+      "id": "gloss-4599-nfc_casefold",
+      "feature": "gloss",
+      "normalization": "nfc_casefold",
+      "match": "exact",
+      "text": "morning",
+      "gold": [
+        "morning"
+      ]
+    },
+    {
+      "id": "gloss-6131-exact",
+      "feature": "gloss",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "zither",
+      "gold": [
+        "zither"
+      ]
+    },
+    {
+      "id": "gloss-6131-nfc",
+      "feature": "gloss",
+      "normalization": "nfc",
+      "match": "exact",
+      "text": "zither",
+      "gold": [
+        "zither"
+      ]
+    },
+    {
+      "id": "gloss-6131-nfc_casefold",
+      "feature": "gloss",
+      "normalization": "nfc_casefold",
+      "match": "exact",
+      "text": "zither",
+      "gold": [
+        "zither"
+      ]
+    },
+    {
+      "id": "gloss-missing",
+      "feature": "gloss",
+      "normalization": "exact",
+      "match": "exact",
+      "text": "__TF_JEV_ABSENT_2021__",
+      "gold": []
+    },
+    {
+      "id": "lex-prefix",
+      "feature": "lex",
+      "normalization": "exact",
+      "match": "prefix",
+      "text": "B",
+      "gold": [
+        "BZZ["
+      ]
+    },
+    {
+      "id": "voc_lex_utf8-prefix",
+      "feature": "voc_lex_utf8",
+      "normalization": "exact",
+      "match": "prefix",
+      "text": "א",
+      "gold": [
+        "אתה"
+      ]
+    },
+    {
+      "id": "gloss-prefix",
+      "feature": "gloss",
+      "normalization": "exact",
+      "match": "prefix",
+      "text": "king",
+      "gold": [
+        "kingship"
+      ]
+    },
+    {
+      "id": "gloss-collision",
+      "feature": "gloss",
+      "normalization": "nfc_casefold",
+      "match": "exact",
+      "text": "put",
+      "gold": [
+        "Put",
+        "put"
+      ]
+    }
+  ],
+  "source_sha256": {
+    "otype.tf": "bb5da974a3b1dd7ff9ddab54dfb533059442642ab830b832a49eea8670aaa920",
+    "lex.tf": "2469664dc71bcde35a916d6a85453a5567cff3dcbc3e3323204e1120bc5ed25a",
+    "voc_lex_utf8.tf": "e67e3a0d67205fbb8508faabfc210c59e1475465084ea8bfe88fa160bfb628b3",
+    "gloss.tf": "b0e94e5e43d6d4305c7321986afbbded1bb980b161a765891b66f40c66434d2e"
+  }
+}

@@ -93,3 +93,10 @@ handles. See the
 [compiler contract](docs/design/typed-compiler.md) for supported constructs,
 explicit errors and native quantifier workarounds. Compilation does not execute
 or evaluate the resulting query.
+
+`tf_jev.retrieval.RetrievalIndex.from_schema(schema, handle)` narrows a large
+string domain locally with exact or explicit normalized/prefix lookup. Results
+preserve original strings and collisions. A complete result can produce a bounded
+`ChoiceQuestion`; no-match and overflow block that handoff. See the
+[retrieval contract](docs/design/candidate-retrieval.md) and
+[real-domain lookup benchmark](benchmarks/retrieval-v1/README.md).
