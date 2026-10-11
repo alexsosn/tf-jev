@@ -82,7 +82,9 @@ def parse_one_atom(
         raise ValueError("a trusted CorpusSchema is required")
     evidence: list[ChoiceEvidence] = []
 
-    def finished(status: ParseStatus, query: Query | None = None, native: str | None = None) -> ParseResult:
+    def finished(
+        status: ParseStatus, query: Query | None = None, native: str | None = None
+    ) -> ParseResult:
         return ParseResult(
             status, query, native,
             min((entry.confidence for entry in evidence), default=0.0),
@@ -91,7 +93,10 @@ def parse_one_atom(
 
     def choose(question_id: str, prompt: str, options: tuple[Option, ...]) -> str | None:
         # Never silently truncate schema choices to fit a backend/model limit.
-        if backend.capabilities.max_options is not None and len(options) > backend.capabilities.max_options:
+        if (
+            backend.capabilities.max_options is not None
+            and len(options) > backend.capabilities.max_options
+        ):
             return None
         request = DecisionRequest(
             {"request": text},
@@ -115,7 +120,8 @@ def parse_one_atom(
 
     mode = choose(
         "mode",
-        "Classify whether the request can be expressed as one node type with at most one equality feature, without relations, counting, ranking, or quantifiers.",
+        "Classify the request: exactly one node type with at most one equality feature, "
+        "or ambiguous/unsupported relations, counting, ranking, and quantifiers.",
         (
             Option("single", "Exactly one node type, optionally one feature equality"),
             Option("ambiguous", "Multiple defensible interpretations, abstain"),
