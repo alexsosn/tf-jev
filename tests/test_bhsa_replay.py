@@ -10,6 +10,7 @@ from typing import Any
 import pytest
 
 import scripts.bhsa_replay as runner
+from scripts.nl_candidates import UPSTREAM_COMMIT
 from scripts.nl_candidates import run_candidate as native_candidate
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,16 +37,17 @@ def test_single_session_checks_sources_first_and_never_executes_deferred(
     monkeypatch: pytest.MonkeyPatch, tiny_api: Any, tmp_path: Path
 ) -> None:
     calls = _stub_sources(monkeypatch, tiny_api)
-    monkeypatch.setattr(
-        runner,
-        "check_gold",
-        lambda api, case: calls.append("gold:" + case.id) or case.expected_count,
-    )
-    monkeypatch.setattr(
-        runner,
-        "run_candidate",
-        lambda api, case: calls.append("candidate:" + case.id) or len(case.id),
-    )
+    def checked_gold(api: Any, case: Any) -> int:
+        calls.append("gold:" + case.id)
+        assert case.expected_count is not None
+        return case.expected_count
+
+    def checked_candidate(api: Any, case: Any) -> int:
+        calls.append("candidate:" + case.id)
+        return len(case.id)
+
+    monkeypatch.setattr(runner, "check_gold", checked_gold)
+    monkeypatch.setattr(runner, "run_candidate", checked_candidate)
     report = runner.replay(tmp_path / "2021", GOLD, CANDIDATES)
     assert calls[:3] == ["gold_source", "candidate_source", "load_api"]
     assert calls.count("load_api") == 1
@@ -57,7 +59,7 @@ def test_single_session_checks_sources_first_and_never_executes_deferred(
     assert report["gold_checked"] == 6
     assert report["candidate_checked"] == 14
     assert len(report["observations"]) == 14
-    assert report["source_commit"] == runner.UPSTREAM_COMMIT
+    assert report["source_commit"] == UPSTREAM_COMMIT
     for key in ("gold_fixture_sha256", "candidate_fixture_sha256"):
         assert len(report[key]) == 64
     assert all(x["observed_2021_rows"] > 0 for x in report["observations"])
