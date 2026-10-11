@@ -127,3 +127,7 @@ sanitizes errors/logs before returning backend-neutral decisions and receipts.
 Semantic benchmark (#10): [v2 evidence contract](docs/design/bhsa-benchmark.md)
 specifies returned-column projection, frozen result-set fingerprints and strict
 source/version/diagnostic gates independently of parser prompts.
+
+Semantic orchestration (#9): [parser contract](docs/design/semantic-parser.md)
+defines bounded choices, supported shapes, evidence/receipts, output projection and
+sanitized non-success states. Compiler/native execution remain independent.

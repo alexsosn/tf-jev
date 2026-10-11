@@ -115,3 +115,7 @@ policy verified against typesafe-sdk 0.7.4 source and current official docs.
 Semantic benchmark (#10): [annotation and projection findings](docs/research/bhsa-benchmark.md)
 underpin the complete [v2 benchmark](benchmarks/nl-tf-v2/README.md). The v1 seed
 remains historical evidence; parser work uses v2 with its heldout partition sealed.
+
+Semantic orchestration (#9): [bounded parser findings](docs/research/semantic-parser.md)
+separate structural symbol budgets from retrieved value budgets and make return
+projection and conservative abstention explicit.
