@@ -21,13 +21,18 @@ PROMOTIONS = {
     "qere-missing": ("development", 424698),
     "samuel-proper-noun-context": ("train", 1868),
     "same-slots-verse-sentence": ("development", 3583),
+    "clauses-distance-one": ("train", 598),
+    "clauses-distance-less-minus-ten": ("development", 86),
+    "clause-adjacent-phrases": ("development", 162653),
+    "sentence-clause-phrase-order": ("train", 136137),
+    "pp-prep-adj-noun": ("development", 61),
 }
 
 
 def test_promotions_are_typed_and_unsealed() -> None:
     catalog = load_catalog(GOLD)
     indexed = {c.id: c for c in catalog.cases}
-    assert len(catalog.cases) == 19
+    assert len(catalog.cases) == 24
     assert set(PROMOTED_IR) == set(PROMOTIONS)
     assert len({c.id for c in catalog.cases}) == len(catalog.cases)
     assert all(
@@ -38,8 +43,8 @@ def test_promotions_are_typed_and_unsealed() -> None:
         for case_id, (split, expected) in PROMOTIONS.items()
     )
     assert all(indexed[x].split != "evaluation" for x in PROMOTED_IR)
-    assert {"book.tf", "qere.tf"} <= PINNED_FILES
-    assert {"book.tf", "qere.tf"} <= dict(catalog.source_git_blobs).keys()
+    assert {"book.tf", "qere.tf", "dist.tf", "typ.tf"} <= PINNED_FILES
+    assert {"book.tf", "qere.tf", "dist.tf", "typ.tf"} <= dict(catalog.source_git_blobs).keys()
     assert len([c for c in catalog.cases if c.split == "evaluation"]) == 5
 
 
@@ -82,3 +87,28 @@ def test_guard_rejects_mismatched_semantic_gold(
     wrong = replace(catalog, cases=tuple(c for c in catalog.cases if c.id != "words-all"))
     with pytest.raises(ValueError, match="promoted"):
         validate_promotions(tiny_api, wrong)
+
+
+def test_new_typed_relations_and_signed_distance_are_expressed_without_native_strings() -> None:
+    """Real-data replay must independently confirm these planned IR witnesses."""
+    from tf_jev.ir import PredicateOp, RelationOp
+
+    lower = PROMOTED_IR["clauses-distance-less-minus-ten"]
+    assert lower.atoms[0].predicates[0].feature == "dist"
+    assert lower.atoms[0].predicates[0].operator is PredicateOp.LT
+    assert lower.atoms[0].predicates[0].values == (-10,)
+
+    consecutive = PROMOTED_IR["clause-adjacent-phrases"]
+    assert len(consecutive.atoms) == 3
+    assert sum(rel.operator is RelationOp.ADJACENT_BEFORE for rel in consecutive.relations) == 1
+    assert sum(rel.operator is RelationOp.EMBEDS for rel in consecutive.relations) == 2
+
+    pp = PROMOTED_IR["pp-prep-adj-noun"]
+    assert len(pp.atoms) == 4
+    assert sum(rel.operator is RelationOp.ADJACENT_BEFORE for rel in pp.relations) == 2
+    assert sum(rel.operator is RelationOp.EMBEDS for rel in pp.relations) == 3
+
+    ordering = PROMOTED_IR["sentence-clause-phrase-order"]
+    assert len(ordering.atoms) == 4
+    assert sum(rel.operator is RelationOp.BEFORE for rel in ordering.relations) == 1
+    assert sum(rel.operator is RelationOp.AFTER for rel in ordering.relations) == 1
