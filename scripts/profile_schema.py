@@ -12,6 +12,7 @@ import json
 import sys
 import time
 import tracemalloc
+from dataclasses import asdict
 from pathlib import Path
 from typing import Any
 
@@ -47,7 +48,13 @@ def _peak_rss_bytes() -> int | None:
         return None
 
 
-def profile_schema(directory: Path, *, trace_python: bool = False) -> dict[str, object]:
+def profile_schema(
+    directory: Path,
+    *,
+    trace_python: bool = False,
+    node_features: tuple[str, ...] | None = None,
+    edge_features: tuple[str, ...] | None = None,
+) -> dict[str, object]:
     """One TF session, measured in two serial phases; no corpus text in results."""
     if not isinstance(directory, Path) or not directory.is_dir() or not (
         directory / "otype.tf"
@@ -86,7 +93,10 @@ def profile_schema(directory: Path, *, trace_python: bool = False) -> dict[str, 
     if trace_python:
         tracemalloc.start()
     try:
-        schema = extract_schema(api, _phase_observer=observe)
+        schema = extract_schema(
+            api, node_features=node_features, edge_features=edge_features,
+            _phase_observer=observe,
+        )
         finished_at = time.perf_counter()
         if trace_python:
             traced_peak = tracemalloc.get_traced_memory()[1]
@@ -95,6 +105,7 @@ def profile_schema(directory: Path, *, trace_python: bool = False) -> dict[str, 
             tracemalloc.stop()
     return {
         "format_version": 1,
+        "coverage": asdict(schema.coverage),
         "tf_version": schema.identity.tf_version,
         "dataset": schema.identity.dataset,
         "version_dir": schema.identity.version_dir,
@@ -119,11 +130,23 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("directory", type=Path, help="directory of local .tf features")
     parser.add_argument("--output", type=Path, help="write JSON output to this file")
     parser.add_argument(
+        "--node-features", nargs="*", metavar="FEATURE",
+        help="explicit node features; omit flag for full mode",
+    )
+    parser.add_argument(
+        "--edge-features", nargs="*", metavar="EDGE",
+        help="explicit edge features; omit flag for full mode",
+    )
+    parser.add_argument(
         "--trace-python", action="store_true",
         help="trace Python allocations (small corpora only; perturbs performance)",
     )
     args = parser.parse_args(argv)
-    report = profile_schema(args.directory.expanduser(), trace_python=args.trace_python)
+    report = profile_schema(
+        args.directory.expanduser(), trace_python=args.trace_python,
+        node_features=tuple(args.node_features) if args.node_features is not None else None,
+        edge_features=tuple(args.edge_features) if args.edge_features is not None else None,
+    )
     content = json.dumps(report, sort_keys=True, ensure_ascii=False, allow_nan=False) + chr(10)
     if args.output is None:
         print(content, end="")
