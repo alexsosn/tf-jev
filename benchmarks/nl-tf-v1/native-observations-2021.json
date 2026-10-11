@@ -4,9 +4,9 @@
   "corpus": "ETCBC/bhsa",
   "data_version": "2021",
   "source_commit": "4db00e2157915495e1a4d3d57e41223df24775da",
-  "gold_fixture_sha256": "a1d0de66eec1260a756d060649dd161b4c1510a461e84f48ab8e84138c649c75",
+  "gold_fixture_sha256": "9c000df58b2f29ef9228abdd20afac95d6bb94bdbda08419bbb1e6f5fa83c64a",
   "candidate_fixture_sha256": "4b8b8e3452c0d050f363a50f7e20129d22f709ea154771f4c33af02e979f7078",
-  "gold_checked": 12,
+  "gold_checked": 17,
   "candidate_checked": 14,
   "observations": [
     {

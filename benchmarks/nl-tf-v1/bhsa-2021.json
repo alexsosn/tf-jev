@@ -195,6 +195,56 @@
       "gold_query": "v:verse\n    s:sentence\nv == s",
       "expected_count": 3583,
       "rationale": "Keep both notebook nesting and explicit same-slot constraint; result count is pairs."
+    },
+    {
+      "id": "clauses-distance-one",
+      "split": "train",
+      "status": "supported",
+      "difficulty": "signed-integer-equality",
+      "request": "Return clause nodes whose BHSA integer feature dist is exactly 1.",
+      "gold_query": "clause dist=1",
+      "expected_count": 598,
+      "rationale": "Native feature equality dist=1 on clause; does not interpret distance as a word count."
+    },
+    {
+      "id": "clauses-distance-less-minus-ten",
+      "split": "development",
+      "status": "supported",
+      "difficulty": "signed-integer-bound",
+      "request": "Return clause nodes whose BHSA integer feature dist is strictly below -10.",
+      "gold_query": "clause dist<-10",
+      "expected_count": 86,
+      "rationale": "Native dist<-10 uses strict less-than with a signed integer comparison threshold."
+    },
+    {
+      "id": "clause-adjacent-phrases",
+      "split": "development",
+      "status": "supported",
+      "difficulty": "structural-adjacency",
+      "request": "Return clause–phrase–phrase triples where two phrases belong to one clause and the first immediately precedes the second.",
+      "gold_query": "clause\n  phrase\n  <: phrase",
+      "expected_count": 162653,
+      "rationale": "The first/second phrase nodes are adjacent with directed <:; both have the same clause ancestor."
+    },
+    {
+      "id": "sentence-clause-phrase-order",
+      "split": "train",
+      "status": "supported",
+      "difficulty": "multi-atom-ordering",
+      "request": "Return sentence–clause–phrase–clause quadruples where both clauses and the phrase belong to the sentence, one clause precedes the phrase and the other follows it.",
+      "gold_query": "sentence\n  c1:clause\n  p:phrase\n  c2:clause\n  c1 << p\n  c2 >> p",
+      "expected_count": 136137,
+      "rationale": "Uses two strict nonadjacent ordering constraints; results are four-node tuples, not distinct sentences."
+    },
+    {
+      "id": "pp-prep-adj-noun",
+      "split": "development",
+      "status": "supported",
+      "difficulty": "nested-adjacency",
+      "request": "Return PP-typed phrase–word–word–word quadruples with consecutive prep, adjv and subs BHSA word annotations inside the phrase.",
+      "gold_query": "phrase typ=PP\n  word sp=prep\n  <: word sp=adjv\n  <: word sp=subs",
+      "expected_count": 61,
+      "rationale": "The three word types and adjacent order are literal corpus annotations. 2017 source total 64 differs from 2021 verified 61."
     }
   ],
   "source_git_blobs": {
@@ -206,6 +256,8 @@
     "function.tf": "07cffd7b21efe39f950897d51cae4c95d99b9d9f",
     "mother.tf": "d1eef3326420db695f12784dc4ac9527cc773188",
     "book.tf": "70407385b60568eaeb44dbeb45f3a7dfafd2a6af",
-    "qere.tf": "405b9a7e98dbc85c401a6e9cf7e4978a04bfe2ee"
+    "qere.tf": "405b9a7e98dbc85c401a6e9cf7e4978a04bfe2ee",
+    "dist.tf": "e88470f33af1dd9dc282424f7c17ca17cb4451f3",
+    "typ.tf": "10c075abd4da74088baa7f3675ca56edc09893de"
   }
 }

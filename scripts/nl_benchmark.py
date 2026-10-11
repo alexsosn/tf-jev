@@ -21,7 +21,7 @@ STATUSES = frozenset({"supported", "ambiguous", "unsupported"})
 MAX_ROWS = 500_000
 PINNED_FILES = frozenset(
     {"otype.tf", "oslots.tf", "sp.tf", "gn.tf", "nu.tf", "function.tf",
-     "mother.tf", "book.tf", "qere.tf"}
+     "mother.tf", "book.tf", "qere.tf", "dist.tf", "typ.tf"}
 )
 ROOT_FIELDS = frozenset(
     {"format_version", "corpus", "data_version", "source_sha256", "source_git_blobs", "cases"}
@@ -201,7 +201,10 @@ def main() -> int:
             if args.corpus.name != catalog.data_version:
                 raise ValueError("benchmark corpus directory must be named after data version")
             verify_source(args.corpus, catalog)
-            api = load_api(args.corpus, features="sp gn nu lex prs function typ verse")
+            api = load_api(
+                args.corpus,
+                features="sp gn nu lex prs function typ verse book qere dist mother",
+            )
             report["native_checked"] = len(
                 [check_gold(api, case) for case in catalog.cases if case.status == "supported"]
             )
