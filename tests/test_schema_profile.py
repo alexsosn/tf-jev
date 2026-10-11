@@ -25,7 +25,7 @@ def test_tiny_corpus_profile_preserves_identity_and_limits_output(tmp_path: Path
         "node_features", "edge_features", "load_seconds",
         "extract_seconds", "rss_bytes_at_load", "rss_bytes_after_extract",
         "peak_process_rss_bytes", "trace_python",
-        "python_traced_peak_bytes",
+        "python_traced_peak_bytes", "phases",
     }
     schema = extract_schema(load_api(tmp_path))
     assert data["format_version"] == 1
@@ -75,3 +75,47 @@ def test_profile_does_not_mutate_existing_corpus_features(tmp_path: Path) -> Non
     feature_before = dict(api.F.sp.data)
     profile_schema(tmp_path)
     assert dict(api.F.sp.data) == feature_before
+
+
+
+PHASE_NAMES = (
+    "discover",
+    "load_features",
+    "type_index",
+    "warp_digest",
+    "node_features",
+    "edge_features",
+    "source_identity",
+    "domains",
+)
+
+
+def test_schema_phase_profile_reports_real_boundary_metrics(tmp_path: Path) -> None:
+    build_tiny_corpus(tmp_path)
+    result = profile_schema(tmp_path)
+    phases = result["phases"]
+    assert type(phases) is list
+    assert tuple(item["name"] for item in phases) == PHASE_NAMES
+    assert all(
+        type(item["seconds"]) is float and 0 <= item["seconds"] < result["extract_seconds"]
+        for item in phases
+    )
+    for item in phases:
+        assert set(item) == {"name", "seconds", "rss_bytes", "peak_process_rss_bytes"}
+        assert item["rss_bytes"] is None or (
+            type(item["rss_bytes"]) is int and item["rss_bytes"] > 0
+        )
+    assert abs(sum(item["seconds"] for item in phases) - result["extract_seconds"]) < 2
+    assert str(tmp_path) not in json.dumps(result)
+
+
+def test_private_phase_callback_is_observational_only(tmp_path: Path) -> None:
+    build_tiny_corpus(tmp_path)
+    api: Any = load_api(tmp_path)
+    events: list[str] = []
+    monitored = extract_schema(api, _phase_observer=events.append)
+    baseline = extract_schema(api)
+    assert tuple(events) == PHASE_NAMES
+    assert monitored.identity == baseline.identity
+    assert monitored.to_json() == baseline.to_json()
+    assert monitored._inventories == baseline._inventories
