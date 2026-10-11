@@ -48,10 +48,11 @@ def test_single_session_checks_sources_first_and_never_executes_deferred(
 
     monkeypatch.setattr(runner, "check_gold", checked_gold)
     monkeypatch.setattr(runner, "run_candidate", checked_candidate)
-    monkeypatch.setattr(
-        runner, "validate_promotions",
-        lambda api, catalog: calls.append("validate_promotions") or 6,
-    )
+    def promotion_stub(api: Any, catalog: Any) -> int:
+        calls.append("validate_promotions")
+        return 6
+
+    monkeypatch.setattr(runner, "validate_promotions", promotion_stub)
     report = runner.replay(tmp_path / "2021", GOLD, CANDIDATES)
     assert calls[:3] == ["gold_source", "candidate_source", "load_api"]
     assert calls.count("load_api") == 1
