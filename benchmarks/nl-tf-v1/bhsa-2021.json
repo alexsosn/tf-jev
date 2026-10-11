@@ -136,5 +136,14 @@
       "expected_count": null,
       "rationale": "Exact cardinality over linked children requires an unsupported count quantifier."
     }
-  ]
+  ],
+  "source_git_blobs": {
+    "otype.tf": "ecc4d0ecd388bd673d0aebfa8ab2a81508bec23c",
+    "oslots.tf": "b389833f7624bb252dd2cf25cf798d4a6a82cc1b",
+    "sp.tf": "d0dfb4d66ba34ff853e7f41b8dc9596e1a17bcc4",
+    "gn.tf": "748e64a50a287578045f614a1319680345f312d5",
+    "nu.tf": "7fec658e1c6ddf5d88820d2be87e2a8782286014",
+    "function.tf": "07cffd7b21efe39f950897d51cae4c95d99b9d9f",
+    "mother.tf": "d1eef3326420db695f12784dc4ac9527cc773188"
+  }
 }
