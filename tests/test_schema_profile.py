@@ -20,7 +20,7 @@ def test_tiny_corpus_profile_preserves_identity_and_limits_output(tmp_path: Path
     # The result is portable, machine-readable and excludes absolute local paths.
     data = json.loads(json.dumps(report, sort_keys=True, allow_nan=False))
     assert set(data) == {
-        "format_version", "tf_version", "dataset", "version_dir",
+        "format_version", "coverage", "tf_version", "dataset", "version_dir",
         "identity_key", "loaded_sha256", "object_types",
         "node_features", "edge_features", "load_seconds",
         "extract_seconds", "rss_bytes_at_load", "rss_bytes_after_extract",
@@ -29,6 +29,7 @@ def test_tiny_corpus_profile_preserves_identity_and_limits_output(tmp_path: Path
     }
     schema = extract_schema(load_api(tmp_path))
     assert data["format_version"] == 1
+    assert data["coverage"]["mode"] == "full"
     assert data["loaded_sha256"] == schema.identity.loaded_sha256
     assert data["identity_key"] == schema.identity.key
     assert data["tf_version"] == version("text-fabric")
@@ -121,3 +122,18 @@ def test_private_phase_callback_is_observational_only(tmp_path: Path) -> None:
     assert monitored.identity == baseline.identity
     assert monitored.to_json() == baseline.to_json()
     assert monitored._inventories == baseline._inventories
+
+
+def test_selected_profile_reports_explicit_omissions(tmp_path: Path) -> None:
+    build_tiny_corpus(tmp_path)
+    report = profile_schema(
+        tmp_path, node_features=("sp",), edge_features=(),
+    )
+    coverage = report["coverage"]
+    assert coverage["mode"] == "selected"
+    assert coverage["node_features"] == ("sp",)
+    assert coverage["edge_features"] == ()
+    assert "lex" in coverage["omitted_node_features"]
+    assert "mother" in coverage["omitted_edge_features"]
+    assert report["node_features"] == 1 and report["edge_features"] == 0
+    assert report["phases"] and len(report["phases"]) == 8
