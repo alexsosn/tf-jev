@@ -64,6 +64,8 @@ def parse_one_atom(
     can be expressed unless the backend wrongly classifies it as single-node:
     generic natural-language intent accuracy is explicitly outside this slice.
     """
+    if not isinstance(schema, CorpusSchema):
+        raise ValueError("a trusted CorpusSchema is required")
     if type(min_confidence) not in (int, float) or not (
         math.isfinite(min_confidence) and 0.0 <= min_confidence <= 1.0
     ):
@@ -78,8 +80,6 @@ def parse_one_atom(
         raise ValueError("feature shortlist contains an unknown node feature")
     if value_hint is not None and type(value_hint) is not str:
         raise ValueError("value hint must be exact text")
-    if not isinstance(schema, CorpusSchema):
-        raise ValueError("a trusted CorpusSchema is required")
     evidence: list[ChoiceEvidence] = []
 
     def finished(
