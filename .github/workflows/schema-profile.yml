@@ -8,6 +8,8 @@ on:
       - "scripts/profile_schema.py"
       - "tests/test_schema_profile.py"
       - "src/tf_jev/schema.py"
+      - "src/tf_jev/parser.py"
+      - "tests/test_schema_selected.py"
       - "docs/research/issue-20-schema-profiling.md"
       - "docs/design/issue-20-profile-baseline.md"
   push:
@@ -78,6 +80,8 @@ jobs:
           assert info["tf_version"] == "13.1.0"
           assert info["version_dir"] == "2021"
           assert info["dataset"] == "BHSA"
+          assert info["coverage"]["mode"] == "full"
+          assert info["loaded_sha256"] == "70150b50dab4ba75908146225ec450652256e2471d131f6106cd3bdaac19e82d"
           assert info["node_features"] >= 100
           assert info["edge_features"] >= 1
           assert info["object_types"] >= 2
@@ -95,10 +99,72 @@ jobs:
           print(json.dumps(info, sort_keys=True))
           PY
 
+      - name: Profile selected three-feature coverage on the same pinned corpus
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m scripts.profile_schema "$RUNNER_TEMP/bhsa/tf/2021" \
+            --node-features sp gn nu --edge-features \
+            --output "$RUNNER_TEMP/schema-selected-profile.json"
+          python - "$RUNNER_TEMP/schema-profile.json" "$RUNNER_TEMP/schema-selected-profile.json" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          full, selected = (json.loads(Path(p).read_text()) for p in sys.argv[1:])
+          assert full["coverage"]["mode"] == "full"
+          assert selected["coverage"]["mode"] == "selected"
+          assert selected["coverage"]["node_features"] == ["gn", "nu", "sp"]
+          assert selected["coverage"]["edge_features"] == []
+          assert "lex" in selected["coverage"]["omitted_node_features"]
+          assert "mother" in selected["coverage"]["omitted_edge_features"]
+          assert selected["node_features"] == 3
+          assert selected["edge_features"] == 0
+          assert selected["object_types"] == full["object_types"]
+          assert selected["loaded_sha256"] != full["loaded_sha256"]
+          assert selected["extract_seconds"] > 0
+          assert len(selected["phases"]) == len(full["phases"]) == 8
+          print("PROFILE COMPARISON (seconds / whole-process RSS):")
+          for key in ("load_seconds", "extract_seconds", "peak_process_rss_bytes",
+                      "rss_bytes_after_extract"):
+              print(f"{key}: full={full[key]}, selected={selected[key]}")
+          print(json.dumps(selected, sort_keys=True))
+          PY
+
+      - name: Verify selected native BHSA query result tuples
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from tf.fabric import Fabric
+          from tf_jev.schema import extract_schema, SchemaError
+          from tf_jev.compiler import compile_query
+          from tf_jev.ir import Atom, Predicate, PredicateOp, Query
+          corpus = Path(os.environ["RUNNER_TEMP"]) / "bhsa" / "tf" / "2021"
+          api = Fabric(locations=str(corpus), silent="deep").load("", silent="deep")
+          schema = extract_schema(api, node_features=("gn", "nu", "sp"), edge_features=())
+          query = compile_query(Query((Atom("word", (
+              Predicate("sp", PredicateOp.EQ, ("verb",)),
+          )),)), schema)
+          actual = tuple(api.S.search(query, shallow=False, silent="deep"))
+          reference = tuple(api.S.search("word sp=verb", shallow=False, silent="deep"))
+          assert actual == reference and len(actual) == 73710
+          try:
+              schema.domain("lex", "word")
+          except SchemaError as exc:
+              assert "omitted" in str(exc)
+          else:
+              raise AssertionError("partial schema silently accepted unloaded feature")
+          print(f"selected native TF result tuples: {len(actual)}; exact equal")
+          PY
+
       - name: Archive aggregate resource metrics, no corpus data
         uses: actions/upload-artifact@v4
         with:
           name: bhsa-2021-schema-extraction-profile
-          path: ${{ runner.temp }}/schema-profile.json
+          path: |
+            ${{ runner.temp }}/schema-profile.json
+            ${{ runner.temp }}/schema-selected-profile.json
           if-no-files-found: error
           retention-days: 30
