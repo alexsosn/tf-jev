@@ -48,15 +48,20 @@ def test_single_session_checks_sources_first_and_never_executes_deferred(
 
     monkeypatch.setattr(runner, "check_gold", checked_gold)
     monkeypatch.setattr(runner, "run_candidate", checked_candidate)
+    monkeypatch.setattr(
+        runner, "validate_promotions",
+        lambda api, catalog: calls.append("validate_promotions") or 6,
+    )
     report = runner.replay(tmp_path / "2021", GOLD, CANDIDATES)
     assert calls[:3] == ["gold_source", "candidate_source", "load_api"]
     assert calls.count("load_api") == 1
-    assert len([x for x in calls if x.startswith("gold:")]) == 6
+    assert len([x for x in calls if x.startswith("gold:")]) == 12
     assert len([x for x in calls if x.startswith("candidate:")]) == 14
+    assert calls.count("validate_promotions") == 1
     assert report["format_version"] == 1
     assert report["corpus"] == "ETCBC/bhsa"
     assert report["data_version"] == "2021"
-    assert report["gold_checked"] == 6
+    assert report["gold_checked"] == 12
     assert report["candidate_checked"] == 14
     assert len(report["observations"]) == 14
     assert report["source_commit"] == UPSTREAM_COMMIT
@@ -121,6 +126,7 @@ def test_true_tiny_native_count_has_no_dependency_on_notebook_history(
 ) -> None:
     _stub_sources(monkeypatch, tiny_api)
     monkeypatch.setattr(runner, "check_gold", lambda *_: 0)
+    monkeypatch.setattr(runner, "validate_promotions", lambda *_: 6)
 
     def native(api: Any, case: Any) -> int:
         if case.id == "feminine-plural-substantives":
@@ -144,7 +150,7 @@ def test_native_reference_is_durable_and_distinct_from_semantic_gold(
     report = json.loads(reference.read_text(encoding="utf-8"))
     assert report["purpose"] == "native-replay-not-gold-promotion"
     assert report["candidate_checked"] == 14
-    assert report["gold_checked"] == 6
+    assert report["gold_checked"] == 12
     by_id = {o["id"]: o for o in report["observations"]}
     assert by_id["pp-prep-adj-noun"]["observed_2021_rows"] == 61
     assert by_id["pp-prep-adj-noun"]["historical_notebook_rows"] == 64
