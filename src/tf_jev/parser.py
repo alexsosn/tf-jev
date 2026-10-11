@@ -143,6 +143,10 @@ class SemanticParser:
             or len(request) > self.policy.max_request_chars
         ):
             return run.result(ParseStatus.ERROR, "invalid_request")
+        if self.schema.coverage.mode != "full":
+            # A bounded feature inventory cannot establish that a requested
+            # but unloaded predicate is unsupported or absent in the corpus.
+            return run.result(ParseStatus.UNSUPPORTED, "incomplete_schema_coverage")
         try:
             return run.build()
         except _Stop as stop:
