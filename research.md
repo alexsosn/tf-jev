@@ -107,3 +107,7 @@ Candidate retrieval (#7): [real-domain findings](docs/research/candidate-retriev
 show why normalization must be explicit and prefix overflow must block ranking.
 The frozen [lookup benchmark](benchmarks/retrieval-v1/README.md) measures literal
 retrieval separately from semantic parser quality.
+
+Jev adapter follow-through (#8): [SDK boundary findings](docs/research/jev-adapter.md)
+record strict custom-response decoding, scoped log suppression and model-drift
+policy verified against typesafe-sdk 0.7.4 source and current official docs.

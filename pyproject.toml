@@ -17,6 +17,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+jev = [
+  "typesafe-sdk>=0.7.4,<0.8",
+]
 dev = [
   "mypy>=1.11",
   "pytest>=8",

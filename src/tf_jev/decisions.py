@@ -63,6 +63,15 @@ class DecisionContractError(ValueError):
     """A question, request or backend answer violates the decision contract."""
 
 
+class BackendError(RuntimeError):
+    """Sanitized backend failure, without server messages or credential-bearing objects."""
+
+    def __init__(self, kind: str, status: int | None = None) -> None:
+        self.kind = kind
+        self.status = status
+        super().__init__(f"backend failure: {kind}" + (f" (HTTP {status})" if status else ""))
+
+
 def _check_symbol(value: object, what: str) -> str:
     """Strict check for labels and ids: visible, NFC, no invisible or bidi characters."""
     if type(value) is not str:
