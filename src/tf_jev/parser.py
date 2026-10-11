@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import math
 import re
+import unicodedata
 from dataclasses import dataclass
 from enum import Enum
 from typing import TypeVar
@@ -46,6 +47,26 @@ _RELATIONS = {
     RelationOp.EDGE_BACKWARD: "an edge points from atom 1 to atom 0",
     RelationOp.EDGE_EITHER: "an edge points in either direction",
 }
+
+
+
+# Untrusted corpus feature values and metadata can include Unicode category Cf
+# (e.g. a bidi override), which ChoiceQuestion correctly disallows as prose.
+# Escape *descriptions only*; the candidate's original local value is retained
+# as options[i][0] and passed unchanged to QueryIR/compiler.
+_UNSAFE_PROSE_CATEGORIES = frozenset({"Cc", "Cf", "Zl", "Zp", "Cs", "Co", "Cn"})
+
+
+def _safe_description(description: str) -> str:
+    return "".join(
+        ascii(ch)[1:-1]
+        if (
+            unicodedata.category(ch) in _UNSAFE_PROSE_CATEGORIES
+            or (unicodedata.category(ch) == "Zs" and ch != " ")
+        )
+        else ch
+        for ch in description
+    )
 
 
 class ParseStatus(Enum):
@@ -172,7 +193,10 @@ class _Run:
             raise _Stop(ParseStatus.UNSUPPORTED, "choice_budget")
         question = ChoiceQuestion(
             prompt,
-            tuple(Option(f"o{i:03}", description) for i, (_, description) in enumerate(options)),
+            tuple(
+                Option(f"o{i:03}", _safe_description(description))
+                for i, (_, description) in enumerate(options)
+            ),
         )
         context = {
             "request": self.request,
@@ -224,7 +248,7 @@ class _Run:
         ):
             raise _Stop(ParseStatus.ABSTAINED, "low_confidence")
         index = question.labels.index(validated.selected)
-        self.state[name] = options[index][1]
+        self.state[name] = _safe_description(options[index][1])
         return options[index][0]
 
     def integer(self, name: str) -> int:
