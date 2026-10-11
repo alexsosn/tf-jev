@@ -11,3 +11,7 @@ Inspected `src/tf_jev/parser.py`, `decisions.py`, `compiler.py`, `scripts/nl_ben
 - Candidate-retrieval recall cannot be derived from the final `ParseResult` and remains unmeasured until candidate sets/ground truth are instrumented. A deterministic/scripted evaluation is an end-to-end **harness test**, not a Jev quality benchmark.
 
 Scope this PR to offline scoring of *real parser result objects and native TF execution*, with exhaustive tiny real-TF fixtures, no calls to live services. Later #11 work: pinned live Jev development/heldout run, measurable retrieval recall, backend comparison, end-to-end go/no-go policy. Preserve the exact BHSA corpus source gate for any live report.
+
+## Adversarial correction
+
+The canonical v2 `load_benchmark()` validates case keys exactly: `id`, `family`, `partition`, `request`, `expected`, `rationale`, optionally `gold`/`interpretations`. There is **no** `difficulty` field. Synthetic evaluator tests that include difficulty do not model an artifact accepted by the real loader. Use per-family breakdowns (and case IDs) instead of silently guessing difficulty. This defect would otherwise raise KeyError before evaluating real BHSA cases.
