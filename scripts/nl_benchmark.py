@@ -125,7 +125,7 @@ def load_catalog(path: Path) -> Catalog:
 def _git_blob_sha(path: Path) -> str:
     """Verify the content SHA from the upstream Git tree without loading it into memory."""
     digest = hashlib.sha1()
-    digest.update(f"blob {path.stat().st_size}\\0".encode())
+    digest.update(f"blob {path.stat().st_size}\0".encode())
     with path.open("rb") as source:
         while chunk := source.read(1024 * 1024):
             digest.update(chunk)
