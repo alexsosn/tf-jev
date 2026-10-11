@@ -128,7 +128,9 @@ these boundaries. To measure a local selected feature set:
 ```bash
 python -m scripts.profile_schema /path/to/bhsa/tf/2021 \\
     --node-features sp gn nu --edge-features
-``` See the
+```
+
+See the
 [compiler contract](docs/design/typed-compiler.md) for supported constructs,
 explicit errors and native quantifier workarounds. Compilation does not execute
 or evaluate the resulting query.
