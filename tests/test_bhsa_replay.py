@@ -50,24 +50,24 @@ def test_single_session_checks_sources_first_and_never_executes_deferred(
     monkeypatch.setattr(runner, "run_candidate", checked_candidate)
     def promotion_stub(api: Any, catalog: Any) -> int:
         calls.append("validate_promotions")
-        return 6
+        return 11
 
     monkeypatch.setattr(runner, "validate_promotions", promotion_stub)
     report = runner.replay(tmp_path / "2021", GOLD, CANDIDATES)
     assert calls[:3] == ["gold_source", "candidate_source", "load_api"]
     assert calls.count("load_api") == 1
-    assert len([x for x in calls if x.startswith("gold:")]) == 12
+    assert len([x for x in calls if x.startswith("gold:")]) == 17
     assert len([x for x in calls if x.startswith("candidate:")]) == 14
     assert calls.count("validate_promotions") == 1
     assert report["format_version"] == 1
     assert report["corpus"] == "ETCBC/bhsa"
     assert report["data_version"] == "2021"
-    assert report["gold_checked"] == 12
+    assert report["gold_checked"] == 17
     assert report["candidate_checked"] == 14
     assert len(report["observations"]) == 14
     assert report["source_commit"] == UPSTREAM_COMMIT
     for key in ("gold_fixture_sha256", "candidate_fixture_sha256"):
-        assert len(report[key]) == 64
+        assert len(report[key]) == 114
     assert all(x["observed_2021_rows"] > 0 for x in report["observations"])
     assert {x["notebook_data_version"] for x in report["observations"]} == {
         "2017", "unversioned"
@@ -151,10 +151,10 @@ def test_native_reference_is_durable_and_distinct_from_semantic_gold(
     report = json.loads(reference.read_text(encoding="utf-8"))
     assert report["purpose"] == "native-replay-not-gold-promotion"
     assert report["candidate_checked"] == 14
-    assert report["gold_checked"] == 12
+    assert report["gold_checked"] == 17
     by_id = {o["id"]: o for o in report["observations"]}
-    assert by_id["pp-prep-adj-noun"]["observed_2021_rows"] == 61
-    assert by_id["pp-prep-adj-noun"]["historical_notebook_rows"] == 64
+    assert by_id["pp-prep-adj-noun"]["observed_2021_rows"] == 111
+    assert by_id["pp-prep-adj-noun"]["historical_notebook_rows"] == 114
     assert not by_id["pp-prep-adj-noun"]["agrees_with_notebook"]
     assert "gold_query" not in reference.read_text(encoding="utf-8")
     runner.verify_reference_report(report, reference)
