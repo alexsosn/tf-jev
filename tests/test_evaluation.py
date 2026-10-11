@@ -65,23 +65,23 @@ def cases(api: Any) -> tuple[dict[str, Any], ...]:
     noun_count, noun_sig = execute(api, "word sp=subs", (0,))
     return (
         {"id": "a", "family": "verbs", "partition": "development",
-         "request": "Return verbs.", "expected": "supported", "difficulty": "easy",
+         "request": "Return verbs.", "expected": "supported",
          "rationale": "private benchmark gold", "gold": {
              "query": "word sp=verb", "projection": [0],
              "count": verb_count, "signature": verb_sig}},
         {"id": "b", "family": "nouns", "partition": "development",
-         "request": "Return nouns.", "expected": "supported", "difficulty": "hard",
+         "request": "Return nouns.", "expected": "supported",
          "rationale": "private benchmark gold", "gold": {
              "query": "word sp=subs", "projection": [0],
              "count": noun_count, "signature": noun_sig}},
         {"id": "c", "family": "amb", "partition": "development",
-         "request": "Unknown meaning.", "expected": "ambiguous", "difficulty": "hard",
+         "request": "Unknown meaning.", "expected": "ambiguous",
          "rationale": "private rationale", "interpretations": ["a", "b"]},
         {"id": "d", "family": "uns", "partition": "development",
-         "request": "Impossible task.", "expected": "unsupported", "difficulty": "easy",
+         "request": "Impossible task.", "expected": "unsupported",
          "rationale": "private rationale"},
         {"id": "e", "family": "sealed", "partition": "heldout",
-         "request": "Sealed.", "expected": "unsupported", "difficulty": "hard",
+         "request": "Sealed.", "expected": "unsupported",
          "rationale": "private rationale"},
     )
 
@@ -112,8 +112,8 @@ def test_projected_native_equivalence_and_safe_abstention(tiny_api: Any) -> None
     assert report["result_equivalent"] == 1
     assert report["unsafe_supported_on_negative"] == 1
     assert report["safe_negative"] == 1
-    assert report["by_difficulty"]["easy"]["total"] == 2
-    assert report["by_difficulty"]["hard"]["total"] == 2
+    assert report["by_family"]["verbs"]["total"] == 1
+    assert report["by_family"]["nouns"]["total"] == 1
     assert report["cases"][0]["result_equivalent"] is True
     assert cases(tiny_api)[0]["gold"]["count"] == cases(tiny_api)[1]["gold"]["count"]
     assert cases(tiny_api)[0]["gold"]["signature"] != cases(tiny_api)[1]["gold"]["signature"]
