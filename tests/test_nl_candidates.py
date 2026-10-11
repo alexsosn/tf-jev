@@ -10,7 +10,6 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-
 from scripts.nl_candidates import (
     CandidateCatalog,
     load_candidates,
@@ -102,7 +101,7 @@ def test_candidate_source_check_detects_feature_edit_and_missing_source(
         payload = ("source:" + name).encode()
         (directory / name).write_bytes(payload)
         digest = hashlib.sha1(
-            b"blob " + str(len(payload)).encode() + b"\\0" + payload
+            b"blob " + str(len(payload)).encode() + b"\0" + payload
         ).hexdigest()
         hashes.append((name, digest))
     fake = replace(catalog, source_git_blobs=tuple(hashes))
