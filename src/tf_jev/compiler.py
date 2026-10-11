@@ -20,13 +20,11 @@ _NEAR_OPS = frozenset((RelationOp.NEAR_BEFORE, RelationOp.NEAR_AFTER))
 # actual TF corpora and support legitimate writing systems. Reject only format
 # controls that obscure a query's visual contents or reverse apparent order.
 # This is a native-query auditability policy, distinct from model prompt display.
-_UNAUDITABLE_FORMAT_CONTROLS = frozenset(
-    "\\u00ad\\u200b\\u2060\\ufeff"
-) | frozenset(chr(point) for point in range(0x202A, 0x202F)) | frozenset(
-    chr(point) for point in range(0x2066, 0x206A)
+_UNAUDITABLE_FORMAT_CONTROLS = (
+    frozenset(chr(point) for point in (0x00AD, 0x200B, 0x2060, 0xFEFF))
+    | frozenset(chr(point) for point in range(0x202A, 0x202F))
+    | frozenset(chr(point) for point in range(0x2066, 0x206A))
 )
-
-
 
 class CompileError(ValueError):
     """Invalid/unsupported IR, unrepresentable value, or schema mismatch."""
