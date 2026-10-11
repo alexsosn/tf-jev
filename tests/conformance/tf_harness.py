@@ -123,6 +123,7 @@ class Outcome:
     ok: bool
     results: tuple[tuple[int, ...], ...] | None
     errors: tuple[str, ...]
+    arity: int | None = None
 
     def error_text(self) -> str:
         return "\n".join(self.errors)
@@ -146,4 +147,9 @@ def run_template(api: Any, template: str, limit: int | None = None) -> Outcome:
         if is_error and (text := raw.strip())
     )
     ok = bool(status) and exe.good and not errors
-    return Outcome(ok=ok, results=rows if ok else None, errors=errors)
+    return Outcome(
+        ok=ok,
+        results=rows if ok else None,
+        errors=errors,
+        arity=len(exe.qnodes) if ok else None,
+    )

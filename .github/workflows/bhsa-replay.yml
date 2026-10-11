@@ -6,6 +6,9 @@ on:
     paths:
       - ".github/workflows/bhsa-replay.yml"
       - "benchmarks/nl-tf-v1/**"
+      - "benchmarks/nl-tf-v2/**"
+      - "scripts/nl_benchmark_v2.py"
+      - "tests/test_nl_benchmark_v2.py"
       - "scripts/bhsa_replay.py"
       - "scripts/bhsa_gold_ir.py"
       - "scripts/nl_benchmark.py"
@@ -16,6 +19,9 @@ on:
     paths:
       - ".github/workflows/bhsa-replay.yml"
       - "benchmarks/nl-tf-v1/**"
+      - "benchmarks/nl-tf-v2/**"
+      - "scripts/nl_benchmark_v2.py"
+      - "tests/test_nl_benchmark_v2.py"
       - "scripts/bhsa_replay.py"
       - "scripts/bhsa_gold_ir.py"
       - "scripts/nl_benchmark.py"
@@ -78,6 +84,13 @@ jobs:
             --corpus "$RUNNER_TEMP/bhsa/tf/2021" \
             --expected "benchmarks/nl-tf-v1/native-observations-2021.json" \
             --output "$RUNNER_TEMP/bhsa-replay-report.json"
+
+      - name: Verify complete v2 gold in both explicit partitions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m scripts.nl_benchmark_v2 "$RUNNER_TEMP/bhsa/tf/2021"
+          python -m scripts.nl_benchmark_v2 "$RUNNER_TEMP/bhsa/tf/2021" --partition heldout
 
       - name: Upload aggregate counts only, never corpus data
         uses: actions/upload-artifact@v4

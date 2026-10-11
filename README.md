@@ -112,13 +112,13 @@ preserve original strings and collisions. A complete result can produce a bounde
 [retrieval contract](docs/design/candidate-retrieval.md) and
 [real-domain lookup benchmark](benchmarks/retrieval-v1/README.md).
 
-A versioned BHSA benchmark now has **24 requests**, including **17 supported native
-gold queries** (eleven with independently adjudicated typed IR and exact native result
-equivalence), with the original evaluation split preserved. See
-[benchmark documentation](benchmarks/nl-tf-v1/README.md). Eleven native tutorial
-candidates were promoted after real BHSA 2021 replay and separate semantic
-review; three in-scope and four deferred remain [unpromoted discovery cases](benchmarks/nl-tf-v1/tutorial-candidates.md).
-This establishes no Jev parsing accuracy and is not a completed #10 benchmark.
+The canonical [BHSA benchmark v2](benchmarks/nl-tf-v2/README.md) has **109 requests**:
+86 supported gold queries, 11 ambiguous and 12 unsupported cases. All supported
+gold has frozen projected-result counts and signatures, verified against native
+TF and independent raw corpus oracles. Whole families are held out, including
+all original v1 evaluation requests. The [v1 seed](benchmarks/nl-tf-v1/README.md)
+and tutorial replay remain historical research evidence. This establishes no
+model parsing accuracy; that remains #9/#11.
 
 The optional `tf-jev[jev]` extra provides `tf_jev.jev.JevBackend`, a thin adapter
 over the official TypeSafe SDK. It accepts the bounded decision contract, checks

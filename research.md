@@ -111,3 +111,7 @@ retrieval separately from semantic parser quality.
 Jev adapter follow-through (#8): [SDK boundary findings](docs/research/jev-adapter.md)
 record strict custom-response decoding, scoped log suppression and model-drift
 policy verified against typesafe-sdk 0.7.4 source and current official docs.
+
+Semantic benchmark (#10): [annotation and projection findings](docs/research/bhsa-benchmark.md)
+underpin the complete [v2 benchmark](benchmarks/nl-tf-v2/README.md). The v1 seed
+remains historical evidence; parser work uses v2 with its heldout partition sealed.
