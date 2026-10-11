@@ -112,12 +112,12 @@ preserve original strings and collisions. A complete result can produce a bounde
 [retrieval contract](docs/design/candidate-retrieval.md) and
 [real-domain lookup benchmark](benchmarks/retrieval-v1/README.md).
 
-A versioned BHSA benchmark now has **19 requests**, including **12 supported native
-gold queries** (six with independently adjudicated typed IR and exact native result
+A versioned BHSA benchmark now has **24 requests**, including **17 supported native
+gold queries** (eleven with independently adjudicated typed IR and exact native result
 equivalence), with the original evaluation split preserved. See
-[benchmark documentation](benchmarks/nl-tf-v1/README.md). Six native tutorial
+[benchmark documentation](benchmarks/nl-tf-v1/README.md). Eleven native tutorial
 candidates were promoted after real BHSA 2021 replay and separate semantic
-review; eight remain [unpromoted discovery cases](benchmarks/nl-tf-v1/tutorial-candidates.md).
+review; three in-scope and four deferred remain [unpromoted discovery cases](benchmarks/nl-tf-v1/tutorial-candidates.md).
 This establishes no Jev parsing accuracy and is not a completed #10 benchmark.
 
 The optional `tf-jev[jev]` extra provides `tf_jev.jev.JevBackend`, a thin adapter
