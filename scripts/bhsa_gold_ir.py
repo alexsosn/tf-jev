@@ -77,6 +77,48 @@ PROMOTED_IR: dict[str, Query] = {
             Relation(2, R.ADJACENT_BEFORE, 3),
         ),
     ),
+    "complex-verbal-negations": Query(
+        (
+            Atom(
+                "word",
+                (
+                    eq("sp", "verb"),
+                    Predicate("vs", P.NE, ("qal",)),
+                    Predicate("vt", P.NE, ("infc", "infa", "ptca", "ptcp")),
+                    Predicate("ps", P.NE, ("p3",)),
+                    Predicate("nu", P.NE, ("sg",)),
+                    Predicate("gn", P.NE, ("m",)),
+                ),
+            ),
+        )
+    ),
+    "object-clause-first-lexeme": Query(
+        (
+            Atom("verse"),
+            Atom("clause", (eq("rela", "Objc"),)),
+            Atom("word", (eq("lex", ">CR"),)),
+        ),
+        (
+            Relation(0, R.EMBEDS, 1),
+            Relation(1, R.EMBEDS, 2),
+            Relation(1, R.SAME_START, 2),
+        ),
+    ),
+    "complex-predicate-object-lexemes": Query(
+        (
+            Atom("clause"),
+            Atom("phrase", (Predicate("function", P.EQ, ("Pred", "PreC")),)),
+            Atom("word", (eq("sp", "verb"), eq("vs", "hif"), eq("lex", "QWM["))),
+            Atom("phrase", (eq("function", "Objc"),)),
+            Atom("word", (eq("lex", "BRJT/"),)),
+        ),
+        (
+            Relation(0, R.EMBEDS, 1),
+            Relation(1, R.EMBEDS, 2),
+            Relation(0, R.EMBEDS, 3),
+            Relation(3, R.EMBEDS, 4),
+        ),
+    ),
 }
 
 
