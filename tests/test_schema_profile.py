@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from importlib.metadata import version
 from pathlib import Path
 from typing import Any
 
@@ -30,7 +31,7 @@ def test_tiny_corpus_profile_preserves_identity_and_limits_output(tmp_path: Path
     assert data["format_version"] == 1
     assert data["loaded_sha256"] == schema.identity.loaded_sha256
     assert data["identity_key"] == schema.identity.key
-    assert data["tf_version"] == "13.1.0"
+    assert data["tf_version"] == version("text-fabric")
     assert data["object_types"] == len(schema.object_types)
     assert data["node_features"] == len(schema.node_features)
     assert data["edge_features"] == len(schema.edge_features)
