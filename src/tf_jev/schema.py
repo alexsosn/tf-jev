@@ -152,6 +152,17 @@ class _Inventory:
 
 
 @dataclass(frozen=True)
+class FeatureCoverage:
+    """Exact inventory coverage; omitted features are unknown, never absent."""
+
+    mode: Literal["full", "selected"]
+    node_features: tuple[str, ...]
+    edge_features: tuple[str, ...]
+    omitted_node_features: tuple[str, ...]
+    omitted_edge_features: tuple[str, ...]
+
+
+@dataclass(frozen=True)
 class CorpusSchema:
     identity: CorpusIdentity
     object_type_details: tuple[ObjectType, ...]
@@ -159,6 +170,7 @@ class CorpusSchema:
     edge_features: tuple[EdgeFeature, ...]
     excluded_features: tuple[str, ...]
     _inventories: tuple[_Inventory, ...] = field(repr=False)
+    coverage: FeatureCoverage
 
     @property
     def object_types(self) -> tuple[str, ...]:
@@ -183,12 +195,16 @@ class CorpusSchema:
         for item in self.node_features:
             if item.name == name:
                 return item
+        if name in self.coverage.omitted_node_features:
+            raise SchemaError("node feature omitted from selected schema")
         raise SchemaError("unknown or excluded node feature")
 
     def edge_feature(self, name: str) -> EdgeFeature:
         for item in self.edge_features:
             if item.name == name:
                 return item
+        if name in self.coverage.omitted_edge_features:
+            raise SchemaError("edge feature omitted from selected schema")
         raise SchemaError("unknown or excluded edge feature")
 
     def domain(self, feature: str, object_type: str) -> ValueDomain:
@@ -224,21 +240,26 @@ class CorpusSchema:
         raise SchemaError("unknown or stale retrieval handle")
 
     def to_json(self) -> str:
-        """Deterministic local summary; omits unbounded value inventories."""
-        return _json(
-            {
-                "identity": asdict(self.identity),
-                "object_types": [asdict(t) for t in self.object_type_details],
-                "node_features": [asdict(f) for f in self.node_features],
-                "edge_features": [asdict(f) for f in self.edge_features],
-                "excluded_features": self.excluded_features,
-                "enum_limit": ENUM_LIMIT,
-            }
-        )
+        """Deterministic summary; legacy full serialization remains byte-identical."""
+        summary: dict[str, object] = {
+            "identity": asdict(self.identity),
+            "object_types": [asdict(t) for t in self.object_type_details],
+            "node_features": [asdict(f) for f in self.node_features],
+            "edge_features": [asdict(f) for f in self.edge_features],
+            "excluded_features": self.excluded_features,
+            "enum_limit": ENUM_LIMIT,
+        }
+        if self.coverage.mode == "selected":
+            summary["coverage"] = asdict(self.coverage)
+        return _json(summary)
 
 
 def extract_schema(
-    api: Any, *, _phase_observer: Callable[[str], None] | None = None
+    api: Any,
+    *,
+    node_features: tuple[str, ...] | None = None,
+    edge_features: tuple[str, ...] | None = None,
+    _phase_observer: Callable[[str], None] | None = None,
 ) -> CorpusSchema:
     """Snapshot a stable loaded TF core session; never downloads or calls a model.
 
@@ -247,7 +268,10 @@ def extract_schema(
     later mutations. Re-extract after updates before compiling new queries.
     """
     try:
-        return _extract(api, _phase_observer=_phase_observer)
+        return _extract(
+            api, node_features=node_features, edge_features=edge_features,
+            _phase_observer=_phase_observer,
+        )
     except SchemaError:
         raise
     except (AttributeError, KeyError, TypeError, ValueError, OSError):
@@ -255,7 +279,11 @@ def extract_schema(
 
 
 def _extract(
-    api: Any, *, _phase_observer: Callable[[str], None] | None = None
+    api: Any,
+    *,
+    node_features: tuple[str, ...] | None = None,
+    edge_features: tuple[str, ...] | None = None,
+    _phase_observer: Callable[[str], None] | None = None,
 ) -> CorpusSchema:
     def checkpoint(phase: str) -> None:
         if _phase_observer is not None:
@@ -265,11 +293,37 @@ def _extract(
         raise SchemaError("a loaded Text-Fabric core API is required")
     tf = api.TF
     sets = tf.explore(silent="deep", show=True)
-    node_names = tuple(sorted(f for f in sets["nodes"] if _admissible(f)))
-    edge_names = tuple(sorted(f for f in sets["edges"] if _admissible(f)))
+    available_nodes = tuple(sorted(f for f in sets["nodes"] if _admissible(f)))
+    available_edges = tuple(sorted(f for f in sets["edges"] if _admissible(f)))
     excluded = tuple(sorted(f for f in (*sets["nodes"], *sets["edges"]) if not _admissible(f)))
+    partial = node_features is not None or edge_features is not None
+    if partial:
+        selected_nodes = () if node_features is None else node_features
+        selected_edges = () if edge_features is None else edge_features
+        for selected, available in (
+            (selected_nodes, available_nodes), (selected_edges, available_edges)
+        ):
+            if (
+                type(selected) is not tuple
+                or any(type(name) is not str for name in selected)
+                or len(set(selected)) != len(selected)
+                or not set(selected).issubset(available)
+            ):
+                raise SchemaError("invalid or unavailable feature selection")
+        node_names = tuple(sorted(selected_nodes))
+        edge_names = tuple(sorted(selected_edges))
+    else:
+        node_names, edge_names = available_nodes, available_edges
+    coverage = FeatureCoverage(
+        "selected" if partial else "full",
+        node_names, edge_names,
+        tuple(sorted(set(available_nodes) - set(node_names))),
+        tuple(sorted(set(available_edges) - set(edge_names))),
+    )
     checkpoint("discover")
-    if not tf.load((*node_names, *edge_names), add=True, silent="deep"):
+    if (node_names or edge_names) and not tf.load(
+        (*node_names, *edge_names), add=True, silent="deep"
+    ):
         raise SchemaError("Text-Fabric could not load query features")
     checkpoint("load_features")
     types = tuple(
@@ -298,6 +352,11 @@ def _extract(
         loaded_digest, ("oslots", [(n, list(slots)) for n, slots in api.E.oslots.items()])
     )
     checkpoint("warp_digest")
+    if partial:
+        _digest_record(
+            loaded_digest,
+            ("feature-coverage-v1", node_names, edge_names, available_nodes, available_edges),
+        )
     inventories: list[_Inventory] = []
     feature_meta: list[tuple[str, Literal["str", "int"], str | None]] = []
     for name in node_names:
@@ -406,7 +465,7 @@ def _extract(
             )
         features.append(NodeFeature(name, dtype, description, tuple(domains)))
     snapshot = CorpusSchema(
-        identity, types, tuple(features), tuple(edges), excluded, tuple(inventories)
+        identity, types, tuple(features), tuple(edges), excluded, tuple(inventories), coverage
     )
     checkpoint("domains")
     return snapshot
