@@ -129,7 +129,8 @@ def verify_reference_report(report: dict[str, Any], reference_path: Path) -> Non
         expected = json.loads(reference_path.read_text(encoding="utf-8"))
     except (OSError, UnicodeError, ValueError) as error:
         raise ValueError("native reference unavailable or malformed") from error
-    canonical = lambda value: json.dumps(value, sort_keys=True, separators=(",", ":"))
+    def canonical(value: Any) -> str:
+        return json.dumps(value, sort_keys=True, separators=(",", ":"))
     if canonical(report) != canonical(expected):
         raise ValueError("native reference mismatch (counts, source or fixture identity)")
 
