@@ -46,8 +46,12 @@ def test_promotions_are_typed_and_unsealed() -> None:
         for case_id, (split, expected) in PROMOTIONS.items()
     )
     assert all(indexed[x].split != "evaluation" for x in PROMOTED_IR)
-    assert {"book.tf", "qere.tf", "dist.tf", "typ.tf", "vs.tf", "vt.tf", "ps.tf", "lex.tf", "rela.tf"} <= PINNED_FILES
-    assert {"book.tf", "qere.tf", "dist.tf", "typ.tf"} <= dict(catalog.source_git_blobs).keys()
+    required_pins = {
+        "book.tf", "qere.tf", "dist.tf", "typ.tf", "vs.tf",
+        "vt.tf", "ps.tf", "lex.tf", "rela.tf",
+    }
+    assert required_pins <= PINNED_FILES
+    assert required_pins <= dict(catalog.source_git_blobs).keys()
     assert len([c for c in catalog.cases if c.split == "evaluation"]) == 5
 
 
