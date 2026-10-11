@@ -2,7 +2,7 @@
 
 ## Data and limits
 
-`benchmarks/nl-tf-v1/bhsa-2021.json` contains a versioned catalogue: corpus, data version, a SHA256 pin, and cases. Every case has id, split (train/development/evaluation), status (supported/ambiguous/unsupported), difficulty, English request, gold query or null, expected result tuple cardinality or null, and rationale. Strict loading rejects unknown fields, duplicate IDs, booleans as counts, blank queries and gold queries on abstention cases. It never interprets or executes request prose.
+`benchmarks/nl-tf-v1/bhsa-2021.json` contains a versioned catalogue: corpus, data version, a SHA256 `otype.tf` pin, Git blob hashes of all referenced feature/structural files, and cases. Every case has id, split (train/development/evaluation), status (supported/ambiguous/unsupported), difficulty, English request, gold query or null, expected result tuple cardinality or null, and rationale. Strict loading rejects unknown fields, duplicate IDs, booleans as counts, blank queries and gold queries on abstention cases. It never interprets or executes request prose.
 
 `scripts/nl_benchmark.py` exposes `load_catalog`, `verify_source`, `check_gold`, and `equivalent` for the research harness. `check_gold` executes each supported native TF query with a limit one above its expected count and requires exact cardinality and zero TF diagnostics. `equivalent` compares complete sorted native result tuples (including atom columns), bounding each execution by `max_rows+1`; results over the bound produce explicit failure, not a success/false equivalence. The runner uses the existing diagnostic-aware real TF `run_template` test harness and does not introduce a second search engine.
 
