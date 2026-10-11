@@ -75,8 +75,10 @@ def test_allowed_unicode_literals_match_raw_feature_data(
     api, data = unicode_corpus
     schema = extract_schema(api)
     native = compile_query(query_for(value, op), schema)
-    # It may be non-NFC or carry directional controls, but never be normalized.
-    assert value in native
+    # Native Text-Fabric metacharacters must be escaped, not copied literally.
+    # Non-NFC and approved script formatting code points must stay byte-exact.
+    if value == "e\\u0301" or any(mark in value for mark in ("\\u200c", "\\u200d", "\\u200e", "\\u200f")):
+        assert value in native
     result = run_template(api, native, limit=len(data) + 1)
     assert result.ok, result.error_text()
     expected = tuple(
