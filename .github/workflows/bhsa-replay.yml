@@ -71,6 +71,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          sha256sum benchmarks/nl-tf-v1/bhsa-2021.json
           python -m scripts.bhsa_replay \
             --corpus "$RUNNER_TEMP/bhsa/tf/2021" \
             --expected "benchmarks/nl-tf-v1/native-observations-2021.json" \
