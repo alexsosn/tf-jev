@@ -9,10 +9,11 @@ from __future__ import annotations
 import argparse
 import json
 import re
+from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 from types import MappingProxyType
-from typing import Any, Mapping
+from typing import Any
 
 from scripts.nl_benchmark import MAX_ROWS, _git_blob_sha
 from tests.conformance.tf_harness import load_api, run_template
