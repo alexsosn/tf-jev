@@ -95,9 +95,11 @@ def test_schema_phase_profile_reports_real_boundary_metrics(tmp_path: Path) -> N
     result = profile_schema(tmp_path)
     phases = result["phases"]
     assert type(phases) is list
+    elapsed = result["extract_seconds"]
+    assert isinstance(elapsed, float)
     assert tuple(item["name"] for item in phases) == PHASE_NAMES
     assert all(
-        type(item["seconds"]) is float and 0 <= item["seconds"] < result["extract_seconds"]
+        type(item["seconds"]) is float and 0 <= item["seconds"] < elapsed
         for item in phases
     )
     for item in phases:
@@ -105,7 +107,7 @@ def test_schema_phase_profile_reports_real_boundary_metrics(tmp_path: Path) -> N
         assert item["rss_bytes"] is None or (
             type(item["rss_bytes"]) is int and item["rss_bytes"] > 0
         )
-    assert abs(sum(item["seconds"] for item in phases) - result["extract_seconds"]) < 2
+    assert abs(sum(item["seconds"] for item in phases) - elapsed) < 2
     assert str(tmp_path) not in json.dumps(result)
 
 
