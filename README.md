@@ -103,8 +103,11 @@ preserve original strings and collisions. A complete result can produce a bounde
 [real-domain lookup benchmark](benchmarks/retrieval-v1/README.md).
 
 A first 13-request, versioned BHSA native gold and abstention seed for #10 is
-available in [benchmarks/nl-tf-v1](benchmarks/nl-tf-v1/README.md). This
-partial seed is not a Jev parsing-accuracy result or a completed benchmark.
+available in [benchmarks/nl-tf-v1](benchmarks/nl-tf-v1/README.md).
+[Official BHSA search tutorial examples](benchmarks/nl-tf-v1/tutorial-candidates.md)
+are separately staged for replay and linguistic vetting; their historical
+counts are not yet accepted as BHSA 2021 gold. Neither fixture is a Jev
+parsing-accuracy result or a completed benchmark.
 
 The optional `tf-jev[jev]` extra provides `tf_jev.jev.JevBackend`, a thin adapter
 over the official TypeSafe SDK. It accepts the bounded decision contract, checks

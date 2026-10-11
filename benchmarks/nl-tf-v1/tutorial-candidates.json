@@ -1,0 +1,229 @@
+{
+  "format_version": 1,
+  "purpose": "discovery-only",
+  "corpus": "ETCBC/bhsa",
+  "target_data_version": "2021",
+  "upstream_commit": "4db00e2157915495e1a4d3d57e41223df24775da",
+  "notebooks": {
+    "search.ipynb": {
+      "blob_sha": "baf00c4649133e190481f6f5da1870d9c5720482",
+      "data_version": "unversioned"
+    },
+    "searchAdvanced.ipynb": {
+      "blob_sha": "732bfb177dfd329328b68a8850f58bfef21b2b10",
+      "data_version": "unversioned"
+    },
+    "searchRelations.ipynb": {
+      "blob_sha": "75e6209baed2ccccc7c6efe24e168e50389cfc51",
+      "data_version": "unversioned"
+    },
+    "searchFromMQL.ipynb": {
+      "blob_sha": "4fd1991fd0f6561c86f46b44333d3377342f4852",
+      "data_version": "2017"
+    },
+    "searchQuantifiers.ipynb": {
+      "blob_sha": "0f13f35d2303fab2b3ea54500f93f2c9a81a782b",
+      "data_version": "unversioned"
+    }
+  },
+  "source_git_blobs": {
+    "otype.tf": "ecc4d0ecd388bd673d0aebfa8ab2a81508bec23c",
+    "oslots.tf": "b389833f7624bb252dd2cf25cf798d4a6a82cc1b",
+    "sp.tf": "d0dfb4d66ba34ff853e7f41b8dc9596e1a17bcc4",
+    "gn.tf": "748e64a50a287578045f614a1319680345f312d5",
+    "nu.tf": "7fec658e1c6ddf5d88820d2be87e2a8782286014",
+    "book.tf": "70407385b60568eaeb44dbeb45f3a7dfafd2a6af",
+    "vs.tf": "59fb614bb49e16f435f3c5720a877102d1f6cf53",
+    "vt.tf": "d003f1ff2f2f972a4d5af61dce26e8311d9b69a9",
+    "ps.tf": "2f102db0f06ce4d61a421aa9d90bfa423d75f2a6",
+    "qere.tf": "405b9a7e98dbc85c401a6e9cf7e4978a04bfe2ee",
+    "dist.tf": "e88470f33af1dd9dc282424f7c17ca17cb4451f3",
+    "typ.tf": "10c075abd4da74088baa7f3675ca56edc09893de",
+    "lex.tf": "234224440026af0b2da9ece3dbeebfbf8da9ad6c",
+    "rela.tf": "e954a15dc4c987032911930b1fcf2dae3f801deb",
+    "function.tf": "07cffd7b21efe39f950897d51cae4c95d99b9d9f",
+    "g_cons.tf": "dbc2fd5a87539c8c77ba9428ea330768adee70ca"
+  },
+  "cases": [
+    {
+      "id": "samuel-proper-noun-context",
+      "source_file": "search.ipynb",
+      "source_cell": 7,
+      "capability": "in_scope",
+      "query": "book book=Samuel_I\n  clause\n    word sp=nmpr",
+      "request": "Find the proper nouns in First Samuel together with their enclosing clauses.",
+      "reported_count": 1868,
+      "rationale": "Three-node structural embedding plus a proper-noun predicate."
+    },
+    {
+      "id": "feminine-plural-substantives",
+      "source_file": "search.ipynb",
+      "source_cell": 64,
+      "capability": "in_scope",
+      "query": "word gn=f nu=pl sp=subs",
+      "request": "Find substantive words annotated as feminine plural.",
+      "reported_count": 5992,
+      "rationale": "Direct three-feature morphological conjunction."
+    },
+    {
+      "id": "same-slots-verse-sentence",
+      "source_file": "searchRelations.ipynb",
+      "source_cell": 20,
+      "capability": "in_scope",
+      "query": "v:verse\n    s:sentence\nv == s",
+      "request": "Find verse and sentence pairs that cover exactly the same slots.",
+      "reported_count": 3583,
+      "rationale": "Explicit same-slot relation independent from containment."
+    },
+    {
+      "id": "sentence-clause-phrase-order",
+      "source_file": "searchRelations.ipynb",
+      "source_cell": 52,
+      "capability": "in_scope",
+      "query": "sentence\n  c1:clause\n  p:phrase\n  c2:clause\n  c1 << p\n  c2 >> p",
+      "request": "Find sentence patterns with a clause entirely before a phrase and another clause entirely after it.",
+      "reported_count": 136137,
+      "rationale": "Four objects and two long-range order relations."
+    },
+    {
+      "id": "clause-adjacent-phrases",
+      "source_file": "searchRelations.ipynb",
+      "source_cell": 62,
+      "capability": "in_scope",
+      "query": "clause\n  phrase\n  <: phrase",
+      "request": "Find consecutive phrase pairs inside a single clause.",
+      "reported_count": 162653,
+      "rationale": "Nesting and directional phrase adjacency."
+    },
+    {
+      "id": "words-all",
+      "source_file": "searchAdvanced.ipynb",
+      "source_cell": 65,
+      "capability": "in_scope",
+      "query": "word",
+      "request": "Find all word nodes in the Hebrew Bible.",
+      "reported_count": 426590,
+      "rationale": "Type-only request; basis for qere presence/absence partition."
+    },
+    {
+      "id": "qere-present",
+      "source_file": "searchAdvanced.ipynb",
+      "source_cell": 65,
+      "capability": "in_scope",
+      "query": "word qere",
+      "request": "Find words that have a qere reading feature.",
+      "reported_count": 1892,
+      "rationale": "Feature presence differs from literal absent string."
+    },
+    {
+      "id": "qere-missing",
+      "source_file": "searchAdvanced.ipynb",
+      "source_cell": 65,
+      "capability": "in_scope",
+      "query": "word qere#",
+      "request": "Find words without a qere feature value.",
+      "reported_count": 424698,
+      "rationale": "Feature absence, not string inequality."
+    },
+    {
+      "id": "complex-verbal-negations",
+      "source_file": "searchAdvanced.ipynb",
+      "source_cell": 61,
+      "capability": "in_scope",
+      "query": "word sp=verb vs#qal vt#infc|infa|ptca|ptcp ps#p3 nu#sg gn#m",
+      "request": "Find verb words excluding qal, specified infinitive/participle verbal forms, third person, singular and masculine.",
+      "reported_count": 271,
+      "rationale": "Five separate non-equality predicates with a value set."
+    },
+    {
+      "id": "clauses-distance-one",
+      "source_file": "searchAdvanced.ipynb",
+      "source_cell": 67,
+      "capability": "in_scope",
+      "query": "clause dist=1",
+      "request": "Find clauses whose dist feature equals integer 1.",
+      "reported_count": 598,
+      "rationale": "Sparse integer-value equality."
+    },
+    {
+      "id": "clauses-distance-less-minus-ten",
+      "source_file": "searchAdvanced.ipynb",
+      "source_cell": 73,
+      "capability": "in_scope",
+      "query": "clause dist<-10",
+      "request": "Find clauses whose dist feature is below minus ten.",
+      "reported_count": 86,
+      "rationale": "Strict signed integer boundary."
+    },
+    {
+      "id": "pp-prep-adj-noun",
+      "source_file": "searchFromMQL.ipynb",
+      "source_cell": 8,
+      "capability": "in_scope",
+      "query": "phrase typ=PP\n  word sp=prep\n  <: word sp=adjv\n  <: word sp=subs",
+      "request": "Find prepositional phrases with a preposition immediately followed by adjective and substantive.",
+      "reported_count": 64,
+      "rationale": "From MQL tutorial, explicitly BHSA 2017 output: counts must be rechecked on 2021."
+    },
+    {
+      "id": "object-clause-first-lexeme",
+      "source_file": "searchFromMQL.ipynb",
+      "source_cell": 55,
+      "capability": "in_scope",
+      "query": "verse\n    clause rela=Objc\n        =: word lex=>CR",
+      "request": "Find verse–object-clause–word triples where the word at clause start has lexeme >CR.",
+      "reported_count": 96,
+      "rationale": "From 2017, structural first-slot relation and high-cardinality lexeme."
+    },
+    {
+      "id": "complex-predicate-object-lexemes",
+      "source_file": "searchFromMQL.ipynb",
+      "source_cell": 67,
+      "capability": "in_scope",
+      "query": "clause\n  phrase function=Pred|PreC\n    word sp=verb vs=hif lex=QWM[\n  phrase function=Objc\n    word lex=BRJT/",
+      "request": "Find clauses with a predicative hif verb QWM[ and object phrase containing lexeme BRJT/.",
+      "reported_count": 13,
+      "rationale": "From 2017, complex lexical/morphological joins; no 2021 count asserted."
+    },
+    {
+      "id": "where-have-all-verbs",
+      "source_file": "searchQuantifiers.ipynb",
+      "source_cell": 19,
+      "capability": "deferred",
+      "query": "clause\n/where/\n  phrase function=Pred\n/have/\n  /without/\n    word sp#verb\n  /-/\n/-/\n  phrase function=Subj",
+      "request": "Find clauses having a subject phrase where predicate phrases contain verbs only.",
+      "reported_count": 31431,
+      "rationale": "Nested /where/ + /have/ is outside the current QueryIR."
+    },
+    {
+      "id": "with-or-subject-boundaries",
+      "source_file": "searchQuantifiers.ipynb",
+      "source_cell": 29,
+      "capability": "deferred",
+      "query": "c:clause\n/with/\n  =: phrase function=Subj\n/or/\n  := phrase function=Subj\n/-/\n  phrase\n  <: phrase",
+      "request": "Find clauses having subject phrases at either clause boundary and consecutive phrases.",
+      "reported_count": 15360,
+      "rationale": "Disjunctive /with/ + /or/ unsupported by compiler."
+    },
+    {
+      "id": "substantive-grapheme-regex",
+      "source_file": "searchAdvanced.ipynb",
+      "source_cell": 78,
+      "capability": "deferred",
+      "query": "word sp=subs g_cons~^>.$",
+      "request": "Find substantives matching a consonantal text regular expression.",
+      "reported_count": 816,
+      "rationale": "Regex predicates explicitly excluded from first compiler subset."
+    },
+    {
+      "id": "clause-typ-regex",
+      "source_file": "searchAdvanced.ipynb",
+      "source_cell": 98,
+      "capability": "deferred",
+      "query": "clause typ~^W[xX]\n  word sp=verb vs#qal",
+      "request": "Find W-type clauses with a non-qal verb.",
+      "reported_count": 3098,
+      "rationale": "Regex on typ is outside current compiler subset."
+    }
+  ]
+}
