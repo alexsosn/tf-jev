@@ -10,10 +10,12 @@ import collections
 import hashlib
 import json
 import re
+import tempfile
 import unicodedata
 from collections.abc import Mapping
 from dataclasses import asdict, dataclass, field
 from importlib.metadata import version
+from itertools import islice
 from pathlib import Path
 from typing import Any, Literal
 
@@ -35,6 +37,41 @@ def _digest_record(digest: Any, value: object) -> None:
     data = _json(value).encode("utf8")
     digest.update(len(data).to_bytes(8, "big"))
     digest.update(data)
+
+
+def _digest_node_feature(
+    digest: Any,
+    name: str,
+    dtype: Literal["str", "int"],
+    metadata: Mapping[str, object],
+    data: Mapping[int, str | int],
+) -> None:
+    """Hash the EXACT prior canonical node-feature JSON with bounded temporaries.
+
+    `_digest_record(..., (name, dtype, metadata, sorted(data.items())))`
+    would materialize all sorted (node, value) tuples and their full JSON
+    encoding at once. Here only sorted integer keys and one bounded chunk of
+    serialized pairs are resident. The spool spills to anonymous scratch disk;
+    it never stores a persistent cache or emits corpus values to stdout.
+    """
+    prefix = _json((name, dtype, metadata))[:-1].encode("utf8") + b",["
+    ordered = iter(sorted(data))
+    with tempfile.SpooledTemporaryFile(max_size=1 << 20, mode="w+b") as spool:
+        spool.write(prefix)
+        first = True
+        while nodes := list(islice(ordered, 4096)):
+            serialized = _json([(node, data[node]) for node in nodes]).encode("utf8")
+            # Concatenating the inner arrays is exactly the JSON serialization
+            # of the flattened sorted pairs: strip ONLY the block brackets.
+            if not first:
+                spool.write(b",")
+            spool.write(serialized[1:-1])
+            first = False
+        spool.write(b"]]")
+        digest.update(spool.tell().to_bytes(8, "big"))
+        spool.seek(0)
+        while chunk := spool.read(1 << 20):
+            digest.update(chunk)
 
 
 def _source_digest(directory: Path) -> str | None:
@@ -294,9 +331,7 @@ def _extract(api: Any) -> CorpusSchema:
         if dtype not in ("str", "int"):
             raise SchemaError("unsupported node feature type")
         description = _metadata_text(info.metaData, "description")
-        _digest_record(
-            loaded_digest, (name, dtype, info.metaData, sorted(api.Fs(name).data.items()))
-        )
+        _digest_node_feature(loaded_digest, name, dtype, info.metaData, api.Fs(name).data)
         by_type: dict[str, collections.Counter[str | int]] = collections.defaultdict(
             collections.Counter
         )
