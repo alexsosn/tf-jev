@@ -105,7 +105,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
     report = profile_schema(args.directory.expanduser(), trace_python=args.trace_python)
-    content = json.dumps(report, sort_keys=True, ensure_ascii=False, allow_nan=False) + "\\n"
+    content = json.dumps(report, sort_keys=True, ensure_ascii=False, allow_nan=False) + chr(10)
     if args.output is None:
         print(content, end="")
     else:
