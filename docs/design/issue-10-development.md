@@ -21,6 +21,11 @@
 - Runner reuses native diagnostic-aware conformance execution, with no model,
   no compiler heuristic and no gold regeneration path. Dedicated pinned BHSA CI
   verifies both v2 partitions alongside the unchanged v1/native tutorial replay.
+- Exact-head full BHSA testing on `23def75` caught a pre-existing fixture gap:
+  #27 added a typed `dist` witness but shared `bhsa_api` did not load `dist`.
+  Isolated promotion test reproduced RED (`CompileError` from missing symbol).
+  Loaded the complete v1 gold feature set in the shared fixture to remove test
+  order dependence; repeat full tests and CI on the resulting final head.
 - Final merge gates: exact-head Ruff/mypy/full tests including opt-in BHSA,
   standard CI Python 3.11–3.13 and wheel, exact-head pinned native CI, then a
   logically independent adversarial code/data review recorded on the PR.

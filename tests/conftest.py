@@ -33,7 +33,7 @@ def bhsa_api() -> Any:
     directory = Path(location).expanduser()
     if directory.name != BHSA_VERSION or not (directory / "otype.tf").exists():
         pytest.fail(f"{BHSA_ENV} must point at a BHSA tf/{BHSA_VERSION} directory: {directory}")
-    return load_api(directory, features="sp gn nu lex prs function typ verse")
+    return load_api(directory, features="sp gn nu lex prs function typ verse book qere dist mother")
 
 
 @pytest.fixture(scope="session")
