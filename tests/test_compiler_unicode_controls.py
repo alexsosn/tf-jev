@@ -13,7 +13,6 @@ from tf_jev.compiler import CompileError, compile_query
 from tf_jev.ir import Atom, Predicate, PredicateOp, Query
 from tf_jev.schema import extract_schema
 
-
 ALLOWED = (
     "plain",
     "e\u0301",  # non-NFC remains byte-exact
