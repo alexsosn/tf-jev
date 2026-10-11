@@ -26,13 +26,16 @@ PROMOTIONS = {
     "clause-adjacent-phrases": ("development", 162653),
     "sentence-clause-phrase-order": ("train", 136137),
     "pp-prep-adj-noun": ("development", 61),
+    "complex-verbal-negations": ("development", 271),
+    "object-clause-first-lexeme": ("train", 96),
+    "complex-predicate-object-lexemes": ("development", 13),
 }
 
 
 def test_promotions_are_typed_and_unsealed() -> None:
     catalog = load_catalog(GOLD)
     indexed = {c.id: c for c in catalog.cases}
-    assert len(catalog.cases) == 24
+    assert len(catalog.cases) == 27
     assert set(PROMOTED_IR) == set(PROMOTIONS)
     assert len({c.id for c in catalog.cases}) == len(catalog.cases)
     assert all(
@@ -43,7 +46,7 @@ def test_promotions_are_typed_and_unsealed() -> None:
         for case_id, (split, expected) in PROMOTIONS.items()
     )
     assert all(indexed[x].split != "evaluation" for x in PROMOTED_IR)
-    assert {"book.tf", "qere.tf", "dist.tf", "typ.tf"} <= PINNED_FILES
+    assert {"book.tf", "qere.tf", "dist.tf", "typ.tf", "vs.tf", "vt.tf", "ps.tf", "lex.tf", "rela.tf"} <= PINNED_FILES
     assert {"book.tf", "qere.tf", "dist.tf", "typ.tf"} <= dict(catalog.source_git_blobs).keys()
     assert len([c for c in catalog.cases if c.split == "evaluation"]) == 5
 
@@ -112,3 +115,30 @@ def test_new_typed_relations_and_signed_distance_are_expressed_without_native_st
     assert len(ordering.atoms) == 4
     assert sum(rel.operator is RelationOp.BEFORE for rel in ordering.relations) == 1
     assert sum(rel.operator is RelationOp.AFTER for rel in ordering.relations) == 1
+
+
+def test_remaining_tutorial_ir_retains_negative_sets_literal_lexemes_and_scope() -> None:
+    from tf_jev.ir import PredicateOp, RelationOp
+
+    verbs = PROMOTED_IR["complex-verbal-negations"]
+    assert len(verbs.atoms) == 1
+    constraints = {p.feature: p for p in verbs.atoms[0].predicates}
+    assert constraints["sp"].operator is PredicateOp.EQ
+    assert constraints["sp"].values == ("verb",)
+    assert constraints["vt"].operator is PredicateOp.NE
+    assert set(constraints["vt"].values) == {"infc", "infa", "ptca", "ptcp"}
+    assert {"vs", "vt", "ps", "nu", "gn"} <= set(constraints)
+    assert all(constraints[x].operator is PredicateOp.NE for x in ("vs", "vt", "ps", "nu", "gn"))
+
+    first = PROMOTED_IR["object-clause-first-lexeme"]
+    assert len(first.atoms) == 3
+    assert first.atoms[2].predicates[0].values == (">CR",)
+    assert sum(r.operator is RelationOp.SAME_START for r in first.relations) == 1
+
+    joined = PROMOTED_IR["complex-predicate-object-lexemes"]
+    assert len(joined.atoms) == 5
+    assert sum(r.operator is RelationOp.EMBEDS for r in joined.relations) == 4
+    assert joined.atoms[1].predicates[0].operator is PredicateOp.EQ
+    assert set(joined.atoms[1].predicates[0].values) == {"Pred", "PreC"}
+    assert any(p.feature == "lex" and p.values == ("QWM[",) for p in joined.atoms[2].predicates)
+    assert joined.atoms[4].predicates[0].values == ("BRJT/",)
