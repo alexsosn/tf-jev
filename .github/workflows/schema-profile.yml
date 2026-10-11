@@ -139,6 +139,7 @@ jobs:
           from pathlib import Path
           from tf.fabric import Fabric
           from tf_jev.schema import extract_schema, SchemaError
+          from tests.conformance.tf_harness import run_template
           from tf_jev.compiler import compile_query
           from tf_jev.ir import Atom, Predicate, PredicateOp, Query
           corpus = Path(os.environ["RUNNER_TEMP"]) / "bhsa" / "tf" / "2021"
@@ -147,16 +148,18 @@ jobs:
           query = compile_query(Query((Atom("word", (
               Predicate("sp", PredicateOp.EQ, ("verb",)),
           )),)), schema)
-          actual = tuple(api.S.search(query, shallow=False, silent="deep"))
-          reference = tuple(api.S.search("word sp=verb", shallow=False, silent="deep"))
-          assert actual == reference and len(actual) == 73710
+          actual = run_template(api, query, limit=500000)
+          reference = run_template(api, "word sp=verb", limit=500000)
+          assert actual.ok and reference.ok, (actual.errors, reference.errors)
+          assert actual.results == reference.results
+          assert actual.results is not None and len(actual.results) == 73710
           try:
               schema.domain("lex", "word")
           except SchemaError as exc:
               assert "omitted" in str(exc)
           else:
               raise AssertionError("partial schema silently accepted unloaded feature")
-          print(f"selected native TF result tuples: {len(actual)}; exact equal")
+          print(f"selected native TF result tuples: {len(actual.results)}; exact equal")
           PY
 
       - name: Archive aggregate resource metrics, no corpus data
