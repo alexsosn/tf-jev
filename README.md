@@ -31,7 +31,8 @@ This lets the compiler restrict node types, features, values, edge features, rel
 ## Status
 
 Research prototype with a deterministic compiler, corpus schema, local retrieval,
-and an optional Jev bounded-decision adapter. End-to-end NL parsing is not yet implemented.
+an optional Jev bounded-decision adapter, and a first bounded semantic parser.
+Model parsing quality has not yet been established.
 
 The first development goal is to establish whether the approach is accurate and cheap enough on real Text-Fabric queries, using a benchmark with gold natural-language ↔ native-query pairs and at least one real corpus.
 
@@ -126,7 +127,7 @@ all returned labels/probabilities, and records resolved model, tokens and latenc
 Set `JEV_API_KEY` (or `TYPESAFE_API_KEY`) explicitly; the adapter does not load
 `.env` files. Use it as a context manager to close its owned client. See the
 [adapter contract](docs/design/jev-adapter.md) for failure and model pinning policy.
-This adapter does not implement natural-language parsing; that remains #9.
+The adapter stays independent of semantic parsing.
 
 Live synthetic contract smoke is opt-in and excluded from normal CI:
 
@@ -136,3 +137,16 @@ TF_JEV_LIVE=1 python -m pytest -q tests/test_jev_live.py
 
 Deterministic adapter tests use the real SDK with HTTP MockTransport. They check
 the transport/validation boundary and do not establish semantic model accuracy.
+
+`tf_jev.parser.SemanticParser(schema, backend).parse(request)` composes bounded
+schema-derived choices into validated QueryIR and deterministic query text. The
+prototype supports one atom, two related atoms, and negated containment, with
+up to three feature predicates per atom. Every result preserves decision
+distributions/receipts and the weakest selected probability. Low confidence,
+unsupported intent and failed whole-candidate verification return no query.
+`result.projection` specifies ordered columns for distinct output tuples; native
+TF still returns all witness columns. Large values use exact local literal
+retrieval before selection, with explicit miss/budget failures. See the
+[parser contract](docs/design/semantic-parser.md) for limits and data flow.
+Scripted real-corpus tests prove orchestration and compiler boundaries, not model
+semantic accuracy; #11/#12 must evaluate quality and cost before default use.
