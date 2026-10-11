@@ -1,0 +1,97 @@
+name: BHSA schema extraction profile
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/schema-profile.yml"
+      - "scripts/profile_schema.py"
+      - "tests/test_schema_profile.py"
+      - "src/tf_jev/schema.py"
+      - "docs/research/issue-20-schema-profiling.md"
+      - "docs/design/issue-20-profile-baseline.md"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/schema-profile.yml"
+      - "scripts/profile_schema.py"
+      - "tests/test_schema_profile.py"
+      - "src/tf_jev/schema.py"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  bhsa-baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BHSA_COMMIT: 4db00e2157915495e1a4d3d57e41223df24775da
+
+    steps:
+      - name: Checkout profiling code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install project and native Text-Fabric
+        run: |
+          set -euo pipefail
+          python -m pip install -e '.[dev]'
+          python -m pip install 'text-fabric==13.1.0'
+          python -c "from importlib.metadata import version; assert version('text-fabric') == '13.1.0'"
+
+      - name: Fetch public corpus at exact immutable commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          directory="$RUNNER_TEMP/bhsa"
+          git init "$directory"
+          git -C "$directory" remote add origin https://github.com/ETCBC/bhsa.git
+          git -C "$directory" sparse-checkout init --cone
+          git -C "$directory" sparse-checkout set tf/2021
+          git -C "$directory" -c protocol.version=2 fetch --no-tags --depth=1 --filter=blob:none origin "$BHSA_COMMIT"
+          git -C "$directory" checkout --detach FETCH_HEAD
+          test "$(git -C "$directory" rev-parse HEAD)" = "$BHSA_COMMIT"
+          git -C "$directory" diff --quiet
+          test -f "$directory/tf/2021/otype.tf"
+
+      - name: Profile cold load and complete schema extraction
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m scripts.profile_schema "$RUNNER_TEMP/bhsa/tf/2021" \
+            --output "$RUNNER_TEMP/schema-profile.json"
+          python - "$RUNNER_TEMP/schema-profile.json" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          info = json.loads(Path(sys.argv[1]).read_text())
+          assert info["tf_version"] == "13.1.0"
+          assert info["version_dir"] == "2021"
+          assert info["dataset"] == "BHSA"
+          assert info["node_features"] >= 100
+          assert info["edge_features"] >= 1
+          assert info["object_types"] >= 2
+          assert info["load_seconds"] >= 0
+          assert info["extract_seconds"] > 0
+          assert info["peak_process_rss_bytes"] is not None
+          assert not info["trace_python"]
+          print(json.dumps(info, sort_keys=True))
+          PY
+
+      - name: Archive aggregate resource metrics, no corpus data
+        uses: actions/upload-artifact@v4
+        with:
+          name: bhsa-2021-schema-extraction-profile
+          path: ${{ runner.temp }}/schema-profile.json
+          if-no-files-found: error
+          retention-days: 30
