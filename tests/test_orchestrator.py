@@ -181,3 +181,36 @@ def test_large_domain_exact_retrieval_preserves_original_values(
     out = parse_one_atom("Find some lexeme", schema, no_hint, feature_candidates=("lex",))
     assert out.status == "unsupported" and out.native_query is None
     assert len(no_hint.requests) == 3
+
+
+def test_integer_feature_and_forbidden_shortlist_cannot_generate_query(tiny_api: Any) -> None:
+    schema = extract_schema(tiny_api)
+    integer_backend = backend_for(schema, feature="rank")
+    result = parse_one_atom(
+        "Find a word with a certain rank", schema, integer_backend,
+        feature_candidates=("rank",),
+    )
+    assert result.status == "unsupported" and result.native_query is None
+    assert len(integer_backend.requests) == 3
+
+    invented = backend_for(schema, feature="sp", value="verb")
+    with pytest.raises(DecisionContractError):
+        # The only available feature option is 'none'; f000 is not legal.
+        parse_one_atom("Verbs", schema, invented)
+
+
+def test_low_confidence_at_late_value_selection_abstains(tiny_api: Any) -> None:
+    schema = extract_schema(tiny_api)
+    original = backend_for(schema, feature="sp", value="verb")
+    weakened = dict(original.answers)
+    weakened["value"] = selected(
+        "v003", ("v000", "v001", "v002", "v003"), p=0.6
+    )
+    backend = ScriptedBackend(weakened, max_options=32)
+    result = parse_one_atom(
+        "Find verbs", schema, backend,
+        feature_candidates=("sp",), min_confidence=0.8,
+    )
+    assert result.status == "low_confidence" and result.native_query is None
+    assert len(result.evidence) == 4
+    assert result.confidence < 0.8
