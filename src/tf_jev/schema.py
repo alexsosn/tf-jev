@@ -42,7 +42,7 @@ def _digest_record(digest: Any, value: object) -> None:
 def _digest_node_feature(
     digest: Any,
     name: str,
-    dtype: Literal["str", "int"],
+    dtype: str,
     metadata: Mapping[str, object],
     data: Mapping[int, str | int],
 ) -> None:
