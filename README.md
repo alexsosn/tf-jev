@@ -71,11 +71,21 @@ python -m mypy
 python -m pytest -q
 ```
 
-Real-corpus conformance tests are opt-in and run against BHSA 2021 (no download in CI):
+Real-corpus conformance tests in the ordinary matrix are opt-in and run against BHSA 2021:
 
 ```bash
 TF_JEV_BHSA_DIR=~/text-fabric-data/github/ETCBC/bhsa/tf/2021 python -m pytest -q tests/conformance
 ```
+
+For reproducible benchmark research, the scoped
+[BHSA replay workflow](.github/workflows/bhsa-replay.yml) checks out a
+commit-pinned public BHSA 2021 corpus, executes native TF 13.1.0 queries,
+and compares aggregate results to the
+[native-only observation reference](benchmarks/nl-tf-v1/native-observations-2021.json).
+The normal Python matrix does not download BHSA. Reproduce locally with
+`python -m scripts.bhsa_replay --corpus /path/to/bhsa/tf/2021 --expected benchmarks/nl-tf-v1/native-observations-2021.json --output /tmp/bhsa-report.json`.
+The 14 replayed tutorial cases still require independent NL↔query semantic
+adjudication before promotion to benchmark gold.
 
 Repository development is issue-driven. Coding agents must start with [AGENTS.md](AGENTS.md) and follow the research → plan/design → RED-first TDD → implementation → exact-head verification → logically independent adversarial review loop.
 
