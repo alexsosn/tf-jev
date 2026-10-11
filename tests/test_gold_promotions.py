@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any
 
 import pytest
@@ -10,8 +11,6 @@ from scripts.bhsa_gold_ir import PROMOTED_IR, validate_promotions
 from scripts.nl_benchmark import PINNED_FILES, equivalent, load_catalog, verify_source
 from tests.test_compiler import NativeSymbols
 from tf_jev.compiler import compile_query
-
-from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GOLD = ROOT / "benchmarks/nl-tf-v1/bhsa-2021.json"
