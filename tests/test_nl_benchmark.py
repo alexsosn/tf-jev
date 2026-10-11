@@ -9,7 +9,7 @@ from typing import Any
 
 import pytest
 
-from scripts.nl_benchmark import check_gold, equivalent, load_catalog, verify_source
+from scripts.nl_benchmark import _git_blob_sha, check_gold, equivalent, load_catalog, verify_source
 
 DATA = Path(__file__).resolve().parents[1] / "benchmarks/nl-tf-v1/bhsa-2021.json"
 
@@ -103,13 +103,19 @@ def test_abstention_never_contains_a_gold_query(tmp_path: Path) -> None:
         assert catalog.cases[0].gold_query is None
 
 
+def test_git_blob_hash_matches_independent_git_object_fixture(tmp_path: Path) -> None:
+    # Canonical Git blob SHA-1 for "hello" (not SHA-1 over raw bytes).
+    (tmp_path / "hello").write_bytes(b"hello")
+    assert _git_blob_sha(tmp_path / "hello") == "b6fc4c620b67d95f953a5c1c1230aaab5db5a1b0"
+
+
 def test_sha_pin_rejects_drift(tmp_path: Path) -> None:
     doc = _catalog([_record()])
     hashes: dict[str, str] = {}
     for name in doc["source_git_blobs"]:
         raw = ("synthetic-" + name).encode()
         (tmp_path / name).write_bytes(raw)
-        hashes[name] = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\\0" + raw).hexdigest()
+        hashes[name] = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
     doc["source_git_blobs"] = hashes
     doc["source_sha256"] = {
         "otype.tf": hashlib.sha256((tmp_path / "otype.tf").read_bytes()).hexdigest()
