@@ -20,14 +20,16 @@ from tf_jev.schema import CorpusSchema, SchemaError
 
 
 class ParserLike(Protocol):
-    schema: CorpusSchema
+    @property
+    def schema(self) -> CorpusSchema: ...
 
     def parse(self, request: str) -> ParseResult: ...
 
 
 def _price(value: float | None) -> bool:
     return (
-        type(value) in (float, int)
+        isinstance(value, (int, float))
+        and not isinstance(value, bool)
         and math.isfinite(value)
         and value >= 0
     )
