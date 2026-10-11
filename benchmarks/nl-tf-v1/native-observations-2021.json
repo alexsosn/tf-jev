@@ -1,0 +1,111 @@
+{
+  "format_version": 1,
+  "purpose": "native-replay-not-gold-promotion",
+  "corpus": "ETCBC/bhsa",
+  "data_version": "2021",
+  "source_commit": "4db00e2157915495e1a4d3d57e41223df24775da",
+  "gold_fixture_sha256": "5fc772b2f7eb0a998608cb815c0ae32bce793cc808ce826560dc7106182a2162",
+  "candidate_fixture_sha256": "4b8b8e3452c0d050f363a50f7e20129d22f709ea154771f4c33af02e979f7078",
+  "gold_checked": 6,
+  "candidate_checked": 14,
+  "observations": [
+    {
+      "id": "samuel-proper-noun-context",
+      "observed_2021_rows": 1868,
+      "historical_notebook_rows": 1868,
+      "notebook_data_version": "unversioned",
+      "agrees_with_notebook": true
+    },
+    {
+      "id": "feminine-plural-substantives",
+      "observed_2021_rows": 5992,
+      "historical_notebook_rows": 5992,
+      "notebook_data_version": "unversioned",
+      "agrees_with_notebook": true
+    },
+    {
+      "id": "same-slots-verse-sentence",
+      "observed_2021_rows": 3583,
+      "historical_notebook_rows": 3583,
+      "notebook_data_version": "unversioned",
+      "agrees_with_notebook": true
+    },
+    {
+      "id": "sentence-clause-phrase-order",
+      "observed_2021_rows": 136137,
+      "historical_notebook_rows": 136137,
+      "notebook_data_version": "unversioned",
+      "agrees_with_notebook": true
+    },
+    {
+      "id": "clause-adjacent-phrases",
+      "observed_2021_rows": 162653,
+      "historical_notebook_rows": 162653,
+      "notebook_data_version": "unversioned",
+      "agrees_with_notebook": true
+    },
+    {
+      "id": "words-all",
+      "observed_2021_rows": 426590,
+      "historical_notebook_rows": 426590,
+      "notebook_data_version": "unversioned",
+      "agrees_with_notebook": true
+    },
+    {
+      "id": "qere-present",
+      "observed_2021_rows": 1892,
+      "historical_notebook_rows": 1892,
+      "notebook_data_version": "unversioned",
+      "agrees_with_notebook": true
+    },
+    {
+      "id": "qere-missing",
+      "observed_2021_rows": 424698,
+      "historical_notebook_rows": 424698,
+      "notebook_data_version": "unversioned",
+      "agrees_with_notebook": true
+    },
+    {
+      "id": "complex-verbal-negations",
+      "observed_2021_rows": 271,
+      "historical_notebook_rows": 271,
+      "notebook_data_version": "unversioned",
+      "agrees_with_notebook": true
+    },
+    {
+      "id": "clauses-distance-one",
+      "observed_2021_rows": 598,
+      "historical_notebook_rows": 598,
+      "notebook_data_version": "unversioned",
+      "agrees_with_notebook": true
+    },
+    {
+      "id": "clauses-distance-less-minus-ten",
+      "observed_2021_rows": 86,
+      "historical_notebook_rows": 86,
+      "notebook_data_version": "unversioned",
+      "agrees_with_notebook": true
+    },
+    {
+      "id": "pp-prep-adj-noun",
+      "observed_2021_rows": 61,
+      "historical_notebook_rows": 64,
+      "notebook_data_version": "2017",
+      "agrees_with_notebook": false
+    },
+    {
+      "id": "object-clause-first-lexeme",
+      "observed_2021_rows": 96,
+      "historical_notebook_rows": 96,
+      "notebook_data_version": "2017",
+      "agrees_with_notebook": true
+    },
+    {
+      "id": "complex-predicate-object-lexemes",
+      "observed_2021_rows": 13,
+      "historical_notebook_rows": 13,
+      "notebook_data_version": "2017",
+      "agrees_with_notebook": true
+    }
+  ]
+}

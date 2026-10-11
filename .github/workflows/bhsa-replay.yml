@@ -1,0 +1,85 @@
+name: BHSA 2021 native replay
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/bhsa-replay.yml"
+      - "benchmarks/nl-tf-v1/**"
+      - "scripts/bhsa_replay.py"
+      - "scripts/nl_benchmark.py"
+      - "scripts/nl_candidates.py"
+      - "tests/conformance/tf_harness.py"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/bhsa-replay.yml"
+      - "benchmarks/nl-tf-v1/**"
+      - "scripts/bhsa_replay.py"
+      - "scripts/nl_benchmark.py"
+      - "scripts/nl_candidates.py"
+      - "tests/conformance/tf_harness.py"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  native-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BHSA_COMMIT: 4db00e2157915495e1a4d3d57e41223df24775da
+
+    steps:
+      - name: Checkout replay code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install pinned native TF and project
+        run: |
+          set -euo pipefail
+          python -m pip install -e '.[dev]'
+          python -m pip install 'text-fabric==13.1.0'
+          python -c "from importlib.metadata import version; assert version('text-fabric') == '13.1.0'"
+
+      - name: Fetch only the immutable public BHSA 2021 data tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          directory="$RUNNER_TEMP/bhsa"
+          git init "$directory"
+          git -C "$directory" remote add origin https://github.com/ETCBC/bhsa.git
+          git -C "$directory" sparse-checkout init --cone
+          git -C "$directory" sparse-checkout set tf/2021
+          git -C "$directory" -c protocol.version=2 fetch --no-tags --depth=1 --filter=blob:none origin "$BHSA_COMMIT"
+          git -C "$directory" checkout --detach FETCH_HEAD
+          test "$(git -C "$directory" rev-parse HEAD)" = "$BHSA_COMMIT"
+          git -C "$directory" diff --quiet
+          test -f "$directory/tf/2021/otype.tf"
+          echo "Pinned BHSA checkout at $BHSA_COMMIT"
+
+      - name: Replay pinned native gold and 14 tutorial candidates
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m scripts.bhsa_replay \
+            --corpus "$RUNNER_TEMP/bhsa/tf/2021" \
+            --expected "benchmarks/nl-tf-v1/native-observations-2021.json" \
+            --output "$RUNNER_TEMP/bhsa-replay-report.json"
+
+      - name: Upload aggregate counts only, never corpus data
+        uses: actions/upload-artifact@v4
+        with:
+          name: bhsa-2021-native-replay
+          path: ${{ runner.temp }}/bhsa-replay-report.json
+          retention-days: 30
+          if-no-files-found: error
