@@ -19,7 +19,12 @@ from tests.conformance.tf_harness import load_api, run_template
 SPLITS = frozenset({"train", "development", "evaluation"})
 STATUSES = frozenset({"supported", "ambiguous", "unsupported"})
 MAX_ROWS = 500_000
-ROOT_FIELDS = frozenset({"format_version", "corpus", "data_version", "source_sha256", "cases"})
+PINNED_FILES = frozenset(
+    {"otype.tf", "oslots.tf", "sp.tf", "gn.tf", "nu.tf", "function.tf", "mother.tf"}
+)
+ROOT_FIELDS = frozenset(
+    {"format_version", "corpus", "data_version", "source_sha256", "source_git_blobs", "cases"}
+)
 CASE_FIELDS = frozenset(
     {
         "id",
@@ -51,13 +56,14 @@ class Catalog:
     corpus: str
     data_version: str
     source_sha256: str
+    source_git_blobs: tuple[tuple[str, str], ...]
     cases: tuple[Case, ...]
 
 
 def _fields(value: Any, expected: frozenset[str]) -> dict[str, Any]:
     if type(value) is not dict or set(value) != expected:
         raise ValueError("benchmark record has missing or unknown fields")
-    return value  # type: ignore[no-any-return]
+    return value
 
 
 def _text(value: Any) -> str:
@@ -80,6 +86,12 @@ def load_catalog(path: Path) -> Catalog:
     source = _fields(root["source_sha256"], frozenset({"otype.tf"}))["otype.tf"]
     if type(source) is not str or re.fullmatch(r"[0-9a-f]{64}", source) is None:
         raise ValueError("invalid source digest")
+    raw_blobs = _fields(root["source_git_blobs"], PINNED_FILES)
+    blobs: list[tuple[str, str]] = []
+    for name, digest in sorted(raw_blobs.items()):
+        if type(digest) is not str or re.fullmatch(r"[0-9a-f]{40}", digest) is None:
+            raise ValueError("invalid Git source digest")
+        blobs.append((name, digest))
     records = root["cases"]
     if type(records) is not list or not records:
         raise ValueError("benchmark cases must be a nonempty list")
@@ -107,18 +119,31 @@ def load_catalog(path: Path) -> Catalog:
         elif gold is not None or count is not None:
             raise ValueError("abstention cases must not have gold native queries or counts")
         cases.append(Case(identifier, split, status, difficulty, request, gold, count, rationale))
-    return Catalog(root["corpus"], root["data_version"], source, tuple(cases))
+    return Catalog(root["corpus"], root["data_version"], source, tuple(blobs), tuple(cases))
+
+
+def _git_blob_sha(path: Path) -> str:
+    """Verify the content SHA from the upstream Git tree without loading it into memory."""
+    digest = hashlib.sha1()
+    digest.update(f"blob {path.stat().st_size}\\0".encode())
+    with path.open("rb") as source:
+        while chunk := source.read(1024 * 1024):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def verify_source(directory: Path, catalog: Catalog) -> None:
-    """Fail closed if BHSA raw otype differs from the frozen source digest."""
+    """Fail closed if any referenced BHSA feature or structural source differs."""
     try:
-        digest = hashlib.sha256((directory / "otype.tf").read_bytes()).hexdigest()
+        with (directory / "otype.tf").open("rb") as source:
+            digest = hashlib.file_digest(source, "sha256").hexdigest()
+        if digest != catalog.source_sha256:
+            raise ValueError("benchmark corpus source digest mismatch")
+        for name, expected in catalog.source_git_blobs:
+            if _git_blob_sha(directory / name) != expected:
+                raise ValueError("benchmark corpus source Git digest mismatch")
     except OSError as error:
         raise ValueError("benchmark corpus source is unavailable") from error
-    if digest != catalog.source_sha256:
-        raise ValueError("benchmark corpus source digest mismatch")
-
 
 def check_gold(api: Any, case: Case) -> int:
     """Validate a supported native gold query and its exact, untruncated row count."""
