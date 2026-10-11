@@ -227,7 +227,7 @@ def test_real_bhsa_compiles_to_native_verbal_clause_results(bhsa_api: Any, bhsa_
     )
     assert lex_result.status is ParseStatus.SUPPORTED and lex_result.query is not None
     assert run_template(bhsa_api, lex_result.query).results == tuple(
-        (n,) for n in sorted(bhsa_api.F.lex.s("BR>["))
+        (n,) for n in sorted(bhsa_api.F.lex.s("BR>[")) if bhsa_api.F.otype.v(n) == "word"
     )
 
     edges = choices("relation")

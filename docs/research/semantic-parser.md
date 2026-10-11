@@ -42,3 +42,9 @@ No benchmark fixture is imported by production code. Synthetic orchestration tes
 and actual BHSA execution prove boundaries, not model accuracy. Keep v2 heldout out
 of examples/tuning; #11 must measure parser quality and replace a holdout after tuning
 informed by evaluation. Do not claim semantic quality from scripted decisions.
+
+BHSA integration observation: `lex` is populated on both `word` and `lex` nodes
+(8,769 distinct values each). Raw feature-value lookup alone does not establish
+requested node type. Corpus oracles must explicitly retain object-type constraints;
+BR>[ has 48 word nodes plus a separate lexeme node. This is why parser choices
+and validation retain per-(feature, object type) domains.

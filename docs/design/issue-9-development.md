@@ -28,3 +28,8 @@ Freeze the final head, run full relevant tests (including opt-in BHSA), CI on Py
 3.11–3.13 and core wheel, then record logically independent adversarial review of the
 actual code and native paths on that same head before merge. Production review fixes
 must repeat RED → fix → GREEN and require new-head review.
+
+Full exact-head BHSA run on `6795744` observed 461 passes and one failure in the
+new lexeme oracle: `F.lex.s("BR>[")` includes both word nodes and the lexeme node
+1437604. The parser correctly constrained `word`; corrected the raw test oracle
+to filter `otype=word`. No production behavior changed. Re-run final-head gates.
