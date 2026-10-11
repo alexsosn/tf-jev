@@ -38,7 +38,9 @@ def _sha256(path: Path) -> str:
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
-def replay(corpus: Path, gold_path: Path = GOLD, candidate_path: Path = CANDIDATES) -> dict[str, Any]:
+def replay(
+    corpus: Path, gold_path: Path = GOLD, candidate_path: Path = CANDIDATES
+) -> dict[str, Any]:
     """Verify the source first, then replay all gold and in-scope candidates.
 
     Raises rather than returning an incomplete or purportedly passing report
@@ -117,11 +119,17 @@ def write_report(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Recheck verified BHSA 2021 native gold and tutorial candidates")
-    parser.add_argument("--corpus", required=True, type=Path, help="local ETCBC/bhsa/tf/2021 directory")
+    parser = argparse.ArgumentParser(
+        description="Recheck verified BHSA 2021 native gold and tutorial candidates"
+    )
+    parser.add_argument(
+        "--corpus", required=True, type=Path, help="local ETCBC/bhsa/tf/2021 directory"
+    )
     parser.add_argument("--gold", type=Path, default=GOLD)
     parser.add_argument("--candidates", type=Path, default=CANDIDATES)
-    parser.add_argument("--output", type=Path, required=True, help="new JSON summary (no corpus text)")
+    parser.add_argument(
+        "--output", type=Path, required=True, help="new JSON summary (no corpus text)"
+    )
     args = parser.parse_args()
     try:
         # Fail before expensive loading if caller points --output at a pinned fixture.
