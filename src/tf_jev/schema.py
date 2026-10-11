@@ -11,7 +11,7 @@ import hashlib
 import json
 import re
 import unicodedata
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 from dataclasses import asdict, dataclass, field
 from importlib.metadata import version
 from pathlib import Path
@@ -237,7 +237,9 @@ class CorpusSchema:
         )
 
 
-def extract_schema(api: Any) -> CorpusSchema:
+def extract_schema(
+    api: Any, *, _phase_observer: Callable[[str], None] | None = None
+) -> CorpusSchema:
     """Snapshot a stable loaded TF core session; never downloads or calls a model.
 
     Adds all admissible features to the session. Do not mutate the corpus or
@@ -245,14 +247,20 @@ def extract_schema(api: Any) -> CorpusSchema:
     later mutations. Re-extract after updates before compiling new queries.
     """
     try:
-        return _extract(api)
+        return _extract(api, _phase_observer=_phase_observer)
     except SchemaError:
         raise
     except (AttributeError, KeyError, TypeError, ValueError, OSError):
         raise SchemaError("invalid or unreadable Text-Fabric corpus state") from None
 
 
-def _extract(api: Any) -> CorpusSchema:
+def _extract(
+    api: Any, *, _phase_observer: Callable[[str], None] | None = None
+) -> CorpusSchema:
+    def checkpoint(phase: str) -> None:
+        if _phase_observer is not None:
+            _phase_observer(phase)
+
     if not api:
         raise SchemaError("a loaded Text-Fabric core API is required")
     tf = api.TF
@@ -260,8 +268,10 @@ def _extract(api: Any) -> CorpusSchema:
     node_names = tuple(sorted(f for f in sets["nodes"] if _admissible(f)))
     edge_names = tuple(sorted(f for f in sets["edges"] if _admissible(f)))
     excluded = tuple(sorted(f for f in (*sets["nodes"], *sets["edges"]) if not _admissible(f)))
+    checkpoint("discover")
     if not tf.load((*node_names, *edge_names), add=True, silent="deep"):
         raise SchemaError("Text-Fabric could not load query features")
+    checkpoint("load_features")
     types = tuple(
         ObjectType(level[0], level[0] == api.F.otype.slotType, bool(_SYMBOL.fullmatch(level[0])))
         for level in api.C.levels.data
@@ -280,12 +290,14 @@ def _extract(api: Any) -> CorpusSchema:
             )
         ):
             raise SchemaError("native type interval differs from raw node types")
+    checkpoint("type_index")
     loaded_digest = hashlib.sha256()
     _digest_record(loaded_digest, [asdict(t) for t in types])
     _digest_record(loaded_digest, ("otype", sorted(node_types.items())))
     _digest_record(
         loaded_digest, ("oslots", [(n, list(slots)) for n, slots in api.E.oslots.items()])
     )
+    checkpoint("warp_digest")
     inventories: list[_Inventory] = []
     feature_meta: list[tuple[str, Literal["str", "int"], str | None]] = []
     for name in node_names:
@@ -310,6 +322,7 @@ def _extract(api: Any) -> CorpusSchema:
                 _Inventory(name, t.name, tuple(sorted(counts.items())), frozenset(counts))
             )
         feature_meta.append((name, dtype, description))
+    checkpoint("node_features")
     edges: list[EdgeFeature] = []
     for name in edge_names:
         info = tf.features[name]
@@ -339,6 +352,7 @@ def _extract(api: Any) -> CorpusSchema:
                 tuple((a, b, count) for (a, b), count in sorted(pairs.items())),
             )
         )
+    checkpoint("edge_features")
     locations = tuple(
         (str(path), _source_digest(path))
         for loc in tf.locations
@@ -355,6 +369,7 @@ def _extract(api: Any) -> CorpusSchema:
         locations,
         loaded_digest.hexdigest(),
     )
+    checkpoint("source_identity")
     features: list[NodeFeature] = []
     for name, dtype, description in feature_meta:
         domains = []
@@ -390,6 +405,8 @@ def _extract(api: Any) -> CorpusSchema:
                 )
             )
         features.append(NodeFeature(name, dtype, description, tuple(domains)))
-    return CorpusSchema(
+    snapshot = CorpusSchema(
         identity, types, tuple(features), tuple(edges), excluded, tuple(inventories)
     )
+    checkpoint("domains")
+    return snapshot
