@@ -36,7 +36,8 @@ def _catalog(cases: list[dict[str, Any]]) -> dict[str, Any]:
         "data_version": "2021",
         "source_sha256": {"otype.tf": "a" * 64},
         "source_git_blobs": {name: "a" * 40 for name in (
-            "otype.tf", "oslots.tf", "sp.tf", "gn.tf", "nu.tf", "function.tf", "mother.tf"
+            "otype.tf", "oslots.tf", "sp.tf", "gn.tf", "nu.tf", "function.tf",
+            "mother.tf", "book.tf", "qere.tf"
         )},
         "cases": cases,
     }
