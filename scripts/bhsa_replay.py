@@ -118,6 +118,23 @@ def write_report(
             tmp.unlink(missing_ok=True)
 
 
+
+def verify_reference_report(report: dict[str, Any], reference_path: Path) -> None:
+    """Refuse corpus/fixture/count drift against reviewed native observations.
+
+    Canonical serialized JSON comparison deliberately distinguishes bool from int,
+    unlike Python dict equality. This fixture records native behavior, not NL gold.
+    """
+    try:
+        expected = json.loads(reference_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, ValueError) as error:
+        raise ValueError("native reference unavailable or malformed") from error
+    canonical = lambda value: json.dumps(value, sort_keys=True, separators=(",", ":"))
+    if canonical(report) != canonical(expected):
+        raise ValueError("native reference mismatch (counts, source or fixture identity)")
+
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Recheck verified BHSA 2021 native gold and tutorial candidates"
@@ -128,17 +145,21 @@ def main() -> int:
     parser.add_argument("--gold", type=Path, default=GOLD)
     parser.add_argument("--candidates", type=Path, default=CANDIDATES)
     parser.add_argument(
+        "--expected", type=Path, help="optional frozen native-only observation reference"
+    )
+    parser.add_argument(
         "--output", type=Path, required=True, help="new JSON summary (no corpus text)"
     )
     args = parser.parse_args()
     try:
         # Fail before expensive loading if caller points --output at a pinned fixture.
-        if args.output.resolve() in {args.gold.resolve(), args.candidates.resolve()}:
+        protected = (args.gold, args.candidates, *([args.expected] if args.expected else []))
+        if args.output.resolve() in {path.resolve() for path in protected}:
             raise ValueError("refusing to overwrite a source fixture")
         report = replay(args.corpus, args.gold, args.candidates)
-        write_report(
-            args.output, report, protected_paths=(args.gold, args.candidates)
-        )
+        if args.expected is not None:
+            verify_reference_report(report, args.expected)
+        write_report(args.output, report, protected_paths=protected)
         print(json.dumps(report, sort_keys=True))
     except (ValueError, OSError) as error:
         parser.exit(1, f"BHSA 2021 replay failed: {error}\n")
