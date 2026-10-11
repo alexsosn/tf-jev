@@ -136,4 +136,5 @@ def test_selected_profile_reports_explicit_omissions(tmp_path: Path) -> None:
     assert "lex" in coverage["omitted_node_features"]
     assert "mother" in coverage["omitted_edge_features"]
     assert report["node_features"] == 1 and report["edge_features"] == 0
-    assert report["phases"] and len(report["phases"]) == 8
+    phases = report["phases"]
+    assert isinstance(phases, list) and len(phases) == 8
