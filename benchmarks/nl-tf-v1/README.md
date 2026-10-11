@@ -1,4 +1,7 @@
-# BHSA NL ↔ native TF benchmark (seed v1)
+# BHSA NL ↔ native TF benchmark (historical seed v1)
+
+Superseded for parser/evaluation work by the complete [v2 benchmark](../nl-tf-v2/README.md).
+This fixture and its original evaluation split remain unchanged as provenance evidence.
 
 Research dataset for [#10](https://github.com/alexsosn/tf-jev/issues/10), originally seeded and first expanded on 2026-10-11.
 Corpus: [ETCBC/bhsa](https://github.com/ETCBC/bhsa) TF data version **2021**,

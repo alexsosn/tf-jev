@@ -1,0 +1,1671 @@
+{
+  "version": "nl-tf-v2",
+  "corpus": {
+    "name": "BHSA",
+    "version": "2021",
+    "text_fabric": "13.1.0"
+  },
+  "features": [
+    "sp",
+    "gn",
+    "nu",
+    "vs",
+    "vt",
+    "function",
+    "typ",
+    "language",
+    "nametype",
+    "lex",
+    "prs",
+    "nme",
+    "voc_lex_utf8",
+    "number",
+    "mother",
+    "gloss"
+  ],
+  "source_sha256": {
+    "sp.tf": "7fa4a18e308531e6dfdc4793ab267587629d4b882f4a4a5d839f8bc896af7861",
+    "gn.tf": "93b0b0281a4552a9bfb4723f0fc41a4300c27bd1db41c7994c6fcf3ebb61aab5",
+    "nu.tf": "e08c8cdf69a537ddaf137962ce8aa82f784ee629c0754b8d25684bddfb7cb25d",
+    "vs.tf": "db8efa910e185d226797ffd62270746d04f1bdc53fbe6a9dbacb65cbd41bf665",
+    "vt.tf": "fa49244a53eae279c8b119b3f4710722111fc81edf01bf7bcc3c43bfd1c7c41d",
+    "function.tf": "3b4f87ac5691826c48a71c71b6cb53a5318f779ca82402e48c1a5db2fbda60b2",
+    "typ.tf": "277409ffea258a56cd3aaaf69f0f620d025e884010a82b33c3a5b41c2ad6ff22",
+    "language.tf": "b6e9f2a855901d6d29c970c2710fd7189ad2b5fc5e457f1b4c92e54d8c77cd5a",
+    "nametype.tf": "fb070813781277ce838134379134ba25332e52587320e0012a96002a49e3c3e1",
+    "lex.tf": "2469664dc71bcde35a916d6a85453a5567cff3dcbc3e3323204e1120bc5ed25a",
+    "prs.tf": "d28c8fbfc6d46f94e5f22adfeb039e40af99c74f1056475a9f1307d0f23cffec",
+    "nme.tf": "5176cea507f87ac0dba888aa4b495847518e271962c2f34326d3a4818ed09c3d",
+    "voc_lex_utf8.tf": "e67e3a0d67205fbb8508faabfc210c59e1475465084ea8bfe88fa160bfb628b3",
+    "number.tf": "a417e8a6f1a3a36d3011505216162746af4aebc3561542c16e0328720192ea62",
+    "mother.tf": "13d3340ed327aa7d739dfc5fc870d10de00308a8e5ed713fbe4c5eee717c5cfe",
+    "gloss.tf": "b0e94e5e43d6d4305c7321986afbbded1bb980b161a765891b66f40c66434d2e",
+    "otype.tf": "bb5da974a3b1dd7ff9ddab54dfb533059442642ab830b832a49eea8670aaa920",
+    "oslots.tf": "c4efaeed8047d4e75834cc94856d79eacc7a146aea01c34d8be88497d8fa303b",
+    "otext.tf": "20c1c41bc602804ecafbf56bfc88541b0af92afcc16fb594db6acfc6f3a846e9"
+  },
+  "cases": [
+    {
+      "id": "dev-part-of-speech-01",
+      "family": "part-of-speech",
+      "partition": "development",
+      "request": "Return all words annotated as verbs.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=verb",
+        "projection": [
+          0
+        ],
+        "count": 73710,
+        "signature": "dea8c051b7418602c4cdf1fd083723a816780ad28feb10e6ce3bdee4e2eaf8d2"
+      }
+    },
+    {
+      "id": "dev-part-of-speech-02",
+      "family": "part-of-speech",
+      "partition": "development",
+      "request": "Return all words annotated as nouns.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=subs",
+        "projection": [
+          0
+        ],
+        "count": 121509,
+        "signature": "ef2ea843feac2f0f02fa54b3da7dcac1fdc7307b1879a5db46c6342d0db6a13e"
+      }
+    },
+    {
+      "id": "dev-part-of-speech-03",
+      "family": "part-of-speech",
+      "partition": "development",
+      "request": "Return all words annotated as proper nouns.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=nmpr",
+        "projection": [
+          0
+        ],
+        "count": 33002,
+        "signature": "40b3279fce339f794e2684d55b44e217af56f00799e68dac9ef06d20bf9c2a1e"
+      }
+    },
+    {
+      "id": "dev-part-of-speech-04",
+      "family": "part-of-speech",
+      "partition": "development",
+      "request": "Return all words annotated as adjectives.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=adjv",
+        "projection": [
+          0
+        ],
+        "count": 9523,
+        "signature": "9fe3e722e172715a3d3d34bf6861adf0f1ddc9c1bb0253371d21bf922fcee041"
+      }
+    },
+    {
+      "id": "dev-part-of-speech-05",
+      "family": "part-of-speech",
+      "partition": "development",
+      "request": "Return all words annotated as adverbs.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=advb",
+        "projection": [
+          0
+        ],
+        "count": 4550,
+        "signature": "8d37baeb2f5f5401a35d4122f8d85c417de0e1d6c2ae1f9f7606a12b70b8ddb5"
+      }
+    },
+    {
+      "id": "dev-part-of-speech-06",
+      "family": "part-of-speech",
+      "partition": "development",
+      "request": "Return all words annotated as prepositions.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=prep",
+        "projection": [
+          0
+        ],
+        "count": 73273,
+        "signature": "d40baf6118d872634f54c3349b3e5f6aa3975994eea6ad6e4f2dc19985ae2f61"
+      }
+    },
+    {
+      "id": "dev-part-of-speech-07",
+      "family": "part-of-speech",
+      "partition": "development",
+      "request": "Return all words annotated as conjunctions.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=conj",
+        "projection": [
+          0
+        ],
+        "count": 62722,
+        "signature": "3641c22af6a0289504db21bfe798df7f64866dc70e8c04ece6a347e9d4f844d1"
+      }
+    },
+    {
+      "id": "dev-part-of-speech-08",
+      "family": "part-of-speech",
+      "partition": "development",
+      "request": "Return all words annotated as articles.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=art",
+        "projection": [
+          0
+        ],
+        "count": 30386,
+        "signature": "c6079fb3a1cc30f29c343615b11c3002f6c87275e354ae96cff93b368464f8eb"
+      }
+    },
+    {
+      "id": "dev-part-of-speech-09",
+      "family": "part-of-speech",
+      "partition": "development",
+      "request": "Return all words annotated as personal pronouns.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=prps",
+        "projection": [
+          0
+        ],
+        "count": 5011,
+        "signature": "26da3615aab0a8837567af7a4a79ccafe2784681d7a5ddeebb8eafa76d3790b1"
+      }
+    },
+    {
+      "id": "dev-part-of-speech-10",
+      "family": "part-of-speech",
+      "partition": "development",
+      "request": "Return all words annotated as negative particles.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=nega",
+        "projection": [
+          0
+        ],
+        "count": 6053,
+        "signature": "2573fc1c70d15bac68caab914cddecce064a29a5f62669ef9fda4e033cabe409"
+      }
+    },
+    {
+      "id": "dev-part-of-speech-11",
+      "family": "part-of-speech",
+      "partition": "development",
+      "request": "Return words annotated as either nouns or proper nouns.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=subs|nmpr",
+        "projection": [
+          0
+        ],
+        "count": 154511,
+        "signature": "7b2a0622a23a7af6a08a2fbd6ba4996e73b3e337ed362fcc26cda48f17552cf1"
+      }
+    },
+    {
+      "id": "dev-part-of-speech-12",
+      "family": "part-of-speech",
+      "partition": "development",
+      "request": "Return words whose part-of-speech annotation is not verb.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp#verb",
+        "projection": [
+          0
+        ],
+        "count": 352880,
+        "signature": "29d22c39e6a51582d68e0521b7dc3721e699a231296103f288a30e5f59c15a32"
+      }
+    },
+    {
+      "id": "dev-gender-number-01",
+      "family": "gender-number",
+      "partition": "development",
+      "request": "Return nouns annotated as feminine and singular.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=subs gn=f nu=sg",
+        "projection": [
+          0
+        ],
+        "count": 19247,
+        "signature": "b66b102d10ab7a51ee1c3d98214409bf84fcf7ae844688a325f20c4b9fc4bec2"
+      }
+    },
+    {
+      "id": "dev-gender-number-02",
+      "family": "gender-number",
+      "partition": "development",
+      "request": "Return nouns annotated as masculine and plural.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=subs gn=m nu=pl",
+        "projection": [
+          0
+        ],
+        "count": 24852,
+        "signature": "c5e5772be8c6acb2b66046c1a0c85dc85cb78466cba3d99aa99414d2d0d412f5"
+      }
+    },
+    {
+      "id": "dev-gender-number-03",
+      "family": "gender-number",
+      "partition": "development",
+      "request": "Return nouns annotated as feminine and plural.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=subs gn=f nu=pl",
+        "projection": [
+          0
+        ],
+        "count": 5992,
+        "signature": "8872996435c7f4fae2de92cefc6736b758bab8a591ecd03c7fa273341df7f1b1"
+      }
+    },
+    {
+      "id": "dev-gender-number-04",
+      "family": "gender-number",
+      "partition": "development",
+      "request": "Return nouns annotated as masculine and singular.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=subs gn=m nu=sg",
+        "projection": [
+          0
+        ],
+        "count": 57057,
+        "signature": "508748684efc3408f90418b38b1db9ae2e3b6ce53634dea68bdc420a66080172"
+      }
+    },
+    {
+      "id": "dev-gender-number-05",
+      "family": "gender-number",
+      "partition": "development",
+      "request": "Return verbs annotated as feminine and plural.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=verb gn=f nu=pl",
+        "projection": [
+          0
+        ],
+        "count": 725,
+        "signature": "834686395e1069b4c70e6cb6a3749cb58c67fd33034062c8e73b8f928f8d51b9"
+      }
+    },
+    {
+      "id": "dev-gender-number-06",
+      "family": "gender-number",
+      "partition": "development",
+      "request": "Return verbs annotated as masculine and singular.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=verb gn=m nu=sg",
+        "projection": [
+          0
+        ],
+        "count": 35656,
+        "signature": "2ad254d0c12a67d277ce8032443b7d06e2a6b1f3f210d3f78b33b1fe93d6439f"
+      }
+    },
+    {
+      "id": "dev-gender-number-07",
+      "family": "gender-number",
+      "partition": "development",
+      "request": "Return adjectives annotated as feminine and singular.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=adjv gn=f nu=sg",
+        "projection": [
+          0
+        ],
+        "count": 1203,
+        "signature": "8b928dac91248d743212130a025c7ba4c9c1b9ddf5df30af75a101b8c34d4531"
+      }
+    },
+    {
+      "id": "dev-gender-number-08",
+      "family": "gender-number",
+      "partition": "development",
+      "request": "Return adjectives annotated as masculine and plural.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=adjv gn=m nu=pl",
+        "projection": [
+          0
+        ],
+        "count": 2711,
+        "signature": "23514407d3b08dd22933b00ed4bb2a326ee2720e6cf9be339bb67aa4cf6d139b"
+      }
+    },
+    {
+      "id": "dev-gender-number-09",
+      "family": "gender-number",
+      "partition": "development",
+      "request": "Return personal pronouns annotated as feminine and plural.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=prps gn=f nu=pl",
+        "projection": [
+          0
+        ],
+        "count": 54,
+        "signature": "8a3195ca048bdfeabddc538927603462557cea90f3b919c167fd872f48cf8aa7"
+      }
+    },
+    {
+      "id": "dev-gender-number-10",
+      "family": "gender-number",
+      "partition": "development",
+      "request": "Return nouns annotated as masculine and dual.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "word sp=subs gn=m nu=du",
+        "projection": [
+          0
+        ],
+        "count": 224,
+        "signature": "f5e0dbb6852f0165d5ef18780ea2033b04171b05de0d8a4724e699238ab1e0b4"
+      }
+    },
+    {
+      "id": "dev-phrase-function-01",
+      "family": "phrase-function",
+      "partition": "development",
+      "request": "Return phrases with the subject function annotation.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "phrase function=Subj",
+        "projection": [
+          0
+        ],
+        "count": 31979,
+        "signature": "a31f2271cc9a28764030360aa783701508017d7adebf7868a1bed23359fe34c5"
+      }
+    },
+    {
+      "id": "dev-phrase-function-02",
+      "family": "phrase-function",
+      "partition": "development",
+      "request": "Return phrases with the object function annotation.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "phrase function=Objc",
+        "projection": [
+          0
+        ],
+        "count": 22668,
+        "signature": "673964fef26e7f86cb3044f4411c4220a0881cb8f751a40b14b46a6ccb4680ed"
+      }
+    },
+    {
+      "id": "dev-phrase-function-03",
+      "family": "phrase-function",
+      "partition": "development",
+      "request": "Return phrases with the predicate function annotation.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "phrase function=Pred",
+        "projection": [
+          0
+        ],
+        "count": 57070,
+        "signature": "182fb56da15915e1cbbd8a806b9cd9cb7b1311b55c45e51d37a407c5ac12002f"
+      }
+    },
+    {
+      "id": "dev-phrase-function-04",
+      "family": "phrase-function",
+      "partition": "development",
+      "request": "Return phrases with the predicate complement function annotation.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "phrase function=PreC",
+        "projection": [
+          0
+        ],
+        "count": 19400,
+        "signature": "d52c666bed619595dfaa128ccc8cff0ce66336048d9f6f257499c31907922790"
+      }
+    },
+    {
+      "id": "dev-phrase-function-05",
+      "family": "phrase-function",
+      "partition": "development",
+      "request": "Return phrases with the time reference function annotation.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "phrase function=Time",
+        "projection": [
+          0
+        ],
+        "count": 4079,
+        "signature": "97ac27127d0f7434298b1a55fa9f3908ef18fa8c768825c5cc1c4ead2865e685"
+      }
+    },
+    {
+      "id": "dev-phrase-function-06",
+      "family": "phrase-function",
+      "partition": "development",
+      "request": "Return phrases with the complement function annotation.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "phrase function=Cmpl",
+        "projection": [
+          0
+        ],
+        "count": 30036,
+        "signature": "993e0333206b6c95f6d1c14820943ca694ba0914c3c5cff3ef30126d0606c6fb"
+      }
+    },
+    {
+      "id": "dev-containment-01",
+      "family": "containment",
+      "partition": "development",
+      "request": "Return distinct clauses containing at least one word annotated as verbs.",
+      "expected": "supported",
+      "rationale": "Column 1 is an existential word witness; return only column 0 and deduplicate.",
+      "gold": {
+        "query": "clause\n  word sp=verb",
+        "projection": [
+          0
+        ],
+        "count": 70150,
+        "signature": "d6dbce7fb8cf51a49d1ea5e45d9dd3119e252b4173a1d05a536e294d1a2686e9"
+      }
+    },
+    {
+      "id": "dev-containment-02",
+      "family": "containment",
+      "partition": "development",
+      "request": "Return distinct clauses containing at least one word annotated as proper nouns.",
+      "expected": "supported",
+      "rationale": "Column 1 is an existential word witness; return only column 0 and deduplicate.",
+      "gold": {
+        "query": "clause\n  word sp=nmpr",
+        "projection": [
+          0
+        ],
+        "count": 22932,
+        "signature": "6ec5a56331ae4f710217458a86ac68d4464ccac0de70f3187bf16d520e04fde7"
+      }
+    },
+    {
+      "id": "dev-containment-03",
+      "family": "containment",
+      "partition": "development",
+      "request": "Return distinct phrases containing at least one word annotated as negative particles.",
+      "expected": "supported",
+      "rationale": "Column 1 is an existential word witness; return only column 0 and deduplicate.",
+      "gold": {
+        "query": "phrase\n  word sp=nega",
+        "projection": [
+          0
+        ],
+        "count": 6049,
+        "signature": "936ab68b50abb596953e078f87256e3c6b4fc6c8a6967f7fa8967415d5bbb679"
+      }
+    },
+    {
+      "id": "dev-containment-04",
+      "family": "containment",
+      "partition": "development",
+      "request": "Return distinct phrases containing at least one word annotated as feminine nouns.",
+      "expected": "supported",
+      "rationale": "Column 1 is an existential word witness; return only column 0 and deduplicate.",
+      "gold": {
+        "query": "phrase\n  word sp=subs gn=f",
+        "projection": [
+          0
+        ],
+        "count": 23594,
+        "signature": "73ee5a37bb9e9683562eb2a6146d70d52977118164ca3239f7d47b2c05aab4fc"
+      }
+    },
+    {
+      "id": "dev-containment-05",
+      "family": "containment",
+      "partition": "development",
+      "request": "Return distinct sentences containing at least one word annotated as Aramaic words.",
+      "expected": "supported",
+      "rationale": "Column 1 is an existential word witness; return only column 0 and deduplicate.",
+      "gold": {
+        "query": "sentence\n  word language=Aramaic",
+        "projection": [
+          0
+        ],
+        "count": 793,
+        "signature": "860fd1335d7e3865d8dd62ba1ba416fe74e9a300f5f80439ebe99046da83a66e"
+      }
+    },
+    {
+      "id": "dev-containment-06",
+      "family": "containment",
+      "partition": "development",
+      "request": "Return distinct clauses containing at least one word annotated as verbs with nif stem.",
+      "expected": "supported",
+      "rationale": "Column 1 is an existential word witness; return only column 0 and deduplicate.",
+      "gold": {
+        "query": "clause\n  word sp=verb vs=nif",
+        "projection": [
+          0
+        ],
+        "count": 4095,
+        "signature": "a84354c03b560dcb7f260625486405e18937d96c83f99bf71468cccb30c8fc2d"
+      }
+    },
+    {
+      "id": "hel-adjacency-01",
+      "family": "adjacency",
+      "partition": "heldout",
+      "request": "Find verb–substantive word pairs where the substantive immediately follows the verb.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "a:word sp=verb\nb:word sp=subs\na <: b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 15336,
+        "signature": "8f77f3f70349bc80f25dcdc2c09c04f55af0f5991819ae8fdee03c957ce36be8"
+      }
+    },
+    {
+      "id": "hel-adjacency-02",
+      "family": "adjacency",
+      "partition": "heldout",
+      "request": "Return ordered word pairs: a preposition immediately followed by a noun in corpus slot order, with those part-of-speech annotations.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "a:word sp=prep\nb:word sp=subs\na <: b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 33967,
+        "signature": "d1de67329a0d6856435e5152130d747f9e19d435a7e198686b4a254c385c6b40"
+      }
+    },
+    {
+      "id": "hel-adjacency-03",
+      "family": "adjacency",
+      "partition": "heldout",
+      "request": "Return ordered word pairs: a article immediately followed by a noun in corpus slot order, with those part-of-speech annotations.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "a:word sp=art\nb:word sp=subs\na <: b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 22699,
+        "signature": "3a02d8ba38faf455db6f1c2b75e3c5d523778595f7ee8a75eeb8498aeaee1987"
+      }
+    },
+    {
+      "id": "hel-adjacency-04",
+      "family": "adjacency",
+      "partition": "heldout",
+      "request": "Return ordered word pairs: a conjunction immediately followed by a verb in corpus slot order, with those part-of-speech annotations.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "a:word sp=conj\nb:word sp=verb\na <: b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 31084,
+        "signature": "398134b86fcbb265ad65d8e549d0b97cba320bb20414a9bfedeff537a13ce087"
+      }
+    },
+    {
+      "id": "hel-adjacency-05",
+      "family": "adjacency",
+      "partition": "heldout",
+      "request": "Return ordered word pairs: a adjective immediately followed by a noun in corpus slot order, with those part-of-speech annotations.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "a:word sp=adjv\nb:word sp=subs\na <: b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 1414,
+        "signature": "5269023085ceca90638916dab56fa8268b3536882b7072a4e9c3d876bc874a58"
+      }
+    },
+    {
+      "id": "hel-adjacency-06",
+      "family": "adjacency",
+      "partition": "heldout",
+      "request": "Return ordered word pairs: a negative particle immediately followed by a verb in corpus slot order, with those part-of-speech annotations.",
+      "expected": "supported",
+      "rationale": "Return the distinct requested nodes/tuples selected by the stated annotations.",
+      "gold": {
+        "query": "a:word sp=nega\nb:word sp=verb\na <: b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 5254,
+        "signature": "6a2bc5f9aeac53755a5741841db01a8d8a2713d26f7473228ae5e30cc26b487b"
+      }
+    },
+    {
+      "id": "dev-literal-lexeme-01",
+      "family": "literal-lexeme",
+      "partition": "development",
+      "request": "Return words whose lex annotation is exactly 'JHWH/'.",
+      "expected": "supported",
+      "rationale": "Literal annotation lookup, not English-to-Hebrew translation; preserve original lexeme spelling.",
+      "gold": {
+        "query": "word lex=JHWH/",
+        "projection": [
+          0
+        ],
+        "count": 6828,
+        "signature": "ec040585c8cbabc5faaf688bec5d2641cfb03983c5cd55bc136cc91f878808e7"
+      }
+    },
+    {
+      "id": "dev-literal-lexeme-02",
+      "family": "literal-lexeme",
+      "partition": "development",
+      "request": "Return words whose lex annotation is exactly '>MR['.",
+      "expected": "supported",
+      "rationale": "Literal annotation lookup, not English-to-Hebrew translation; preserve original lexeme spelling.",
+      "gold": {
+        "query": "word lex=>MR[",
+        "projection": [
+          0
+        ],
+        "count": 5378,
+        "signature": "0be5e95aad10fac26a3017366e4ffe3a984664a88f04400de9f49b58a33a8d5e"
+      }
+    },
+    {
+      "id": "dev-literal-lexeme-03",
+      "family": "literal-lexeme",
+      "partition": "development",
+      "request": "Return words whose lex annotation is exactly 'BR>['.",
+      "expected": "supported",
+      "rationale": "Literal annotation lookup, not English-to-Hebrew translation; preserve original lexeme spelling.",
+      "gold": {
+        "query": "word lex=BR>[",
+        "projection": [
+          0
+        ],
+        "count": 48,
+        "signature": "8f4b56481046e696631c3042bca86e48a9b0d9ba9ef4ee88a9ad29e5c68f39ca"
+      }
+    },
+    {
+      "id": "dev-literal-lexeme-04",
+      "family": "literal-lexeme",
+      "partition": "development",
+      "request": "Return words whose lex annotation is exactly '>LHJM/'.",
+      "expected": "supported",
+      "rationale": "Literal annotation lookup, not English-to-Hebrew translation; preserve original lexeme spelling.",
+      "gold": {
+        "query": "word lex=>LHJM/",
+        "projection": [
+          0
+        ],
+        "count": 2601,
+        "signature": "9c2c70b0d55a7e5ceaba4980402fd6efe119be6fcb661c6d9fc99e61a09c2d03"
+      }
+    },
+    {
+      "id": "dev-literal-lexeme-05",
+      "family": "literal-lexeme",
+      "partition": "development",
+      "request": "Return words whose lex annotation is exactly 'R>CJT/'.",
+      "expected": "supported",
+      "rationale": "Literal annotation lookup, not English-to-Hebrew translation; preserve original lexeme spelling.",
+      "gold": {
+        "query": "word lex=R>CJT/",
+        "projection": [
+          0
+        ],
+        "count": 51,
+        "signature": "c363fc7cdfbec88af748a71362912803d8f894bfad3b7471407878ea0f30ae87"
+      }
+    },
+    {
+      "id": "dev-literal-lexeme-06",
+      "family": "literal-lexeme",
+      "partition": "development",
+      "request": "Return words whose lex annotation is exactly 'BN/'.",
+      "expected": "supported",
+      "rationale": "Literal annotation lookup, not English-to-Hebrew translation; preserve original lexeme spelling.",
+      "gold": {
+        "query": "word lex=BN/",
+        "projection": [
+          0
+        ],
+        "count": 4937,
+        "signature": "8bcccbadc097b2095b0fc4b7563cc68cd2a7ea08f4a38b3b97ce17bdd8a639b1"
+      }
+    },
+    {
+      "id": "dev-negated-containment-01",
+      "family": "negated-containment",
+      "partition": "development",
+      "request": "Return clauses containing no words annotated as verbs.",
+      "expected": "supported",
+      "rationale": "Native /without/ excludes any parent with at least one matching word witness.",
+      "gold": {
+        "query": "clause\n/without/\n  word sp=verb\n/-/",
+        "projection": [
+          0
+        ],
+        "count": 17981,
+        "signature": "5c770096198af4eaf10358eb434ec4aaa24c551e8a78bb7859fa80673b3a6ef5"
+      }
+    },
+    {
+      "id": "dev-negated-containment-02",
+      "family": "negated-containment",
+      "partition": "development",
+      "request": "Return clauses containing no words annotated as proper nouns.",
+      "expected": "supported",
+      "rationale": "Native /without/ excludes any parent with at least one matching word witness.",
+      "gold": {
+        "query": "clause\n/without/\n  word sp=nmpr\n/-/",
+        "projection": [
+          0
+        ],
+        "count": 65199,
+        "signature": "df6fb257e00ab0c4ac825d6a4f737378271164d2c54ca445769744b68c738cb0"
+      }
+    },
+    {
+      "id": "dev-negated-containment-03",
+      "family": "negated-containment",
+      "partition": "development",
+      "request": "Return phrases with subject function containing no words annotated as feminine words.",
+      "expected": "supported",
+      "rationale": "Native /without/ excludes any parent with at least one matching word witness.",
+      "gold": {
+        "query": "phrase function=Subj\n/without/\n  word gn=f\n/-/",
+        "projection": [
+          0
+        ],
+        "count": 26307,
+        "signature": "c3bc5e78341f15fd420f0805a7f2f96cfbe24441f41128c1f9219fb84f4e4cda"
+      }
+    },
+    {
+      "id": "dev-negated-containment-04",
+      "family": "negated-containment",
+      "partition": "development",
+      "request": "Return phrases with object function containing no words annotated as prepositions.",
+      "expected": "supported",
+      "rationale": "Native /without/ excludes any parent with at least one matching word witness.",
+      "gold": {
+        "query": "phrase function=Objc\n/without/\n  word sp=prep\n/-/",
+        "projection": [
+          0
+        ],
+        "count": 13198,
+        "signature": "8e87f47c9da72e123010dc90ccdc9ef8b869f223528272d987418043899506e1"
+      }
+    },
+    {
+      "id": "hel-verbal-morphology-01",
+      "family": "verbal-morphology",
+      "partition": "heldout",
+      "request": "Return verbs with the qal stem annotation.",
+      "expected": "supported",
+      "rationale": "Use the annotated morphological class, without inferring temporal meaning.",
+      "gold": {
+        "query": "word sp=verb vs=qal",
+        "projection": [
+          0
+        ],
+        "count": 50205,
+        "signature": "88b92ed11e69b22162d5f9168ea8f8d6851978af7d77b6c7c21127054484f80b"
+      }
+    },
+    {
+      "id": "hel-verbal-morphology-02",
+      "family": "verbal-morphology",
+      "partition": "heldout",
+      "request": "Return verbs with the nif stem annotation.",
+      "expected": "supported",
+      "rationale": "Use the annotated morphological class, without inferring temporal meaning.",
+      "gold": {
+        "query": "word sp=verb vs=nif",
+        "projection": [
+          0
+        ],
+        "count": 4145,
+        "signature": "1e7722c3e9494056a3fcd184dbf67c5fc926472ee777560dba124074ca91db19"
+      }
+    },
+    {
+      "id": "hel-verbal-morphology-03",
+      "family": "verbal-morphology",
+      "partition": "heldout",
+      "request": "Return verbs with the piel stem annotation.",
+      "expected": "supported",
+      "rationale": "Use the annotated morphological class, without inferring temporal meaning.",
+      "gold": {
+        "query": "word sp=verb vs=piel",
+        "projection": [
+          0
+        ],
+        "count": 6811,
+        "signature": "cc4a26d5487ce22edb86bf1bec9921d639a808d8f2af68b9b78e05af03370bf2"
+      }
+    },
+    {
+      "id": "hel-verbal-morphology-04",
+      "family": "verbal-morphology",
+      "partition": "heldout",
+      "request": "Return verbs with the hif stem annotation.",
+      "expected": "supported",
+      "rationale": "Use the annotated morphological class, without inferring temporal meaning.",
+      "gold": {
+        "query": "word sp=verb vs=hif",
+        "projection": [
+          0
+        ],
+        "count": 9407,
+        "signature": "d75e4426e77c8835225f143bdff946db28309ebe9fd38bf0175e745511fe0cc4"
+      }
+    },
+    {
+      "id": "hel-verbal-morphology-05",
+      "family": "verbal-morphology",
+      "partition": "heldout",
+      "request": "Return verbs with the perfect tense/mood annotation.",
+      "expected": "supported",
+      "rationale": "Use the annotated morphological class, without inferring temporal meaning.",
+      "gold": {
+        "query": "word sp=verb vt=perf",
+        "projection": [
+          0
+        ],
+        "count": 21129,
+        "signature": "bbc7ecf004d2b53d195a209c39b1e775a0377e60b9856b4509b46d3b4a508090"
+      }
+    },
+    {
+      "id": "hel-verbal-morphology-06",
+      "family": "verbal-morphology",
+      "partition": "heldout",
+      "request": "Return verbs with the imperfect tense/mood annotation.",
+      "expected": "supported",
+      "rationale": "Use the annotated morphological class, without inferring temporal meaning.",
+      "gold": {
+        "query": "word sp=verb vt=impf",
+        "projection": [
+          0
+        ],
+        "count": 16099,
+        "signature": "4f848b76219c5111c23dff786cdd09f98aa23fb5791f8ef545d0ee9d96a7caed"
+      }
+    },
+    {
+      "id": "hel-verbal-morphology-07",
+      "family": "verbal-morphology",
+      "partition": "heldout",
+      "request": "Return verbs with the wayyiqtol tense/mood annotation.",
+      "expected": "supported",
+      "rationale": "Use the annotated morphological class, without inferring temporal meaning.",
+      "gold": {
+        "query": "word sp=verb vt=wayq",
+        "projection": [
+          0
+        ],
+        "count": 14974,
+        "signature": "981c4d07c8fc1575603f443399b281683113fec08da2c75e1346977bed0028b0"
+      }
+    },
+    {
+      "id": "hel-verbal-morphology-08",
+      "family": "verbal-morphology",
+      "partition": "heldout",
+      "request": "Return verbs with the imperative tense/mood annotation.",
+      "expected": "supported",
+      "rationale": "Use the annotated morphological class, without inferring temporal meaning.",
+      "gold": {
+        "query": "word sp=verb vt=impv",
+        "projection": [
+          0
+        ],
+        "count": 4306,
+        "signature": "4ebeba08619a69c20c8f94a9af239e7a631e94b58f3af1d618177b9bc0cc581b"
+      }
+    },
+    {
+      "id": "hel-annotation-sentinels-01",
+      "family": "annotation-sentinels",
+      "partition": "heldout",
+      "request": "Return words whose gender annotation is unknown.",
+      "expected": "supported",
+      "rationale": "Literal NA/unknown/absent/empty values differ from missing annotations; contradictory annotation predicates may correctly return zero.",
+      "gold": {
+        "query": "word gn=unknown",
+        "projection": [
+          0
+        ],
+        "count": 45539,
+        "signature": "062f40a5e36be9c26e84169808e4e84c6a6ad801dd06e181debafab76830b5bf"
+      }
+    },
+    {
+      "id": "hel-annotation-sentinels-02",
+      "family": "annotation-sentinels",
+      "partition": "heldout",
+      "request": "Return words whose number annotation is NA (not applicable).",
+      "expected": "supported",
+      "rationale": "Literal NA/unknown/absent/empty values differ from missing annotations; contradictory annotation predicates may correctly return zero.",
+      "gold": {
+        "query": "word nu=NA",
+        "projection": [
+          0
+        ],
+        "count": 180154,
+        "signature": "5f0812c148865ba521c92c48a4bccb29318155e924906eee22cc9ecec86e72cb"
+      }
+    },
+    {
+      "id": "hel-annotation-sentinels-03",
+      "family": "annotation-sentinels",
+      "partition": "heldout",
+      "request": "Return words with the literal pronominal-suffix annotation absent.",
+      "expected": "supported",
+      "rationale": "Literal NA/unknown/absent/empty values differ from missing annotations; contradictory annotation predicates may correctly return zero.",
+      "gold": {
+        "query": "word prs=absent",
+        "projection": [
+          0
+        ],
+        "count": 236028,
+        "signature": "c018481803422ebb0edf0aee3eb08a739ac898730b7386d24c9008dbd8c32438"
+      }
+    },
+    {
+      "id": "hel-annotation-sentinels-04",
+      "family": "annotation-sentinels",
+      "partition": "heldout",
+      "request": "Return words with no nametype annotation.",
+      "expected": "supported",
+      "rationale": "Literal NA/unknown/absent/empty values differ from missing annotations; contradictory annotation predicates may correctly return zero.",
+      "gold": {
+        "query": "word nametype#",
+        "projection": [
+          0
+        ],
+        "count": 391084,
+        "signature": "4c085462e0e8613d2ebc73876fc5a8338742e5849ee128a9de4bb9cba796d580"
+      }
+    },
+    {
+      "id": "hel-annotation-sentinels-05",
+      "family": "annotation-sentinels",
+      "partition": "heldout",
+      "request": "Return words with an empty nme annotation value.",
+      "expected": "supported",
+      "rationale": "Literal NA/unknown/absent/empty values differ from missing annotations; contradictory annotation predicates may correctly return zero.",
+      "gold": {
+        "query": "word nme=|",
+        "projection": [
+          0
+        ],
+        "count": 121983,
+        "signature": "8a746eda261e710fe86424d9848f9eddd76835517ea1a457da96c08bda920c98"
+      }
+    },
+    {
+      "id": "hel-annotation-sentinels-06",
+      "family": "annotation-sentinels",
+      "partition": "heldout",
+      "request": "Return verbs whose tense/mood annotation is NA.",
+      "expected": "supported",
+      "rationale": "Literal NA/unknown/absent/empty values differ from missing annotations; contradictory annotation predicates may correctly return zero.",
+      "gold": {
+        "query": "word sp=verb vt=NA",
+        "projection": [
+          0
+        ],
+        "count": 0,
+        "signature": "ffefd089bfd14bf61fdc93b8f71709882545e30c024a22bc848e83cdcd30bd5e"
+      }
+    },
+    {
+      "id": "hel-slot-boundaries-01",
+      "family": "slot-boundaries",
+      "partition": "heldout",
+      "request": "Return ordered (subject phrase, clause) pairs where the phrase has function Subj and the two nodes start at the same slot as each other.",
+      "expected": "supported",
+      "rationale": "Return phrase then clause. Boundary equality does not imply full slot-set equality.",
+      "gold": {
+        "query": "a:phrase function=Subj\nb:clause\na =: b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 5311,
+        "signature": "27b170cb908fcc1e565dc8027c71051d8c1f19b6d7fc95bd9f9afef6627f4209"
+      }
+    },
+    {
+      "id": "hel-slot-boundaries-02",
+      "family": "slot-boundaries",
+      "partition": "heldout",
+      "request": "Return ordered (subject phrase, clause) pairs where the phrase has function Subj and the two nodes end at the same slot as each other.",
+      "expected": "supported",
+      "rationale": "Return phrase then clause. Boundary equality does not imply full slot-set equality.",
+      "gold": {
+        "query": "a:phrase function=Subj\nb:clause\na := b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 11126,
+        "signature": "a646e7974973c02520f713cce217e204f68ea22abc2312ab48e3d56da2ce69fb"
+      }
+    },
+    {
+      "id": "hel-slot-boundaries-03",
+      "family": "slot-boundaries",
+      "partition": "heldout",
+      "request": "Return ordered (subject phrase, clause) pairs where the phrase has function Subj and the two nodes have the same first and last slots as each other.",
+      "expected": "supported",
+      "rationale": "Return phrase then clause. Boundary equality does not imply full slot-set equality.",
+      "gold": {
+        "query": "a:phrase function=Subj\nb:clause\na :: b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 488,
+        "signature": "645af4f3368263f4b2f35b477fefeb74a9a1ff5f549496d60977b668d74f51d4"
+      }
+    },
+    {
+      "id": "hel-slot-boundaries-04",
+      "family": "slot-boundaries",
+      "partition": "heldout",
+      "request": "Return ordered (subject phrase, clause) pairs where the phrase has function Subj and the two nodes cover exactly the same slots as each other.",
+      "expected": "supported",
+      "rationale": "Return phrase then clause. Boundary equality does not imply full slot-set equality.",
+      "gold": {
+        "query": "a:phrase function=Subj\nb:clause\na == b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 470,
+        "signature": "4b81819354cd1a6935fd04ae358270edb6ed082330a96d69346cfa7cc3de82df"
+      }
+    },
+    {
+      "id": "hel-directed-mother-01",
+      "family": "directed-mother",
+      "partition": "heldout",
+      "request": "Find directed pairs of clauses linked by the mother edge.",
+      "expected": "supported",
+      "rationale": "mother is a directed syntactic edge, not a lexical reference to a parent.",
+      "gold": {
+        "query": "a:clause\nb:clause\na -mother> b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 13917,
+        "signature": "6a87818403e2a517fecffd4aea78a59c9ac4d9e849e49c120f228941885f2ce2"
+      }
+    },
+    {
+      "id": "hel-directed-mother-02",
+      "family": "directed-mother",
+      "partition": "heldout",
+      "request": "Return ordered clause pairs linked by the BHSA mother edge where the second points to the first.",
+      "expected": "supported",
+      "rationale": "mother is a directed syntactic edge, not a lexical reference to a parent.",
+      "gold": {
+        "query": "a:clause\nb:clause\na <mother- b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 13917,
+        "signature": "8ace800c5898b2e996c4b92e223fd7cbda9abd2718e59fcfa4ed9f0517fa4fec"
+      }
+    },
+    {
+      "id": "hel-directed-mother-03",
+      "family": "directed-mother",
+      "partition": "heldout",
+      "request": "Return ordered clause pairs linked by the BHSA mother edge where the first points to the second and the first clause is annotated typ=NmCl.",
+      "expected": "supported",
+      "rationale": "mother is a directed syntactic edge, not a lexical reference to a parent.",
+      "gold": {
+        "query": "a:clause typ=NmCl\nb:clause\na -mother> b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 1501,
+        "signature": "8544ef6a8226c2002b375138cf80a536bcd2960a5de3c24abda8fd8626912cc3"
+      }
+    },
+    {
+      "id": "hel-directed-mother-04",
+      "family": "directed-mother",
+      "partition": "heldout",
+      "request": "Return ordered clause pairs linked by the BHSA mother edge where the second points to the first and the first clause is annotated typ=NmCl.",
+      "expected": "supported",
+      "rationale": "mother is a directed syntactic edge, not a lexical reference to a parent.",
+      "gold": {
+        "query": "a:clause typ=NmCl\nb:clause\na <mother- b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 1195,
+        "signature": "150247319b88c3dd0faa5c9462dfe7bd81f9ab5237274c536a5fb995e6e4efe9"
+      }
+    },
+    {
+      "id": "hel-integer-annotations-01",
+      "family": "integer-annotations",
+      "partition": "heldout",
+      "request": "Return word nodes whose number annotation is less than 5.",
+      "expected": "supported",
+      "rationale": "number is within the documented context (word/book, phrase/clause, clause/sentence), not a global node ID.",
+      "gold": {
+        "query": "word number<5",
+        "projection": [
+          0
+        ],
+        "count": 156,
+        "signature": "db8356ee18ab562369fe2dc34fbf490bf2f7c56c0d3877a0020e20cf7e7b6891"
+      }
+    },
+    {
+      "id": "hel-integer-annotations-02",
+      "family": "integer-annotations",
+      "partition": "heldout",
+      "request": "Return word nodes whose number annotation is greater than 20000.",
+      "expected": "supported",
+      "rationale": "number is within the documented context (word/book, phrase/clause, clause/sentence), not a global node ID.",
+      "gold": {
+        "query": "word number>20000",
+        "projection": [
+          0
+        ],
+        "count": 40049,
+        "signature": "ea3d8ba42a95ba99db49e1a90441f48184227efedac636b3e383a30570005dc5"
+      }
+    },
+    {
+      "id": "hel-integer-annotations-03",
+      "family": "integer-annotations",
+      "partition": "heldout",
+      "request": "Return phrase nodes whose number annotation is equal to 1.",
+      "expected": "supported",
+      "rationale": "number is within the documented context (word/book, phrase/clause, clause/sentence), not a global node ID.",
+      "gold": {
+        "query": "phrase number=1",
+        "projection": [
+          0
+        ],
+        "count": 88131,
+        "signature": "2e1f1b8c62b5224fb4b57071d4378c53831fb8eecd7a88621cd23dc2e03c9cf9"
+      }
+    },
+    {
+      "id": "hel-integer-annotations-04",
+      "family": "integer-annotations",
+      "partition": "heldout",
+      "request": "Return clause nodes whose number annotation is greater than 3.",
+      "expected": "supported",
+      "rationale": "number is within the documented context (word/book, phrase/clause, clause/sentence), not a global node ID.",
+      "gold": {
+        "query": "clause number>3",
+        "projection": [
+          0
+        ],
+        "count": 4128,
+        "signature": "8ba611cf8fbd0d246430080cb280d8bd007eccb6a970696c69de3d418959714f"
+      }
+    },
+    {
+      "id": "hel-pointed-lexeme-01",
+      "family": "pointed-lexeme",
+      "partition": "heldout",
+      "request": "Return words whose voc_lex_utf8 annotation exactly equals 'יְהוָה', preserving these Unicode code points.",
+      "expected": "supported",
+      "rationale": "Exact stored Unicode spelling; no implicit normalization or semantic translation.",
+      "gold": {
+        "query": "word voc_lex_utf8=יְהוָה",
+        "projection": [
+          0
+        ],
+        "count": 6828,
+        "signature": "ec040585c8cbabc5faaf688bec5d2641cfb03983c5cd55bc136cc91f878808e7"
+      }
+    },
+    {
+      "id": "hel-pointed-lexeme-02",
+      "family": "pointed-lexeme",
+      "partition": "heldout",
+      "request": "Return words whose voc_lex_utf8 annotation exactly equals 'בְּ', preserving these Unicode code points.",
+      "expected": "supported",
+      "rationale": "Exact stored Unicode spelling; no implicit normalization or semantic translation.",
+      "gold": {
+        "query": "word voc_lex_utf8=בְּ",
+        "projection": [
+          0
+        ],
+        "count": 15768,
+        "signature": "d4fb2506efb2a4970a2691dbce636221eeec1449f623f4163d0eb3dcb4fc6ef6"
+      }
+    },
+    {
+      "id": "hel-pointed-lexeme-03",
+      "family": "pointed-lexeme",
+      "partition": "heldout",
+      "request": "Return words whose voc_lex_utf8 annotation exactly equals 'לֹא', preserving these Unicode code points.",
+      "expected": "supported",
+      "rationale": "Exact stored Unicode spelling; no implicit normalization or semantic translation.",
+      "gold": {
+        "query": "word voc_lex_utf8=לֹא",
+        "projection": [
+          0
+        ],
+        "count": 5167,
+        "signature": "30a50ec0ea9fbf867bec7b56c60581674996f6cd87883e395887166382dcf05d"
+      }
+    },
+    {
+      "id": "hel-literal-gloss-01",
+      "family": "literal-gloss",
+      "partition": "heldout",
+      "request": "Return words whose gloss annotation is exactly 'YHWH'.",
+      "expected": "supported",
+      "rationale": "Exact English annotation string, not free-text semantic interpretation.",
+      "gold": {
+        "query": "word gloss=YHWH",
+        "projection": [
+          0
+        ],
+        "count": 6828,
+        "signature": "ec040585c8cbabc5faaf688bec5d2641cfb03983c5cd55bc136cc91f878808e7"
+      }
+    },
+    {
+      "id": "hel-literal-gloss-02",
+      "family": "literal-gloss",
+      "partition": "heldout",
+      "request": "Return words whose gloss annotation is exactly 'say'.",
+      "expected": "supported",
+      "rationale": "Exact English annotation string, not free-text semantic interpretation.",
+      "gold": {
+        "query": "word gloss=say",
+        "projection": [
+          0
+        ],
+        "count": 5378,
+        "signature": "0be5e95aad10fac26a3017366e4ffe3a984664a88f04400de9f49b58a33a8d5e"
+      }
+    },
+    {
+      "id": "hel-literal-gloss-03",
+      "family": "literal-gloss",
+      "partition": "heldout",
+      "request": "Return words whose gloss annotation is exactly 'son'.",
+      "expected": "supported",
+      "rationale": "Exact English annotation string, not free-text semantic interpretation.",
+      "gold": {
+        "query": "word gloss=son",
+        "projection": [
+          0
+        ],
+        "count": 4973,
+        "signature": "8fe602656338c5ab0dc5ee6be4057056bf4d30bbef1b01ba0d0d7d73cd0d4b46"
+      }
+    },
+    {
+      "id": "dev-ambiguous-scope-01",
+      "family": "ambiguous-scope",
+      "partition": "development",
+      "request": "Find mothers.",
+      "expected": "ambiguous",
+      "rationale": "The request does not select one defensible return shape or annotation interpretation.",
+      "interpretations": [
+        "Words denoting mothers",
+        "Nodes related by the syntactic mother edge"
+      ]
+    },
+    {
+      "id": "dev-ambiguous-scope-02",
+      "family": "ambiguous-scope",
+      "partition": "development",
+      "request": "Find subjects.",
+      "expected": "ambiguous",
+      "rationale": "The request does not select one defensible return shape or annotation interpretation.",
+      "interpretations": [
+        "Phrases annotated with subject function",
+        "Words contained in subject phrases"
+      ]
+    },
+    {
+      "id": "dev-ambiguous-scope-03",
+      "family": "ambiguous-scope",
+      "partition": "development",
+      "request": "Find plural subjects.",
+      "expected": "ambiguous",
+      "rationale": "The request does not select one defensible return shape or annotation interpretation.",
+      "interpretations": [
+        "Subject phrases containing any plural word",
+        "Subject phrases whose head is plural"
+      ]
+    },
+    {
+      "id": "dev-ambiguous-scope-04",
+      "family": "ambiguous-scope",
+      "partition": "development",
+      "request": "Find names.",
+      "expected": "ambiguous",
+      "rationale": "The request does not select one defensible return shape or annotation interpretation.",
+      "interpretations": [
+        "Proper-noun words",
+        "A particular named entity value"
+      ]
+    },
+    {
+      "id": "dev-unsupported-query-construct-01",
+      "family": "unsupported-query-construct",
+      "partition": "development",
+      "request": "Return words whose lex annotation matches the regular expression ^B.*.",
+      "expected": "unsupported",
+      "rationale": "Regex predicates are outside the current typed compiler subset."
+    },
+    {
+      "id": "dev-unsupported-query-construct-02",
+      "family": "unsupported-query-construct",
+      "partition": "development",
+      "request": "Return pairs of words with equal gender feature values.",
+      "expected": "unsupported",
+      "rationale": "Cross-node feature comparisons are outside the current IR."
+    },
+    {
+      "id": "dev-unsupported-query-construct-03",
+      "family": "unsupported-query-construct",
+      "partition": "development",
+      "request": "Return the number of verbs per book.",
+      "expected": "unsupported",
+      "rationale": "Aggregation/group-by output is outside the node-tuple compiler contract."
+    },
+    {
+      "id": "dev-unsupported-query-construct-04",
+      "family": "unsupported-query-construct",
+      "partition": "development",
+      "request": "Return only the first ten nouns.",
+      "expected": "unsupported",
+      "rationale": "Ordered result slicing is outside the current query IR."
+    },
+    {
+      "id": "hel-ambiguous-semantics-01",
+      "family": "ambiguous-semantics",
+      "partition": "heldout",
+      "request": "Find future verbs.",
+      "expected": "ambiguous",
+      "rationale": "Multiple interpretations would produce different queries or require unannotated semantics.",
+      "interpretations": [
+        "An imperfect annotation",
+        "A temporal interpretation requiring contextual analysis"
+      ]
+    },
+    {
+      "id": "hel-ambiguous-semantics-02",
+      "family": "ambiguous-semantics",
+      "partition": "heldout",
+      "request": "Find adjacent phrases.",
+      "expected": "ambiguous",
+      "rationale": "Multiple interpretations would produce different queries or require unannotated semantics.",
+      "interpretations": [
+        "Adjacent corpus slot boundaries",
+        "Consecutive sibling phrases within a clause"
+      ]
+    },
+    {
+      "id": "hel-ambiguous-semantics-03",
+      "family": "ambiguous-semantics",
+      "partition": "heldout",
+      "request": "Find Hebrew words for love.",
+      "expected": "ambiguous",
+      "rationale": "Multiple interpretations would produce different queries or require unannotated semantics.",
+      "interpretations": [
+        "One exact Hebrew lexeme",
+        "All senses/lexemes translating as love"
+      ]
+    },
+    {
+      "id": "hel-ambiguous-semantics-04",
+      "family": "ambiguous-semantics",
+      "partition": "heldout",
+      "request": "Find clauses with no subject.",
+      "expected": "ambiguous",
+      "rationale": "Multiple interpretations would produce different queries or require unannotated semantics.",
+      "interpretations": [
+        "No phrase annotated Subj",
+        "No overt subject word, possibly implicit subject"
+      ]
+    },
+    {
+      "id": "hel-ambiguous-semantics-05",
+      "family": "ambiguous-semantics",
+      "partition": "heldout",
+      "request": "Find masculine names.",
+      "expected": "ambiguous",
+      "rationale": "Multiple interpretations would produce different queries or require unannotated semantics.",
+      "interpretations": [
+        "Proper nouns with masculine morphology",
+        "Entities whose referents are male"
+      ]
+    },
+    {
+      "id": "hel-ambiguous-semantics-06",
+      "family": "ambiguous-semantics",
+      "partition": "heldout",
+      "request": "Find phrases before verbs.",
+      "expected": "ambiguous",
+      "rationale": "Multiple interpretations would produce different queries or require unannotated semantics.",
+      "interpretations": [
+        "Every earlier phrase in corpus order",
+        "Only the immediately preceding phrase"
+      ]
+    },
+    {
+      "id": "hel-unsupported-schema-and-semantics-01",
+      "family": "unsupported-schema-and-semantics",
+      "partition": "heldout",
+      "request": "Return words with the feature fictional_feature equal to yes.",
+      "expected": "unsupported",
+      "rationale": "The named feature is absent from the loaded schema."
+    },
+    {
+      "id": "hel-unsupported-schema-and-semantics-02",
+      "family": "unsupported-schema-and-semantics",
+      "partition": "heldout",
+      "request": "Return paragraph nodes containing nouns.",
+      "expected": "unsupported",
+      "rationale": "paragraph is not a BHSA 2021 node type."
+    },
+    {
+      "id": "hel-unsupported-schema-and-semantics-03",
+      "family": "unsupported-schema-and-semantics",
+      "partition": "heldout",
+      "request": "Return verses that express irony.",
+      "expected": "unsupported",
+      "rationale": "Irony is not an available annotation and requires interpretation of corpus text."
+    },
+    {
+      "id": "hel-unsupported-schema-and-semantics-04",
+      "family": "unsupported-schema-and-semantics",
+      "partition": "heldout",
+      "request": "Return words with a negation nested inside another negated containment.",
+      "expected": "unsupported",
+      "rationale": "Nested quantifiers are outside the supported typed IR."
+    },
+    {
+      "id": "hel-unsupported-schema-and-semantics-05",
+      "family": "unsupported-schema-and-semantics",
+      "partition": "heldout",
+      "request": "Return sentences whose translation is a question in modern English.",
+      "expected": "unsupported",
+      "rationale": "No modern-English sentence translation/question annotation is available."
+    },
+    {
+      "id": "hel-unsupported-schema-and-semantics-06",
+      "family": "unsupported-schema-and-semantics",
+      "partition": "heldout",
+      "request": "Return words with their sentiment scores.",
+      "expected": "unsupported",
+      "rationale": "Sentiment scores are not loaded corpus features or node-tuple query output."
+    },
+    {
+      "id": "hel-corpus-order-01",
+      "family": "corpus-order",
+      "partition": "heldout",
+      "request": "Return ordered word pairs with lex annotations 'BR>[' then 'R>CJT/', where the first word is anywhere before the second in corpus slot order.",
+      "expected": "supported",
+      "rationale": "Global corpus order is explicit; do not add same-clause, same-book or adjacency restrictions.",
+      "gold": {
+        "query": "a:word lex=BR>[\nb:word lex=R>CJT/\na << b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 1546,
+        "signature": "ae7805abff520ffdbc321cb419bae0c78344d045434661a42bac477a41d990ff"
+      }
+    },
+    {
+      "id": "hel-corpus-order-02",
+      "family": "corpus-order",
+      "partition": "heldout",
+      "request": "Return ordered word pairs with lex annotations 'BR>[' then 'R>CJT/', where the first word is anywhere after the second in corpus slot order.",
+      "expected": "supported",
+      "rationale": "Global corpus order is explicit; do not add same-clause, same-book or adjacency restrictions.",
+      "gold": {
+        "query": "a:word lex=BR>[\nb:word lex=R>CJT/\na >> b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 902,
+        "signature": "902301bd0651d8fe3d0fed1bdd410c2473a355186cbed0a69e8cb2f76a79eae5"
+      }
+    },
+    {
+      "id": "hel-corpus-order-03",
+      "family": "corpus-order",
+      "partition": "heldout",
+      "request": "Return ordered word pairs with lex annotations 'R>CJT/' then 'BR>[', where the first word is anywhere before the second in corpus slot order.",
+      "expected": "supported",
+      "rationale": "Global corpus order is explicit; do not add same-clause, same-book or adjacency restrictions.",
+      "gold": {
+        "query": "a:word lex=R>CJT/\nb:word lex=BR>[\na << b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 902,
+        "signature": "27cf692d7fb84c266e66845ea0c928f9539516d7900b1a6c8596aa02b0146745"
+      }
+    },
+    {
+      "id": "hel-corpus-order-04",
+      "family": "corpus-order",
+      "partition": "heldout",
+      "request": "Return ordered word pairs with lex annotations 'R>CJT/' then 'BR>[', where the first word is anywhere after the second in corpus slot order.",
+      "expected": "supported",
+      "rationale": "Global corpus order is explicit; do not add same-clause, same-book or adjacency restrictions.",
+      "gold": {
+        "query": "a:word lex=R>CJT/\nb:word lex=BR>[\na >> b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 1546,
+        "signature": "e56327247987b2c78a940d0a1d705b3dca5ed5b45ac75c7bb06e29d9b9a536e5"
+      }
+    },
+    {
+      "id": "near-without-distance",
+      "family": "ambiguous-proximity",
+      "partition": "heldout",
+      "request": "Find verbs near substantives.",
+      "expected": "ambiguous",
+      "rationale": "Near has no specified direction or distance.",
+      "interpretations": [
+        "Immediate adjacency",
+        "Within several slots in either direction"
+      ]
+    },
+    {
+      "id": "diachronic-change",
+      "family": "unsupported-history",
+      "partition": "heldout",
+      "request": "Find how verbal stems changed from the Iron Age to the Persian period.",
+      "expected": "unsupported",
+      "rationale": "A single corpus query cannot establish diachronic change."
+    },
+    {
+      "id": "translation-quality",
+      "family": "unsupported-translation",
+      "partition": "heldout",
+      "request": "Find verses with inaccurate translations.",
+      "expected": "unsupported",
+      "rationale": "Translation adequacy is not represented in the supported BHSA query annotations."
+    }
+  ]
+}

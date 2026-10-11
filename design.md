@@ -123,3 +123,7 @@ The optional Jev adapter (#8) is specified in
 [docs/design/jev-adapter.md](docs/design/jev-adapter.md). The official SDK owns
 transport/retries; tf-jev checks request-bound answers, model/usage metadata and
 sanitizes errors/logs before returning backend-neutral decisions and receipts.
+
+Semantic benchmark (#10): [v2 evidence contract](docs/design/bhsa-benchmark.md)
+specifies returned-column projection, frozen result-set fingerprints and strict
+source/version/diagnostic gates independently of parser prompts.
