@@ -20,7 +20,9 @@ CANDIDATES = ROOT / "benchmarks/nl-tf-v1/tutorial-candidates.json"
 def _stub_sources(monkeypatch: pytest.MonkeyPatch, tiny_api: Any) -> list[str]:
     calls: list[str] = []
     monkeypatch.setattr(runner, "verify_source", lambda *_: calls.append("gold_source"))
-    monkeypatch.setattr(runner, "verify_candidate_source", lambda *_: calls.append("candidate_source"))
+    monkeypatch.setattr(
+        runner, "verify_candidate_source", lambda *_: calls.append("candidate_source")
+    )
 
     def loader(*_: Any, **__: Any) -> Any:
         calls.append("load_api")
