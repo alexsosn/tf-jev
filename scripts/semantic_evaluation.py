@@ -71,7 +71,7 @@ def evaluate(
     summaries: list[dict[str, Any]] = []
     statuses: Counter[str] = Counter()
     confusion: Counter[str] = Counter()
-    by_difficulty: dict[str, dict[str, int]] = {}
+    by_family: dict[str, dict[str, int]] = {}
     strict_correct = supported_gold = native_valid = equivalent = exact = 0
     negative = safe_negative = unsafe_supported = 0
     times: list[float] = []
@@ -157,7 +157,7 @@ def evaluate(
         costs.append(estimate)
         duration = max(0.0, time.perf_counter() - start)
         times.append(duration)
-        level = by_difficulty.setdefault(case["difficulty"], {"total": 0, "equivalent": 0})
+        level = by_family.setdefault(case["family"], {"total": 0, "equivalent": 0})
         level["total"] += 1
         level["equivalent"] += int(same_results is True)
 
@@ -172,7 +172,7 @@ def evaluate(
         )
         summaries.append({
             "id": case["id"],
-            "difficulty": case["difficulty"],
+            "family": case["family"],
             "expected": expected,
             "predicted": predicted,
             "reason": reason,
@@ -211,7 +211,7 @@ def evaluate(
         "safe_negative": safe_negative,
         "safe_negative_rate": _rate(safe_negative, negative),
         "unsafe_supported_on_negative": unsafe_supported,
-        "by_difficulty": dict(sorted(by_difficulty.items())),
+        "by_family": dict(sorted(by_family.items())),
         "wall_latency_median_s": statistics.median(ordered) if ordered else None,
         "wall_latency_p95_s": ordered[math.ceil(.95 * len(ordered)) - 1] if ordered else None,
         "estimated_cost_usd_complete": complete_cost,
