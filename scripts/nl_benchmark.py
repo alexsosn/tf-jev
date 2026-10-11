@@ -163,8 +163,14 @@ def main() -> int:
     args = parser.parse_args()
     try:
         catalog = load_catalog(args.dataset)
-        counts = {status: sum(c.status == status for c in catalog.cases) for status in sorted(STATUSES)}
-        report: dict[str, Any] = {"cases": len(catalog.cases), "status": counts, "native_checked": 0}
+        counts = {
+            status: sum(c.status == status for c in catalog.cases) for status in sorted(STATUSES)
+        }
+        report: dict[str, Any] = {
+            "cases": len(catalog.cases),
+            "status": counts,
+            "native_checked": 0,
+        }
         if args.corpus is not None:
             if args.corpus.name != catalog.data_version:
                 raise ValueError("benchmark corpus directory must be named after data version")
