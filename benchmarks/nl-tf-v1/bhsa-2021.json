@@ -135,6 +135,66 @@
       "gold_query": null,
       "expected_count": null,
       "rationale": "Exact cardinality over linked children requires an unsupported count quantifier."
+    },
+    {
+      "id": "words-all",
+      "split": "train",
+      "status": "supported",
+      "difficulty": "type-only",
+      "request": "Return all BHSA word nodes (one tuple per word).",
+      "gold_query": "word",
+      "expected_count": 426590,
+      "rationale": "The query returns the complete word-node extent, not unique written forms."
+    },
+    {
+      "id": "feminine-plural-substantives",
+      "split": "development",
+      "status": "supported",
+      "difficulty": "conjunction",
+      "request": "Return BHSA word nodes with sp=subs, gn=f and nu=pl.",
+      "gold_query": "word gn=f nu=pl sp=subs",
+      "expected_count": 5992,
+      "rationale": "Three simultaneous attested word-feature predicates; substantive is the BHSA POS tag."
+    },
+    {
+      "id": "qere-present",
+      "split": "train",
+      "status": "supported",
+      "difficulty": "presence",
+      "request": "Return BHSA word nodes carrying the qere node feature.",
+      "gold_query": "word qere",
+      "expected_count": 1892,
+      "rationale": "Presence checks the annotation, independent of literal qere spelling or value."
+    },
+    {
+      "id": "qere-missing",
+      "split": "development",
+      "status": "supported",
+      "difficulty": "absence",
+      "request": "Return BHSA word nodes without a qere feature annotation.",
+      "gold_query": "word qere#",
+      "expected_count": 424698,
+      "rationale": "Native qere# is feature absence, not string inequality or a string named absent."
+    },
+    {
+      "id": "samuel-proper-noun-context",
+      "split": "train",
+      "status": "supported",
+      "difficulty": "nested-containment",
+      "request": "Return book–clause–word triples for proper-noun words within clauses of Samuel I.",
+      "gold_query": "book book=Samuel_I\n  clause\n    word sp=nmpr",
+      "expected_count": 1868,
+      "rationale": "Book value Samuel_I, clause embedding and sp=nmpr; tuples are not distinct persons or clauses."
+    },
+    {
+      "id": "same-slots-verse-sentence",
+      "split": "development",
+      "status": "supported",
+      "difficulty": "same-slots",
+      "request": "Return verse–sentence node pairs where the sentence is nested in the verse and both occupy identical slots.",
+      "gold_query": "v:verse\n    s:sentence\nv == s",
+      "expected_count": 3583,
+      "rationale": "Keep both notebook nesting and explicit same-slot constraint; result count is pairs."
     }
   ],
   "source_git_blobs": {
@@ -144,6 +204,8 @@
     "gn.tf": "748e64a50a287578045f614a1319680345f312d5",
     "nu.tf": "7fec658e1c6ddf5d88820d2be87e2a8782286014",
     "function.tf": "07cffd7b21efe39f950897d51cae4c95d99b9d9f",
-    "mother.tf": "d1eef3326420db695f12784dc4ac9527cc773188"
+    "mother.tf": "d1eef3326420db695f12784dc4ac9527cc773188",
+    "book.tf": "70407385b60568eaeb44dbeb45f3a7dfafd2a6af",
+    "qere.tf": "405b9a7e98dbc85c401a6e9cf7e4978a04bfe2ee"
   }
 }
