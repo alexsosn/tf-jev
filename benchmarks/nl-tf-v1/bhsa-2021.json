@@ -1,0 +1,140 @@
+{
+  "format_version": 1,
+  "corpus": "ETCBC/bhsa",
+  "data_version": "2021",
+  "source_sha256": {
+    "otype.tf": "bb5da974a3b1dd7ff9ddab54dfb533059442642ab830b832a49eea8670aaa920"
+  },
+  "cases": [
+    {
+      "id": "verb-words",
+      "split": "train",
+      "status": "supported",
+      "difficulty": "simple",
+      "request": "Find all words annotated as verbs.",
+      "gold_query": "word sp=verb",
+      "expected_count": 73710,
+      "rationale": "One word atom constrained by part-of-speech."
+    },
+    {
+      "id": "feminine-plural-verbs",
+      "split": "development",
+      "status": "supported",
+      "difficulty": "conjunction",
+      "request": "Find words that are verbs, feminine, and plural.",
+      "gold_query": "word sp=verb gn=f nu=pl",
+      "expected_count": 725,
+      "rationale": "Three independent node-feature predicates on the same word."
+    },
+    {
+      "id": "clauses-with-verbs",
+      "split": "train",
+      "status": "supported",
+      "difficulty": "containment",
+      "request": "Find clause–word pairs where a clause contains a verb.",
+      "gold_query": "clause\n  word sp=verb",
+      "expected_count": 73710,
+      "rationale": "One result tuple per clause–verb pair; not a count of distinct clauses."
+    },
+    {
+      "id": "verb-before-substantive",
+      "split": "evaluation",
+      "status": "supported",
+      "difficulty": "adjacency",
+      "request": "Find verb–substantive word pairs where the substantive immediately follows the verb.",
+      "gold_query": "word sp=verb\n<: word sp=subs",
+      "expected_count": 15336,
+      "rationale": "Ordered adjacent word pairs, preserving tuple direction."
+    },
+    {
+      "id": "mother-clause-edge",
+      "split": "evaluation",
+      "status": "supported",
+      "difficulty": "edge",
+      "request": "Find directed pairs of clauses linked by the mother edge.",
+      "gold_query": "a:clause\nb:clause\na -mother> b",
+      "expected_count": 13917,
+      "rationale": "BHSA mother-edge direction is explicit; output contains two clause IDs."
+    },
+    {
+      "id": "without-pred-phrase",
+      "split": "development",
+      "status": "supported",
+      "difficulty": "negation",
+      "request": "Find clauses with no phrase annotated with function Pred.",
+      "gold_query": "clause\n/without/\n  phrase function=Pred\n/-/",
+      "expected_count": 31061,
+      "rationale": "Native /without/ construct, zero-row diagnostics are not accepted as success."
+    },
+    {
+      "id": "near-without-distance",
+      "split": "evaluation",
+      "status": "ambiguous",
+      "difficulty": "proximity",
+      "request": "Find verbs near substantives.",
+      "gold_query": null,
+      "expected_count": null,
+      "rationale": "Near has no specified direction or distance."
+    },
+    {
+      "id": "prominent-verbs",
+      "split": "development",
+      "status": "ambiguous",
+      "difficulty": "interpretation",
+      "request": "Find prominent verbs.",
+      "gold_query": null,
+      "expected_count": null,
+      "rationale": "Prominence has no operational definition or declared feature."
+    },
+    {
+      "id": "unclear-attachment",
+      "split": "train",
+      "status": "ambiguous",
+      "difficulty": "scope",
+      "request": "Find feminine words next to plural verbs and nouns.",
+      "gold_query": null,
+      "expected_count": null,
+      "rationale": "The attachment/scope of feminine and plural is unresolved."
+    },
+    {
+      "id": "diachronic-change",
+      "split": "evaluation",
+      "status": "unsupported",
+      "difficulty": "historical",
+      "request": "Find how verbal stems changed from the Iron Age to the Persian period.",
+      "gold_query": null,
+      "expected_count": null,
+      "rationale": "A single corpus query cannot establish diachronic change."
+    },
+    {
+      "id": "translation-quality",
+      "split": "evaluation",
+      "status": "unsupported",
+      "difficulty": "semantics",
+      "request": "Find verses with inaccurate translations.",
+      "gold_query": null,
+      "expected_count": null,
+      "rationale": "Translation adequacy is not represented in the supported BHSA query annotations."
+    },
+    {
+      "id": "frequency-ranking",
+      "split": "development",
+      "status": "unsupported",
+      "difficulty": "aggregation",
+      "request": "Return the ten most frequent verbs ranked by frequency.",
+      "gold_query": null,
+      "expected_count": null,
+      "rationale": "Ranking/aggregation is not in the researched native-query compiler subset."
+    },
+    {
+      "id": "exactly-two-subjects",
+      "split": "train",
+      "status": "unsupported",
+      "difficulty": "aggregation",
+      "request": "Find clauses containing exactly two subject phrases.",
+      "gold_query": null,
+      "expected_count": null,
+      "rationale": "Exact cardinality over linked children requires an unsupported count quantifier."
+    }
+  ]
+}
