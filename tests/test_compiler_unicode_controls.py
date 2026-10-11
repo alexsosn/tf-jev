@@ -30,6 +30,8 @@ FORBIDDEN = (
     "a\u202eb",  # right-to-left override
     "a\u202ab",  # left-to-right embedding
     "a\u2060b",  # word joiner
+    "a\u2062b",  # invisible times operator
+    "a\u206ab",  # inhibit symmetric swapping
     "a\u2066b",  # left-to-right isolate
     "a\u2069b",  # pop directional isolate
     "a\ufeffb",  # zero-width no-break space
