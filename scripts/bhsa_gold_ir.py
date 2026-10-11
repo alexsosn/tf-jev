@@ -1,4 +1,4 @@
-"""Reviewed typed-IR witnesses for six BHSA 2021 tutorial-derived gold pairs.
+"""Reviewed typed-IR witnesses for BHSA 2021 tutorial-derived gold pairs.
 
 These are research fixtures, not semantic-parser rules, model examples or a
 mechanism for turning untrusted text into native search queries.
@@ -39,6 +39,43 @@ PROMOTED_IR: dict[str, Query] = {
     "same-slots-verse-sentence": Query(
         (Atom("verse"), Atom("sentence")),
         (Relation(0, R.EMBEDS, 1), Relation(0, R.SAME_SLOTS, 1)),
+    ),
+    "clauses-distance-one": Query((Atom("clause", (Predicate("dist", P.EQ, (1,)),)),)),
+    "clauses-distance-less-minus-ten": Query(
+        (Atom("clause", (Predicate("dist", P.LT, (-10,)),)),)
+    ),
+    "clause-adjacent-phrases": Query(
+        (Atom("clause"), Atom("phrase"), Atom("phrase")),
+        (
+            Relation(0, R.EMBEDS, 1),
+            Relation(0, R.EMBEDS, 2),
+            Relation(1, R.ADJACENT_BEFORE, 2),
+        ),
+    ),
+    "sentence-clause-phrase-order": Query(
+        (Atom("sentence"), Atom("clause"), Atom("phrase"), Atom("clause")),
+        (
+            Relation(0, R.EMBEDS, 1),
+            Relation(0, R.EMBEDS, 2),
+            Relation(0, R.EMBEDS, 3),
+            Relation(1, R.BEFORE, 2),
+            Relation(3, R.AFTER, 2),
+        ),
+    ),
+    "pp-prep-adj-noun": Query(
+        (
+            Atom("phrase", (eq("typ", "PP"),)),
+            Atom("word", (eq("sp", "prep"),)),
+            Atom("word", (eq("sp", "adjv"),)),
+            Atom("word", (eq("sp", "subs"),)),
+        ),
+        (
+            Relation(0, R.EMBEDS, 1),
+            Relation(0, R.EMBEDS, 2),
+            Relation(0, R.EMBEDS, 3),
+            Relation(1, R.ADJACENT_BEFORE, 2),
+            Relation(2, R.ADJACENT_BEFORE, 3),
+        ),
     ),
 }
 
