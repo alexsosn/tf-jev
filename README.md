@@ -102,6 +102,10 @@ preserve original strings and collisions. A complete result can produce a bounde
 [retrieval contract](docs/design/candidate-retrieval.md) and
 [real-domain lookup benchmark](benchmarks/retrieval-v1/README.md).
 
+A first 13-request, versioned BHSA native gold and abstention seed for #10 is
+available in [benchmarks/nl-tf-v1](benchmarks/nl-tf-v1/README.md). This
+partial seed is not a Jev parsing-accuracy result or a completed benchmark.
+
 The optional `tf-jev[jev]` extra provides `tf_jev.jev.JevBackend`, a thin adapter
 over the official TypeSafe SDK. It accepts the bounded decision contract, checks
 all returned labels/probabilities, and records resolved model, tokens and latency.
