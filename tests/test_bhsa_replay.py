@@ -67,7 +67,7 @@ def test_single_session_checks_sources_first_and_never_executes_deferred(
     assert len(report["observations"]) == 14
     assert report["source_commit"] == UPSTREAM_COMMIT
     for key in ("gold_fixture_sha256", "candidate_fixture_sha256"):
-        assert len(report[key]) == 114
+        assert len(report[key]) == 64
     assert all(x["observed_2021_rows"] > 0 for x in report["observations"])
     assert {x["notebook_data_version"] for x in report["observations"]} == {
         "2017", "unversioned"
@@ -153,8 +153,8 @@ def test_native_reference_is_durable_and_distinct_from_semantic_gold(
     assert report["candidate_checked"] == 14
     assert report["gold_checked"] == 17
     by_id = {o["id"]: o for o in report["observations"]}
-    assert by_id["pp-prep-adj-noun"]["observed_2021_rows"] == 111
-    assert by_id["pp-prep-adj-noun"]["historical_notebook_rows"] == 114
+    assert by_id["pp-prep-adj-noun"]["observed_2021_rows"] == 61
+    assert by_id["pp-prep-adj-noun"]["historical_notebook_rows"] == 64
     assert not by_id["pp-prep-adj-noun"]["agrees_with_notebook"]
     assert "gold_query" not in reference.read_text(encoding="utf-8")
     runner.verify_reference_report(report, reference)
