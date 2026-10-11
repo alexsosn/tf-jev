@@ -78,6 +78,8 @@ jobs:
           assert info["tf_version"] == "13.1.0"
           assert info["version_dir"] == "2021"
           assert info["dataset"] == "BHSA"
+          # Identical TF 2021 effective in-memory snapshot across old/new hash code.
+          assert info["loaded_sha256"] == "70150b50dab4ba75908146225ec450652256e2471d131f6106cd3bdaac19e82d"
           assert info["node_features"] >= 100
           assert info["edge_features"] >= 1
           assert info["object_types"] >= 2
