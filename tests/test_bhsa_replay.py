@@ -40,7 +40,7 @@ def test_single_session_checks_sources_first_and_never_executes_deferred(
     def checked_gold(api: Any, case: Any) -> int:
         calls.append("gold:" + case.id)
         assert case.expected_count is not None
-        return case.expected_count
+        return int(case.expected_count)
 
     def checked_candidate(api: Any, case: Any) -> int:
         calls.append("candidate:" + case.id)
