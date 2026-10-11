@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 import pytest
+
 from scripts.nl_candidates import (
     CandidateCatalog,
     load_candidates,
