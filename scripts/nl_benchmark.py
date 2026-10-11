@@ -21,7 +21,7 @@ STATUSES = frozenset({"supported", "ambiguous", "unsupported"})
 MAX_ROWS = 500_000
 PINNED_FILES = frozenset(
     {"otype.tf", "oslots.tf", "sp.tf", "gn.tf", "nu.tf", "function.tf",
-     "mother.tf", "book.tf", "qere.tf"}
+     "mother.tf", "book.tf", "qere.tf", "dist.tf", "typ.tf"}
 )
 ROOT_FIELDS = frozenset(
     {"format_version", "corpus", "data_version", "source_sha256", "source_git_blobs", "cases"}
