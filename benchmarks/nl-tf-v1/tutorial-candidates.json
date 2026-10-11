@@ -70,7 +70,7 @@
       "source_file": "searchRelations.ipynb",
       "source_cell": 20,
       "capability": "in_scope",
-      "query": "v:verse\n  s:sentence\nv == s",
+      "query": "v:verse\n    s:sentence\nv == s",
       "request": "Find verse and sentence pairs that cover exactly the same slots.",
       "reported_count": 3583,
       "rationale": "Explicit same-slot relation independent from containment."
