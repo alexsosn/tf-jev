@@ -120,6 +120,19 @@ all original v1 evaluation requests. The [v1 seed](benchmarks/nl-tf-v1/README.md
 and tutorial replay remain historical research evidence. This establishes no
 model parsing accuracy; that remains #9/#11.
 
+A first **guided NL-to-QueryIR orchestration slice** lives in
+`tf_jev.orchestrator.parse_one_atom`. It accepts the current `CorpusSchema`,
+a bounded `DecisionBackend`, an optional *schema-validated caller shortlist*
+of candidate feature names, and an optional exact `value_hint` for large
+feature domains. It revalidates every choice independently of the backend,
+abstains on unsupported/ambiguous or low-confidence intent, preserves per-choice
+evidence, and compiles successful single-atom output only through
+`tf_jev.compiler.compile_query`. The prototype currently supports one object
+type and at most one string equality predicate. It is **not** an unrestricted
+natural-language parser: caller hints are not inferred, integer predicates and
+structural relations abstain, and end-to-end semantic accuracy is not yet
+measured. See [design](docs/design/issue-9-bounded-orchestrator.md).
+
 The optional `tf-jev[jev]` extra provides `tf_jev.jev.JevBackend`, a thin adapter
 over the official TypeSafe SDK. It accepts the bounded decision contract, checks
 all returned labels/probabilities, and records resolved model, tokens and latency.
