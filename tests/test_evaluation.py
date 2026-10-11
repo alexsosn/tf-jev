@@ -62,7 +62,7 @@ def prediction(
 
 def cases(api: Any) -> tuple[dict[str, Any], ...]:
     verb_count, verb_sig = execute(api, "word sp=verb", (0,))
-    noun_count, noun_sig = execute(api, "word sp=noun", (0,))
+    noun_count, noun_sig = execute(api, "word sp=subs", (0,))
     return (
         {"id": "a", "family": "verbs", "partition": "development",
          "request": "Return verbs.", "expected": "supported", "difficulty": "easy",
@@ -72,7 +72,7 @@ def cases(api: Any) -> tuple[dict[str, Any], ...]:
         {"id": "b", "family": "nouns", "partition": "development",
          "request": "Return nouns.", "expected": "supported", "difficulty": "hard",
          "rationale": "private benchmark gold", "gold": {
-             "query": "word sp=noun", "projection": [0],
+             "query": "word sp=subs", "projection": [0],
              "count": noun_count, "signature": noun_sig}},
         {"id": "c", "family": "amb", "partition": "development",
          "request": "Unknown meaning.", "expected": "ambiguous", "difficulty": "hard",
@@ -115,6 +115,8 @@ def test_projected_native_equivalence_and_safe_abstention(tiny_api: Any) -> None
     assert report["by_difficulty"]["easy"]["total"] == 2
     assert report["by_difficulty"]["hard"]["total"] == 2
     assert report["cases"][0]["result_equivalent"] is True
+    assert cases(tiny_api)[0]["gold"]["count"] == cases(tiny_api)[1]["gold"]["count"]
+    assert cases(tiny_api)[0]["gold"]["signature"] != cases(tiny_api)[1]["gold"]["signature"]
     assert report["cases"][1]["native_valid"] is True
     assert report["cases"][1]["result_equivalent"] is False
     assert report["cases"][2]["result_equivalent"] is None
