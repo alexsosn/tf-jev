@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from importlib.metadata import version
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import pytest
 
@@ -129,7 +129,7 @@ def test_selected_profile_reports_explicit_omissions(tmp_path: Path) -> None:
     report = profile_schema(
         tmp_path, node_features=("sp",), edge_features=(),
     )
-    coverage = report["coverage"]
+    coverage = cast(dict[str, Any], report["coverage"])
     assert coverage["mode"] == "selected"
     assert coverage["node_features"] == ("sp",)
     assert coverage["edge_features"] == ()
