@@ -30,7 +30,8 @@ This lets the compiler restrict node types, features, values, edge features, rel
 
 ## Status
 
-Bootstrap / research prototype. There is no production Jev integration yet.
+Research prototype with a deterministic compiler, corpus schema, local retrieval,
+and an optional Jev bounded-decision adapter. End-to-end NL parsing is not yet implemented.
 
 The first development goal is to establish whether the approach is accurate and cheap enough on real Text-Fabric queries, using a benchmark with gold natural-language ↔ native-query pairs and at least one real corpus.
 
@@ -64,7 +65,7 @@ The returned `query` must come from a deterministic compiler over a validated ty
 ## Development
 
 ```bash
-python -m pip install -e '.[dev]'
+python -m pip install -e '.[dev,jev]'
 python -m ruff check .
 python -m mypy
 python -m pytest -q
@@ -100,3 +101,20 @@ preserve original strings and collisions. A complete result can produce a bounde
 `ChoiceQuestion`; no-match and overflow block that handoff. See the
 [retrieval contract](docs/design/candidate-retrieval.md) and
 [real-domain lookup benchmark](benchmarks/retrieval-v1/README.md).
+
+The optional `tf-jev[jev]` extra provides `tf_jev.jev.JevBackend`, a thin adapter
+over the official TypeSafe SDK. It accepts the bounded decision contract, checks
+all returned labels/probabilities, and records resolved model, tokens and latency.
+Set `JEV_API_KEY` (or `TYPESAFE_API_KEY`) explicitly; the adapter does not load
+`.env` files. Use it as a context manager to close its owned client. See the
+[adapter contract](docs/design/jev-adapter.md) for failure and model pinning policy.
+This adapter does not implement natural-language parsing; that remains #9.
+
+Live synthetic contract smoke is opt-in and excluded from normal CI:
+
+```bash
+TF_JEV_LIVE=1 python -m pytest -q tests/test_jev_live.py
+```
+
+Deterministic adapter tests use the real SDK with HTTP MockTransport. They check
+the transport/validation boundary and do not establish semantic model accuracy.

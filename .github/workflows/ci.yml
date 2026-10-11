@@ -27,7 +27,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
       - name: Install
-        run: python -m pip install -e '.[dev]'
+        run: python -m pip install -e '.[dev,jev]'
       - name: Ruff
         run: python -m ruff check .
       - name: Mypy
@@ -52,4 +52,4 @@ jobs:
           vpy="$RUNNER_TEMP/tf-jev-wheel-venv/bin/python"
           "$vpy" -m pip install "$RUNNER_TEMP"/wheels/tf_jev-*.whl
           cd "$RUNNER_TEMP"
-          "$vpy" -c "import tf_jev; assert tf_jev.__version__ == '0.1.0.dev0'"
+          "$vpy" -c "import importlib.util, tf_jev, tf_jev.compiler, tf_jev.schema, tf_jev.retrieval; assert tf_jev.__version__ == '0.1.0.dev0'; assert importlib.util.find_spec('typesafe_sdk') is None"

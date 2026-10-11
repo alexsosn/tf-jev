@@ -118,3 +118,8 @@ The retrieval contract (#7) is specified in
 [docs/design/candidate-retrieval.md](docs/design/candidate-retrieval.md). Local
 identity-bound indexes preserve raw strings, expose collision/overflow counts,
 and hand only complete sets of at most 32 opaque options to a decision backend.
+
+The optional Jev adapter (#8) is specified in
+[docs/design/jev-adapter.md](docs/design/jev-adapter.md). The official SDK owns
+transport/retries; tf-jev checks request-bound answers, model/usage metadata and
+sanitizes errors/logs before returning backend-neutral decisions and receipts.
