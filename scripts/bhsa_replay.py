@@ -68,18 +68,18 @@ def replay(
             confirmed += 1
 
     observations: list[dict[str, Any]] = []
-    for case in candidates.cases:
-        if case.capability != "in_scope":
+    for candidate in candidates.cases:
+        if candidate.capability != "in_scope":
             continue
-        observed = run_candidate(api, case)
-        source_version = candidates.notebooks[case.source_file].data_version
+        observed = run_candidate(api, candidate)
+        source_version = candidates.notebooks[candidate.source_file].data_version
         observations.append(
             {
-                "id": case.id,
+                "id": candidate.id,
                 "notebook_data_version": source_version,
                 "observed_2021_rows": observed,
-                "historical_notebook_rows": case.reported_count,
-                "agrees_with_notebook": observed == case.reported_count,
+                "historical_notebook_rows": candidate.reported_count,
+                "agrees_with_notebook": observed == candidate.reported_count,
             }
         )
 
