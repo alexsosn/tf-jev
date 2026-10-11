@@ -103,6 +103,7 @@ def test_empty_explicit_scope_is_not_full_and_unknown_is_not_absent(api: Any) ->
 
 def test_coverage_selection_invalidates_large_retrieval_handles(tmp_path: Path) -> None:
     from tf.fabric import Fabric
+
     from tf_jev.schema import Large
 
     n = 38
