@@ -245,6 +245,36 @@
       "gold_query": "phrase typ=PP\n  word sp=prep\n  <: word sp=adjv\n  <: word sp=subs",
       "expected_count": 61,
       "rationale": "The three word types and adjacent order are literal corpus annotations. 2017 source total 64 differs from 2021 verified 61."
+    },
+    {
+      "id": "complex-verbal-negations",
+      "split": "development",
+      "status": "supported",
+      "difficulty": "feature-negation-set",
+      "request": "Return word nodes with sp=verb but vs not qal, vt not in {infc,infa,ptca,ptcp}, ps not p3, nu not sg, and gn not m.",
+      "gold_query": "word sp=verb vs#qal vt#infc|infa|ptca|ptcp ps#p3 nu#sg gn#m",
+      "expected_count": 271,
+      "rationale": "The five native # predicates act independently; annotated word-feature values are literal BHSA tags."
+    },
+    {
+      "id": "object-clause-first-lexeme",
+      "split": "train",
+      "status": "supported",
+      "difficulty": "lexical-same-start",
+      "request": "Return verse–clause–word triples where clause rela=Objc and a lex=>CR word starts at the clause's first slot.",
+      "gold_query": "verse\n    clause rela=Objc\n        =: word lex=>CR",
+      "expected_count": 96,
+      "rationale": "lex=>CR is native equality to literal >CR; =: enforces same start slot for clause and word."
+    },
+    {
+      "id": "complex-predicate-object-lexemes",
+      "split": "development",
+      "status": "supported",
+      "difficulty": "lexical-structural-conjunction",
+      "request": "Return clause–phrase–word–phrase–word tuples with a Pred or PreC phrase containing a sp=verb vs=hif lex=QWM[ word, and an Objc phrase containing a lex=BRJT/ word.",
+      "gold_query": "clause\n  phrase function=Pred|PreC\n    word sp=verb vs=hif lex=QWM[\n  phrase function=Objc\n    word lex=BRJT/",
+      "expected_count": 13,
+      "rationale": "Either Pred or PreC is permitted; these are literal lexical tags and no phrase order is specified."
     }
   ],
   "source_git_blobs": {
@@ -258,6 +288,11 @@
     "book.tf": "70407385b60568eaeb44dbeb45f3a7dfafd2a6af",
     "qere.tf": "405b9a7e98dbc85c401a6e9cf7e4978a04bfe2ee",
     "dist.tf": "e88470f33af1dd9dc282424f7c17ca17cb4451f3",
-    "typ.tf": "10c075abd4da74088baa7f3675ca56edc09893de"
+    "typ.tf": "10c075abd4da74088baa7f3675ca56edc09893de",
+    "vs.tf": "59fb614bb49e16f435f3c5720a877102d1f6cf53",
+    "vt.tf": "d003f1ff2f2f972a4d5af61dce26e8311d9b69a9",
+    "ps.tf": "2f102db0f06ce4d61a421aa9d90bfa423d75f2a6",
+    "lex.tf": "234224440026af0b2da9ece3dbeebfbf8da9ad6c",
+    "rela.tf": "e954a15dc4c987032911930b1fcf2dae3f801deb"
   }
 }
