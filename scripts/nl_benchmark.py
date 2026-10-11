@@ -201,7 +201,10 @@ def main() -> int:
             if args.corpus.name != catalog.data_version:
                 raise ValueError("benchmark corpus directory must be named after data version")
             verify_source(args.corpus, catalog)
-            api = load_api(args.corpus, features="sp gn nu lex prs function typ verse")
+            api = load_api(
+                args.corpus,
+                features="sp gn nu lex prs function typ verse book qere dist mother",
+            )
             report["native_checked"] = len(
                 [check_gold(api, case) for case in catalog.cases if case.status == "supported"]
             )
