@@ -16,14 +16,14 @@ _NAME = re.compile(r"[A-Za-z0-9_][A-Za-z0-9_@-]*")
 _EDGE_OPS = frozenset((RelationOp.EDGE_FORWARD, RelationOp.EDGE_BACKWARD, RelationOp.EDGE_EITHER))
 _NEAR_OPS = frozenset((RelationOp.NEAR_BEFORE, RelationOp.NEAR_AFTER))
 
-# Unicode `Cf` is not uniformly unsafe: joiners and LRM/RLM round-trip in
-# actual TF corpora and support legitimate writing systems. Reject only format
+# Unicode `Cf` is not uniformly unsafe: joiners and LRM/RLM have legitimate
+# uses in writing systems. Native round-trip tests protect those values. Reject format
 # controls that obscure a query's visual contents or reverse apparent order.
 # This is a native-query auditability policy, distinct from model prompt display.
 _UNAUDITABLE_FORMAT_CONTROLS = (
-    frozenset(chr(point) for point in (0x00AD, 0x200B, 0x2060, 0xFEFF))
+    frozenset(chr(point) for point in (0x00AD, 0x200B, 0xFEFF))
     | frozenset(chr(point) for point in range(0x202A, 0x202F))
-    | frozenset(chr(point) for point in range(0x2066, 0x206A))
+    | frozenset(chr(point) for point in range(0x2060, 0x2070))
 )
 
 class CompileError(ValueError):
