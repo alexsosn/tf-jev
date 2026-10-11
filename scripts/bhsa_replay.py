@@ -14,6 +14,7 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
+from scripts.bhsa_gold_ir import validate_promotions
 from scripts.nl_benchmark import check_gold, load_catalog, verify_source
 from scripts.nl_candidates import (
     UPSTREAM_COMMIT,
@@ -66,6 +67,7 @@ def replay(
         if case.status == "supported":
             check_gold(api, case)
             confirmed += 1
+    validate_promotions(api, gold)
 
     observations: list[dict[str, Any]] = []
     for candidate in candidates.cases:

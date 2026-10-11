@@ -1,14 +1,18 @@
 # BHSA NL ↔ native TF benchmark (seed v1)
 
-Research dataset for [#10](https://github.com/alexsosn/tf-jev/issues/10), frozen 2026-10-11.
+Research dataset for [#10](https://github.com/alexsosn/tf-jev/issues/10), originally seeded and first expanded on 2026-10-11.
 Corpus: [ETCBC/bhsa](https://github.com/ETCBC/bhsa) TF data version **2021**,
 release v1.8.1, used with Text-Fabric 13.1.0.
 
-The fixture contains **13 original English requests**: six supported native-query
-gold examples with empirically recorded result-*tuple* counts, three ambiguous
-requests and four unsupported requests. The original gold counts come from
-`tests/conformance/test_tf_search_grammar_bhsa.py` run against real BHSA 2021.
-The fixture has an immutable train/development/evaluation assignment.
+The fixture contains **19 English requests**: twelve supported native-query gold
+examples with observed result-*tuple* counts, three ambiguous requests and four
+unsupported requests. Six original counts come from
+`tests/conformance/test_tf_search_grammar_bhsa.py`; six additional queries originate
+from official ETCBC search tutorial cells and were rerun against pinned BHSA 2021
+in [the native replay workflow](../../.github/workflows/bhsa-replay.yml). Their
+hand-adjudicated typed IR witnesses in `scripts/bhsa_gold_ir.py` must compile to
+queries with **identical native result tuples**, not just equal counts.
+The original evaluation partition is unchanged; new cases are train/development only.
 No parser/model has been evaluated on these cases yet.
 
 **This is an incomplete seed, not the full #10 acceptance dataset.** It does not
@@ -28,13 +32,16 @@ TF_JEV_BHSA_DIR=/path/to/ETCBC/bhsa/tf/2021 python -m pytest tests/test_nl_bench
 ```
 
 The first command checks structural integrity without executing Text-Fabric.
-The others require the local corpus; **nothing is downloaded**. The runner
-checks the recorded SHA256 of `otype.tf` and upstream Git blob hashes of all seven referenced feature/structural files, then executes supported gold queries
+The local commands do not download any corpus. The dedicated GitHub Actions replay
+job uses an immutable, sparsely checked-out upstream corpus commit. Validation checks
+the SHA256 of `otype.tf` and Git blob hashes of all **nine** referenced features
+and structural source files, then executes supported gold queries
 through Text-Fabric's native search and checks strict diagnostics and full
 row counts (with one-extra-row overflow detection).
 
 **Scope of source pin:** The fixture now authenticates the on-disk `otype.tf`,
-`oslots.tf`, `sp.tf`, `gn.tf`, `nu.tf`, `function.tf`, and `mother.tf` against the
+`oslots.tf`, `sp.tf`, `gn.tf`, `nu.tf`, `function.tf`, `mother.tf`,
+`book.tf`, and `qere.tf` against the
 upstream [BHSA 2021 tree](https://github.com/ETCBC/bhsa/tree/master/tf/2021),
 using Git blob SHA-1 and an additional SHA256 for `otype.tf`. Other feature
 files, overlays, and in-memory TF changes are not authenticated. Runtime
@@ -45,6 +52,12 @@ research helper for comparing **trusted compiler-produced** native queries.
 It compares the full sorted tuple sets, not only result counts, and explicitly
 fails on TF diagnostics or a row-count ceiling. Do not execute raw untrusted
 model text through this interface.
+
+The six added gold requests were adapted and independently reviewed from the
+[official notebook candidates](tutorial-candidates.md), with full native tuple
+identity checked on the pinned corpus. The other eight replayed in-scope tutorial
+queries remain **discovery candidates**, not gold. No natural-language parser has
+been evaluated on the gold pairs.
 
 ## License and provenance
 

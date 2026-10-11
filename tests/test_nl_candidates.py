@@ -11,6 +11,7 @@ from typing import Any
 
 import pytest
 
+from scripts.bhsa_gold_ir import PROMOTED_IR
 from scripts.nl_candidates import (
     CandidateCatalog,
     load_candidates,
@@ -40,7 +41,16 @@ def test_official_sources_are_discovery_only_and_cross_version() -> None:
     assert len(catalog.cases) >= 16
     assert {c.capability for c in catalog.cases} == {"in_scope", "deferred"}
     assert {v.data_version for v in catalog.notebooks.values()} == {"2017", "unversioned"}
-    assert all(c.id not in {case["id"] for case in gold["cases"]} for c in catalog.cases)
+    # Reviewed tutorial cases are retained here for provenance after promotion.
+    # A *new* overlap must be independently approved and cannot touch evaluation.
+    gold_ids = {case["id"] for case in gold["cases"]}
+    shared = {c.id for c in catalog.cases} & gold_ids
+    assert shared == set(PROMOTED_IR)
+    assert all(
+        case["split"] != "evaluation"
+        for case in gold["cases"]
+        if case["id"] in shared
+    )
     assert all(c.reported_count is not None for c in catalog.cases)
     assert {case.source_file for case in catalog.cases} == set(catalog.notebooks)
     assert all(case.source_cell >= 0 for case in catalog.cases)
