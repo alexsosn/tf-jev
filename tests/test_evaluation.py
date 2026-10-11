@@ -11,9 +11,9 @@ from typing import Any
 import pytest
 
 from scripts.nl_benchmark_v2 import Benchmark, execute
+from scripts.semantic_evaluation import evaluate
 from tf_jev.compiler import compile_query
 from tf_jev.decisions import ChoiceDecision, ChoiceQuestion, Option, Receipt
-from scripts.semantic_evaluation import evaluate
 from tf_jev.ir import Atom, Predicate, PredicateOp, Query
 from tf_jev.parser import Evidence, ParseResult, ParseStatus
 from tf_jev.schema import CorpusSchema, extract_schema
