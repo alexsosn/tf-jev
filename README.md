@@ -101,7 +101,36 @@ symbol/value checks; `tf_jev.schema.extract_schema(api)` extracts an immutable
 local features and retains exact membership, with high-cardinality inventories
 kept out of its JSON summary. See the
 [schema contract](docs/design/corpus-schema.md) for identity, lookup and retrieval
-handles. See the
+handles.
+
+For deterministic, known-feature queries, schema extraction can be explicitly
+scoped to a feature shortlist without suggesting the entire corpus was examined:
+
+```python
+from tf_jev.schema import extract_schema
+
+scoped = extract_schema(api, node_features=("sp", "gn", "nu"), edge_features=())
+assert scoped.coverage.mode == "selected"
+assert "lex" in scoped.coverage.omitted_node_features
+```
+
+Only covered features have validated inventories. Unloaded but discovered
+features are **unknown**, not absent, and compiler access to them raises an error.
+An explicit empty tuple differs from omitting the option: with both parameters
+omitted, the legacy **full** extractor and its original corpus identity remain
+unchanged. Selected feature names are included in the snapshot identity and
+large-domain retrieval handles. The current natural-language `SemanticParser`
+abstains on all selected-coverage schemas; partial-mode NL parsing requires a
+separately reviewed completeness policy. The
+[schema coverage design](docs/design/issue-37-selected-coverage.md) details
+these boundaries. To measure a local selected feature set:
+
+```bash
+python -m scripts.profile_schema /path/to/bhsa/tf/2021 \\
+    --node-features sp gn nu --edge-features
+```
+
+See the
 [compiler contract](docs/design/typed-compiler.md) for supported constructs,
 explicit errors and native quantifier workarounds. Compilation does not execute
 or evaluate the resulting query.
