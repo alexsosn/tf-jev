@@ -133,3 +133,40 @@ def test_true_tiny_native_count_has_no_dependency_on_notebook_history(
     assert match["observed_2021_rows"] == 1
     assert match["historical_notebook_rows"] == 5992
     assert not match["agrees_with_notebook"]
+
+
+def test_native_reference_is_durable_and_distinct_from_semantic_gold(
+    tmp_path: Path,
+) -> None:
+    reference = ROOT / "benchmarks/nl-tf-v1/native-observations-2021.json"
+    report = json.loads(reference.read_text(encoding="utf-8"))
+    assert report["purpose"] == "native-replay-not-gold-promotion"
+    assert report["candidate_checked"] == 14
+    assert report["gold_checked"] == 6
+    by_id = {o["id"]: o for o in report["observations"]}
+    assert by_id["pp-prep-adj-noun"]["observed_2021_rows"] == 61
+    assert by_id["pp-prep-adj-noun"]["historical_notebook_rows"] == 64
+    assert not by_id["pp-prep-adj-noun"]["agrees_with_notebook"]
+    assert "gold_query" not in reference.read_text(encoding="utf-8")
+    runner.verify_reference_report(report, reference)
+    changed = json.loads(json.dumps(report))
+    changed["observations"][0]["observed_2021_rows"] += 1
+    with pytest.raises(ValueError, match="native reference"):
+        runner.verify_reference_report(changed, reference)
+    changed["observations"][0]["observed_2021_rows"] -= 1
+    changed["candidate_fixture_sha256"] = "0" * 64
+    with pytest.raises(ValueError, match="native reference"):
+        runner.verify_reference_report(changed, reference)
+    changed = json.loads(json.dumps(report))
+    changed["observations"].pop()
+    with pytest.raises(ValueError, match="native reference"):
+        runner.verify_reference_report(changed, reference)
+
+
+def test_native_reference_rejects_wrong_types_even_if_python_would_equate_them(
+    tmp_path: Path,
+) -> None:
+    reference = tmp_path / "ref.json"
+    reference.write_text('{"candidate_checked": 1}', encoding="utf-8")
+    with pytest.raises(ValueError, match="native reference"):
+        runner.verify_reference_report({"candidate_checked": True}, reference)
