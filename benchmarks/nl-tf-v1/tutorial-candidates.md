@@ -4,7 +4,9 @@ These 18 examples were adapted from the [official Text-Fabric search documentati
 
 **14** examples use native constructs intended to be expressible in tf-jev's researched compiler subset. **4** deliberately use unsupported constructs, including regular expressions and `/where/`/`/with/` quantifiers, for later abstention tests. Each entry records its notebook and original *zero-based* code-cell index, upstream Git blob SHA-1, original native query, novel English request, and historical result count.
 
-**No entry is BHSA 2021 gold yet.** The `searchFromMQL.ipynb` notebook explicitly used **BHSA 2017**; the other tutorials do not pin a BHSA dataset version and include notebooks executed under older Text-Fabric versions. Notebook result totals must not be used as 2021 acceptance thresholds, and the English requests need independent linguistic review for equivalence.
+**No entry is BHSA 2021 semantic gold yet.** All 14 in-scope native queries have now been executed on pinned BHSA 2021 via the [replay workflow](../../.github/workflows/bhsa-replay.yml), and the native-only observed counts are frozen in [native-observations-2021.json](native-observations-2021.json). In particular, the 2017 tutorial's PP adjective-noun pattern gives **64** rows historically but **61** on BHSA 2021. This native observation does not yet establish that each English description is semantically equivalent to its query.
+
+ The `searchFromMQL.ipynb` notebook explicitly used **BHSA 2017**; the other tutorials do not pin a BHSA dataset version and include notebooks executed under older Text-Fabric versions. Notebook result totals must not be used as 2021 acceptance thresholds, and the English requests need independent linguistic review for equivalence.
 
 ## Run
 
