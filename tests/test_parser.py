@@ -415,3 +415,62 @@ def test_repeated_parse_does_not_reuse_prior_choices(tiny_api: Any) -> None:
     assert first.status is ParseStatus.SUPPORTED
     assert second.status is ParseStatus.UNSUPPORTED and len(second.evidence) == 1
     assert dict(backend.requests[-1].context)["selected"] == "{}"
+
+
+@pytest.mark.parametrize("poison", ["unselected_value", "feature_description"])
+def test_untrusted_schema_prose_does_not_poison_safe_native_choices(
+    tmp_path: Path, poison: str
+) -> None:
+    """A literal Cf format character in corpus data must not abort safe searches."""
+    from tf.fabric import Fabric
+
+    root = tmp_path / "unicode"
+    root.mkdir()
+    tf = Fabric(locations=str(root), silent="deep")
+    assert tf.save(
+        nodeFeatures={
+            "otype": {1: "word", 2: "word", 3: "sentence"},
+            "label": {1: "safe", 2: "bidi\u202e"},
+            "sp": {1: "subs", 2: "verb"},
+        },
+        edgeFeatures={"oslots": {3: {1, 2}}},
+        metaData={
+            "otype": {"valueType": "str"},
+            "oslots": {"valueType": "str"},
+            "label": {
+                "valueType": "str",
+                "description": (
+                    "untrusted description\u202e"
+                    if poison == "feature_description" else "synthetic labels"
+                ),
+            },
+            "sp": {"valueType": "str"},
+            "otext": {"fmt:text-orig-full": "{label} "},
+        },
+        silent="deep",
+    )
+    api = Fabric(locations=str(root), silent="deep").load("sp label", silent="deep")
+    selected = choices()
+    if poison == "unselected_value":
+        selected.update({
+            "atom0.pred0.feature": "label",
+            "atom0.pred0.value0": "safe",
+        })
+        expected = ((1,),)
+    else:
+        # Even though this selects sp, an unrelated label description is unsafe.
+        selected.update({
+            "atom0.pred0.feature": "sp",
+            "atom0.pred0.value0": "verb",
+        })
+        expected = ((2,),)
+    result = SemanticParser(extract_schema(api), ChoosingBackend(selected)).parse(
+        "Return words with exactly the attested safe annotation."
+    )
+    assert result.status is ParseStatus.SUPPORTED and result.query is not None
+    assert run_template(api, result.query).results == expected
+    assert all(
+        "\u202e" not in (option.description or "")
+        for evidence in result.evidence
+        for option in evidence.question.options
+    )
