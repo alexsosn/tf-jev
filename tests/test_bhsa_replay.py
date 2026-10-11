@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import json
+from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
 import pytest
 
 import scripts.bhsa_replay as runner
+from scripts.nl_candidates import run_candidate as native_candidate
 
 ROOT = Path(__file__).resolve().parents[1]
 GOLD = ROOT / "benchmarks/nl-tf-v1/bhsa-2021.json"
@@ -118,9 +120,7 @@ def test_true_tiny_native_count_has_no_dependency_on_notebook_history(
 
     def native(api: Any, case: Any) -> int:
         if case.id == "feminine-plural-substantives":
-            return runner.run_candidate_native(
-                api, case, query_override="word gn=f nu=pl sp=subs"
-            )
+            return native_candidate(api, replace(case, query="word gn=f nu=pl sp=subs"))
         return 0
 
     monkeypatch.setattr(runner, "run_candidate", native)
