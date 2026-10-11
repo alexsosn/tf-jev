@@ -73,6 +73,7 @@ jobs:
           set -euo pipefail
           python -m scripts.bhsa_replay \
             --corpus "$RUNNER_TEMP/bhsa/tf/2021" \
+            --expected "benchmarks/nl-tf-v1/native-observations-2021.json" \
             --output "$RUNNER_TEMP/bhsa-replay-report.json"
 
       - name: Upload aggregate counts only, never corpus data
