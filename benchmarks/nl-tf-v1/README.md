@@ -29,15 +29,16 @@ TF_JEV_BHSA_DIR=/path/to/ETCBC/bhsa/tf/2021 python -m pytest tests/test_nl_bench
 
 The first command checks structural integrity without executing Text-Fabric.
 The others require the local corpus; **nothing is downloaded**. The runner
-checks the recorded SHA256 of `otype.tf`, then executes supported gold queries
+checks the recorded SHA256 of `otype.tf` and upstream Git blob hashes of all seven referenced feature/structural files, then executes supported gold queries
 through Text-Fabric's native search and checks strict diagnostics and full
 row counts (with one-extra-row overflow detection).
 
-**Scope of source pin:** `otype.tf` is digest-pinned as an early drift guard;
-this does **not** authenticate all feature files or in-memory overrides.
-Until a complete feature-manifest pin and real-corpus verification are added,
-a passing check on its own is insufficient to certify corpus equivalence.
-Native count assertions detect many, but not all, feature-level drifts.
+**Scope of source pin:** The fixture now authenticates the on-disk `otype.tf`,
+`oslots.tf`, `sp.tf`, `gn.tf`, `nu.tf`, `function.tf`, and `mother.tf` against the
+upstream [BHSA 2021 tree](https://github.com/ETCBC/bhsa/tree/master/tf/2021),
+using Git blob SHA-1 and an additional SHA256 for `otype.tf`. Other feature
+files, overlays, and in-memory TF changes are not authenticated. Runtime
+counts guard against semantic drift within the tested gold queries.
 
 `scripts.nl_benchmark.equivalent(api, gold, candidate)` is a lower-level
 research helper for comparing **trusted compiler-produced** native queries.
