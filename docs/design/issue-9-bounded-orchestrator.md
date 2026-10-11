@@ -1,0 +1,15 @@
+# Issue #9 design: safe guided one-atom parser slice
+
+API: `tf_jev.orchestrator.parse_one_atom(text: str, schema: CorpusSchema, backend: DecisionBackend, *, feature_candidates: tuple[str, ...]=(), value_hint: str|None=None, min_confidence: float=0.8) -> ParseResult`. Result includes a closed status (`ok/ambiguous/unsupported/low_confidence`), `Query|None`, `native_query|None`, per-decision evidence (selected opaque label and normalized confidence), and aggregate confidence = **minimum** of recorded decisions. No query is emitted except `ok`. A failure code is internal and sanitized; arbitrary backend text does not enter errors or TF syntax.
+
+Workflow:
+1. Validate argument types/shortlist against `CorpusSchema`, including uniqueness and node-feature existence, before any backend call. Construct `DecisionRequest(context={request: text}, questions={mode: bounded options})` with single, ambiguous, unsupported. Reject unauthorized responses by applying `validate_answers` a second time using the exact emitted question and `backend.capabilities.probability_resolution`, and check capability budgets pre-call.
+2. If decision not `single` or confidence under `min_confidence`, return abstention; no further backend calls.
+3. Choose a single node type from `schema.object_type_details` with `expressible`, via opaque labels `t000`, etc. Reject low confidence.
+4. Choose no feature or exactly one from a caller-provided bounded shortlist, filtered by that selected node type (nonempty attested domain). All labels are opaque `f000`; description may contain only trusted schema ASCII feature names. If shortlist exceeds backend capacity, abstain as unsupported, **without truncation**.
+5. For one feature: if string Enumerated, enumerate all attested values with safe ASCII-escaped descriptions. If Large, require explicit `value_hint`; exact RetrievalIndex/handle lookup with no truncation and original value mapping; if int, unsupported in this slice (not a misleading integer literal guess). Ensure all options fit backend capabilities; otherwise abstain. Select an opaque label and map to original attested value, then construct `Predicate(EQ,(value,))`. No raw model strings become QueryIR members.
+6. Compile exclusively through `compile_query(Query((Atom(...),)), schema)`. Invalid schema/compiler input fails closed before `ok`. No execution or corpus text dump.
+
+`ScriptedBackend` supplies answer distributions in tests; a malicious custom DecisionBackend returning a forged `DecisionBatch` is rejected. Test actual native Text-Fabric search on tiny real corpus for nonempty and punctuation-containing values. Preserve all receipts locally if later metrics require them; do not log prompts/corpus data. No training/prompt examples from v2 heldout.
+
+Gate sequence: research/design commit → RED tests → implementation → Python 3.11/3.12/3.13 CI/pytest/mypy/Ruff/package → logically independent skeptical review of exact head → merge. This is **partial issue #9**; do not close it until relation composition, unguided feature retrieval and benchmark evaluation are implemented.
