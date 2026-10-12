@@ -126,7 +126,7 @@ separately reviewed completeness policy. The
 these boundaries. To measure a local selected feature set:
 
 ```bash
-python -m scripts.profile_schema /path/to/bhsa/tf/2021 \\
+python -m scripts.profile_schema /path/to/bhsa/tf/2021 \
     --node-features sp gn nu --edge-features
 ```
 
@@ -179,3 +179,29 @@ retrieval before selection, with explicit miss/budget failures. See the
 [parser contract](docs/design/semantic-parser.md) for limits and data flow.
 Scripted real-corpus tests prove orchestration and compiler boundaries, not model
 semantic accuracy; #11/#12 must evaluate quality and cost before default use.
+
+
+## Explicit opt-in Jev evaluation (#11)
+
+The checkout-only `scripts.run_jev_evaluation` command connects the canonical
+BHSA 2021 v2 benchmark to `SemanticParser` and the pinned
+`JevBackend`. It verifies Text-Fabric 13.1.0 and all source feature SHA256
+hashes **before constructing the model client**. Set `JEV_API_KEY` securely
+in the environment and install `.[dev,jev]`. A small development run:
+
+```bash
+TF_JEV_LIVE=1 python -m scripts.run_jev_evaluation /path/to/bhsa/tf/2021 \\
+  --partition development --max-cases 1 --live --output /tmp/tf-jev-dev-1.json
+```
+
+This makes paid network calls; both `TF_JEV_LIVE=1` and `--live` are
+required, as is a deliberate case limit. Each request can use several model
+calls. Output files must be new, and the report explicitly identifies
+canonical-prefix samples rather than mislabeling them as whole-partition
+measurements. Add `--input-usd-per-million` and `--output-usd-per-million`
+only when the corresponding model prices are independently verified; otherwise
+estimated cost remains unknown. No prompt, raw corpus text, gold query or
+API credential is written to the report. Treat held-out results as evaluation
+only; do not tune the parser after inspecting them and still claim an
+unbiased held-out score. Scripted CI tests verify safety and native TF
+integration but do not establish Jev accuracy.
