@@ -266,6 +266,9 @@ def test_extraction_borrows_existing_tf_otype_mapping_without_copy(
     api: Any, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     """Native TF 13.1 exposes the same otype entries in F.otype.data."""
+    native_otype = api.F.otype
+    assert len(native_otype.data) == native_otype.maxNode - native_otype.maxSlot
+    assert native_otype.maxNode > native_otype.maxSlot
     before = extract_schema(api)
     expected_query = compile_query(
         Query((Atom("word", (Predicate("sp", P.EQ, ("verb",)),)),)), before
