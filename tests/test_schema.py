@@ -278,8 +278,9 @@ def test_extraction_borrows_existing_tf_otype_mapping_without_copy(
 
     # Force the extractor to use the already resident F.otype.data, not
     # build a second dictionary from the accessor.
-    monkeypatch.setattr(api.F.otype, "items", forbidden_items)
-    after = extract_schema(api)
+    with monkeypatch.context() as patch:
+        patch.setattr(api.F.otype, "items", forbidden_items)
+        after = extract_schema(api)
     assert after.identity == before.identity
     assert after.to_json() == before.to_json()
     assert after._inventories == before._inventories
