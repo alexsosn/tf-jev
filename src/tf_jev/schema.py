@@ -66,6 +66,29 @@ def _admissible(name: str) -> bool:
     )
 
 
+class _OtypeView(Mapping[int, str]):
+    """Read-only 1-based node-to-type view over TF 13.1's compact OtypeFeature."""
+
+    def __init__(self, native: Any) -> None:
+        self._max_slot: int = native.maxSlot
+        self._max_node: int = native.maxNode
+        self._slot_type: str = native.slotType
+        self._non_slots: Any = native.data
+
+    def __len__(self) -> int:
+        return self._max_node
+
+    def __iter__(self) -> Any:
+        return iter(range(1, self._max_node + 1))
+
+    def __getitem__(self, node: int) -> str:
+        if type(node) is not int or not 1 <= node <= self._max_node:
+            raise KeyError(node)
+        if node <= self._max_slot:
+            return self._slot_type
+        return self._non_slots[node - self._max_slot - 1]
+
+
 @dataclass(frozen=True)
 class CorpusIdentity:
     tf_version: str
@@ -330,9 +353,9 @@ def _extract(
         ObjectType(level[0], level[0] == api.F.otype.slotType, bool(_SYMBOL.fullmatch(level[0])))
         for level in api.C.levels.data
     )
-    # Text-Fabric 13.1 NodeFeature.items() delegates to .data.items().
-    # Borrow the already-loaded otype map instead of allocating its full clone.
-    node_types = api.F.otype.data
+    # OtypeFeature stores only non-slot type names, plus a shared slot type.
+    # View its complete node-to-type mapping without materializing a new dict.
+    node_types = _OtypeView(api.F.otype)
     totals = collections.Counter(node_types.values())
     if set(totals) != {t.name for t in types} or len(types) != len(totals):
         raise SchemaError("inconsistent object types")
