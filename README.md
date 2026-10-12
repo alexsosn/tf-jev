@@ -205,3 +205,29 @@ API credential is written to the report. Treat held-out results as evaluation
 only; do not tune the parser after inspecting them and still claim an
 unbiased held-out score. Scripted CI tests verify safety and native TF
 integration but do not establish Jev accuracy.
+
+
+## Model-free diagnostic CLI
+
+After installing the package (also available from its wheel), compile an
+explicitly typed, corpus-grounded Text-Fabric query **without Jev or credentials**:
+
+```bash
+tf-jev compile --corpus /path/to/bhsa/tf/2021 --type word --eq sp=verb
+tf-jev compile --corpus /path/to/bhsa/tf/2021 --type word --eq sp=verb \
+  --execute --limit 50000
+```
+
+The command emits machine-readable JSON with native query text, schema
+identity, and \`coverage_mode=selected\`. Optional \`--execute\` asks native TF
+to run the validated query and reports only a complete result count; it
+**fails rather than truncating** when the explicit result limit is exceeded or
+Text-Fabric reports an execution error. Other supported predicates are repeated
+\`--eq FEATURE=VALUE\`, \`--present FEATURE\`, and \`--absent FEATURE\`; the
+CLI checks node/feature types and literals against the actual loaded corpus.
+
+This intentionally supports one atom and known annotations, without pretending
+to interpret natural-language requests. The experimental natural-language parser
+remains gated by independent accuracy and cost evaluation (#11 and #12). The
+installed wheel's CI smoke creates a real tiny TF corpus and invokes the
+\`tf-jev\` console command for compilation, bounded execution, and failure.
