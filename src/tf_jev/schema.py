@@ -11,7 +11,7 @@ import hashlib
 import json
 import re
 import unicodedata
-from collections.abc import Callable, Iterator, Mapping
+from collections.abc import Callable, Iterator, Mapping, Sequence
 from dataclasses import asdict, dataclass, field
 from importlib.metadata import version
 from pathlib import Path
@@ -73,7 +73,7 @@ class _OtypeView(Mapping[int, str]):
         self._max_slot: int = native.maxSlot
         self._max_node: int = native.maxNode
         self._slot_type: str = native.slotType
-        self._non_slots: Any = native.data
+        self._non_slots: Sequence[str] = native.data
 
     def __len__(self) -> int:
         return self._max_node
