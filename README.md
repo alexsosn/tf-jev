@@ -219,15 +219,15 @@ tf-jev compile --corpus /path/to/bhsa/tf/2021 --type word --eq sp=verb \
 ```
 
 The command emits machine-readable JSON with native query text, schema
-identity, and \`coverage_mode=selected\`. Optional \`--execute\` asks native TF
+identity, and `coverage_mode=selected`. Optional `--execute` asks native TF
 to run the validated query and reports only a complete result count; it
 **fails rather than truncating** when the explicit result limit is exceeded or
 Text-Fabric reports an execution error. Other supported predicates are repeated
-\`--eq FEATURE=VALUE\`, \`--present FEATURE\`, and \`--absent FEATURE\`; the
+`--eq FEATURE=VALUE`, `--present FEATURE`, and `--absent FEATURE`; the
 CLI checks node/feature types and literals against the actual loaded corpus.
 
 This intentionally supports one atom and known annotations, without pretending
 to interpret natural-language requests. The experimental natural-language parser
 remains gated by independent accuracy and cost evaluation (#11 and #12). The
 installed wheel's CI smoke creates a real tiny TF corpus and invokes the
-\`tf-jev\` console command for compilation, bounded execution, and failure.
+`tf-jev` console command for compilation, bounded execution, and failure.
