@@ -265,7 +265,7 @@ def test_noncontiguous_types_are_rejected_before_compilation(tmp_path: Path) -> 
 def test_extraction_borrows_existing_tf_otype_mapping_without_copy(
     api: Any, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """Native TF 13.1 exposes the same otype entries in F.otype.data."""
+    """TF 13.1 stores non-slot types compactly; .items() expands them."""
     native_otype = api.F.otype
     assert len(native_otype.data) == native_otype.maxNode - native_otype.maxSlot
     assert native_otype.maxNode > native_otype.maxSlot
@@ -279,8 +279,8 @@ def test_extraction_borrows_existing_tf_otype_mapping_without_copy(
     def forbidden_items() -> Any:
         raise AssertionError("duplicated authoritative otype map through .items()")
 
-    # Force the extractor to use the already resident F.otype.data, not
-    # build a second dictionary from the accessor.
+    # Force the extractor to work from native compact storage, not
+    # materialize a giant node-to-type dict via the accessor.
     with monkeypatch.context() as patch:
         patch.setattr(api.F.otype, "items", forbidden_items)
         after = extract_schema(api)
