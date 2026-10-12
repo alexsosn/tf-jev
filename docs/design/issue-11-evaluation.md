@@ -1,0 +1,15 @@
+# Design: first offline evaluator increment for #11
+
+Checkout-only evaluator callable: `scripts.semantic_evaluation.evaluate(benchmark, parser, api, *, partition="development", input_usd_per_million=None, output_usd_per_million=None)` returning a JSON-compatible, aggregate + per-case evidence dict. The caller must `benchmark.verify_source(corpus_dir)` before any real BHSA run; this function evaluates an already loaded, independently version-verified native API and does not fetch a corpus or credentials.
+
+- Iterate only `benchmark.selected(partition)`, passing **only request prose** to `parser.parse`. Do not show/consume gold, rationale, interpretations, partition or other benchmark annotations in the parser. No prompt- or model-candidate generation in the evaluator.
+- The same full `CorpusSchema` belongs to parser and native session. Require parse result schema identity; a supported result must have non-null IR/query and a valid nonempty projection. Recompile the IR with the schema and require exact query-field identity before calling native `execute`. Reject malformed query claims (including any non-success with a query).
+- Use `execute` for actual Text-Fabric semantics, compare both count and fingerprint against frozen gold, record exact query-text match separately. A failed compiler or TF execution marks that supported prediction invalid/incorrect rather than turning it into an empty corpus result or stopping all evaluation.
+- Per-case metadata: id, family, expected and predicted class, static reason, compile/native validity, result equivalence, exact query-text match, wall latency, call count, token counts when complete, backend/model strings. No request text, native query, gold, prompt, candidate list or raw backend errors in the report.
+- Aggregates: total, class confusion matrix, strict classification matches, supported gold count, native valid/equivalent/exact counts, unsafe supported predictions on negative gold, safe negative decisions excluding errors, status counts and wall-latency median/p95. Fractions with zero denominator report `null`, never NaN.
+- Prices are optional explicit nonnegative **USD per million tokens** for both directions; an estimate is given only if all receipts for that case report both usage fields and prices were supplied. Unknown usage/price remains `null`, never inferred as free. Model pinning is visible via recorded receipt model names.
+- The v2 benchmark and heldout gold remain untouched. This PR does not claim measured live model accuracy/cost, calibrated confidence, retrieval recall or statistical superiority over alternatives.
+
+Gates: research then design then committed test-only RED, production code, Ruff/mypy/pytest across Python 3.11–3.13, deterministic tiny real-TF oracle checks, separate exact-head skeptical review, merge only after all green.
+
+Correction: the actual v2 loader forbids `difficulty`; per-family grouping is the only validated difficulty/construct proxy until an explicit benchmark revision. No new case fields may be added by the evaluator.
