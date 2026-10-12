@@ -215,7 +215,7 @@ explicitly typed, corpus-grounded Text-Fabric query **without Jev or credentials
 ```bash
 tf-jev compile --corpus /path/to/bhsa/tf/2021 --type word --eq sp=verb
 tf-jev compile --corpus /path/to/bhsa/tf/2021 --type word --eq sp=verb \
-  --execute --limit 50000
+  --execute --limit 100000
 ```
 
 The command emits machine-readable JSON with native query text, schema
