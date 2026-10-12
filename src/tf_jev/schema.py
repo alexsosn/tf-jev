@@ -355,7 +355,12 @@ def _extract(
     )
     # OtypeFeature stores only non-slot type names, plus a shared slot type.
     # View its complete node-to-type mapping without materializing a new dict.
-    node_types = _OtypeView(api.F.otype)
+    native_otype = api.F.otype
+    node_types = _OtypeView(native_otype)
+    max_slot: int = native_otype.maxSlot
+    max_node: int = native_otype.maxNode
+    slot_type: str = native_otype.slotType
+    non_slots: Sequence[str] = native_otype.data
     totals = collections.Counter(node_types.values())
     if set(totals) != {t.name for t in types} or len(types) != len(totals):
         raise SchemaError("inconsistent object types")
@@ -397,9 +402,16 @@ def _extract(
             collections.Counter
         )
         for n, value in api.Fs(name).data.items():
-            if n not in node_types or type(value) is not (str if dtype == "str" else int):
+            if (
+                type(n) is not int
+                or not 1 <= n <= max_node
+                or type(value) is not (str if dtype == "str" else int)
+            ):
                 raise SchemaError("invalid feature node or value type")
-            by_type[node_types[n]][value] += 1
+            # This is the hot path across all loaded feature values: use the
+            # same compact otype representation without two Mapping dispatches.
+            kind = slot_type if n <= max_slot else non_slots[n - max_slot - 1]
+            by_type[kind][value] += 1
         for t in types:
             counts = by_type[t.name]
             inventories.append(
