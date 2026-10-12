@@ -53,3 +53,59 @@ jobs:
           "$vpy" -m pip install "$RUNNER_TEMP"/wheels/tf_jev-*.whl
           cd "$RUNNER_TEMP"
           "$vpy" -c "import importlib.util, tf_jev, tf_jev.compiler, tf_jev.schema, tf_jev.retrieval, tf_jev.parser; assert tf_jev.__version__ == '0.1.0.dev0'; assert importlib.util.find_spec('typesafe_sdk') is None"
+
+
+      - name: Installed wheel native CLI end-to-end smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          vpy="$RUNNER_TEMP/tf-jev-wheel-venv/bin/python"
+          "$vpy" - <<'PY'
+          import json
+          import subprocess
+          import sys
+          from pathlib import Path
+          from tf.fabric import Fabric
+
+          corpus = Path.cwd() / "tf-jev-cli-smoke"
+          corpus.mkdir()
+          assert Fabric(locations=str(corpus), silent="deep").save(
+              nodeFeatures={
+                  "otype": {1: "word", 2: "word", 3: "sentence"},
+                  "sp": {1: "verb", 2: "subs"},
+                  "number": {3: 1},
+              },
+              edgeFeatures={"oslots": {3: {1, 2}}},
+              metaData={
+                  "otype": {"valueType": "str"},
+                  "oslots": {"valueType": "str"},
+                  "sp": {"valueType": "str"},
+                  "number": {"valueType": "int"},
+                  "otext": {
+                      "sectionTypes": "sentence",
+                      "sectionFeatures": "number",
+                      "fmt:text-orig-full": "{sp} ",
+                  },
+              },
+              silent="deep",
+          )
+          cli = str(Path(sys.executable).with_name("tf-jev"))
+          command = [cli, "compile", "--corpus", str(corpus),
+                     "--type", "word", "--eq", "sp=verb"]
+          compiled = json.loads(subprocess.check_output(command, text=True))
+          assert compiled["query"] == "n0:word sp=verb"
+          assert compiled["executed"] is False
+          assert compiled["coverage_mode"] == "selected"
+          assert "result_count" not in compiled
+          executed = json.loads(subprocess.check_output(
+              [*command, "--execute", "--limit", "2"], text=True
+          ))
+          assert executed["result_count"] == 1 and executed["complete"] is True
+          blocked = subprocess.run(
+              [*command, "--execute", "--limit", "0"],
+              capture_output=True, text=True, check=False
+          )
+          assert blocked.returncode == 2 and not blocked.stdout
+          print("Installed wheel console command + native TF query: PASS")
+          PY
