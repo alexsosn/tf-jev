@@ -38,6 +38,7 @@ def prediction(
     query_override: str | None = None,
     meter: bool = False,
 ) -> ParseResult:
+    projection: tuple[int, ...]
     if status is ParseStatus.SUPPORTED:
         ir = Query((Atom("word", (Predicate("sp", PredicateOp.EQ, (feature_value,)),)),))
         query = compile_query(ir, schema) if query_override is None else query_override
