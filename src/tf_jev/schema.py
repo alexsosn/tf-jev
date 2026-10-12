@@ -11,7 +11,7 @@ import hashlib
 import json
 import re
 import unicodedata
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Iterator, Mapping
 from dataclasses import asdict, dataclass, field
 from importlib.metadata import version
 from pathlib import Path
@@ -78,7 +78,7 @@ class _OtypeView(Mapping[int, str]):
     def __len__(self) -> int:
         return self._max_node
 
-    def __iter__(self) -> Any:
+    def __iter__(self) -> Iterator[int]:
         return iter(range(1, self._max_node + 1))
 
     def __getitem__(self, node: int) -> str:
