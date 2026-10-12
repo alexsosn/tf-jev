@@ -11,7 +11,7 @@ import hashlib
 import json
 import re
 import unicodedata
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Iterator, Mapping, Sequence
 from dataclasses import asdict, dataclass, field
 from importlib.metadata import version
 from pathlib import Path
@@ -64,6 +64,29 @@ def _admissible(name: str) -> bool:
         and name not in ("otype", "oslots")
         and not name.startswith("omap@")
     )
+
+
+class _OtypeView(Mapping[int, str]):
+    """Read-only 1-based node-to-type view over TF 13.1's compact OtypeFeature."""
+
+    def __init__(self, native: Any) -> None:
+        self._max_slot: int = native.maxSlot
+        self._max_node: int = native.maxNode
+        self._slot_type: str = native.slotType
+        self._non_slots: Sequence[str] = native.data
+
+    def __len__(self) -> int:
+        return self._max_node
+
+    def __iter__(self) -> Iterator[int]:
+        return iter(range(1, self._max_node + 1))
+
+    def __getitem__(self, node: int) -> str:
+        if type(node) is not int or not 1 <= node <= self._max_node:
+            raise KeyError(node)
+        if node <= self._max_slot:
+            return self._slot_type
+        return self._non_slots[node - self._max_slot - 1]
 
 
 @dataclass(frozen=True)
@@ -330,7 +353,14 @@ def _extract(
         ObjectType(level[0], level[0] == api.F.otype.slotType, bool(_SYMBOL.fullmatch(level[0])))
         for level in api.C.levels.data
     )
-    node_types = dict(api.F.otype.items())
+    # OtypeFeature stores only non-slot type names, plus a shared slot type.
+    # View its complete node-to-type mapping without materializing a new dict.
+    native_otype = api.F.otype
+    node_types = _OtypeView(native_otype)
+    max_slot: int = native_otype.maxSlot
+    max_node: int = native_otype.maxNode
+    slot_type: str = native_otype.slotType
+    non_slots: Sequence[str] = native_otype.data
     totals = collections.Counter(node_types.values())
     if set(totals) != {t.name for t in types} or len(types) != len(totals):
         raise SchemaError("inconsistent object types")
@@ -372,9 +402,16 @@ def _extract(
             collections.Counter
         )
         for n, value in api.Fs(name).data.items():
-            if n not in node_types or type(value) is not (str if dtype == "str" else int):
+            if (
+                type(n) is not int
+                or not 1 <= n <= max_node
+                or type(value) is not (str if dtype == "str" else int)
+            ):
                 raise SchemaError("invalid feature node or value type")
-            by_type[node_types[n]][value] += 1
+            # This is the hot path across all loaded feature values: use the
+            # same compact otype representation without two Mapping dispatches.
+            node_type_name = slot_type if n <= max_slot else non_slots[n - max_slot - 1]
+            by_type[node_type_name][value] += 1
         for t in types:
             counts = by_type[t.name]
             inventories.append(

@@ -260,3 +260,35 @@ def test_noncontiguous_types_are_rejected_before_compilation(tmp_path: Path) -> 
     assert {row[0] for row in outcome.results} != raw  # real native hazard
     with pytest.raises(SchemaError, match="interval"):
         extract_schema(api)
+
+
+def test_extraction_borrows_existing_tf_otype_mapping_without_copy(
+    api: Any, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """TF 13.1 stores non-slot types compactly; .items() expands them."""
+    native_otype = api.F.otype
+    assert len(native_otype.data) == native_otype.maxNode - native_otype.maxSlot
+    assert native_otype.maxNode > native_otype.maxSlot
+    before = extract_schema(api)
+    expected_query = compile_query(
+        Query((Atom("word", (Predicate("sp", P.EQ, ("verb",)),)),)), before
+    )
+    expected_native = run_template(api, expected_query, limit=100)
+    assert expected_native.ok and expected_native.results == ((3,), (6,), (8,))
+
+    def forbidden_items() -> Any:
+        raise AssertionError("duplicated authoritative otype map through .items()")
+
+    # Force the extractor to work from native compact storage, not
+    # materialize a giant node-to-type dict via the accessor.
+    with monkeypatch.context() as patch:
+        patch.setattr(api.F.otype, "items", forbidden_items)
+        after = extract_schema(api)
+    assert after.identity == before.identity
+    assert after.to_json() == before.to_json()
+    assert after._inventories == before._inventories
+    actual_query = compile_query(
+        Query((Atom("word", (Predicate("sp", P.EQ, ("verb",)),)),)), after
+    )
+    assert actual_query == expected_query
+    assert run_template(api, actual_query, limit=100) == expected_native

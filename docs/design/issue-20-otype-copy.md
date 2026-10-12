@@ -1,0 +1,9 @@
+# Design: read-only mapping view of TF 13.1 compact OtypeFeature (#20)
+
+The authoritative `api.F.otype` is `OtypeFeature` (not ordinary `NodeFeature`), with optimized `slotType`, `maxSlot`, `maxNode` and a positional `.data` sequence of all non-slot types. Implement a tiny private `_OtypeView(Mapping[int,str])` that maps valid integer node IDs `1..maxNode` onto native types without allocating a new full node→type dict. Invalid IDs raise `KeyError`. Its iteration yields nodes in natural order; `Mapping` supplies `.items()`, `.values()`, `.get()`, membership. Borrow native compact storage for the duration of `_extract`; do not retain the view in the returned snapshot.
+
+Replace only `node_types = dict(api.F.otype.items())` with `node_types = _OtypeView(api.F.otype)`; keep sorted canonical `otype` digest, type interval/count checks, exact node value and edge endpoint validation, source/module digests and corpus loaded identity unchanged. The view is structurally read-only, and concurrent mutation of TF core data during extraction was already unsupported.
+
+Test-first observed RED: saved tiny native TF `F.otype.items()` patched to raise; previous code necessarily fails, new code must reproduce exact schema JSON/hash/values and native verb query tuples. Extend test to assert real optimized `OtypeFeature.data` length is `maxNode-maxSlot`, not a dictionary. Existing module-override, sparse integers, unicode, Large retrieval handles and selected feature coverage tests still apply.
+
+Verify exact-head Python 3.11–3.13 Ruff/mypy/pytest and wheel, pinned BHSA full-schema historical SHA/profile and selected native tuple equivalence, plus broad BHSA replay. Report actual full-extraction elapsed and whole-process peak RSS versus earlier baseline, without treating runner noise as proof of repeatable gains. Keep #20 open for remaining JSON serialization/resource work.
