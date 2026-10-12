@@ -15,6 +15,9 @@ on:
       - "src/tf_jev/ir.py"
       - "src/tf_jev/compiler.py"
       - "src/tf_jev/parser.py"
+      - "src/tf_jev/cli.py"
+      - "tests/test_cli.py"
+      - "pyproject.toml"
       - "scripts/nl_benchmark.py"
       - "scripts/nl_candidates.py"
       - "tests/conformance/tf_harness.py"
@@ -34,6 +37,9 @@ on:
       - "src/tf_jev/ir.py"
       - "src/tf_jev/compiler.py"
       - "src/tf_jev/parser.py"
+      - "src/tf_jev/cli.py"
+      - "tests/test_cli.py"
+      - "pyproject.toml"
       - "scripts/nl_benchmark.py"
       - "scripts/nl_candidates.py"
       - "tests/conformance/tf_harness.py"
@@ -103,6 +109,27 @@ jobs:
           set -euo pipefail
           python -m scripts.nl_benchmark_v2 "$RUNNER_TEMP/bhsa/tf/2021"
           python -m scripts.nl_benchmark_v2 "$RUNNER_TEMP/bhsa/tf/2021" --partition heldout
+
+      - name: Installed CLI completes real pinned BHSA verb query
+        shell: bash
+        run: |
+          set -euo pipefail
+          tf-jev compile --corpus "$RUNNER_TEMP/bhsa/tf/2021" \
+            --type word --eq sp=verb --execute --limit 100000 \
+            > "$RUNNER_TEMP/bhsa-cli-smoke.json"
+          python - "$RUNNER_TEMP/bhsa-cli-smoke.json" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          result = json.loads(Path(sys.argv[1]).read_text())
+          assert result["query"] == "n0:word sp=verb"
+          assert result["coverage_mode"] == "selected"
+          assert result["executed"] is True
+          assert result["complete"] is True
+          assert result["result_count"] == 73710
+          assert len(result["schema_key"]) == 64
+          print("Installed CLI + real BHSA native verb query: 73,710 exact results")
+          PY
 
       - name: Upload aggregate counts only, never corpus data
         uses: actions/upload-artifact@v4
