@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 import pytest
-from tf_jev.cli import main  # type: ignore[import-untyped]  # RED-only: module absent
+from tf_jev.cli import main
 
 from tests.conformance.tf_harness import build_tiny_corpus
 
