@@ -29,7 +29,9 @@ _INT = re.compile(r"[+-]?[0-9]+")
 _MAX_LIMIT = 50_000
 
 
-def _predicates(args: argparse.Namespace) -> tuple[list[tuple[str, PredicateOp, str | None]], tuple[str, ...]]:
+def _predicates(
+    args: argparse.Namespace,
+) -> tuple[list[tuple[str, PredicateOp, str | None]], tuple[str, ...]]:
     entries: list[tuple[str, PredicateOp, str | None]] = []
     for expression in args.eq:
         if "=" not in expression:
