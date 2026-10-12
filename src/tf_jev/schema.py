@@ -410,8 +410,8 @@ def _extract(
                 raise SchemaError("invalid feature node or value type")
             # This is the hot path across all loaded feature values: use the
             # same compact otype representation without two Mapping dispatches.
-            kind = slot_type if n <= max_slot else non_slots[n - max_slot - 1]
-            by_type[kind][value] += 1
+            node_type_name = slot_type if n <= max_slot else non_slots[n - max_slot - 1]
+            by_type[node_type_name][value] += 1
         for t in types:
             counts = by_type[t.name]
             inventories.append(
