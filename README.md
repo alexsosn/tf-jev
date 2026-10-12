@@ -126,7 +126,7 @@ separately reviewed completeness policy. The
 these boundaries. To measure a local selected feature set:
 
 ```bash
-python -m scripts.profile_schema /path/to/bhsa/tf/2021 \\
+python -m scripts.profile_schema /path/to/bhsa/tf/2021 \
     --node-features sp gn nu --edge-features
 ```
 
