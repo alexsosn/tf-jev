@@ -26,7 +26,7 @@ class CliError(ValueError):
 
 
 _INT = re.compile(r"[+-]?[0-9]+")
-_MAX_LIMIT = 50_000
+_MAX_LIMIT = 500_000
 
 
 def _predicates(
