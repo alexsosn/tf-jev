@@ -330,7 +330,9 @@ def _extract(
         ObjectType(level[0], level[0] == api.F.otype.slotType, bool(_SYMBOL.fullmatch(level[0])))
         for level in api.C.levels.data
     )
-    node_types = dict(api.F.otype.items())
+    # Text-Fabric 13.1 NodeFeature.items() delegates to .data.items().
+    # Borrow the already-loaded otype map instead of allocating its full clone.
+    node_types = api.F.otype.data
     totals = collections.Counter(node_types.values())
     if set(totals) != {t.name for t in types} or len(types) != len(totals):
         raise SchemaError("inconsistent object types")
