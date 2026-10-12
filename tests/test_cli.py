@@ -71,7 +71,7 @@ def test_native_integer_and_string_literals_keep_types(
     ("--eq", "sp=verb\n/without/"),
     ("--eq", "sp=verb", "--limit", "2"),
     ("--eq", "sp=verb", "--execute", "--limit", "0"),
-    ("--eq", "sp=verb", "--execute", "--limit", "50001"),
+    ("--eq", "sp=verb", "--execute", "--limit", "500001"),
 ])
 def test_fail_closed_without_native_query_or_internal_diagnostics(
     corpus: Path, capsys: pytest.CaptureFixture[str], arguments: tuple[str, ...]
@@ -99,3 +99,15 @@ def test_invalid_directory_does_not_show_user_path(
 ) -> None:
     status, out, err = invoke(tmp_path / "missing", capsys, "--eq", "sp=verb")
     assert status == 2 and not out and str(tmp_path) not in err
+
+
+def test_explicit_limit_can_cover_full_bhsa_verb_cardinality(
+    corpus: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    # BHSA 2021's pinned verb query has 73,710 results; the CLI must permit
+    # an explicit ceiling above that value. Real 73,710 count is tested in BHSA CI.
+    status, out, err = invoke(
+        corpus, capsys, "--eq", "sp=verb", "--execute", "--limit", "100000"
+    )
+    assert status == 0 and not err
+    assert json.loads(out)["result_count"] == 3
