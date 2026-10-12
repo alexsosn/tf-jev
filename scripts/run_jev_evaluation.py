@@ -76,6 +76,8 @@ def main(argv: list[str] | None = None) -> int:
     args = cli.parse_args(argv)
     if not args.live or os.environ.get("TF_JEV_LIVE") != "1":
         raise ValueError("live evaluation needs --live and TF_JEV_LIVE=1 opt-in")
+    if args.output.exists() or args.output.with_name(args.output.name + ".tmp").exists():
+        raise ValueError("output already exists; choose a new report path")
     corpus: Path = args.corpus.expanduser()
     benchmark = load_benchmark()
     chosen = benchmark.selected(args.partition)
