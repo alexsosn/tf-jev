@@ -260,3 +260,31 @@ def test_noncontiguous_types_are_rejected_before_compilation(tmp_path: Path) -> 
     assert {row[0] for row in outcome.results} != raw  # real native hazard
     with pytest.raises(SchemaError, match="interval"):
         extract_schema(api)
+
+
+def test_extraction_borrows_existing_tf_otype_mapping_without_copy(
+    api: Any, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Native TF 13.1 exposes the same otype entries in F.otype.data."""
+    before = extract_schema(api)
+    expected_query = compile_query(
+        Query((Atom("word", (Predicate("sp", P.EQ, ("verb",)),)),)), before
+    )
+    expected_native = run_template(api, expected_query, limit=100)
+    assert expected_native.ok and expected_native.results == ((3,), (6,), (8,))
+
+    def forbidden_items() -> Any:
+        raise AssertionError("duplicated authoritative otype map through .items()")
+
+    # Force the extractor to use the already resident F.otype.data, not
+    # build a second dictionary from the accessor.
+    monkeypatch.setattr(api.F.otype, "items", forbidden_items)
+    after = extract_schema(api)
+    assert after.identity == before.identity
+    assert after.to_json() == before.to_json()
+    assert after._inventories == before._inventories
+    actual_query = compile_query(
+        Query((Atom("word", (Predicate("sp", P.EQ, ("verb",)),)),)), after
+    )
+    assert actual_query == expected_query
+    assert run_template(api, actual_query, limit=100) == expected_native
