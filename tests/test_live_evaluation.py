@@ -149,3 +149,16 @@ def test_existing_report_is_not_overwritten_or_reused(
         main([str(tmp_path / "2021"), "--max-cases", "1",
               "--output", str(output), "--live"])
     assert output.read_text(encoding="utf8") == '{"old":true}'
+
+
+def test_cli_rejects_missing_verified_source_before_importing_jev(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    corpus = tmp_path / "2021"
+    corpus.mkdir()
+    output = tmp_path / "unused.json"
+    monkeypatch.setenv("TF_JEV_LIVE", "1")
+    with pytest.raises(BenchmarkError, match="source unavailable"):
+        main([str(corpus), "--max-cases", "1",
+              "--output", str(output), "--live"])
+    assert not output.exists()
