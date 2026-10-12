@@ -49,7 +49,7 @@ class AbstainingBackend:
 
 
 def fixture(tmp_path: Path) -> tuple[Path, Benchmark]:
-    corpus = tmp_path / "tiny"
+    corpus = tmp_path / "2021"
     corpus.mkdir()
     build_tiny_corpus(corpus)
     api: Any = load_api(corpus)
