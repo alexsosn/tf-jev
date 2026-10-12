@@ -137,3 +137,15 @@ def test_cli_double_opt_in_required_and_no_output(
         main([str(tmp_path / "no-corpus"), "--max-cases", "1",
               "--output", str(out), "--live"])
     assert not out.exists()
+
+
+def test_existing_report_is_not_overwritten_or_reused(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    output = tmp_path / "existing.json"
+    output.write_text('{"old":true}', encoding="utf8")
+    monkeypatch.setenv("TF_JEV_LIVE", "1")
+    with pytest.raises(ValueError, match="output already exists"):
+        main([str(tmp_path / "2021"), "--max-cases", "1",
+              "--output", str(output), "--live"])
+    assert output.read_text(encoding="utf8") == '{"old":true}'
