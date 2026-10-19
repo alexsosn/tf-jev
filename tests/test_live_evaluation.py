@@ -6,6 +6,7 @@ Fake decisions validate CLI/source-verification wiring, never model quality.
 from __future__ import annotations
 
 import hashlib
+from importlib.metadata import version
 from pathlib import Path
 from typing import Any
 
@@ -60,7 +61,7 @@ def fixture(tmp_path: Path) -> tuple[Path, Benchmark]:
         for name in names
     }
     benchmark = Benchmark(
-        {"name": "BHSA", "version": "2021", "text_fabric": "13.1.0"},
+        {"name": "BHSA", "version": "2021", "text_fabric": version("text-fabric")},
         ("sp",), hashes,
         (
             {"id": "dev-a", "family": "pos", "partition": "development",
@@ -154,6 +155,8 @@ def test_existing_report_is_not_overwritten_or_reused(
 def test_cli_rejects_missing_verified_source_before_importing_jev(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    # Isolate missing-source precedence; canonical version rejection is tested separately.
+    monkeypatch.setattr("scripts.nl_benchmark_v2.version", lambda _: "13.1.0")
     corpus = tmp_path / "2021"
     corpus.mkdir()
     output = tmp_path / "unused.json"
@@ -161,4 +164,25 @@ def test_cli_rejects_missing_verified_source_before_importing_jev(
     with pytest.raises(BenchmarkError, match="source unavailable"):
         main([str(corpus), "--max-cases", "1",
               "--output", str(output), "--live"])
+    assert not output.exists()
+
+
+def test_unpinned_runtime_rejected_before_model_import(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import builtins
+
+    original_import = builtins.__import__
+
+    def reject_model(name: str, *args: Any, **kwargs: Any) -> Any:
+        if name == "tf_jev.jev":
+            pytest.fail("version rejection must precede model import")
+        return original_import(name, *args, **kwargs)
+
+    monkeypatch.setattr(builtins, "__import__", reject_model)
+    monkeypatch.setattr("scripts.nl_benchmark_v2.version", lambda _: "13.1.1")
+    monkeypatch.setenv("TF_JEV_LIVE", "1")
+    output = tmp_path / "unused.json"
+    with pytest.raises(BenchmarkError, match="Text-Fabric version mismatch"):
+        main([str(tmp_path / "2021"), "--max-cases", "1", "--output", str(output), "--live"])
     assert not output.exists()

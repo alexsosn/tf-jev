@@ -23,3 +23,15 @@ benchmark. Source-drift unit tests must isolate source validation from version
 rejection, while a separate adversarial test preserves wrong-version rejection
 BEFORE source access/model initialization. Canonical benchmark/version/source
 validation and all published reports remain unchanged.
+
+Installed wheel comparison independently confirms the upstream scope: raw bytes
+differ broadly due to line endings, but Python ASTs differ only in
+`parameters.py`, `core/text.py`, and `core/prepare.py`. Normalized `fabric.py`
+content and the search engine ASTs are identical. Do not mistake packaging line
+endings for native semantic changes.
+
+Observed local RED under actual TF 13.1.1 before fixture edits:
+7 failed, 550 passed, 41 skipped (21.81 s). Six failures match the original CI;
+the seventh is the new stage-diagnostic saved-corpus CLI reusing the same
+synthetic fixture. No production runtime failure was identified. New adversarial
+tests preserve canonical wrong-version rejection before source reads/model import.
