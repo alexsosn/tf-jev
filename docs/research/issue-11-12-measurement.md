@@ -33,3 +33,13 @@ single-atom gold using the unchanged parser's local candidate routine; report
 eligibility, matches, misses and scope. Gold only enters this post-parse audit,
 never model context. Unvisited retrieval due to an earlier abstention is distinct
 from a deterministic candidate miss. Other semantic candidate recall is unknown.
+
+## Dependency drift caught by the real CI gate
+
+CI run 39329554595 installed TF 13.1.1 through `text-fabric>=13.1,<14`.
+All Python versions reached pytest and failed six existing exact-version fixture
+checks (528 passed, 41 skipped on 3.12). The measured corpus benchmark explicitly
+requires 13.1.0; changing that identity check would invalidate the frozen study.
+Pin the research CI quality matrix to TF 13.1.0, matching the native replay job,
+while tracking testing of the broader advertised package range separately.
+No parser/baseline/scoring or measured result is changed by this CI correction.

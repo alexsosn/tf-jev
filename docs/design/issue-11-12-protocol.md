@@ -44,3 +44,16 @@ baseline and scoring code before heldout execution; do not tune after results.
 Exact-head tests, real BHSA replay and logically independent adversarial review
 are merge gates. Comparison can establish a no-go; lack of Jev advantage is an
 acceptable research result. One canonical PR for the coherent #11/#12 report.
+
+## Independent intent adjudication
+
+After inference is frozen, review every emitted candidate's compiled structure
+against the request, gold annotation semantics and requested output roles. Since
+the compiler deterministically preserves the validated typed structure, this is
+an audit of IR intent rather than a string-equality score. Record manual
+correct/incorrect/absent labels, reasons for errors and conditional emitted-IR
+precision separately from supported-gold end-to-end IR recall. Non-emission is
+not an incorrect IR construction, but earns no supported request success. Do not
+substitute result equivalence for this audit, especially for empty results.
+Manual single-reviewer adjudication is evidence, not a formal equivalence proof
+or an independent human annotation campaign. It must not change parser/rules.
