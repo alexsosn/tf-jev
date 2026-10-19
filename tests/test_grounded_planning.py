@@ -247,3 +247,90 @@ def test_all_stages_use_real_sdk_and_once_per_call_accounting(tiny_api: Any) -> 
                 assert row["correct"] and row["input_tokens"] == 13
                 assert row["error_kind"] is None
     assert len(calls) == 3
+
+
+def test_calibration_rejects_same_case_in_multiple_families() -> None:
+    with pytest.raises(ValueError, match="family"):
+        calibrate([row("same", "A", 0.9, True), row("same", "B", 0.9, True)])
+
+
+def test_done_sentinel_cannot_collide_with_a_real_feature(tiny_api: Any) -> None:
+    schema = extract_schema(tiny_api)
+    original = schema.node_features[0]
+    schema = replace(
+        schema, node_features=(replace(original, name="DONE"), *schema.node_features[1:])
+    )
+    with pytest.raises(ValueError, match="sentinel"):
+        build_probe(schema, "request", "feature", "word")
+
+
+def test_cli_runs_saved_native_corpus_before_constructing_backend(
+    tmp_path: Any,
+    monkeypatch: Any,
+) -> None:
+    import tf_jev.jev as adapter
+    from scripts import grounded_planning as study
+    from scripts.nl_benchmark_v2 import execute
+    from tests.conformance.tf_harness import build_tiny_corpus, load_api
+
+    corpus = tmp_path / "corpus"
+    corpus.mkdir()
+    build_tiny_corpus(corpus)
+    api = load_api(corpus)
+    count, digest = execute(api, "word sp=verb", (0,))
+    case: dict[str, Any] = dict(
+        id="test",
+        family="part-of-speech",
+        expected="supported",
+        request="Return verbs.",
+        gold=dict(query="word sp=verb", projection=[0], count=count, signature=digest),
+    )
+    source_checked = []
+
+    def check_sources(path: Any) -> dict[str, str]:
+        source_checked.append(path)
+        return {}
+
+    monkeypatch.setattr(study, "verify_sources", check_sources)
+    monkeypatch.setattr(study, "select_cases", lambda: [case])
+    monkeypatch.setenv("TF_JEV_LIVE", "1")
+    created = []
+
+    class Client(First):
+        def __init__(self) -> None:
+            assert source_checked == [corpus]
+            created.append(True)
+
+        def __enter__(self) -> Any:
+            return self
+
+        def __exit__(self, *args: Any) -> None:
+            pass
+
+    monkeypatch.setattr(adapter, "JevBackend", Client)
+    output = tmp_path / "report"
+    assert study.main([str(corpus), "--output", str(output), "--live"]) == 0
+    report = json.loads((output / "observations.json").read_text())
+    assert report["complete"] is True and report["scheduled_calls"] == len(report["rows"]) == 10
+    assert sum(r["input_tokens"] for r in report["rows"]) == 100
+    assert all("Return verbs" not in json.dumps(r) for r in report["rows"])
+    assert len(created) == 1
+    case["gold"]["signature"] = "0" * 64
+    with pytest.raises(ValueError, match="gold mismatch"):
+        study.main([str(corpus), "--output", str(tmp_path / "bad"), "--live"])
+    assert len(created) == 1  # corrupt native evidence cannot cause an API call
+
+
+def test_review_fixes_preserve_frozen_study_analysis() -> None:
+    from pathlib import Path
+
+    from scripts.grounded_planning import analyze
+
+    root = Path(__file__).resolve().parents[1] / "reports/grounded-planning-2026-10-20/live"
+    observed = json.loads((root / "observations.json").read_text())
+    recorded = json.loads((root / "analysis.json").read_text())
+    assert observed["complete"] and len(observed["rows"]) == observed["scheduled_calls"] == 138
+    assert analyze(observed["rows"]) == recorded
+    assert {r["model"] for r in observed["rows"]} == {"jev-1.13.0"}
+    assert sum(r["input_tokens"] for r in observed["rows"]) == 1_141_174
+    assert sum(r["output_tokens"] for r in observed["rows"]) == 63_200

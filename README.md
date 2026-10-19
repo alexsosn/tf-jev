@@ -38,6 +38,8 @@ The conservative rule baseline also had no supported heldout successes.
 Neither is recommended as a default natural-language parser.
 [Development-only diagnosis](reports/abstention-diagnosis-2026-10-20/README.md)
 localized the blocking stages; simple prompt changes did not establish a safe fix.
+[Grounded stage research](reports/grounded-planning-2026-10-20/README.md) improves
+selective local decisions, but does not yet establish end-to-end parser quality.
 
 The first development goal is to establish whether the approach is accurate and cheap enough on real Text-Fabric queries, using a benchmark with gold natural-language ↔ native-query pairs and at least one real corpus.
 
@@ -191,7 +193,8 @@ retrieval before selection, with explicit miss/budget failures. See the
 [parser contract](docs/design/semantic-parser.md) for limits and data flow.
 Scripted real-corpus tests prove orchestration and compiler boundaries. The
 [measured evaluation](reports/jev-rules-2026-10-20/README.md) found no supported
-query successes with the current Jev policy; further research is tracked in #46.
+query successes with the current Jev policy; the grounded planning research is
+recorded in #48 and does not change the default parser or policy.
 
 
 ## Explicit opt-in Jev evaluation (#11)

@@ -45,3 +45,11 @@ The approach is worth continuing only if the benchmark demonstrates that:
 - deterministic compiler/schema layers remain usable independently of Jev.
 
 If these conditions do not hold, preserve the benchmark and compiler work and reconsider the semantic backend rather than forcing Jev deeper into the architecture.
+
+## Research follow-through
+
+- #48 — completed grounded stage diagnostics and stage-specific development calibration;
+  no production parser change or fresh end-to-end quality claim.
+- #51 — freeze fresh native-gold evaluation and implement the separately opt-in
+  grounded planner under the researched design and full rollout gates.
+- #50 — explicit model-version support and separate Jev 1.14 preview comparison.

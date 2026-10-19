@@ -1,0 +1,66 @@
+{
+  "method": "raw annotation sets and oslots intersections; no TF search/compiler",
+  "verified": 12,
+  "cases": [
+    {
+      "id": "dev-part-of-speech-01",
+      "count": 73710,
+      "signature": "dea8c051b7418602c4cdf1fd083723a816780ad28feb10e6ce3bdee4e2eaf8d2"
+    },
+    {
+      "id": "dev-part-of-speech-12",
+      "count": 352880,
+      "signature": "29d22c39e6a51582d68e0521b7dc3721e699a231296103f288a30e5f59c15a32"
+    },
+    {
+      "id": "dev-gender-number-01",
+      "count": 19247,
+      "signature": "b66b102d10ab7a51ee1c3d98214409bf84fcf7ae844688a325f20c4b9fc4bec2"
+    },
+    {
+      "id": "dev-gender-number-10",
+      "count": 224,
+      "signature": "f5e0dbb6852f0165d5ef18780ea2033b04171b05de0d8a4724e699238ab1e0b4"
+    },
+    {
+      "id": "dev-phrase-function-01",
+      "count": 31979,
+      "signature": "a31f2271cc9a28764030360aa783701508017d7adebf7868a1bed23359fe34c5"
+    },
+    {
+      "id": "dev-phrase-function-06",
+      "count": 30036,
+      "signature": "993e0333206b6c95f6d1c14820943ca694ba0914c3c5cff3ef30126d0606c6fb"
+    },
+    {
+      "id": "dev-containment-01",
+      "count": 70150,
+      "signature": "d6dbce7fb8cf51a49d1ea5e45d9dd3119e252b4173a1d05a536e294d1a2686e9"
+    },
+    {
+      "id": "dev-containment-06",
+      "count": 4095,
+      "signature": "a84354c03b560dcb7f260625486405e18937d96c83f99bf71468cccb30c8fc2d"
+    },
+    {
+      "id": "dev-literal-lexeme-01",
+      "count": 6828,
+      "signature": "ec040585c8cbabc5faaf688bec5d2641cfb03983c5cd55bc136cc91f878808e7"
+    },
+    {
+      "id": "dev-literal-lexeme-06",
+      "count": 4937,
+      "signature": "8bcccbadc097b2095b0fc4b7563cc68cd2a7ea08f4a38b3b97ce17bdd8a639b1"
+    },
+    {
+      "id": "dev-negated-containment-01",
+      "count": 17981,
+      "signature": "5c770096198af4eaf10358eb434ec4aaa24c551e8a78bb7859fa80673b3a6ef5"
+    },
+    {
+      "id": "dev-negated-containment-04",
+      "count": 13198,
+      "signature": "8e87f47c9da72e123010dc90ccdc9ef8b869f223528272d987418043899506e1"
+    }
+  ]
+}

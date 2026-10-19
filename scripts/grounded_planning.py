@@ -125,6 +125,8 @@ def build_probe(
             "this is the returned parent; do not select the witness child."
         )
     elif stage == "feature":
+        if any(f.name == "DONE" for f in schema.node_features):
+            raise ValueError("feature conflicts with stopping sentinel")
         if kind is None:
             raise ValueError("feature probe needs type")
         schema.object_type(kind)
@@ -246,9 +248,12 @@ def measure(
 
 
 def calibrate(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    families: dict[str, str] = {}
     for r in rows:
         if not all(type(r.get(k)) is str and r[k] for k in ("id", "family")):
             raise ValueError("invalid group")
+        if families.setdefault(r["id"], r["family"]) != r["family"]:
+            raise ValueError("case crosses family boundary")
         if r["error_kind"] is None:
             if type(r["correct"]) is not bool:
                 raise ValueError("invalid correctness")

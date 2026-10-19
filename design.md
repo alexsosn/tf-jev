@@ -131,3 +131,8 @@ source/version/diagnostic gates independently of parser prompts.
 Semantic orchestration (#9): [parser contract](docs/design/semantic-parser.md)
 defines bounded choices, supported shapes, evidence/receipts, output projection and
 sanitized non-success states. Compiler/native execution remain independent.
+
+Grounded planning research (#48): [experimental strategy design](docs/design/issue-48-grounded-planning.md)
+replaces unaided predicate counting with bounded feature/DONE selection and adds
+explicit corpus/grammar context. Stage-specific policies remain research evidence;
+fresh native-gold evaluation and a separate implementation gate precede adoption.
