@@ -195,3 +195,19 @@ def test_cli_fails_closed_before_network_or_source_loading(tmp_path: Any, monkey
     with pytest.raises(ValueError, match="max-cases"):
         main([str(tmp_path / "2021"), "--output", str(output), "--max-cases", "53", "--live"])
     assert not output.exists()
+
+
+def test_failed_attempt_keeps_stage_and_prior_validated_question(tiny_api: Any) -> None:
+    class BrokenAfterShape(ChoosingBackend):
+        def decide(self, request: DecisionRequest) -> DecisionBatch:
+            if "atom0.type" in request.questions:
+                raise BackendError("timeout")
+            return super().decide(request)
+
+    trace = TraceBackend(BrokenAfterShape(choices()))
+    result = SemanticParser(extract_schema(tiny_api), trace).parse("Return verbs.")
+    report = summarize(result, trace.calls)
+    assert report["last_observed_question"] == "shape"
+    assert report["last_attempted_question"] == "atom0.type"
+    assert report["stopping_question"] is None  # no validated decision at the failed call
+    assert report["calls"][-1]["requested_questions"] == ["atom0.type"]

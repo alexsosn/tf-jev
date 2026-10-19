@@ -39,3 +39,28 @@ semantic labels, plain shape wording, context ablation and five independent
 binary shape decisions (cardinality/decomposition). These are mechanism probes,
 not a new model-quality score. Gold never goes to a backend. No automatic query
 execution from a probe; the real parser alone constructs any typed IR.
+
+## Findings and scope decision
+
+Frozen run `df65c44` reproduced no emitted query. Stops: 33 shape (one explicit
+unsupported), 11 type, eight numeric predicate count. Shape question top-choice
+correctness is 41/52 against the development construct annotation. Native TF
+`C.levels` gives 13 expressible types; slot type word is position 12. All 11 type
+stops correctly select word but with .51–.77 probability. The count stage selects
+two predicates for four of six one-predicate lexeme requests. Refusal is therefore
+not solely a probability calibration problem.
+
+Paired shape perturbations show no safe simple fix. Plain wording increases gate
+passes but increases confident wrong atomic classification of the unsupported
+regex request and loses the negated-containment class. Binary probes resolve none
+at the frozen threshold. One response-contract error is retained with unknown
+usage, not retried or scored as a selection. A separately designed corpus-aware
+planning experiment is #48. This ticket does NOT justify a production parser
+revision; all inference behavior remains unchanged. Fresh evaluation is required
+before any future default recommendation.
+
+Post-run instrumentation review found that a failed later call hid its attempted
+stage and the prior validated decision. Observed RED for shape success followed
+by type timeout, then fix last_observed_question versus last_attempted_question.
+The original diagnostic artifacts remain byte-identical at df65c44; their one
+probe error is explicitly reported. No model outcomes or thresholds are changed.

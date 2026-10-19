@@ -93,7 +93,13 @@ class TraceBackend:
     def decide(self, request: DecisionRequest) -> DecisionBatch:
         self.requests.append(request)
         row: dict[str, Any] = dict(
-            questions=[], error_kind=None, input_tokens=None, output_tokens=None
+            questions=[],
+            error_kind=None,
+            input_tokens=None,
+            output_tokens=None,
+            requested_questions=[
+                name if STAGE.fullmatch(name) else "redacted" for name in request.questions
+            ],
         )
         start = time.perf_counter()
         try:
@@ -144,7 +150,12 @@ class TraceBackend:
 
 
 def summarize(result: ParseResult, calls: list[dict[str, Any]]) -> dict[str, Any]:
-    last = calls[-1]["questions"][-1]["question"] if calls and calls[-1]["questions"] else None
+    last = next((c["questions"][-1]["question"] for c in reversed(calls) if c["questions"]), None)
+    attempted = (
+        calls[-1].get("requested_questions", [q["question"] for q in calls[-1]["questions"]])
+        if calls
+        else []
+    )
     stopping = last if result.reason in ("low_confidence", "intent", "candidate_mismatch") else None
     complete = all(c["input_tokens"] is not None and c["output_tokens"] is not None for c in calls)
     inputs = sum(c["input_tokens"] for c in calls) if complete else None
@@ -153,6 +164,7 @@ def summarize(result: ParseResult, calls: list[dict[str, Any]]) -> dict[str, Any
         reason=result.reason if result.reason in REASONS else "redacted",
         confidence=result.confidence if math.isfinite(result.confidence) else None,
         last_observed_question=last,
+        last_attempted_question=attempted[0] if len(attempted) == 1 else None,
         stopping_question=stopping,
         attempted_calls=len(calls),
         calls=calls,
