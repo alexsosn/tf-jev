@@ -25,8 +25,9 @@ def decision(report: dict[str, Any]) -> dict[str, Any]:
         and total > 0,
         "supported_equivalence": at_least("result_equivalent_rate", 0.8),
         "safe_negatives": at_least("safe_negative_rate", 0.95)
+        and type(report.get("unsafe_supported_on_negative")) is int
         and report.get("unsafe_supported_on_negative") == 0,
-        "native_validity": report.get("emitted_query_native_valid_rate") == 1.0,
+        "native_validity": at_least("emitted_query_native_valid_rate", 1.0),
         "error_rate": at_most("error_rate", 0.05),
         "parse_p95": at_most("parse_latency_p95_s", 10.0),
         "mean_estimated_cost": report.get("estimated_cost_usd_complete") is True

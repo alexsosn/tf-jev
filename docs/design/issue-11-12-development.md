@@ -39,3 +39,10 @@ The supplementary actual-BHSA candidate audit recalled all 12 literal targets
 (6 development, 6 heldout), verifying identical full schema identity to the
 initial study. Original public live JSON files remain byte-identical to the
 source-commit measurement output.
+
+Final skeptical review exposed Python bool/int equality in two numeric go/no-go
+fields: forged `native_valid=True` or `unsafe_count=False` could earn a pass in an
+otherwise passing report. Two observed RED regressions precede the fix: require
+an actual numeric rate and a plain integer unsafe count. Both GREEN. Recomputing
+all four recorded well-formed decisions gives identical results; no model,
+parser, threshold, baseline or measured outcome changed. Re-review the new head.

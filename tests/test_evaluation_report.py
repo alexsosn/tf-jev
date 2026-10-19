@@ -134,3 +134,11 @@ def test_candidate_audit_also_covers_heldout_literal_annotation_families(tiny_ap
     )
     result = retrieval_audit(sample, extract_schema(tiny_api), "heldout")
     assert result["eligible"] == result["recalled"] == 2
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [("emitted_query_native_valid_rate", True), ("unsafe_supported_on_negative", False)],
+)
+def test_decision_rejects_boolean_numeric_metrics(field: str, value: bool) -> None:
+    assert not decision(passing() | {field: value})["recommend_default"]
