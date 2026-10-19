@@ -65,32 +65,67 @@ def cases(api: Any) -> tuple[dict[str, Any], ...]:
     verb_count, verb_sig = execute(api, "word sp=verb", (0,))
     noun_count, noun_sig = execute(api, "word sp=subs", (0,))
     return (
-        {"id": "a", "family": "verbs", "partition": "development",
-         "request": "Return verbs.", "expected": "supported",
-         "rationale": "private benchmark gold", "gold": {
-             "query": "word sp=verb", "projection": [0],
-             "count": verb_count, "signature": verb_sig}},
-        {"id": "b", "family": "nouns", "partition": "development",
-         "request": "Return nouns.", "expected": "supported",
-         "rationale": "private benchmark gold", "gold": {
-             "query": "word sp=subs", "projection": [0],
-             "count": noun_count, "signature": noun_sig}},
-        {"id": "c", "family": "amb", "partition": "development",
-         "request": "Unknown meaning.", "expected": "ambiguous",
-         "rationale": "private rationale", "interpretations": ["a", "b"]},
-        {"id": "d", "family": "uns", "partition": "development",
-         "request": "Impossible task.", "expected": "unsupported",
-         "rationale": "private rationale"},
-        {"id": "e", "family": "sealed", "partition": "heldout",
-         "request": "Sealed.", "expected": "unsupported",
-         "rationale": "private rationale"},
+        {
+            "id": "a",
+            "family": "verbs",
+            "partition": "development",
+            "request": "Return verbs.",
+            "expected": "supported",
+            "rationale": "private benchmark gold",
+            "gold": {
+                "query": "word sp=verb",
+                "projection": [0],
+                "count": verb_count,
+                "signature": verb_sig,
+            },
+        },
+        {
+            "id": "b",
+            "family": "nouns",
+            "partition": "development",
+            "request": "Return nouns.",
+            "expected": "supported",
+            "rationale": "private benchmark gold",
+            "gold": {
+                "query": "word sp=subs",
+                "projection": [0],
+                "count": noun_count,
+                "signature": noun_sig,
+            },
+        },
+        {
+            "id": "c",
+            "family": "amb",
+            "partition": "development",
+            "request": "Unknown meaning.",
+            "expected": "ambiguous",
+            "rationale": "private rationale",
+            "interpretations": ["a", "b"],
+        },
+        {
+            "id": "d",
+            "family": "uns",
+            "partition": "development",
+            "request": "Impossible task.",
+            "expected": "unsupported",
+            "rationale": "private rationale",
+        },
+        {
+            "id": "e",
+            "family": "sealed",
+            "partition": "heldout",
+            "request": "Sealed.",
+            "expected": "unsupported",
+            "rationale": "private rationale",
+        },
     )
 
 
 def setup(api: Any) -> tuple[Benchmark, ScriptedParser]:
     schema = extract_schema(api)
-    benchmark = Benchmark({"name": "BHSA", "version": "2021", "text_fabric": "13.1.0"},
-                          ("sp",), {}, cases(api))
+    benchmark = Benchmark(
+        {"name": "BHSA", "version": "2021", "text_fabric": "13.1.0"}, ("sp",), {}, cases(api)
+    )
     outputs = {
         "Return verbs.": prediction(schema, ParseStatus.SUPPORTED, meter=True),
         "Return nouns.": prediction(schema, ParseStatus.SUPPORTED, meter=True),
@@ -122,16 +157,18 @@ def test_projected_native_equivalence_and_safe_abstention(tiny_api: Any) -> None
     assert report["cases"][1]["result_equivalent"] is False
     assert report["cases"][2]["result_equivalent"] is None
     assert report["cases"][3]["native_valid"] is None
-    assert all("query" not in c and "request" not in c and "rationale" not in c
-               for c in report["cases"])
+    assert all(
+        "query" not in c and "request" not in c and "rationale" not in c for c in report["cases"]
+    )
     assert "private" not in str(report)
     assert report["wall_latency_p95_s"] >= report["wall_latency_median_s"] >= 0
 
 
 def test_token_price_unknown_is_not_free(tiny_api: Any) -> None:
     benchmark, parser = setup(tiny_api)
-    report = evaluate(benchmark, parser, tiny_api,
-                      input_usd_per_million=2.0, output_usd_per_million=10.0)
+    report = evaluate(
+        benchmark, parser, tiny_api, input_usd_per_million=2.0, output_usd_per_million=10.0
+    )
     assert report["cases"][0]["estimated_cost_usd"] == pytest.approx(0.0004)
     assert report["cases"][0]["input_tokens"] == 100
     assert report["cases"][0]["output_tokens"] == 20
@@ -156,8 +193,14 @@ def test_forged_compiler_output_and_schema_are_rejected(tiny_api: Any) -> None:
     benchmark, parser = setup(tiny_api)
     original = parser.responses["Return verbs."]
     parser.responses["Return verbs."] = ParseResult(
-        original.status, original.reason, original.ir, "word sp=verb\nword sp=noun",
-        original.projection, original.confidence, original.evidence, original.schema_key
+        original.status,
+        original.reason,
+        original.ir,
+        "word sp=verb\nword sp=noun",
+        original.projection,
+        original.confidence,
+        original.evidence,
+        original.schema_key,
     )
     report = evaluate(benchmark, parser, tiny_api)
     assert report["cases"][0]["valid_compilation"] is False
@@ -165,19 +208,31 @@ def test_forged_compiler_output_and_schema_are_rejected(tiny_api: Any) -> None:
     assert report["cases"][0]["result_equivalent"] is False
     assert report["result_equivalent"] == 0
     parser.responses["Return verbs."] = ParseResult(
-        original.status, original.reason, original.ir, original.query,
-        original.projection, original.confidence, original.evidence, "stale"
+        original.status,
+        original.reason,
+        original.ir,
+        original.query,
+        original.projection,
+        original.confidence,
+        original.evidence,
+        "stale",
     )
     assert evaluate(benchmark, parser, tiny_api)["cases"][0]["valid_compilation"] is False
 
 
-@pytest.mark.parametrize("prices", [(True, 1.0), (float("nan"), 2.0), (-1.0, 2.0),
-                                      (1.0, None), (None, 1.0)])
+@pytest.mark.parametrize(
+    "prices", [(True, 1.0), (float("nan"), 2.0), (-1.0, 2.0), (1.0, None), (None, 1.0)]
+)
 def test_invalid_or_incomplete_pricing_fails_closed(tiny_api: Any, prices: tuple[Any, Any]) -> None:
     benchmark, parser = setup(tiny_api)
     with pytest.raises(ValueError):
-        evaluate(benchmark, parser, tiny_api,
-                 input_usd_per_million=prices[0], output_usd_per_million=prices[1])
+        evaluate(
+            benchmark,
+            parser,
+            tiny_api,
+            input_usd_per_million=prices[0],
+            output_usd_per_million=prices[1],
+        )
 
 
 def test_unknown_partition_fails_before_calling_parser(tiny_api: Any) -> None:
@@ -190,17 +245,19 @@ def test_unknown_partition_fails_before_calling_parser(tiny_api: Any) -> None:
 def test_complete_metrics_separate_abstention_and_errors(tiny_api: Any) -> None:
     benchmark, parser = setup(tiny_api)
     report = evaluate(benchmark, parser, tiny_api)
-    assert report['end_to_end_success'] == 2
-    assert report['end_to_end_success_rate'] == 0.5
-    assert report['abstention_precision'] == 1.0
-    assert report['abstention_recall'] == 0.5
-    assert report['emitted_query_native_valid_rate'] == 1.0
-    assert report['parse_latency_p95_s'] >= report['parse_latency_median_s'] >= 0
-    assert report['cases'][0]['backend_latency_s'] == 0.12
-    assert report['cases'][0]['parse_latency_s'] <= report['cases'][0]['latency_s']
-    parser.responses['Impossible task.'] = prediction(schema=parser.schema, status=ParseStatus.ERROR)
+    assert report["end_to_end_success"] == 2
+    assert report["end_to_end_success_rate"] == 0.5
+    assert report["abstention_precision"] == 1.0
+    assert report["abstention_recall"] == 0.5
+    assert report["emitted_query_native_valid_rate"] == 1.0
+    assert report["parse_latency_p95_s"] >= report["parse_latency_median_s"] >= 0
+    assert report["cases"][0]["backend_latency_s"] == 0.12
+    assert report["cases"][0]["parse_latency_s"] <= report["cases"][0]["latency_s"]
+    parser.responses["Impossible task."] = prediction(
+        schema=parser.schema, status=ParseStatus.ERROR
+    )
     report = evaluate(benchmark, parser, tiny_api)
-    assert report['end_to_end_success'] == 1
-    assert report['abstention_recall'] == 0
-    assert report['abstention_precision'] is None
-    assert report['error_rate'] == 0.25
+    assert report["end_to_end_success"] == 1
+    assert report["abstention_recall"] == 0
+    assert report["abstention_precision"] is None
+    assert report["error_rate"] == 0.25

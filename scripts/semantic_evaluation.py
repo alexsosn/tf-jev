@@ -75,6 +75,8 @@ def evaluate(
     strict_correct = supported_gold = native_valid = equivalent = exact = 0
     negative = safe_negative = unsafe_supported = 0
     times: list[float] = []
+    parse_times: list[float] = []
+    abstentions = 0
     costs: list[float | None] = []
 
     for case in cases:
@@ -82,6 +84,8 @@ def evaluate(
         # Crucially only request prose reaches parse(): no gold, rationales,
         # interpretation labels or other benchmark annotations are provided.
         result = parser.parse(case["request"])
+        parse_duration = max(0.0, time.perf_counter() - start)
+        parse_times.append(parse_duration)
         expected = case["expected"]
         predicted = result.status.value if isinstance(result.status, ParseStatus) else "error"
         statuses[predicted] += 1
@@ -90,10 +94,9 @@ def evaluate(
         supported_gold += int(expected == "supported")
         negative += int(expected != "supported")
 
-        integrity = (
-            result.schema_key == parser.schema.identity.key
-            and (result.status is ParseStatus.SUPPORTED or
-                 (result.ir is None and result.query is None and not result.projection))
+        integrity = result.schema_key == parser.schema.identity.key and (
+            result.status is ParseStatus.SUPPORTED
+            or (result.ir is None and result.query is None and not result.projection)
         )
         valid_compilation: bool | None = None
         valid_native: bool | None = None
@@ -106,8 +109,12 @@ def evaluate(
             if expected == "supported":
                 same_results = False
                 exact_query = False
-            if (integrity and result.ir is not None and type(result.query) is str
-                    and projection_valid(result.projection)):
+            if (
+                integrity
+                and result.ir is not None
+                and type(result.query) is str
+                and projection_valid(result.projection)
+            ):
                 try:
                     compiled = compile_query(result.ir, parser.schema)
                     valid_compilation = compiled == result.query
@@ -126,32 +133,46 @@ def evaluate(
                 except (BenchmarkError, CompileError, SchemaError, ValueError):
                     # A failed TF search or validation never becomes an empty result.
                     pass
+        is_abstention = integrity and result.status in (
+            ParseStatus.AMBIGUOUS,
+            ParseStatus.UNSUPPORTED,
+            ParseStatus.ABSTAINED,
+        )
+        abstentions += int(is_abstention)
         if expected != "supported":
             unsafe_supported += int(result.status is ParseStatus.SUPPORTED)
             safe_negative += int(
-                integrity and result.status in (
-                    ParseStatus.AMBIGUOUS, ParseStatus.UNSUPPORTED, ParseStatus.ABSTAINED
-                )
+                integrity
+                and result.status
+                in (ParseStatus.AMBIGUOUS, ParseStatus.UNSUPPORTED, ParseStatus.ABSTAINED)
             )
 
         receipts = tuple(e.receipt for e in result.evidence)
-        complete_usage = bool(receipts) and all(
-            r.input_tokens is not None and r.output_tokens is not None for r in receipts
+        complete_usage = (
+            result.status is not ParseStatus.ERROR
+            and bool(receipts)
+            and all(r.input_tokens is not None and r.output_tokens is not None for r in receipts)
         )
         input_tokens = (
             sum(r.input_tokens for r in receipts if r.input_tokens is not None)
-            if complete_usage else None
+            if complete_usage
+            else None
         )
         output_tokens = (
             sum(r.output_tokens for r in receipts if r.output_tokens is not None)
-            if complete_usage else None
+            if complete_usage
+            else None
         )
         estimate = (
-            (input_tokens * input_usd_per_million
-             + output_tokens * output_usd_per_million) / 1_000_000
-            if (complete_usage and input_tokens is not None and output_tokens is not None
+            (input_tokens * input_usd_per_million + output_tokens * output_usd_per_million)
+            / 1_000_000
+            if (
+                complete_usage
+                and input_tokens is not None
+                and output_tokens is not None
                 and input_usd_per_million is not None
-                and output_usd_per_million is not None)
+                and output_usd_per_million is not None
+            )
             else None
         )
         costs.append(estimate)
@@ -162,34 +183,42 @@ def evaluate(
         level["equivalent"] += int(same_results is True)
 
         reason = (
-            result.reason if type(result.reason) is str
-            and re.fullmatch(r"[a-z][a-z0-9_]{0,80}", result.reason) else "redacted"
+            result.reason
+            if type(result.reason) is str and re.fullmatch(r"[a-z][a-z0-9_]{0,80}", result.reason)
+            else "redacted"
         )
         confidence = (
-            result.confidence if type(result.confidence) in (float, int)
-            and math.isfinite(result.confidence) and 0 <= result.confidence <= 1
+            result.confidence
+            if type(result.confidence) in (float, int)
+            and math.isfinite(result.confidence)
+            and 0 <= result.confidence <= 1
             else None
         )
-        summaries.append({
-            "id": case["id"],
-            "family": case["family"],
-            "expected": expected,
-            "predicted": predicted,
-            "reason": reason,
-            "valid_compilation": valid_compilation,
-            "native_valid": valid_native,
-            "result_equivalent": same_results,
-            "exact_query_match": exact_query,
-            "confidence": confidence,
-            "latency_s": duration,
-            "decision_calls": len(receipts),
-            "input_tokens": input_tokens,
-            "output_tokens": output_tokens,
-            "estimated_cost_usd": estimate,
-            "backend_models": sorted({
-                _model_id(r.backend) + "/" + _model_id(r.model) for r in receipts
-            }),
-        })
+        summaries.append(
+            {
+                "id": case["id"],
+                "family": case["family"],
+                "expected": expected,
+                "predicted": predicted,
+                "safe_negative": expected != "supported" and is_abstention,
+                "reason": reason,
+                "valid_compilation": valid_compilation,
+                "native_valid": valid_native,
+                "result_equivalent": same_results,
+                "exact_query_match": exact_query,
+                "confidence": confidence,
+                "latency_s": duration,
+                "parse_latency_s": parse_duration,
+                "backend_latency_s": sum(r.latency_s for r in receipts) if receipts else None,
+                "decision_calls": len(receipts),
+                "input_tokens": input_tokens,
+                "output_tokens": output_tokens,
+                "estimated_cost_usd": estimate,
+                "backend_models": sorted(
+                    {_model_id(r.backend) + "/" + _model_id(r.model) for r in receipts}
+                ),
+            }
+        )
     ordered = sorted(times)
     complete_cost = bool(costs) and all(v is not None for v in costs)
     return {
@@ -207,13 +236,24 @@ def evaluate(
         "result_equivalent": equivalent,
         "result_equivalent_rate": _rate(equivalent, supported_gold),
         "exact_query_match": exact,
+        "emitted_query_native_valid_rate": _rate(native_valid, statuses["supported"]),
+        "end_to_end_success": equivalent + safe_negative,
+        "end_to_end_success_rate": _rate(equivalent + safe_negative, len(summaries)),
+        "abstentions": abstentions,
+        "abstention_precision": _rate(safe_negative, abstentions),
+        "abstention_recall": _rate(safe_negative, negative),
+        "error_rate": _rate(statuses["error"], len(summaries)),
+        "parse_latency_median_s": statistics.median(parse_times) if parse_times else None,
+        "parse_latency_p95_s": (
+            sorted(parse_times)[math.ceil(0.95 * len(parse_times)) - 1] if parse_times else None
+        ),
         "negative_gold": negative,
         "safe_negative": safe_negative,
         "safe_negative_rate": _rate(safe_negative, negative),
         "unsafe_supported_on_negative": unsafe_supported,
         "by_family": dict(sorted(by_family.items())),
         "wall_latency_median_s": statistics.median(ordered) if ordered else None,
-        "wall_latency_p95_s": ordered[math.ceil(.95 * len(ordered)) - 1] if ordered else None,
+        "wall_latency_p95_s": ordered[math.ceil(0.95 * len(ordered)) - 1] if ordered else None,
         "estimated_cost_usd_complete": complete_cost,
         "estimated_cost_usd": sum(v for v in costs if v is not None) if complete_cost else None,
         "cases": summaries,
