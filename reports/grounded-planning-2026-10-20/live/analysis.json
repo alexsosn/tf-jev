@@ -1,0 +1,1494 @@
+{
+  "control.support": {
+    "cross_validated_accepted": 8,
+    "cross_validated_wrong": 0,
+    "errors": 0,
+    "folds": [
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "family": "ambiguous-scope",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.9
+        },
+        "total": 4,
+        "training": {
+          "accepted": 8,
+          "distinct_cases": 4,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "family": "containment",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.9
+        },
+        "total": 4,
+        "training": {
+          "accepted": 8,
+          "distinct_cases": 4,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 4,
+        "distinct_cases": 2,
+        "family": "gender-number",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.9
+        },
+        "total": 4,
+        "training": {
+          "accepted": 4,
+          "distinct_cases": 2,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 4,
+        "distinct_cases": 2,
+        "family": "literal-lexeme",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.9
+        },
+        "total": 4,
+        "training": {
+          "accepted": 4,
+          "distinct_cases": 2,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "family": "negated-containment",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.9
+        },
+        "total": 4,
+        "training": {
+          "accepted": 8,
+          "distinct_cases": 4,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "family": "part-of-speech",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.9
+        },
+        "total": 4,
+        "training": {
+          "accepted": 8,
+          "distinct_cases": 4,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "family": "phrase-function",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.9
+        },
+        "total": 4,
+        "training": {
+          "accepted": 8,
+          "distinct_cases": 4,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "family": "unsupported-query-construct",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.9
+        },
+        "total": 4,
+        "training": {
+          "accepted": 8,
+          "distinct_cases": 4,
+          "wrong": 0
+        },
+        "wrong": 0
+      }
+    ],
+    "grid": [
+      {
+        "accepted": 32,
+        "distinct_cases": 16,
+        "margin": 0.0,
+        "probability": 0.5,
+        "wrong": 8
+      },
+      {
+        "accepted": 32,
+        "distinct_cases": 16,
+        "margin": 0.1,
+        "probability": 0.5,
+        "wrong": 8
+      },
+      {
+        "accepted": 32,
+        "distinct_cases": 16,
+        "margin": 0.2,
+        "probability": 0.5,
+        "wrong": 8
+      },
+      {
+        "accepted": 31,
+        "distinct_cases": 16,
+        "margin": 0.3,
+        "probability": 0.5,
+        "wrong": 8
+      },
+      {
+        "accepted": 19,
+        "distinct_cases": 10,
+        "margin": 0.5,
+        "probability": 0.5,
+        "wrong": 4
+      },
+      {
+        "accepted": 25,
+        "distinct_cases": 13,
+        "margin": 0.0,
+        "probability": 0.6,
+        "wrong": 4
+      },
+      {
+        "accepted": 25,
+        "distinct_cases": 13,
+        "margin": 0.1,
+        "probability": 0.6,
+        "wrong": 4
+      },
+      {
+        "accepted": 25,
+        "distinct_cases": 13,
+        "margin": 0.2,
+        "probability": 0.6,
+        "wrong": 4
+      },
+      {
+        "accepted": 25,
+        "distinct_cases": 13,
+        "margin": 0.3,
+        "probability": 0.6,
+        "wrong": 4
+      },
+      {
+        "accepted": 19,
+        "distinct_cases": 10,
+        "margin": 0.5,
+        "probability": 0.6,
+        "wrong": 4
+      },
+      {
+        "accepted": 15,
+        "distinct_cases": 9,
+        "margin": 0.0,
+        "probability": 0.7,
+        "wrong": 4
+      },
+      {
+        "accepted": 15,
+        "distinct_cases": 9,
+        "margin": 0.1,
+        "probability": 0.7,
+        "wrong": 4
+      },
+      {
+        "accepted": 15,
+        "distinct_cases": 9,
+        "margin": 0.2,
+        "probability": 0.7,
+        "wrong": 4
+      },
+      {
+        "accepted": 15,
+        "distinct_cases": 9,
+        "margin": 0.3,
+        "probability": 0.7,
+        "wrong": 4
+      },
+      {
+        "accepted": 15,
+        "distinct_cases": 9,
+        "margin": 0.5,
+        "probability": 0.7,
+        "wrong": 4
+      },
+      {
+        "accepted": 10,
+        "distinct_cases": 5,
+        "margin": 0.0,
+        "probability": 0.8,
+        "wrong": 2
+      },
+      {
+        "accepted": 10,
+        "distinct_cases": 5,
+        "margin": 0.1,
+        "probability": 0.8,
+        "wrong": 2
+      },
+      {
+        "accepted": 10,
+        "distinct_cases": 5,
+        "margin": 0.2,
+        "probability": 0.8,
+        "wrong": 2
+      },
+      {
+        "accepted": 10,
+        "distinct_cases": 5,
+        "margin": 0.3,
+        "probability": 0.8,
+        "wrong": 2
+      },
+      {
+        "accepted": 10,
+        "distinct_cases": 5,
+        "margin": 0.5,
+        "probability": 0.8,
+        "wrong": 2
+      },
+      {
+        "accepted": 8,
+        "distinct_cases": 4,
+        "margin": 0.0,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 8,
+        "distinct_cases": 4,
+        "margin": 0.1,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 8,
+        "distinct_cases": 4,
+        "margin": 0.2,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 8,
+        "distinct_cases": 4,
+        "margin": 0.3,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 8,
+        "distinct_cases": 4,
+        "margin": 0.5,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 2,
+        "distinct_cases": 1,
+        "margin": 0.0,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 2,
+        "distinct_cases": 1,
+        "margin": 0.1,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 2,
+        "distinct_cases": 1,
+        "margin": 0.2,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 2,
+        "distinct_cases": 1,
+        "margin": 0.3,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 2,
+        "distinct_cases": 1,
+        "margin": 0.5,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "margin": 0.0,
+        "probability": 0.99,
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "margin": 0.1,
+        "probability": 0.99,
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "margin": 0.2,
+        "probability": 0.99,
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "margin": 0.3,
+        "probability": 0.99,
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "margin": 0.5,
+        "probability": 0.99,
+        "wrong": 0
+      }
+    ],
+    "original_gate": {
+      "accepted": 10,
+      "distinct_cases": 5,
+      "wrong": 2
+    },
+    "top_correct": 24,
+    "total": 32
+  },
+  "grounded.feature": {
+    "cross_validated_accepted": 44,
+    "cross_validated_wrong": 0,
+    "errors": 0,
+    "folds": [
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "family": "containment",
+        "policy": {
+          "margin": 0.3,
+          "probability": 0.6
+        },
+        "total": 4,
+        "training": {
+          "accepted": 44,
+          "distinct_cases": 9,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 16,
+        "distinct_cases": 2,
+        "family": "gender-number",
+        "policy": {
+          "margin": 0.3,
+          "probability": 0.5
+        },
+        "total": 16,
+        "training": {
+          "accepted": 29,
+          "distinct_cases": 8,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 8,
+        "distinct_cases": 2,
+        "family": "literal-lexeme",
+        "policy": {
+          "margin": 0.3,
+          "probability": 0.5
+        },
+        "total": 8,
+        "training": {
+          "accepted": 37,
+          "distinct_cases": 8,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 4,
+        "distinct_cases": 1,
+        "family": "negated-containment",
+        "policy": {
+          "margin": 0.3,
+          "probability": 0.5
+        },
+        "total": 6,
+        "training": {
+          "accepted": 41,
+          "distinct_cases": 9,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 8,
+        "distinct_cases": 2,
+        "family": "part-of-speech",
+        "policy": {
+          "margin": 0.3,
+          "probability": 0.5
+        },
+        "total": 8,
+        "training": {
+          "accepted": 37,
+          "distinct_cases": 8,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 8,
+        "distinct_cases": 2,
+        "family": "phrase-function",
+        "policy": {
+          "margin": 0.3,
+          "probability": 0.5
+        },
+        "total": 8,
+        "training": {
+          "accepted": 37,
+          "distinct_cases": 8,
+          "wrong": 0
+        },
+        "wrong": 0
+      }
+    ],
+    "grid": [
+      {
+        "accepted": 45,
+        "distinct_cases": 10,
+        "margin": 0.0,
+        "probability": 0.5,
+        "wrong": 0
+      },
+      {
+        "accepted": 45,
+        "distinct_cases": 10,
+        "margin": 0.1,
+        "probability": 0.5,
+        "wrong": 0
+      },
+      {
+        "accepted": 45,
+        "distinct_cases": 10,
+        "margin": 0.2,
+        "probability": 0.5,
+        "wrong": 0
+      },
+      {
+        "accepted": 45,
+        "distinct_cases": 10,
+        "margin": 0.3,
+        "probability": 0.5,
+        "wrong": 0
+      },
+      {
+        "accepted": 43,
+        "distinct_cases": 9,
+        "margin": 0.5,
+        "probability": 0.5,
+        "wrong": 0
+      },
+      {
+        "accepted": 44,
+        "distinct_cases": 9,
+        "margin": 0.0,
+        "probability": 0.6,
+        "wrong": 0
+      },
+      {
+        "accepted": 44,
+        "distinct_cases": 9,
+        "margin": 0.1,
+        "probability": 0.6,
+        "wrong": 0
+      },
+      {
+        "accepted": 44,
+        "distinct_cases": 9,
+        "margin": 0.2,
+        "probability": 0.6,
+        "wrong": 0
+      },
+      {
+        "accepted": 44,
+        "distinct_cases": 9,
+        "margin": 0.3,
+        "probability": 0.6,
+        "wrong": 0
+      },
+      {
+        "accepted": 43,
+        "distinct_cases": 9,
+        "margin": 0.5,
+        "probability": 0.6,
+        "wrong": 0
+      },
+      {
+        "accepted": 42,
+        "distinct_cases": 9,
+        "margin": 0.0,
+        "probability": 0.7,
+        "wrong": 0
+      },
+      {
+        "accepted": 42,
+        "distinct_cases": 9,
+        "margin": 0.1,
+        "probability": 0.7,
+        "wrong": 0
+      },
+      {
+        "accepted": 42,
+        "distinct_cases": 9,
+        "margin": 0.2,
+        "probability": 0.7,
+        "wrong": 0
+      },
+      {
+        "accepted": 42,
+        "distinct_cases": 9,
+        "margin": 0.3,
+        "probability": 0.7,
+        "wrong": 0
+      },
+      {
+        "accepted": 42,
+        "distinct_cases": 9,
+        "margin": 0.5,
+        "probability": 0.7,
+        "wrong": 0
+      },
+      {
+        "accepted": 38,
+        "distinct_cases": 9,
+        "margin": 0.0,
+        "probability": 0.8,
+        "wrong": 0
+      },
+      {
+        "accepted": 38,
+        "distinct_cases": 9,
+        "margin": 0.1,
+        "probability": 0.8,
+        "wrong": 0
+      },
+      {
+        "accepted": 38,
+        "distinct_cases": 9,
+        "margin": 0.2,
+        "probability": 0.8,
+        "wrong": 0
+      },
+      {
+        "accepted": 38,
+        "distinct_cases": 9,
+        "margin": 0.3,
+        "probability": 0.8,
+        "wrong": 0
+      },
+      {
+        "accepted": 38,
+        "distinct_cases": 9,
+        "margin": 0.5,
+        "probability": 0.8,
+        "wrong": 0
+      },
+      {
+        "accepted": 27,
+        "distinct_cases": 8,
+        "margin": 0.0,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 27,
+        "distinct_cases": 8,
+        "margin": 0.1,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 27,
+        "distinct_cases": 8,
+        "margin": 0.2,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 27,
+        "distinct_cases": 8,
+        "margin": 0.3,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 27,
+        "distinct_cases": 8,
+        "margin": 0.5,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 11,
+        "distinct_cases": 5,
+        "margin": 0.0,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 11,
+        "distinct_cases": 5,
+        "margin": 0.1,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 11,
+        "distinct_cases": 5,
+        "margin": 0.2,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 11,
+        "distinct_cases": 5,
+        "margin": 0.3,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 11,
+        "distinct_cases": 5,
+        "margin": 0.5,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "margin": 0.0,
+        "probability": 0.99,
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "margin": 0.1,
+        "probability": 0.99,
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "margin": 0.2,
+        "probability": 0.99,
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "margin": 0.3,
+        "probability": 0.99,
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "margin": 0.5,
+        "probability": 0.99,
+        "wrong": 0
+      }
+    ],
+    "original_gate": {
+      "accepted": 38,
+      "distinct_cases": 9,
+      "wrong": 0
+    },
+    "top_correct": 46,
+    "total": 50
+  },
+  "grounded.support": {
+    "cross_validated_accepted": 18,
+    "cross_validated_wrong": 0,
+    "errors": 0,
+    "folds": [
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "family": "ambiguous-scope",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.9
+        },
+        "total": 4,
+        "training": {
+          "accepted": 20,
+          "distinct_cases": 10,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "family": "containment",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.9
+        },
+        "total": 4,
+        "training": {
+          "accepted": 20,
+          "distinct_cases": 10,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 4,
+        "distinct_cases": 2,
+        "family": "gender-number",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.9
+        },
+        "total": 4,
+        "training": {
+          "accepted": 16,
+          "distinct_cases": 8,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 4,
+        "distinct_cases": 2,
+        "family": "literal-lexeme",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.9
+        },
+        "total": 4,
+        "training": {
+          "accepted": 16,
+          "distinct_cases": 8,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 0,
+        "distinct_cases": 0,
+        "family": "negated-containment",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.9
+        },
+        "total": 4,
+        "training": {
+          "accepted": 20,
+          "distinct_cases": 10,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 4,
+        "distinct_cases": 2,
+        "family": "part-of-speech",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.9
+        },
+        "total": 4,
+        "training": {
+          "accepted": 16,
+          "distinct_cases": 8,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 4,
+        "distinct_cases": 2,
+        "family": "phrase-function",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.9
+        },
+        "total": 4,
+        "training": {
+          "accepted": 16,
+          "distinct_cases": 8,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 2,
+        "distinct_cases": 1,
+        "family": "unsupported-query-construct",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.95
+        },
+        "total": 4,
+        "training": {
+          "accepted": 16,
+          "distinct_cases": 8,
+          "wrong": 0
+        },
+        "wrong": 0
+      }
+    ],
+    "grid": [
+      {
+        "accepted": 25,
+        "distinct_cases": 13,
+        "margin": 0.0,
+        "probability": 0.5,
+        "wrong": 4
+      },
+      {
+        "accepted": 25,
+        "distinct_cases": 13,
+        "margin": 0.1,
+        "probability": 0.5,
+        "wrong": 4
+      },
+      {
+        "accepted": 25,
+        "distinct_cases": 13,
+        "margin": 0.2,
+        "probability": 0.5,
+        "wrong": 4
+      },
+      {
+        "accepted": 21,
+        "distinct_cases": 11,
+        "margin": 0.3,
+        "probability": 0.5,
+        "wrong": 1
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.5,
+        "probability": 0.5,
+        "wrong": 0
+      },
+      {
+        "accepted": 21,
+        "distinct_cases": 11,
+        "margin": 0.0,
+        "probability": 0.6,
+        "wrong": 1
+      },
+      {
+        "accepted": 21,
+        "distinct_cases": 11,
+        "margin": 0.1,
+        "probability": 0.6,
+        "wrong": 1
+      },
+      {
+        "accepted": 21,
+        "distinct_cases": 11,
+        "margin": 0.2,
+        "probability": 0.6,
+        "wrong": 1
+      },
+      {
+        "accepted": 21,
+        "distinct_cases": 11,
+        "margin": 0.3,
+        "probability": 0.6,
+        "wrong": 1
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.5,
+        "probability": 0.6,
+        "wrong": 0
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.0,
+        "probability": 0.7,
+        "wrong": 0
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.1,
+        "probability": 0.7,
+        "wrong": 0
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.2,
+        "probability": 0.7,
+        "wrong": 0
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.3,
+        "probability": 0.7,
+        "wrong": 0
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.5,
+        "probability": 0.7,
+        "wrong": 0
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.0,
+        "probability": 0.8,
+        "wrong": 0
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.1,
+        "probability": 0.8,
+        "wrong": 0
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.2,
+        "probability": 0.8,
+        "wrong": 0
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.3,
+        "probability": 0.8,
+        "wrong": 0
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.5,
+        "probability": 0.8,
+        "wrong": 0
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.0,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.1,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.2,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.3,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 20,
+        "distinct_cases": 10,
+        "margin": 0.5,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 18,
+        "distinct_cases": 9,
+        "margin": 0.0,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 18,
+        "distinct_cases": 9,
+        "margin": 0.1,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 18,
+        "distinct_cases": 9,
+        "margin": 0.2,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 18,
+        "distinct_cases": 9,
+        "margin": 0.3,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 18,
+        "distinct_cases": 9,
+        "margin": 0.5,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 6,
+        "distinct_cases": 3,
+        "margin": 0.0,
+        "probability": 0.99,
+        "wrong": 0
+      },
+      {
+        "accepted": 6,
+        "distinct_cases": 3,
+        "margin": 0.1,
+        "probability": 0.99,
+        "wrong": 0
+      },
+      {
+        "accepted": 6,
+        "distinct_cases": 3,
+        "margin": 0.2,
+        "probability": 0.99,
+        "wrong": 0
+      },
+      {
+        "accepted": 6,
+        "distinct_cases": 3,
+        "margin": 0.3,
+        "probability": 0.99,
+        "wrong": 0
+      },
+      {
+        "accepted": 6,
+        "distinct_cases": 3,
+        "margin": 0.5,
+        "probability": 0.99,
+        "wrong": 0
+      }
+    ],
+    "original_gate": {
+      "accepted": 20,
+      "distinct_cases": 10,
+      "wrong": 0
+    },
+    "top_correct": 24,
+    "total": 32
+  },
+  "grounded.type": {
+    "cross_validated_accepted": 21,
+    "cross_validated_wrong": 0,
+    "errors": 0,
+    "folds": [
+      {
+        "accepted": 4,
+        "distinct_cases": 2,
+        "family": "containment",
+        "policy": {
+          "margin": 0.3,
+          "probability": 0.6
+        },
+        "total": 4,
+        "training": {
+          "accepted": 20,
+          "distinct_cases": 10,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 3,
+        "distinct_cases": 2,
+        "family": "gender-number",
+        "policy": {
+          "margin": 0.3,
+          "probability": 0.7
+        },
+        "total": 4,
+        "training": {
+          "accepted": 20,
+          "distinct_cases": 10,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 2,
+        "distinct_cases": 1,
+        "family": "literal-lexeme",
+        "policy": {
+          "margin": 0.5,
+          "probability": 0.6
+        },
+        "total": 4,
+        "training": {
+          "accepted": 20,
+          "distinct_cases": 10,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 4,
+        "distinct_cases": 2,
+        "family": "negated-containment",
+        "policy": {
+          "margin": 0.3,
+          "probability": 0.6
+        },
+        "total": 4,
+        "training": {
+          "accepted": 20,
+          "distinct_cases": 10,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 4,
+        "distinct_cases": 2,
+        "family": "part-of-speech",
+        "policy": {
+          "margin": 0.3,
+          "probability": 0.6
+        },
+        "total": 4,
+        "training": {
+          "accepted": 20,
+          "distinct_cases": 10,
+          "wrong": 0
+        },
+        "wrong": 0
+      },
+      {
+        "accepted": 4,
+        "distinct_cases": 2,
+        "family": "phrase-function",
+        "policy": {
+          "margin": 0.3,
+          "probability": 0.6
+        },
+        "total": 4,
+        "training": {
+          "accepted": 20,
+          "distinct_cases": 10,
+          "wrong": 0
+        },
+        "wrong": 0
+      }
+    ],
+    "grid": [
+      {
+        "accepted": 24,
+        "distinct_cases": 12,
+        "margin": 0.0,
+        "probability": 0.5,
+        "wrong": 0
+      },
+      {
+        "accepted": 24,
+        "distinct_cases": 12,
+        "margin": 0.1,
+        "probability": 0.5,
+        "wrong": 0
+      },
+      {
+        "accepted": 24,
+        "distinct_cases": 12,
+        "margin": 0.2,
+        "probability": 0.5,
+        "wrong": 0
+      },
+      {
+        "accepted": 24,
+        "distinct_cases": 12,
+        "margin": 0.3,
+        "probability": 0.5,
+        "wrong": 0
+      },
+      {
+        "accepted": 22,
+        "distinct_cases": 11,
+        "margin": 0.5,
+        "probability": 0.5,
+        "wrong": 0
+      },
+      {
+        "accepted": 24,
+        "distinct_cases": 12,
+        "margin": 0.0,
+        "probability": 0.6,
+        "wrong": 0
+      },
+      {
+        "accepted": 24,
+        "distinct_cases": 12,
+        "margin": 0.1,
+        "probability": 0.6,
+        "wrong": 0
+      },
+      {
+        "accepted": 24,
+        "distinct_cases": 12,
+        "margin": 0.2,
+        "probability": 0.6,
+        "wrong": 0
+      },
+      {
+        "accepted": 24,
+        "distinct_cases": 12,
+        "margin": 0.3,
+        "probability": 0.6,
+        "wrong": 0
+      },
+      {
+        "accepted": 22,
+        "distinct_cases": 11,
+        "margin": 0.5,
+        "probability": 0.6,
+        "wrong": 0
+      },
+      {
+        "accepted": 23,
+        "distinct_cases": 12,
+        "margin": 0.0,
+        "probability": 0.7,
+        "wrong": 0
+      },
+      {
+        "accepted": 23,
+        "distinct_cases": 12,
+        "margin": 0.1,
+        "probability": 0.7,
+        "wrong": 0
+      },
+      {
+        "accepted": 23,
+        "distinct_cases": 12,
+        "margin": 0.2,
+        "probability": 0.7,
+        "wrong": 0
+      },
+      {
+        "accepted": 23,
+        "distinct_cases": 12,
+        "margin": 0.3,
+        "probability": 0.7,
+        "wrong": 0
+      },
+      {
+        "accepted": 21,
+        "distinct_cases": 11,
+        "margin": 0.5,
+        "probability": 0.7,
+        "wrong": 0
+      },
+      {
+        "accepted": 17,
+        "distinct_cases": 9,
+        "margin": 0.0,
+        "probability": 0.8,
+        "wrong": 0
+      },
+      {
+        "accepted": 17,
+        "distinct_cases": 9,
+        "margin": 0.1,
+        "probability": 0.8,
+        "wrong": 0
+      },
+      {
+        "accepted": 17,
+        "distinct_cases": 9,
+        "margin": 0.2,
+        "probability": 0.8,
+        "wrong": 0
+      },
+      {
+        "accepted": 17,
+        "distinct_cases": 9,
+        "margin": 0.3,
+        "probability": 0.8,
+        "wrong": 0
+      },
+      {
+        "accepted": 17,
+        "distinct_cases": 9,
+        "margin": 0.5,
+        "probability": 0.8,
+        "wrong": 0
+      },
+      {
+        "accepted": 12,
+        "distinct_cases": 6,
+        "margin": 0.0,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 12,
+        "distinct_cases": 6,
+        "margin": 0.1,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 12,
+        "distinct_cases": 6,
+        "margin": 0.2,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 12,
+        "distinct_cases": 6,
+        "margin": 0.3,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 12,
+        "distinct_cases": 6,
+        "margin": 0.5,
+        "probability": 0.9,
+        "wrong": 0
+      },
+      {
+        "accepted": 8,
+        "distinct_cases": 4,
+        "margin": 0.0,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 8,
+        "distinct_cases": 4,
+        "margin": 0.1,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 8,
+        "distinct_cases": 4,
+        "margin": 0.2,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 8,
+        "distinct_cases": 4,
+        "margin": 0.3,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 8,
+        "distinct_cases": 4,
+        "margin": 0.5,
+        "probability": 0.95,
+        "wrong": 0
+      },
+      {
+        "accepted": 3,
+        "distinct_cases": 2,
+        "margin": 0.0,
+        "probability": 0.99,
+        "wrong": 0
+      },
+      {
+        "accepted": 3,
+        "distinct_cases": 2,
+        "margin": 0.1,
+        "probability": 0.99,
+        "wrong": 0
+      },
+      {
+        "accepted": 3,
+        "distinct_cases": 2,
+        "margin": 0.2,
+        "probability": 0.99,
+        "wrong": 0
+      },
+      {
+        "accepted": 3,
+        "distinct_cases": 2,
+        "margin": 0.3,
+        "probability": 0.99,
+        "wrong": 0
+      },
+      {
+        "accepted": 3,
+        "distinct_cases": 2,
+        "margin": 0.5,
+        "probability": 0.99,
+        "wrong": 0
+      }
+    ],
+    "original_gate": {
+      "accepted": 17,
+      "distinct_cases": 9,
+      "wrong": 0
+    },
+    "top_correct": 24,
+    "total": 24
+  }
+}

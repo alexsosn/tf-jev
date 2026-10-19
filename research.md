@@ -128,3 +128,9 @@ no-go for default use. Development-only diagnosis and fresh evaluation are #46.
 Abstention diagnosis (#46): [development traces and controlled probes](reports/abstention-diagnosis-2026-10-20/README.md)
 localize stops to shape, type and predicate count. Corpus-aware planning research
 is #48; no production parser change or fresh quality claim is justified yet.
+
+Corpus-aware planning (#48): [preregistered grounded-stage protocol](docs/research/issue-48-grounded-planning.md)
+and [measured report](reports/grounded-planning-2026-10-20/README.md) find improved
+selective support acceptance, 24/24 correct type winners and 46/50 correct
+oracle-conditioned next-feature choices. Isolated stages are not parser success;
+no production prompt/threshold change or fresh end-to-end quality claim is made.
