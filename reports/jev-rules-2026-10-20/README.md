@@ -4,7 +4,10 @@ Measured 2026-10-20 (Athens local date), frozen source commit
 `3abcf270911798e7414124772b5fe27e5ecbf32c` (see full `package_commit` in JSON), BHSA 2021 / TF 13.1.0,
 TypeSafe SDK 0.7.4, Jev **1.13.0**. The exact benchmark hash, 19 pinned source
 hashes, full schema identity, package commit, Python version and UTC start are
-in each report. Protocol and thresholds were committed before inference;
+in each report. The [complete source manifest](corpus-source-sha256.json) also
+hashes every TF file in the full corpus, covering model-visible schema features
+beyond the benchmark's 19 referenced sources. The supplementary audit reproduced
+the full schema identity from the live run before this source snapshot. Protocol and thresholds were committed before inference;
 parser, default thresholds, prompts, rules and benchmark were unchanged after
 heldout inspection. This is one run, not a statistical model leaderboard.
 

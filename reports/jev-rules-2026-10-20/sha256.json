@@ -1,5 +1,6 @@
 {
   "candidate-audit.json": "7073ba32fee7ed9ef636b68cbb30aea9fd1f0baf9a05709c19fa96f2b9d23223",
+  "corpus-source-sha256.json": "7c247077ec5c4cf0539b7a0210c2d34852e2297071efdbd5ca277dc50c3a2002",
   "intent-audit.json": "1aaef87be44b338b0f88703cfc18f7da910d67f484f99db65a82f447a43fd546",
   "jev-development.json": "b09f7c163153f233dda222e81b7f449191e75c05f46cf6a929d722106e63fe0d",
   "jev-heldout.json": "bb77e5cb2fdf3ca3cd0a393182aa9aa336165ecb090c9ca1bf3aa1123793ae95",
