@@ -1,0 +1,481 @@
+{
+  "version": "nl-tf-v2",
+  "corpus": {
+    "name": "BHSA",
+    "version": "2021",
+    "text_fabric": "13.1.0"
+  },
+  "features": [
+    "sp",
+    "gn",
+    "nu",
+    "vs",
+    "function",
+    "lex",
+    "language",
+    "number",
+    "qere",
+    "freq_lex",
+    "mother"
+  ],
+  "source_sha256": {
+    "sp.tf": "7fa4a18e308531e6dfdc4793ab267587629d4b882f4a4a5d839f8bc896af7861",
+    "gn.tf": "93b0b0281a4552a9bfb4723f0fc41a4300c27bd1db41c7994c6fcf3ebb61aab5",
+    "nu.tf": "e08c8cdf69a537ddaf137962ce8aa82f784ee629c0754b8d25684bddfb7cb25d",
+    "vs.tf": "db8efa910e185d226797ffd62270746d04f1bdc53fbe6a9dbacb65cbd41bf665",
+    "function.tf": "3b4f87ac5691826c48a71c71b6cb53a5318f779ca82402e48c1a5db2fbda60b2",
+    "lex.tf": "2469664dc71bcde35a916d6a85453a5567cff3dcbc3e3323204e1120bc5ed25a",
+    "language.tf": "b6e9f2a855901d6d29c970c2710fd7189ad2b5fc5e457f1b4c92e54d8c77cd5a",
+    "number.tf": "a417e8a6f1a3a36d3011505216162746af4aebc3561542c16e0328720192ea62",
+    "qere.tf": "3aa63d0061ffe37d22f07f105c187cc96507f859e1867ff2b3b283de4ee2393f",
+    "freq_lex.tf": "b0403e48ef7b8a9f7844c119db89584a2fe95d836a7f1b0f6c943d2f8c707265",
+    "mother.tf": "13d3340ed327aa7d739dfc5fc870d10de00308a8e5ed713fbe4c5eee717c5cfe",
+    "otype.tf": "bb5da974a3b1dd7ff9ddab54dfb533059442642ab830b832a49eea8670aaa920",
+    "oslots.tf": "c4efaeed8047d4e75834cc94856d79eacc7a146aea01c34d8be88497d8fa303b",
+    "otext.tf": "20c1c41bc602804ecafbf56bfc88541b0af92afcc16fb594db6acfc6f3a846e9"
+  },
+  "cases": [
+    {
+      "id": "cal-01",
+      "family": "cal-category-conjunction",
+      "partition": "development",
+      "request": "List substantives marked masculine singular.",
+      "expected": "supported",
+      "rationale": "Substantive means noun annotation subs; all three features constrain the same word.",
+      "gold": {
+        "query": "word sp=subs gn=m nu=sg",
+        "projection": [
+          0
+        ],
+        "count": 57057,
+        "signature": "508748684efc3408f90418b38b1db9ae2e3b6ce53634dea68bdc420a66080172"
+      }
+    },
+    {
+      "id": "cal-02",
+      "family": "cal-category-conjunction",
+      "partition": "development",
+      "request": "Find adjectives with feminine plural annotation.",
+      "expected": "supported",
+      "rationale": "Three annotations on one word; no parent constraint.",
+      "gold": {
+        "query": "word sp=adjv gn=f nu=pl",
+        "projection": [
+          0
+        ],
+        "count": 312,
+        "signature": "19a3030538f1d57f2189e610aff87369454e7dcff3cb26fbcb722cad344281d6"
+      }
+    },
+    {
+      "id": "cal-03",
+      "family": "cal-phrase-function",
+      "partition": "development",
+      "request": "Give phrases annotated with function Time.",
+      "expected": "supported",
+      "rationale": "Explicit phrase annotation, not chronological reasoning.",
+      "gold": {
+        "query": "phrase function=Time",
+        "projection": [
+          0
+        ],
+        "count": 4079,
+        "signature": "97ac27127d0f7434298b1a55fa9f3908ef18fa8c768825c5cc1c4ead2865e685"
+      }
+    },
+    {
+      "id": "cal-04",
+      "family": "cal-exact-lexeme",
+      "partition": "development",
+      "request": "List word occurrences with lex exactly 'BJT/'.",
+      "expected": "supported",
+      "rationale": "Exact attested literal; word occurrences, not lex nodes.",
+      "gold": {
+        "query": "word lex=BJT/",
+        "projection": [
+          0
+        ],
+        "count": 2107,
+        "signature": "d44715b855d8c9d246dbfbf7af3f0657367f180ea47bc441f75de3b5c4063c79"
+      }
+    },
+    {
+      "id": "cal-05",
+      "family": "cal-category-conjunction",
+      "partition": "development",
+      "request": "Select verbal words with the nif stem annotation.",
+      "expected": "supported",
+      "rationale": "Two literal annotations on words.",
+      "gold": {
+        "query": "word sp=verb vs=nif",
+        "projection": [
+          0
+        ],
+        "count": 4145,
+        "signature": "1e7722c3e9494056a3fcd184dbf67c5fc926472ee777560dba124074ca91db19"
+      }
+    },
+    {
+      "id": "cal-06",
+      "family": "cal-parent-exclusion",
+      "partition": "development",
+      "request": "Select clauses with no contained word annotated as Aramaic.",
+      "expected": "supported",
+      "rationale": "Returned clause is unconstrained; exclusion tests the child word language.",
+      "gold": {
+        "query": "clause\n/without/\n  word language=Aramaic\n/-/",
+        "projection": [
+          0
+        ],
+        "count": 86836,
+        "signature": "eb9b4dc275bdf96fac5dd33382e9928bfcd116117632bc57e07b96096872b50a"
+      }
+    },
+    {
+      "id": "cal-07",
+      "family": "cal-parent-exclusion",
+      "partition": "development",
+      "request": "Select object-function phrases that contain no adjective words.",
+      "expected": "supported",
+      "rationale": "Object annotation belongs to phrase; adjective annotation to excluded child.",
+      "gold": {
+        "query": "phrase function=Objc\n/without/\n  word sp=adjv\n/-/",
+        "projection": [
+          0
+        ],
+        "count": 20999,
+        "signature": "914c61357a544c1da73ee41d8c833c56edf8006e25c34073e801c45867b8b789"
+      }
+    },
+    {
+      "id": "cal-08",
+      "family": "cal-integer",
+      "partition": "development",
+      "request": "List clauses with number annotation greater than 12.",
+      "expected": "supported",
+      "rationale": "Explicit integer comparison on clause number, not a result limit.",
+      "gold": {
+        "query": "clause number>12",
+        "projection": [
+          0
+        ],
+        "count": 167,
+        "signature": "152f214bcffc2686de955bf048ca4da2f3c51c53311a77c77fe0ec203a4ebdff"
+      }
+    },
+    {
+      "id": "cal-09",
+      "family": "cal-ambiguity",
+      "partition": "development",
+      "request": "Select complements.",
+      "expected": "ambiguous",
+      "rationale": "Could mean complement or predicate-complement function.",
+      "interpretations": [
+        "phrases with function Cmpl",
+        "phrases with function PreC"
+      ]
+    },
+    {
+      "id": "cal-10",
+      "family": "cal-ambiguity",
+      "partition": "development",
+      "request": "Select roots.",
+      "expected": "ambiguous",
+      "rationale": "Lexical roots and syntactic roots differ.",
+      "interpretations": [
+        "lexical root annotation",
+        "syntactic root annotation"
+      ]
+    },
+    {
+      "id": "cal-11",
+      "family": "cal-unsupported",
+      "partition": "development",
+      "request": "Count verbal words separately for each verse.",
+      "expected": "unsupported",
+      "rationale": "Aggregation is outside the supported compiler subset."
+    },
+    {
+      "id": "cal-12",
+      "family": "cal-unsupported",
+      "partition": "development",
+      "request": "Return books containing a phrase containing a verbal word.",
+      "expected": "unsupported",
+      "rationale": "Three independently typed atoms exceed the two-atom planner subset."
+    },
+    {
+      "id": "eval-01",
+      "family": "eval-disjunction-inequality",
+      "partition": "heldout",
+      "request": "Find word nodes whose part-of-speech is either adjective or adverb.",
+      "expected": "supported",
+      "rationale": "Two alternatives in a single feature predicate, not two atoms.",
+      "gold": {
+        "query": "word sp=adjv|advb",
+        "projection": [
+          0
+        ],
+        "count": 14073,
+        "signature": "1b629f61a05811fb983ba1731b81beb318a36cf0981540ccb8bd7c193ff24b44"
+      }
+    },
+    {
+      "id": "eval-02",
+      "family": "eval-disjunction-inequality",
+      "partition": "heldout",
+      "request": "Find word nodes whose part-of-speech is anything except preposition.",
+      "expected": "supported",
+      "rationale": "Native inequality includes missing values; word sp is fully populated here.",
+      "gold": {
+        "query": "word sp#prep",
+        "projection": [
+          0
+        ],
+        "count": 353317,
+        "signature": "867a4d1e76a1e1e25c8b4470f2e0e584ea48ea98e933efd9cd9023252e6a6851"
+      }
+    },
+    {
+      "id": "eval-03",
+      "family": "eval-presence",
+      "partition": "heldout",
+      "request": "Return word nodes carrying a qere annotation.",
+      "expected": "supported",
+      "rationale": "Presence is distinct from a literal sentinel value.",
+      "gold": {
+        "query": "word qere",
+        "projection": [
+          0
+        ],
+        "count": 1892,
+        "signature": "138b0d236e0d0eed06560c3f1c0e12202370d8b362969ff8a964726a55e08fb5"
+      }
+    },
+    {
+      "id": "eval-04",
+      "family": "eval-presence",
+      "partition": "heldout",
+      "request": "Return word nodes without a qere annotation.",
+      "expected": "supported",
+      "rationale": "Missing annotation, not a missing child node.",
+      "gold": {
+        "query": "word qere#",
+        "projection": [
+          0
+        ],
+        "count": 424698,
+        "signature": "8a40fd9b5e4aa699b2f4d6282dd75961ed86f2c802bc3c983e4c02bb0a79b8cb"
+      }
+    },
+    {
+      "id": "eval-05",
+      "family": "eval-presence",
+      "partition": "heldout",
+      "request": "Return verbal word nodes carrying a qere annotation.",
+      "expected": "supported",
+      "rationale": "Conjoin literal category and annotation presence.",
+      "gold": {
+        "query": "word sp=verb qere",
+        "projection": [
+          0
+        ],
+        "count": 426,
+        "signature": "c605f395062a23e240f0c0ff5b0fce4423a52db1c1c9b7a40dcf8f12b2721dd5"
+      }
+    },
+    {
+      "id": "eval-06",
+      "family": "eval-disjunction-inequality",
+      "partition": "heldout",
+      "request": "Return phrases whose function is Subj or Objc.",
+      "expected": "supported",
+      "rationale": "Exact annotated function alternatives on phrases.",
+      "gold": {
+        "query": "phrase function=Subj|Objc",
+        "projection": [
+          0
+        ],
+        "count": 54647,
+        "signature": "dcc3f07fbe553691b066c4aa7cf3a41092586e978720ab14c09db1966c4c6b57"
+      }
+    },
+    {
+      "id": "eval-07",
+      "family": "eval-slot-projection",
+      "partition": "heldout",
+      "request": "Return noun-adjective pairs, noun first, where the adjective immediately precedes the noun in global slot order; impose no shared-parent restriction.",
+      "expected": "supported",
+      "rationale": "Return both nodes in reverse atom order; immediate adjacency in slots.",
+      "gold": {
+        "query": "a:word sp=adjv\nb:word sp=subs\na <: b",
+        "projection": [
+          1,
+          0
+        ],
+        "count": 1414,
+        "signature": "80bfb7b4f55802576c482d450dbbb6e6fef2de2cbdfc285008946f8b26bcf0ae"
+      }
+    },
+    {
+      "id": "eval-08",
+      "family": "eval-slot-projection",
+      "partition": "heldout",
+      "request": "Return ordered pairs of word occurrences: lex 'BN/' immediately followed by lex 'JHWH/' in global slot order.",
+      "expected": "supported",
+      "rationale": "Exact large-domain literals; two output columns in the stated order.",
+      "gold": {
+        "query": "a:word lex=BN/\nb:word lex=JHWH/\na <: b",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 2,
+        "signature": "224d11fa8a41c7d852cf58072c473d174cd804b02e7de0dc8da007e01b5876e0"
+      }
+    },
+    {
+      "id": "eval-09",
+      "family": "eval-edge-projection",
+      "partition": "heldout",
+      "request": "Return distinct target clauses reached by a mother edge from another clause.",
+      "expected": "supported",
+      "rationale": "Follow the attested directed edge; project target, not source.",
+      "gold": {
+        "query": "a:clause\nb:clause\na -mother> b",
+        "projection": [
+          1
+        ],
+        "count": 13122,
+        "signature": "eaa362a8bc7949bb923ff1c9c7aa22e60dc9be763e834b85530789b2416454de"
+      }
+    },
+    {
+      "id": "eval-10",
+      "family": "eval-positive-containment",
+      "partition": "heldout",
+      "request": "Return distinct sentences containing at least one word with language annotation Aramaic.",
+      "expected": "supported",
+      "rationale": "Parent output, existential child, actual annotated language.",
+      "gold": {
+        "query": "sentence\n  word language=Aramaic",
+        "projection": [
+          0
+        ],
+        "count": 793,
+        "signature": "860fd1335d7e3865d8dd62ba1ba416fe74e9a300f5f80439ebe99046da83a66e"
+      }
+    },
+    {
+      "id": "eval-11",
+      "family": "eval-mixed-exclusion",
+      "partition": "heldout",
+      "request": "Return phrases annotated Objc that contain no word annotated verb.",
+      "expected": "supported",
+      "rationale": "Parent function and child exclusion apply to distinct types.",
+      "gold": {
+        "query": "phrase function=Objc\n/without/\n  word sp=verb\n/-/",
+        "projection": [
+          0
+        ],
+        "count": 21924,
+        "signature": "7ec441bec97df5fbc176384d11b5063040e5337e7ac2c357f06c709f549068ca"
+      }
+    },
+    {
+      "id": "eval-12",
+      "family": "eval-frequency",
+      "partition": "heldout",
+      "request": "Return word nodes whose freq_lex annotation is greater than 2.",
+      "expected": "supported",
+      "rationale": "Integer feature comparison, no sorting or arithmetic by the model.",
+      "gold": {
+        "query": "word freq_lex>2",
+        "projection": [
+          0
+        ],
+        "count": 420981,
+        "signature": "59d25685cad8f55110b3bca4448749dcf4313231201f13f9a4af43a28764ac07"
+      }
+    },
+    {
+      "id": "eval-13",
+      "family": "eval-unsupported-regex",
+      "partition": "heldout",
+      "request": "Return words with a lex value matching regex ^M.*.",
+      "expected": "unsupported",
+      "rationale": "Native TF regex exists but the bounded IR does not support it."
+    },
+    {
+      "id": "eval-14",
+      "family": "eval-unsupported-feature-compare",
+      "partition": "heldout",
+      "request": "Return word pairs whose number annotations equal each other.",
+      "expected": "unsupported",
+      "rationale": "Feature-to-feature comparison is outside this IR; not literal equality."
+    },
+    {
+      "id": "eval-15",
+      "family": "eval-constraint-overflow",
+      "partition": "heldout",
+      "request": "Return verbs annotated feminine, plural, and nif stem.",
+      "expected": "unsupported",
+      "rationale": "sp, gn, nu and vs require four distinct predicates on one atom."
+    },
+    {
+      "id": "eval-16",
+      "family": "eval-schema-mismatch",
+      "partition": "heldout",
+      "request": "Return objects of node type paragraph.",
+      "expected": "unsupported",
+      "rationale": "The loaded BHSA schema has no paragraph node type."
+    },
+    {
+      "id": "eval-17",
+      "family": "eval-unresolved-reference",
+      "partition": "heldout",
+      "request": "Find earlier clauses.",
+      "expected": "ambiguous",
+      "rationale": "Earlier than what is unspecified.",
+      "interpretations": [
+        "before a particular referenced clause",
+        "before a specified corpus position"
+      ]
+    },
+    {
+      "id": "eval-18",
+      "family": "eval-unsupported-selection",
+      "partition": "heldout",
+      "request": "Return only the first noun of each sentence.",
+      "expected": "unsupported",
+      "rationale": "Per-parent top-one selection is outside this subset."
+    },
+    {
+      "id": "eval-19",
+      "family": "eval-schema-mismatch",
+      "partition": "heldout",
+      "request": "Return words with lex exactly 'TF_JEV_NONEXISTENT_51/'.",
+      "expected": "unsupported",
+      "rationale": "The exact literal is absent from the loaded domain; no query may be invented."
+    },
+    {
+      "id": "eval-20",
+      "family": "eval-alternative-overflow",
+      "partition": "heldout",
+      "request": "Return words annotated as any of verb, noun, adjective or adverb.",
+      "expected": "unsupported",
+      "rationale": "Four OR alternatives exceed the planner limit of three."
+    },
+    {
+      "id": "eval-21",
+      "family": "eval-unresolved-reference",
+      "partition": "heldout",
+      "request": "Find the matching words.",
+      "expected": "ambiguous",
+      "rationale": "Matching what criterion is unspecified.",
+      "interpretations": [
+        "matching an unstated literal",
+        "matching an unstated annotation category"
+      ]
+    }
+  ]
+}
