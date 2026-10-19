@@ -185,3 +185,22 @@ def test_unknown_partition_fails_before_calling_parser(tiny_api: Any) -> None:
     with pytest.raises(ValueError):
         evaluate(benchmark, parser, tiny_api, partition="all")
     assert parser.seen == []
+
+
+def test_complete_metrics_separate_abstention_and_errors(tiny_api: Any) -> None:
+    benchmark, parser = setup(tiny_api)
+    report = evaluate(benchmark, parser, tiny_api)
+    assert report['end_to_end_success'] == 2
+    assert report['end_to_end_success_rate'] == 0.5
+    assert report['abstention_precision'] == 1.0
+    assert report['abstention_recall'] == 0.5
+    assert report['emitted_query_native_valid_rate'] == 1.0
+    assert report['parse_latency_p95_s'] >= report['parse_latency_median_s'] >= 0
+    assert report['cases'][0]['backend_latency_s'] == 0.12
+    assert report['cases'][0]['parse_latency_s'] <= report['cases'][0]['latency_s']
+    parser.responses['Impossible task.'] = prediction(schema=parser.schema, status=ParseStatus.ERROR)
+    report = evaluate(benchmark, parser, tiny_api)
+    assert report['end_to_end_success'] == 1
+    assert report['abstention_recall'] == 0
+    assert report['abstention_precision'] is None
+    assert report['error_rate'] == 0.25
