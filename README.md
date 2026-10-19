@@ -36,6 +36,8 @@ The [first measured evaluation](reports/jev-rules-2026-10-20/README.md) is a no-
 for the current Jev pipeline: it abstained on every supported benchmark request.
 The conservative rule baseline also had no supported heldout successes.
 Neither is recommended as a default natural-language parser.
+[Development-only diagnosis](reports/abstention-diagnosis-2026-10-20/README.md)
+localized the blocking stages; simple prompt changes did not establish a safe fix.
 
 The first development goal is to establish whether the approach is accurate and cheap enough on real Text-Fabric queries, using a benchmark with gold natural-language ↔ native-query pairs and at least one real corpus.
 

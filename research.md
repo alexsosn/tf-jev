@@ -124,3 +124,7 @@ Empirical evaluation and comparison (#11/#12): the [frozen 2026-10-20 study](rep
 found 0/86 supported Jev successes and 0/42 heldout supported successes for both
 Jev and a conservative atomic rule baseline. The current pipeline is a measured
 no-go for default use. Development-only diagnosis and fresh evaluation are #46.
+
+Abstention diagnosis (#46): [development traces and controlled probes](reports/abstention-diagnosis-2026-10-20/README.md)
+localize stops to shape, type and predicate count. Corpus-aware planning research
+is #48; no production parser change or fresh quality claim is justified yet.
