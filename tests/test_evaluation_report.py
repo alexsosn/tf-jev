@@ -102,3 +102,35 @@ def test_paired_negative_requires_integrity_checked_safe_flag() -> None:
         ],
     }
     assert compare(report, report)["both_success"] == 0
+
+
+def test_candidate_audit_also_covers_heldout_literal_annotation_families(tiny_api: Any) -> None:
+    from scripts.evaluation_report import retrieval_audit
+    from scripts.nl_benchmark_v2 import Benchmark
+    from tf_jev.schema import extract_schema
+
+    sample = Benchmark(
+        {},
+        (),
+        {},
+        (
+            dict(
+                id="a",
+                family="literal-gloss",
+                partition="heldout",
+                request="Return words whose lex annotation is exactly 'BR>['.",
+                expected="supported",
+                gold={"query": "word lex=BR>["},
+            ),
+            dict(
+                id="b",
+                family="pointed-lexeme",
+                partition="heldout",
+                request="Return words whose lex annotation is exactly 'a\\b'.",
+                expected="supported",
+                gold={"query": "word lex=a\\b"},
+            ),
+        ),
+    )
+    result = retrieval_audit(sample, extract_schema(tiny_api), "heldout")
+    assert result["eligible"] == result["recalled"] == 2

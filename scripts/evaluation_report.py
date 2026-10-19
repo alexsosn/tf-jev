@@ -69,7 +69,7 @@ def compare(left: dict[str, Any], right: dict[str, Any]) -> dict[str, int]:
 
 
 def retrieval_audit(benchmark: Any, schema: Any, partition: str) -> dict[str, Any]:
-    """Post-parse candidate coverage for simple literal lex gold, not semantic recall.
+    """Post-parse coverage of canonical atomic literal annotations, not semantic recall.
 
     Reuse the exact unchanged parser candidate routine (including its budgets).
     Gold is only the independent comparison target; it never enters seed creation.
@@ -79,23 +79,27 @@ def retrieval_audit(benchmark: Any, schema: Any, partition: str) -> dict[str, An
     from tf_jev.decisions import ScriptedBackend
     from tf_jev.parser import SemanticParser, _Run, _Stop
 
-    feature = schema.node_feature("lex", "word")
     cases = []
     for case in benchmark.selected(partition):
-        if case["expected"] != "supported" or case["family"] != "literal-lexeme":
+        if case["expected"] != "supported" or case["family"] not in (
+            "literal-lexeme",
+            "literal-gloss",
+            "pointed-lexeme",
+        ):
             continue
-        match = re.fullmatch(r"word lex=([^\s|]+)", case["gold"]["query"])
+        match = re.fullmatch(r"word ([A-Za-z_][A-Za-z_0-9]*)=([^\s|]+)", case["gold"]["query"])
         if not match:
             continue
         run = _Run(SemanticParser(schema, ScriptedBackend({})), case["request"])
         try:
+            feature = schema.node_feature(match[1], "word")
             candidates = run.string_values(feature, "word")
         except _Stop:
             candidates = []
-        cases.append({"id": case["id"], "candidate_contains_gold": match[1] in candidates})
+        cases.append({"id": case["id"], "candidate_contains_gold": match[2] in candidates})
     recalled = sum(c["candidate_contains_gold"] for c in cases)
     return {
-        "scope": "single_atom_exact_literal_lex_only",
+        "scope": "single_atom_exact_literal_annotation_families",
         "eligible": len(cases),
         "recalled": recalled,
         "recall": recalled / len(cases) if cases else None,

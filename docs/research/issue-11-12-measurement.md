@@ -43,3 +43,14 @@ requires 13.1.0; changing that identity check would invalidate the frozen study.
 Pin the research CI quality matrix to TF 13.1.0, matching the native replay job,
 while tracking testing of the broader advertised package range separately.
 No parser/baseline/scoring or measured result is changed by this CI correction.
+
+## Post-inference audit coverage correction
+
+The initial literal audit covered lexeme requests only (6 development probes).
+The heldout benchmark also has three gloss and three pointed-lexeme literal
+requests. Extend only the post-parse auditor, not inference or baseline rules,
+to those canonical single-atom equality families. Observed deterministic RED:
+new tiny-TF audit expected two probes but got zero. After correction all five
+report tests pass. Preserve the original live JSON unchanged and publish a
+separate, source/schema-verified supplementary audit. This is evaluation coverage
+repair, not heldout parser tuning. Broader semantic retrieval remains unmeasured.
