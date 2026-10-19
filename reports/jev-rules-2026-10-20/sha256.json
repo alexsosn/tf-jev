@@ -1,0 +1,11 @@
+{
+  "candidate-audit.json": "7073ba32fee7ed9ef636b68cbb30aea9fd1f0baf9a05709c19fa96f2b9d23223",
+  "intent-audit.json": "1aaef87be44b338b0f88703cfc18f7da910d67f484f99db65a82f447a43fd546",
+  "jev-development.json": "b09f7c163153f233dda222e81b7f449191e75c05f46cf6a929d722106e63fe0d",
+  "jev-heldout.json": "bb77e5cb2fdf3ca3cd0a393182aa9aa336165ecb090c9ca1bf3aa1123793ae95",
+  "native-development.json": "536e1a965e99ba35035bd7ec0c52d2c226473b0eaea0e80ce11dcbab6c8a503e",
+  "native-heldout.json": "e25f8350fd9b68decb2d7e09203aa00977f4f90dd08d0e7269df5007a53297a0",
+  "paired.json": "85fd860625b4535daeb53cb0cd2be184c283e95601a722278301b291bbab9f2e",
+  "rules-development.json": "94e5888da8a8f9eeba15ea57de830cdbd797482205c1ca0f1109f332851da012",
+  "rules-heldout.json": "f30b1570532843af2f983bbf570195bd0ee16af64bc4c7a3d2352436fd7581cb"
+}

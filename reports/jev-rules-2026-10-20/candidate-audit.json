@@ -1,0 +1,72 @@
+{
+  "benchmark_sha256": "076f6a8b22adca4e1bc37323efb55863b9f6bf096388968a70fec051648ae4c9",
+  "code_commit": "bfbfe3e0e42e08c64a70976d4da24de989c9f06a",
+  "kind": "post_inference_literal_candidate_availability",
+  "partitions": {
+    "development": {
+      "cases": [
+        {
+          "candidate_contains_gold": true,
+          "id": "dev-literal-lexeme-01"
+        },
+        {
+          "candidate_contains_gold": true,
+          "id": "dev-literal-lexeme-02"
+        },
+        {
+          "candidate_contains_gold": true,
+          "id": "dev-literal-lexeme-03"
+        },
+        {
+          "candidate_contains_gold": true,
+          "id": "dev-literal-lexeme-04"
+        },
+        {
+          "candidate_contains_gold": true,
+          "id": "dev-literal-lexeme-05"
+        },
+        {
+          "candidate_contains_gold": true,
+          "id": "dev-literal-lexeme-06"
+        }
+      ],
+      "eligible": 6,
+      "recall": 1.0,
+      "recalled": 6,
+      "scope": "single_atom_exact_literal_annotation_families"
+    },
+    "heldout": {
+      "cases": [
+        {
+          "candidate_contains_gold": true,
+          "id": "hel-pointed-lexeme-01"
+        },
+        {
+          "candidate_contains_gold": true,
+          "id": "hel-pointed-lexeme-02"
+        },
+        {
+          "candidate_contains_gold": true,
+          "id": "hel-pointed-lexeme-03"
+        },
+        {
+          "candidate_contains_gold": true,
+          "id": "hel-literal-gloss-01"
+        },
+        {
+          "candidate_contains_gold": true,
+          "id": "hel-literal-gloss-02"
+        },
+        {
+          "candidate_contains_gold": true,
+          "id": "hel-literal-gloss-03"
+        }
+      ],
+      "eligible": 6,
+      "recall": 1.0,
+      "recalled": 6,
+      "scope": "single_atom_exact_literal_annotation_families"
+    }
+  },
+  "schema_key": "4a777cf2dc316633c062e89a99580bf1f19b9c7aa2713892779b11a4c60a442c"
+}

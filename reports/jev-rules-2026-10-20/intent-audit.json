@@ -1,0 +1,1349 @@
+{
+  "limitations": [
+    "One reviewer; not a formal query equivalence proof.",
+    "Conditional IR precision is undefined when no IR is emitted."
+  ],
+  "method": "single_reviewer_compiled_structure_intent_audit",
+  "systems": {
+    "jev-development": {
+      "cases": [
+        {
+          "id": "dev-part-of-speech-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-part-of-speech-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-part-of-speech-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-part-of-speech-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-part-of-speech-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-part-of-speech-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-part-of-speech-07",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-part-of-speech-08",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-part-of-speech-09",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-part-of-speech-10",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-part-of-speech-11",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-part-of-speech-12",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-gender-number-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-gender-number-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-gender-number-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-gender-number-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-gender-number-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-gender-number-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-gender-number-07",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-gender-number-08",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-gender-number-09",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-gender-number-10",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-phrase-function-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-phrase-function-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-phrase-function-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-phrase-function-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-phrase-function-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-phrase-function-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-containment-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-containment-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-containment-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-containment-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-containment-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-containment-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-literal-lexeme-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-literal-lexeme-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-literal-lexeme-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-literal-lexeme-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-literal-lexeme-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-literal-lexeme-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-negated-containment-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-negated-containment-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-negated-containment-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-negated-containment-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-ambiguous-scope-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-ambiguous-scope-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-ambiguous-scope-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-ambiguous-scope-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-unsupported-query-construct-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-unsupported-query-construct-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-unsupported-query-construct-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-unsupported-query-construct-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        }
+      ],
+      "conditional_intent_precision": null,
+      "correct": 0,
+      "emitted": 0,
+      "supported_gold_ir_recall": 0.0
+    },
+    "jev-heldout": {
+      "cases": [
+        {
+          "id": "hel-adjacency-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-adjacency-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-adjacency-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-adjacency-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-adjacency-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-adjacency-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-verbal-morphology-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-verbal-morphology-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-verbal-morphology-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-verbal-morphology-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-verbal-morphology-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-verbal-morphology-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-verbal-morphology-07",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-verbal-morphology-08",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-annotation-sentinels-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-annotation-sentinels-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-annotation-sentinels-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-annotation-sentinels-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-annotation-sentinels-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-annotation-sentinels-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-slot-boundaries-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-slot-boundaries-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-slot-boundaries-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-slot-boundaries-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-directed-mother-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-directed-mother-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-directed-mother-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-directed-mother-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-integer-annotations-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-integer-annotations-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-integer-annotations-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-integer-annotations-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-pointed-lexeme-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-pointed-lexeme-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-pointed-lexeme-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-literal-gloss-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-literal-gloss-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-literal-gloss-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-ambiguous-semantics-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-ambiguous-semantics-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-ambiguous-semantics-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-ambiguous-semantics-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-ambiguous-semantics-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-ambiguous-semantics-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-unsupported-schema-and-semantics-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-unsupported-schema-and-semantics-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-unsupported-schema-and-semantics-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-unsupported-schema-and-semantics-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-unsupported-schema-and-semantics-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-unsupported-schema-and-semantics-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-corpus-order-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-corpus-order-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-corpus-order-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-corpus-order-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "near-without-distance",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "diachronic-change",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "translation-quality",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        }
+      ],
+      "conditional_intent_precision": null,
+      "correct": 0,
+      "emitted": 0,
+      "supported_gold_ir_recall": 0.0
+    },
+    "rules-development": {
+      "cases": [
+        {
+          "id": "dev-part-of-speech-01",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-part-of-speech-02",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-part-of-speech-03",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-part-of-speech-04",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-part-of-speech-05",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-part-of-speech-06",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-part-of-speech-07",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-part-of-speech-08",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-part-of-speech-09",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-part-of-speech-10",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-part-of-speech-11",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-part-of-speech-12",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-gender-number-01",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-gender-number-02",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-gender-number-03",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-gender-number-04",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-gender-number-05",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-gender-number-06",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-gender-number-07",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-gender-number-08",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-gender-number-09",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-gender-number-10",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-phrase-function-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-phrase-function-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-phrase-function-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-phrase-function-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-phrase-function-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-phrase-function-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-containment-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-containment-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-containment-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-containment-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-containment-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-containment-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-literal-lexeme-01",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-literal-lexeme-02",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-literal-lexeme-03",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-literal-lexeme-04",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-literal-lexeme-05",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-literal-lexeme-06",
+          "intent_correct": true,
+          "ir_emitted": true,
+          "reason": "atomic_predicates_and_output_match"
+        },
+        {
+          "id": "dev-negated-containment-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-negated-containment-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-negated-containment-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-negated-containment-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-ambiguous-scope-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-ambiguous-scope-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-ambiguous-scope-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-ambiguous-scope-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-unsupported-query-construct-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-unsupported-query-construct-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-unsupported-query-construct-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "dev-unsupported-query-construct-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        }
+      ],
+      "conditional_intent_precision": 1.0,
+      "correct": 26,
+      "emitted": 26,
+      "supported_gold_ir_recall": 0.5909090909090909
+    },
+    "rules-heldout": {
+      "cases": [
+        {
+          "id": "hel-adjacency-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-adjacency-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-adjacency-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-adjacency-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-adjacency-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-adjacency-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-verbal-morphology-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-verbal-morphology-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-verbal-morphology-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-verbal-morphology-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-verbal-morphology-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-verbal-morphology-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-verbal-morphology-07",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-verbal-morphology-08",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-annotation-sentinels-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-annotation-sentinels-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-annotation-sentinels-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-annotation-sentinels-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-annotation-sentinels-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-annotation-sentinels-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-slot-boundaries-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-slot-boundaries-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-slot-boundaries-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-slot-boundaries-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-directed-mother-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-directed-mother-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-directed-mother-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-directed-mother-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-integer-annotations-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-integer-annotations-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-integer-annotations-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-integer-annotations-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-pointed-lexeme-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-pointed-lexeme-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-pointed-lexeme-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-literal-gloss-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-literal-gloss-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-literal-gloss-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-ambiguous-semantics-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-ambiguous-semantics-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-ambiguous-semantics-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-ambiguous-semantics-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-ambiguous-semantics-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-ambiguous-semantics-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-unsupported-schema-and-semantics-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-unsupported-schema-and-semantics-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-unsupported-schema-and-semantics-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-unsupported-schema-and-semantics-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-unsupported-schema-and-semantics-05",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-unsupported-schema-and-semantics-06",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-corpus-order-01",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-corpus-order-02",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-corpus-order-03",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "hel-corpus-order-04",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "near-without-distance",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "diachronic-change",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        },
+        {
+          "id": "translation-quality",
+          "intent_correct": null,
+          "ir_emitted": false,
+          "reason": "no_ir"
+        }
+      ],
+      "conditional_intent_precision": null,
+      "correct": 0,
+      "emitted": 0,
+      "supported_gold_ir_recall": 0.0
+    }
+  }
+}

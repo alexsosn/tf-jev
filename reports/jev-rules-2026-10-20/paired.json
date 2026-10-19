@@ -1,0 +1,14 @@
+{
+  "development": {
+    "both_success": 8,
+    "left_only": 0,
+    "right_only": 26,
+    "both_fail": 18
+  },
+  "heldout": {
+    "both_success": 15,
+    "left_only": 0,
+    "right_only": 0,
+    "both_fail": 42
+  }
+}

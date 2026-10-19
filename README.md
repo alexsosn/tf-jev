@@ -32,7 +32,10 @@ This lets the compiler restrict node types, features, values, edge features, rel
 
 Research prototype with a deterministic compiler, corpus schema, local retrieval,
 an optional Jev bounded-decision adapter, and a first bounded semantic parser.
-Model parsing quality has not yet been established.
+The [first measured evaluation](reports/jev-rules-2026-10-20/README.md) is a no-go
+for the current Jev pipeline: it abstained on every supported benchmark request.
+The conservative rule baseline also had no supported heldout successes.
+Neither is recommended as a default natural-language parser.
 
 The first development goal is to establish whether the approach is accurate and cheap enough on real Text-Fabric queries, using a benchmark with gold natural-language ↔ native-query pairs and at least one real corpus.
 
@@ -147,8 +150,9 @@ The canonical [BHSA benchmark v2](benchmarks/nl-tf-v2/README.md) has **109 reque
 gold has frozen projected-result counts and signatures, verified against native
 TF and independent raw corpus oracles. Whole families are held out, including
 all original v1 evaluation requests. The [v1 seed](benchmarks/nl-tf-v1/README.md)
-and tutorial replay remain historical research evidence. This establishes no
-model parsing accuracy; that remains #9/#11.
+and tutorial replay remain historical research evidence. This establishes frozen
+native ground truth; measured parser results are in the
+[evaluation report](reports/jev-rules-2026-10-20/README.md).
 
 The optional `tf-jev[jev]` extra provides `tf_jev.jev.JevBackend`, a thin adapter
 over the official TypeSafe SDK. It accepts the bounded decision contract, checks
@@ -177,8 +181,9 @@ unsupported intent and failed whole-candidate verification return no query.
 TF still returns all witness columns. Large values use exact local literal
 retrieval before selection, with explicit miss/budget failures. See the
 [parser contract](docs/design/semantic-parser.md) for limits and data flow.
-Scripted real-corpus tests prove orchestration and compiler boundaries, not model
-semantic accuracy; #11/#12 must evaluate quality and cost before default use.
+Scripted real-corpus tests prove orchestration and compiler boundaries. The
+[measured evaluation](reports/jev-rules-2026-10-20/README.md) found no supported
+query successes with the current Jev policy; further research is tracked in #46.
 
 
 ## Explicit opt-in Jev evaluation (#11)
@@ -228,6 +233,6 @@ CLI checks node/feature types and literals against the actual loaded corpus.
 
 This intentionally supports one atom and known annotations, without pretending
 to interpret natural-language requests. The experimental natural-language parser
-remains gated by independent accuracy and cost evaluation (#11 and #12). The
+failed the measured usefulness gate in #11/#12 and remains research-only. The
 installed wheel's CI smoke creates a real tiny TF corpus and invokes the
 `tf-jev` console command for compilation, bounded execution, and failure.

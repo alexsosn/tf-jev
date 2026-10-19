@@ -119,3 +119,8 @@ remains historical evidence; parser work uses v2 with its heldout partition seal
 Semantic orchestration (#9): [bounded parser findings](docs/research/semantic-parser.md)
 separate structural symbol budgets from retrieved value budgets and make return
 projection and conservative abstention explicit.
+
+Empirical evaluation and comparison (#11/#12): the [frozen 2026-10-20 study](reports/jev-rules-2026-10-20/README.md)
+found 0/86 supported Jev successes and 0/42 heldout supported successes for both
+Jev and a conservative atomic rule baseline. The current pipeline is a measured
+no-go for default use. Development-only diagnosis and fresh evaluation are #46.
