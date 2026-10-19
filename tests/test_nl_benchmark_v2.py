@@ -162,7 +162,9 @@ def test_equivalent_native_forms_and_wrong_answer(tmp_path: Path) -> None:
     assert execute(api, "clause\n  word sp=prep", (0,)) != expected
 
 
-def test_source_drift_fails_closed(tmp_path: Path) -> None:
+def test_source_drift_fails_closed(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    # Test source validation independently of the installed runtime version.
+    monkeypatch.setattr("scripts.nl_benchmark_v2.version", lambda _: "13.1.0")
     benchmark = load_benchmark(write(tmp_path, artifact()))
     with pytest.raises(BenchmarkError, match="source unavailable"):
         benchmark.verify_source(tmp_path)
@@ -194,3 +196,17 @@ def test_original_evaluation_requests_remain_sealed() -> None:
 def test_empty_result_still_validates_output_columns(tiny_api: Any) -> None:
     with pytest.raises(BenchmarkError, match="projection"):
         execute(tiny_api, "word sp=nonexistent", (1,))
+
+
+def test_unpinned_runtime_rejected_before_source_access(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    benchmark = load_benchmark(write(tmp_path, artifact()))
+    monkeypatch.setattr("scripts.nl_benchmark_v2.version", lambda _: "13.1.1")
+
+    def forbidden_read(path: Path) -> bytes:
+        pytest.fail("version mismatch must precede source reads")
+
+    monkeypatch.setattr(Path, "read_bytes", forbidden_read)
+    with pytest.raises(BenchmarkError, match="Text-Fabric version mismatch"):
+        benchmark.verify_source(tmp_path)

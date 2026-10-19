@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import FrozenInstanceError
+from importlib.metadata import version
 from pathlib import Path
 from typing import Any
 
@@ -97,7 +98,7 @@ def test_determinism_and_deep_snapshot_isolation(api: Any) -> None:
     a = extract_schema(api)
     b = extract_schema(api)
     assert a.to_json() == b.to_json()
-    assert json.loads(a.to_json())["identity"]["tf_version"] == "13.1.0"
+    assert json.loads(a.to_json())["identity"]["tf_version"] == version("text-fabric")
     with pytest.raises(FrozenInstanceError):
         a.node_features = ()  # type: ignore[misc]
     with pytest.raises(FrozenInstanceError):

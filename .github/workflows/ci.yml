@@ -35,6 +35,25 @@ jobs:
       - name: Tests
         run: python -m pytest -q
 
+  latest-supported:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install latest supported dependencies
+        run: python -m pip install -e '.[dev,jev]'
+      - name: Record actual TF version
+        run: python -c "from importlib.metadata import version; print(version('text-fabric'))"
+      - name: Ruff
+        run: python -m ruff check .
+      - name: Mypy
+        run: python -m mypy
+      - name: Tests
+        run: python -m pytest -q
+
   distribution:
     runs-on: ubuntu-latest
     steps:

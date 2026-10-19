@@ -77,6 +77,12 @@ python -m mypy
 python -m pytest -q
 ```
 
+CI tests Python 3.11–3.13 against the pinned TF 13.1.0 evidence runtime and
+Python 3.12 against the latest release in the supported `>=13.1,<14` range
+(currently 13.1.1). Synthetic tiny-corpus tests record the actual runtime version.
+Canonical BHSA benchmark/research reports remain pinned to **13.1.0**; a compatible
+newer package runtime does not change their version or source verification gates.
+
 Real-corpus conformance tests in the ordinary matrix are opt-in and run against BHSA 2021:
 
 ```bash
@@ -194,7 +200,13 @@ The checkout-only `scripts.run_jev_evaluation` command connects the canonical
 BHSA 2021 v2 benchmark to `SemanticParser` and the pinned
 `JevBackend`. It verifies Text-Fabric 13.1.0 and all source feature SHA256
 hashes **before constructing the model client**. Set `JEV_API_KEY` securely
-in the environment and install `.[dev,jev]`. A small development run:
+in the environment. Install the exact research runtime before a benchmark run:
+
+```bash
+python -m pip install -e '.[dev,jev]' 'text-fabric==13.1.0'
+```
+
+A small development run:
 
 ```bash
 TF_JEV_LIVE=1 python -m scripts.run_jev_evaluation /path/to/bhsa/tf/2021 \\
