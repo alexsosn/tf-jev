@@ -1,0 +1,107 @@
+{
+  "cases": [
+    {
+      "id": "onto-01",
+      "status": "supported",
+      "calls": 12,
+      "request_structures_identical": true,
+      "result_identical": true
+    },
+    {
+      "id": "onto-02",
+      "status": "supported",
+      "calls": 16,
+      "request_structures_identical": true,
+      "result_identical": true
+    },
+    {
+      "id": "onto-03",
+      "status": "supported",
+      "calls": 16,
+      "request_structures_identical": true,
+      "result_identical": true
+    },
+    {
+      "id": "onto-04",
+      "status": "supported",
+      "calls": 9,
+      "request_structures_identical": true,
+      "result_identical": true
+    },
+    {
+      "id": "onto-05",
+      "status": "supported",
+      "calls": 8,
+      "request_structures_identical": true,
+      "result_identical": true
+    },
+    {
+      "id": "onto-06",
+      "status": "abstained",
+      "calls": 16,
+      "request_structures_identical": true,
+      "result_identical": true
+    },
+    {
+      "id": "onto-07",
+      "status": "supported",
+      "calls": 16,
+      "request_structures_identical": true,
+      "result_identical": true
+    },
+    {
+      "id": "onto-08",
+      "status": "abstained",
+      "calls": 6,
+      "request_structures_identical": true,
+      "result_identical": true
+    },
+    {
+      "id": "onto-09",
+      "status": "abstained",
+      "calls": 8,
+      "request_structures_identical": true,
+      "result_identical": true
+    },
+    {
+      "id": "onto-10",
+      "status": "supported",
+      "calls": 8,
+      "request_structures_identical": true,
+      "result_identical": true
+    },
+    {
+      "id": "onto-11",
+      "status": "abstained",
+      "calls": 6,
+      "request_structures_identical": true,
+      "result_identical": true
+    },
+    {
+      "id": "onto-12",
+      "status": "unsupported",
+      "calls": 1,
+      "request_structures_identical": true,
+      "result_identical": true
+    },
+    {
+      "id": "onto-13",
+      "status": "abstained",
+      "calls": 4,
+      "request_structures_identical": true,
+      "result_identical": true
+    },
+    {
+      "id": "onto-14",
+      "status": "abstained",
+      "calls": 8,
+      "request_structures_identical": true,
+      "result_identical": true
+    }
+  ],
+  "calls": 134,
+  "catalog_sha256": "6feda4d56fe613877b99cf9875ff0e07d816ed0e51eae4ab37f2664b8d801c6f",
+  "schema_key": "4a777cf2dc316633c062e89a99580bf1f19b9c7aa2713892779b11a4c60a442c",
+  "new_inference": false,
+  "note": "Structural request equality; private JSON did not retain mapping insertion order. Current growing-catalog overflow path is tested deterministically, not measured by this historical replay."
+}

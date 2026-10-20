@@ -54,7 +54,8 @@ A [frozen paired ontoTF-context pilot](reports/ontotf-context-2026-10-20/README.
 observes 7/10 correct positives with ontology context versus 5/10 control, with
 no ontology wrong emissions and all four negatives safely withheld. Input cost
 increases about 27%; one imperative case regresses. This is checkout-only
-research supporting a small opt-in integration in #60, not a default change.
+research supporting the experimental opt-in integration described below, not a
+default change.
 
 The first development goal is to establish whether the approach is accurate and cheap enough on real Text-Fabric queries, using a benchmark with gold natural-language ↔ native-query pairs and at least one real corpus.
 
@@ -328,3 +329,59 @@ calibrated whole-query correctness. Its context budget counts conservative escap
 SDK-shaped JSON bytes, including descriptions. No benchmark/gold or corpus passage
 enters production prompts. See [design/protocol](docs/research/issue-51-grounded-parser.md)
 and the [complete measured no-go](reports/grounded-parser-2026-10-20/README.md).
+
+
+## Optional ontoTF catalog context
+
+`tf_jev.ontology.OntologyParser` adds schema-validated descriptions from a local
+ontoTF XML catalog to the candidate parser. It has no additional dependencies,
+network catalog download or ontology executor. Select a catalog matching your
+actual corpus source/version; matching feature names alone does not prove the
+mapping's semantic applicability.
+
+```python
+from pathlib import Path
+from tf_jev.ontology import OntologyParser, load_catalog
+from tf_jev.jev import JevBackend
+
+catalog = load_catalog(
+    Path("/path/to/ontoTF/src/tfont/mappings/bhsa.xml"),
+    schema,
+    corpus="bhsa",
+    version="2021",
+    # revision="your-selected-ontoTF-commit",  # optional provenance label
+    # expected_sha256="actual-64-character-digest",  # pin evaluations explicitly
+)
+with JevBackend(model="jev-1.14.0") as backend:
+    result = OntologyParser(schema, backend, catalog=catalog).parse(
+        "Find feminine singular noun words."
+    )
+print(result.status, result.query)
+print(result.catalog.sha256, result.catalog.revision)
+print(result.ontology_context)
+```
+
+A newer XML file can add native value/concept mappings without tf-jev code edits.
+Reload it to create a new immutable snapshot; existing parsers retain their old
+snapshot. Results identify the actual XML digest, caller revision label, source,
+version, schema key and skipped record dispositions. No bundled fixed concept or
+feature list controls coverage. Exact **value** mappings supply context; approximate,
+ambiguous/native-only entries and other known mapping kinds are counted but not
+used as value-equivalence instructions. New query structures still need compiler
+support.
+
+For larger catalogs, the adapter first scopes by its own predicted type/property.
+If the complete context exceeds the budget, it retrieves descriptions using
+request/target-label token overlap, preserving every scoped binding for each
+matched target. Unmatched synonyms may lose extra assistance. If that complete
+subset still does not fit, optional context is omitted with `omitted_budget`
+diagnostics; native choices remain available. It never truncates a concept's
+native alternatives to fit. Catalog input is limited to 2 MiB/10,000 records;
+added context to 8 KiB and the complete request to the parser's byte budget.
+
+This remains experimental. The 7/10 versus 5/10 pilot used a fixed small catalog;
+the growing-catalog overflow path has deterministic tests but no new quality
+measurement. Keep the recorded imperative regression, higher input cost and #57
+fresh-evaluation requirement in view. Legacy parser/model defaults are unchanged.
+See the [contract](docs/design/issue-60-ontology-context.md) and
+[integration evidence](reports/ontology-integration-2026-10-20/README.md).

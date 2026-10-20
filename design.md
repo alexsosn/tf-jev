@@ -151,3 +151,10 @@ uses bounded proposals, unmodified weakest-proposal confidence and a separately
 gated complete-candidate fidelity verdict. The deterministic explanation describes
 validated IR; native TF still executes it. No per-field gate relaxation in legacy
 parsers, no alternative backend, and no change to defaults.
+
+
+Optional ontology context (#60): [catalog contract](docs/design/issue-60-ontology-context.md)
+binds a local immutable XML snapshot to the actual schema, adds bounded exact
+value descriptions, and records source/digest/dispositions/context selection in
+results. Growing catalogs are data; native options/IR/compiler/execution remain
+authoritative. No provider/dependency/default change.
