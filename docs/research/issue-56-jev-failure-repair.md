@@ -276,3 +276,24 @@ No fresh heldout/default claim; these witnesses become observed development data
 Use exact same model/source/budget and independent semantic review of full emitted
 constraints/projection. Require actual morphology AND relation positives before
 promoting even an opt-in production strategy or installed-wheel positive claim.
+
+Verified completes 3/8 original positives (full cal-01 morphology, cal-03, cal-08),
+withholds all six negatives including the two new ones, and abstains on both new
+relation witnesses. The adjacency router's CORRECT relation winner is .79; the
+positive-containment request incorrectly chooses atom at .76. The first criterion
+says 'One node type filtered by annotations', which can also describe a returned
+phrase filtered by a child condition. It fails to distinguish output arity from
+witness/relational structure. This is another question-contract error, not a
+backend diagnosis. Storage interrupted after the first completed model observation;
+it was saved from memory and continuation began at case 2, with no repeated call.
+
+Freeze `routed` on the same 16 DEVELOPMENT cases once. Only routing criteria change
+from verified: atomic requires NO second-node/witness condition; positive relation
+includes containment/immediate adjacency, allows identical types and returning one
+or both nodes; negative containment explicitly excludes matching children. Unknown
+literal familiarity is deferred to schema/value validation; unsupported grammar
+and unresolved intent remain explicit choices. Type/context/feature proposal policy,
+all .8/.2 single-valued/fidelity gates, limits, values and compiler are unchanged.
+No threshold tuning or model/observation replacement. Require actual whole-query
+morphology and relation successes, inspect all constraints/ordered projection, and
+keep public default prohibition absent fresh evaluation.

@@ -37,6 +37,7 @@ class FocusedParser(GroundedParser):
             "ranked",
             "concrete",
             "verified",
+            "routed",
         ):
             raise ValueError("unknown research variant")
 
@@ -58,9 +59,13 @@ class _FocusedRun(_GroundedRun):
         context = _Run.context(self)
         parser = self.parser
         assert isinstance(parser, FocusedParser)
-        if parser.variant in ("attested", "ranked", "concrete", "verified") and self.stage.endswith(
-            ".type"
-        ):
+        if parser.variant in (
+            "attested",
+            "ranked",
+            "concrete",
+            "verified",
+            "routed",
+        ) and self.stage.endswith(".type"):
             return {
                 "request": context["request"],
                 "contract": context["contract"],
@@ -79,10 +84,49 @@ class _FocusedRun(_GroundedRun):
             context["candidate"] = self._candidate
         return context
 
+    def shape(self) -> str:
+        if not isinstance(self.parser, FocusedParser) or self.parser.variant != "routed":
+            return super().shape()
+        self._shape = self.choose(
+            "shape",
+            "Route the structural pattern of the request. An unfamiliar literal does not "
+            "change the pattern: code checks actual annotation/value membership later. "
+            "Distinguish returned columns from additional related witness nodes.",
+            [
+                (
+                    "atom",
+                    "atom: One entity node with only its OWN annotation conditions. "
+                    "NO second-node relationship or witness condition.",
+                ),
+                (
+                    "relation",
+                    "relation: A POSITIVE relationship between two nodes, including "
+                    "containment or immediate adjacency. Types may be identical; return one "
+                    "node or ordered pairs. A returned parent containing a child uses this.",
+                ),
+                (
+                    "without",
+                    "without: Return parent nodes with NO matching contained child. "
+                    "This is negative containment, not a positive relationship.",
+                ),
+                (
+                    "ambiguous",
+                    "ambiguous: Unresolved object kind, meaning, reference or scope "
+                    "with multiple plausible interpretations.",
+                ),
+                (
+                    "unsupported",
+                    "unsupported: Outside the stated grammar, such as regex, "
+                    "aggregation/counting, sorting, nested quantifiers or more than two nodes.",
+                ),
+            ],
+        )
+        return self._shape
+
     def gate(self, name: str) -> tuple[float, float]:
         if (
             isinstance(self.parser, FocusedParser)
-            and self.parser.variant in ("ranked", "concrete", "verified")
+            and self.parser.variant in ("ranked", "concrete", "verified", "routed")
             and name.endswith(".feature")
         ):
             return 0.0, 0.0  # proposal ranking only; semantic check below retains original gate
@@ -92,9 +136,13 @@ class _FocusedRun(_GroundedRun):
         self.stage = name
         parser = self.parser
         assert isinstance(parser, FocusedParser)
-        if parser.variant in ("attested", "ranked", "concrete", "verified") and name.endswith(
-            ".type"
-        ):
+        if parser.variant in (
+            "attested",
+            "ranked",
+            "concrete",
+            "verified",
+            "routed",
+        ) and name.endswith(".type"):
             role = self.focus["index"]
             assert isinstance(role, int)
             target = (
@@ -113,6 +161,7 @@ class _FocusedRun(_GroundedRun):
             "ranked",
             "concrete",
             "verified",
+            "routed",
         ) and name.endswith(".operator"):
             feature = json.loads(self.state[name.removesuffix(".operator") + ".feature"])
             prompt = (

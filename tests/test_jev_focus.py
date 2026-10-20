@@ -243,3 +243,28 @@ def test_verified_strategy_gates_complete_plan_not_nonexclusive_feature_rank(tin
         schema, PlanBackend(plan(), "atom0.pred0.operator"), variant="verified"
     ).parse("Return verbs.")
     assert op.query is None and op.reason == "low_confidence"
+
+
+def test_routed_distinguishes_witness_structure_from_returned_column_count(tiny_api: Any) -> None:
+    from tf_jev.ir import RelationOp
+
+    selected = plan() | {
+        "shape": "relation",
+        "atom1.type": "word",
+        "atom1.pred0.feature": "sp",
+        "atom1.pred0.operator": "=",
+        "atom1.pred0.count": "1",
+        "atom1.pred0.value0": "subs",
+        "relation": RelationOp.ADJACENT_BEFORE.value,
+        "output": "[0, 1]",
+    }
+    backend = PlanBackend(selected)
+    result = FocusedParser(extract_schema(tiny_api), backend, variant="routed").parse(
+        "Return ordered pairs of a verb word immediately followed by a substantive word."
+    )
+    assert result.status is ParseStatus.SUPPORTED and result.query
+    assert run_template(tiny_api, result.query).results == ((3, 4),)
+    shape = backend.requests[0].questions["shape"]
+    assert isinstance(shape, ChoiceQuestion)
+    assert "witness" in (shape.options[0].description or "")
+    assert "containment" in (shape.options[1].description or "")
