@@ -323,3 +323,20 @@ native enum values such as [[ and <: without explaining them to the verifier.
 Restore the closed compiler-relation meaning map ONLY at verification. These are
 code-owned native semantics, not corpus passages or extra schema inventory.
 Add this prerequisite to scoped; keep older variants/outcomes byte-identical.
+
+Scoped keeps the cal-01 complete morphology result, but the remaining per-field
+gates still block relations before a whole candidate exists. Do not interpret
+these refusals as evidence that Jev cannot plan the query. The diagnostic already
+showed complete correct plans hidden behind low proposal probabilities.
+
+Freeze joint on all 16 DEVELOPMENT requests once: all bounded field choices are
+PROPOSALS to a typed candidate, with no per-field probability admission threshold.
+Existing structural budgets, domain membership, explicit non-success states and
+compiler validation remain mandatory. Only final COMPLETE-candidate fidelity has
+the original .8/.2 acceptance gate; a low/negative fidelity returns no query.
+Use scoped question/context improvements and the native relation legend. This is
+an explicit experimental acceptance-policy change, NOT unchanged per-field gates
+or calibrated confidence. Retain ALL alternatives/probabilities and the unmodified
+weakest probability in results; never represent proposal probabilities as certainty.
+Measure wrong emissions as well as correct ones; no default/quality recommendation.
+No retries, alternate-candidate search, model changes or gold in the parser.

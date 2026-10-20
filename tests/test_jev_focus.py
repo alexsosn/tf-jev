@@ -311,3 +311,16 @@ def test_scoped_verifier_gets_native_relation_meanings(tiny_api: Any) -> None:
     legend = json.loads(backend.requests[-1].context["relation_meanings"])
     assert "contains" in legend["[["]
     assert "immediately" in legend["<:"]
+
+
+def test_joint_proposals_need_complete_candidate_acceptance(tiny_api: Any) -> None:
+    schema = extract_schema(tiny_api)
+    candidate = FocusedParser(
+        schema, PlanBackend(plan(), "atom0.pred0.operator"), variant="joint"
+    ).parse("Return verbs.")
+    assert candidate.status is ParseStatus.SUPPORTED and candidate.confidence == pytest.approx(0.65)
+    no = FocusedParser(schema, PlanBackend(plan(), "verify"), variant="joint").parse(
+        "Return verbs."
+    )
+    assert no.query is None and no.ir is None and not no.projection
+    assert no.reason == "low_confidence"

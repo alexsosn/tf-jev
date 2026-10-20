@@ -39,6 +39,7 @@ class FocusedParser(GroundedParser):
             "verified",
             "routed",
             "scoped",
+            "joint",
         ):
             raise ValueError("unknown research variant")
 
@@ -67,19 +68,20 @@ class _FocusedRun(_GroundedRun):
             "verified",
             "routed",
             "scoped",
+            "joint",
         ) and self.stage.endswith(".type"):
             type_context = {
                 "request": context["request"],
                 "contract": context["contract"],
                 "types": _json(json.loads(self.corpus())["types"]),
             }
-            if parser.variant == "scoped" and self.focus["index"] == 1:
+            if parser.variant in ("scoped", "joint") and self.focus["index"] == 1:
                 type_context["planned_first_type"] = self.state["atom0.type"]
                 type_context["target_role"] = (
                     "child witness" if self._shape == "without" else "second related node"
                 )
             return type_context
-        if parser.variant == "scoped" and self.stage.endswith(".count"):
+        if parser.variant in ("scoped", "joint") and self.stage.endswith(".count"):
             f = json.loads(self.state[self.stage.removesuffix(".count") + ".feature"])
             return dict(
                 request=self.request,
@@ -100,7 +102,7 @@ class _FocusedRun(_GroundedRun):
             context["focus"] = _json(self.focus)
         if self._candidate is not None:
             context["candidate"] = self._candidate
-        if parser.variant == "scoped" and self.stage == "verify":
+        if parser.variant in ("scoped", "joint") and self.stage == "verify":
             context["relation_meanings"] = _json({r.value: d for r, d in _RELATIONS.items()})
         return context
 
@@ -108,6 +110,7 @@ class _FocusedRun(_GroundedRun):
         if not isinstance(self.parser, FocusedParser) or self.parser.variant not in (
             "routed",
             "scoped",
+            "joint",
         ):
             return super().shape()
         self._shape = self.choose(
@@ -149,7 +152,14 @@ class _FocusedRun(_GroundedRun):
     def gate(self, name: str) -> tuple[float, float]:
         if (
             isinstance(self.parser, FocusedParser)
-            and self.parser.variant in ("ranked", "concrete", "verified", "routed", "scoped")
+            and self.parser.variant == "joint"
+            and name != "verify"
+        ):
+            return 0.0, 0.0
+        if (
+            isinstance(self.parser, FocusedParser)
+            and self.parser.variant
+            in ("ranked", "concrete", "verified", "routed", "scoped", "joint")
             and name.endswith(".feature")
         ):
             return 0.0, 0.0  # proposal ranking only; semantic check below retains original gate
@@ -166,6 +176,7 @@ class _FocusedRun(_GroundedRun):
             "verified",
             "routed",
             "scoped",
+            "joint",
         ) and name.endswith(".type"):
             role = self.focus["index"]
             assert isinstance(role, int)
@@ -178,7 +189,7 @@ class _FocusedRun(_GroundedRun):
             )
             prompt = "Which corpus object type is being requested"
             prompt += f" for the {target}?" if target else "?"
-            if parser.variant == "scoped" and role == 1:
+            if parser.variant in ("scoped", "joint") and role == 1:
                 prompt = (
                     "Select the native object type of the excluded child witness, "
                     "NOT its returned parent."
@@ -196,6 +207,7 @@ class _FocusedRun(_GroundedRun):
             "verified",
             "routed",
             "scoped",
+            "joint",
         ) and name.endswith(".operator"):
             feature = json.loads(self.state[name.removesuffix(".operator") + ".feature"])
             prompt = (
@@ -210,7 +222,7 @@ class _FocusedRun(_GroundedRun):
                 else (value, description)
                 for value, description in options
             ]
-        if parser.variant == "scoped" and name.endswith(".count"):
+        if parser.variant in ("scoped", "joint") and name.endswith(".count"):
             f = json.loads(self.state[name.removesuffix(".count") + ".feature"])
             scope = _scope(self._shape, self.focus["index"])
             prompt = _safe_description(
