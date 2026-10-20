@@ -324,3 +324,76 @@ def test_joint_proposals_need_complete_candidate_acceptance(tiny_api: Any) -> No
     )
     assert no.query is None and no.ir is None and not no.projection
     assert no.reason == "low_confidence"
+
+
+def test_candidate_meaning_is_complete_and_native_validated(tiny_api: Any) -> None:
+    from scripts.jev_focus import candidate_meaning
+    from tf_jev.ir import Atom, Predicate, PredicateOp, Query, Relation, RelationOp
+
+    schema = extract_schema(tiny_api)
+    q = Query(
+        (
+            Atom("word", (Predicate("sp", PredicateOp.EQ, ("verb",)),)),
+            Atom("word", (Predicate("sp", PredicateOp.EQ, ("subs",)),)),
+        ),
+        (Relation(0, RelationOp.ADJACENT_BEFORE, 1),),
+    )
+    text = candidate_meaning(q, (1, 0), schema)
+    assert "verb" in text and "subs" in text and "immediately precedes" in text
+    assert "node1, node0" in text and "distinct" in text
+    assert text == candidate_meaning(q, (1, 0), schema)
+    with pytest.raises(ValueError):
+        candidate_meaning(q, (2,), schema)
+    with pytest.raises(ValueError):
+        candidate_meaning(Query((Atom("invented_type"),)), (0,), schema)
+
+
+def test_meaning_preserves_exclusion_edge_and_distance(tiny_api: Any) -> None:
+    from scripts.jev_focus import candidate_meaning
+    from tf_jev.ir import Atom, Parent, Predicate, PredicateOp, Query, Relation, RelationOp, Without
+
+    schema = extract_schema(tiny_api)
+    body = Query(
+        (Atom("word", (Predicate("sp", PredicateOp.NE, ("verb",)),)),),
+        (Relation(Parent.REF, RelationOp.EMBEDS, 0),),
+    )
+    q = Query(
+        (Atom("phrase", (Predicate("function", PredicateOp.PRESENT),)),),
+        without=(Without(0, body),),
+    )
+    text = candidate_meaning(q, (0,), schema)
+    assert "NO matching" in text and "excluded0.node0" in text and "does not equal" in text
+    assert "must be present" in text and "node0 contains all slots of excluded0.node0" in text
+    q2 = Query(
+        (
+            Atom("word", (Predicate("gn", PredicateOp.ABSENT),)),
+            Atom("word", (Predicate("rank", PredicateOp.GT, (2,)),)),
+        ),
+        (
+            Relation(0, RelationOp.EDGE_FORWARD, 1, edge="dist"),
+            Relation(0, RelationOp.NEAR_BEFORE, 1, distance=2),
+        ),
+    )
+    text = candidate_meaning(q2, (0, 1), schema)
+    assert "must be missing" in text and "is greater than 2" in text
+    assert 'native edge feature "dist"' in text and "distance tolerance 2" in text
+
+
+def test_semantic_verification_has_complete_readable_candidate_only(tiny_api: Any) -> None:
+    import json
+
+    backend = PlanBackend(plan())
+    result = FocusedParser(extract_schema(tiny_api), backend, variant="semantic").parse(
+        "Return verbs."
+    )
+    assert result.status is ParseStatus.SUPPORTED
+    final = backend.requests[-1]
+    assert set(final.context) == {
+        "request",
+        "contract",
+        "grammar",
+        "candidate",
+        "candidate_meaning",
+    }
+    assert json.loads(final.context["candidate"])["projection"] == [0]
+    assert "verb" in final.context["candidate_meaning"]

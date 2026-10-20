@@ -6,9 +6,10 @@ import json
 from dataclasses import dataclass
 from typing import TypeVar
 
+from tf_jev.compiler import CompileError, compile_query
 from tf_jev.decisions import ChoiceQuestion, DecisionRequest, Option
 from tf_jev.grounded import GRAMMAR, GroundedParser, _GroundedRun, _json
-from tf_jev.ir import Predicate, PredicateOp
+from tf_jev.ir import Parent, Predicate, PredicateOp, Query
 from tf_jev.parser import _RELATIONS, ParseStatus, _Run, _safe_description, _Stop
 from tf_jev.schema import CorpusSchema, NodeFeature
 
@@ -40,6 +41,7 @@ class FocusedParser(GroundedParser):
             "routed",
             "scoped",
             "joint",
+            "semantic",
         ):
             raise ValueError("unknown research variant")
 
@@ -52,6 +54,7 @@ class FocusedParser(GroundedParser):
 class _FocusedRun(_GroundedRun):
     stage = ""
     _predicate_context: dict[str, str] | None = None
+    _meaning: str | None = None
 
     def context(self) -> dict[str, str]:
         # Keep precisely the same selected history, request and untrusted-data
@@ -61,6 +64,15 @@ class _FocusedRun(_GroundedRun):
         context = _Run.context(self)
         parser = self.parser
         assert isinstance(parser, FocusedParser)
+        if parser.variant == "semantic" and self.stage == "verify":
+            assert self._candidate is not None and self._meaning is not None
+            return dict(
+                request=self.request,
+                contract=context["contract"],
+                grammar=GRAMMAR,
+                candidate=self._candidate,
+                candidate_meaning=self._meaning,
+            )
         if parser.variant in (
             "attested",
             "ranked",
@@ -69,19 +81,20 @@ class _FocusedRun(_GroundedRun):
             "routed",
             "scoped",
             "joint",
+            "semantic",
         ) and self.stage.endswith(".type"):
             type_context = {
                 "request": context["request"],
                 "contract": context["contract"],
                 "types": _json(json.loads(self.corpus())["types"]),
             }
-            if parser.variant in ("scoped", "joint") and self.focus["index"] == 1:
+            if parser.variant in ("scoped", "joint", "semantic") and self.focus["index"] == 1:
                 type_context["planned_first_type"] = self.state["atom0.type"]
                 type_context["target_role"] = (
                     "child witness" if self._shape == "without" else "second related node"
                 )
             return type_context
-        if parser.variant in ("scoped", "joint") and self.stage.endswith(".count"):
+        if parser.variant in ("scoped", "joint", "semantic") and self.stage.endswith(".count"):
             f = json.loads(self.state[self.stage.removesuffix(".count") + ".feature"])
             return dict(
                 request=self.request,
@@ -102,7 +115,7 @@ class _FocusedRun(_GroundedRun):
             context["focus"] = _json(self.focus)
         if self._candidate is not None:
             context["candidate"] = self._candidate
-        if parser.variant in ("scoped", "joint") and self.stage == "verify":
+        if parser.variant in ("scoped", "joint", "semantic") and self.stage == "verify":
             context["relation_meanings"] = _json({r.value: d for r, d in _RELATIONS.items()})
         return context
 
@@ -111,6 +124,7 @@ class _FocusedRun(_GroundedRun):
             "routed",
             "scoped",
             "joint",
+            "semantic",
         ):
             return super().shape()
         self._shape = self.choose(
@@ -152,7 +166,7 @@ class _FocusedRun(_GroundedRun):
     def gate(self, name: str) -> tuple[float, float]:
         if (
             isinstance(self.parser, FocusedParser)
-            and self.parser.variant == "joint"
+            and self.parser.variant in ("joint", "semantic")
             and name != "verify"
         ):
             return 0.0, 0.0
@@ -169,6 +183,22 @@ class _FocusedRun(_GroundedRun):
         self.stage = name
         parser = self.parser
         assert isinstance(parser, FocusedParser)
+        if parser.variant == "semantic" and name == "verify":
+            prompt = (
+                "Does candidate_meaning, the deterministic explanation of candidate, exactly "
+                "express ALL request restrictions and output roles? Reject any missing/invented "
+                "condition, broader alternative values, wrong scope/direction/columns or "
+                "unsupported operation. The candidate was proposed, not assumed correct."
+            )
+            options = [
+                (
+                    v,
+                    "yes: exact complete match of every requirement and output role"
+                    if v == "yes"
+                    else "no: any missing, extra, contradictory, broader or unsupported meaning",
+                )
+                for v, _ in options
+            ]
         if parser.variant in (
             "attested",
             "ranked",
@@ -177,6 +207,7 @@ class _FocusedRun(_GroundedRun):
             "routed",
             "scoped",
             "joint",
+            "semantic",
         ) and name.endswith(".type"):
             role = self.focus["index"]
             assert isinstance(role, int)
@@ -189,7 +220,7 @@ class _FocusedRun(_GroundedRun):
             )
             prompt = "Which corpus object type is being requested"
             prompt += f" for the {target}?" if target else "?"
-            if parser.variant in ("scoped", "joint") and role == 1:
+            if parser.variant in ("scoped", "joint", "semantic") and role == 1:
                 prompt = (
                     "Select the native object type of the excluded child witness, "
                     "NOT its returned parent."
@@ -208,6 +239,7 @@ class _FocusedRun(_GroundedRun):
             "routed",
             "scoped",
             "joint",
+            "semantic",
         ) and name.endswith(".operator"):
             feature = json.loads(self.state[name.removesuffix(".operator") + ".feature"])
             prompt = (
@@ -222,7 +254,7 @@ class _FocusedRun(_GroundedRun):
                 else (value, description)
                 for value, description in options
             ]
-        if parser.variant in ("scoped", "joint") and name.endswith(".count"):
+        if parser.variant in ("scoped", "joint", "semantic") and name.endswith(".count"):
             f = json.loads(self.state[name.removesuffix(".count") + ".feature"])
             scope = _scope(self._shape, self.focus["index"])
             prompt = _safe_description(
@@ -297,6 +329,14 @@ class _FocusedRun(_GroundedRun):
             if accepted != "required":
                 raise _Stop(ParseStatus.ABSTAINED, "predicate_not_required")
         return predicate
+
+    def candidate(self, query: Query, projection: tuple[int, ...]) -> None:
+        super().candidate(query, projection)
+        if isinstance(self.parser, FocusedParser) and self.parser.variant == "semantic":
+            try:
+                self._meaning = candidate_meaning(query, projection, self.parser.schema)
+            except CompileError:
+                raise _Stop(ParseStatus.UNSUPPORTED, "compiler_rejected") from None
 
 
 def _scope(shape: str | None, index: object) -> str:
@@ -445,3 +485,76 @@ def predicate_probe(
             )
         },
     )
+
+
+def candidate_meaning(query: Query, projection: tuple[int, ...], schema: CorpusSchema) -> str:
+    """Deterministic explanation of validated IR, never an execution language."""
+    compile_query(query, schema)
+    if (
+        not projection
+        or any(type(i) is not int or not 0 <= i < len(query.atoms) for i in projection)
+        or len(set(projection)) != len(projection)
+    ):
+        raise ValueError("invalid projection")
+    features = {f.name: f for f in schema.node_features}
+    edges = {f.name: f for f in schema.edge_features}
+    lines = [
+        "Return distinct output columns in this order: "
+        + ", ".join(f"node{i}" for i in projection)
+        + ". All other nodes are witnesses."
+    ]
+    meanings = {
+        PredicateOp.EQ: "equals one of",
+        PredicateOp.NE: "does not equal any of",
+        PredicateOp.PRESENT: "must be present",
+        PredicateOp.ABSENT: "must be missing",
+        PredicateOp.GT: "is greater than",
+        PredicateOp.LT: "is less than",
+    }
+
+    def describe(q: Query, prefix: str, parent: str | None) -> None:
+        def label(ref: int | Parent) -> str:
+            if ref is Parent.REF:
+                assert parent is not None
+                return parent
+            return f"{prefix}node{ref}"
+
+        for i, atom in enumerate(q.atoms):
+            node = label(i)
+            lines.append(f"{node} is a corpus node of type {_json(atom.object_type)}.")
+            if atom.predicates:
+                lines.append(f"ALL of these annotation conditions must hold on {node} itself:")
+            for p in atom.predicates:
+                f = features[p.feature]
+                text = (
+                    f"  {node}: annotation {_json(f.name)} "
+                    f"(meaning {_json(f.description or f.name)}) {meanings[p.operator]}"
+                )
+                if p.values:
+                    text += " " + (
+                        _json(p.values[0])
+                        if p.operator in (PredicateOp.GT, PredicateOp.LT)
+                        else _json(sorted(set(p.values)))
+                    )
+                lines.append(text + ".")
+        for r in q.relations:
+            source, target = label(r.source), label(r.target)
+            meaning = _RELATIONS[r.operator].replace("atom 0", source).replace("atom 1", target)
+            text = f"Required relation with source {source} and target {target}: {meaning}"
+            if r.edge is not None:
+                text += (
+                    f"; native edge feature {_json(r.edge)} "
+                    f"(meaning {_json(edges[r.edge].description or r.edge)})"
+                )
+            if r.distance is not None:
+                text += f"; explicit distance tolerance {r.distance}"
+            lines.append(text + ".")
+        for i, excluded in enumerate(q.without):
+            lines.append(
+                f"There must be NO matching combination of these child witnesses "
+                f"for parent {label(excluded.parent)}:"
+            )
+            describe(excluded.body, f"{prefix}excluded{i}.", label(excluded.parent))
+
+    describe(query, "", None)
+    return "\n".join(lines)

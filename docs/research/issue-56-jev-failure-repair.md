@@ -340,3 +340,26 @@ or calibrated confidence. Retain ALL alternatives/probabilities and the unmodifi
 weakest probability in results; never represent proposal probabilities as certainty.
 Measure wrong emissions as well as correct ones; no default/quality recommendation.
 No retries, alternate-candidate search, model changes or gold in the parser.
+
+Joint produces correct COMPLETE adjacent-pair and positive-containment candidates,
+including values/direction/projection, but fidelity yes is only .71/.52. These are
+not accepted user successes. The JSON candidate still uses compact feature and
+operator codes and references. A separate native relation legend did not remove
+that interpretation burden. Cal-01/cal-03/cal-04/cal-08 emit correct queries;
+all six negatives withhold; no wrong emitted query so far.
+
+Freeze semantic on all 16 DEVELOPMENT requests once: same joint proposals, domains,
+questions, limits and .8/.2 final acceptance, but final verification receives a
+deterministic plain-language explanation of the EXACT typed IR plus raw IR.
+Explain every predicate with native feature metadata, actual operator/value(s),
+relation with bound source/target roles, exclusions, and ordered distinct output
+columns. Validate IR/projection before explanation. Never add inferred/missing
+conditions or describe gold instead of the prediction. The explanation is model
+context, not a second execution language/engine. Keep untrusted literals/metadata
+quoted/escaped and bounded. Final state needs only original request, grammar,
+untrusted-data contract, raw candidate and its complete explanation; discard
+irrelevant intermediate selections there. Explicitly reject missing/invented
+conditions, broader alternatives, wrong scope/direction/output and unsupported
+operations. Source/native tests must show the explanation covers the actual IR,
+including negative containment, edge direction, distance and reversed projection,
+before this variant is inferred. No model/threshold changes or replacement runs.
