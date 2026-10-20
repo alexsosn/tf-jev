@@ -148,3 +148,15 @@ def test_ranked_feature_is_only_a_proposal_until_independent_acceptance(tiny_api
         schema, PlanBackend(selected, "atom0.pred0.feature_check"), variant="ranked"
     ).parse("Return verbs.")
     assert uncertain.query is None and uncertain.reason == "low_confidence"
+
+
+def test_property_probe_names_meaning_without_planning_history(tiny_api: Any) -> None:
+    from scripts.jev_focus import property_probe
+
+    schema = extract_schema(tiny_api)
+    feature = next(f for f in schema.node_features if f.name == "gn")
+    request = property_probe("Return feminine verbs.", "word", "requested output node", feature)
+    assert request.context["property_id"] == "gn"
+    assert request.context["property_meaning"] == (feature.description or feature.name)
+    assert "selected" not in request.context and "focus" not in request.context
+    assert "need not appear" in next(iter(request.questions.values())).prompt

@@ -188,3 +188,20 @@ and one validation per feature/stop, <=64 total calls, original .8/.2 on all sem
 checks, original predicate/retrieval/compiler limits. No gold, schema aliases,
 handwritten phrase matches, retries or heldout inference. This must produce actual
 semantically correct morphology before any production design is considered.
+
+Ranked-candidate DEVELOPMENT solves cal-03 (phrase function=Time) and cal-08,
+withholds all four negatives, and has zero errors. It reaches cal-01's correct gn=m
+predicate, then rejects the correct nu proposal at its literal check (.74 yes).
+Cal-02's correct gn check is .65 yes; cal-05's correct vs check is .63 no. The latter
+is an actual wrong winner, not a gate-only refusal. Old context includes all prior
+planning selections in a question about a single named technical annotation.
+
+Freeze a pointwise relevance wording/context probe before calls: cal-01 nu,
+cal-02 gn, cal-05 vs and cal-03 function (positive); cal-01 prs_gn and suffix_gender
+(negative contrasts, since the request constrains the word's own morphology, not
+its suffix). Six calls, each with ONLY original request, actual predicted native
+node type/role and this native property's ID/meaning, no selected plan history.
+Question asks for semantic restriction on property_meaning and explicitly says the
+technical ID need not appear in the request. No annotation is accepted from these
+probes; expected labels are adjudicated after inference. Same .8/.2, model, source,
+no retries and metering. Test both positive and misleading related-property cases.
