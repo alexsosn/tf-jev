@@ -159,3 +159,32 @@ rather than silently assume absent. Code counts selected features and enforces
 predicate limits. Independently adjudicate expected sets from NL/native gold only
 AFTER inference (3/3/1/0 required features). This is a mechanism probe, not a
 parser or quality success. Same 1.14/source/budget/no-retry/accounting policy.
+
+The four all-feature binary batches are NOT a fix: the three positive requests
+select extra annotations (including phrase-dependent or suffix morphology), with
+many uncertain negatives; the unfiltered parent probe correctly selects none.
+No uncertain negative is silently treated as absent and no query is emitted.
+This rejects the naive all-features relevance design, while preserving evidence.
+
+## Candidate ranking versus semantic acceptance (next fixed experiment)
+
+A next-feature distribution can rank proposals even when several proposals are
+valid. Test a separate ranked-candidate strategy, not a global gate reduction:
+use the existing next-feature Choice as a proposal ONLY (no probability/margin
+acceptance gate for this ranking). Before using ANY proposed feature in a predicate,
+ask a separate literal yes/no Choice whether the request explicitly constrains
+that specific native feature on the current node/role. Require .8/.2 on this
+semantic acceptance and every other existing semantic stage. A proposed stop
+requires a separate .8/.2 completeness check of current node predicates. A no,
+uncertain check or error refuses the WHOLE query; no trying a favorable alternate,
+constraint deletion or implicit negative default. Full-candidate fidelity remains.
+All ranking distributions remain evidence and the existing weakest-probability
+result field remains unmodified; do not relabel a .46 proposal as .99 certainty.
+The extra checks are correlated model judgments, not independent proof of safety.
+
+Freeze all 12 DEVELOPMENT requests once using relevant attested type grounding,
+focused state and literal operator criteria from the previous variant. One rank
+and one validation per feature/stop, <=64 total calls, original .8/.2 on all semantic
+checks, original predicate/retrieval/compiler limits. No gold, schema aliases,
+handwritten phrase matches, retries or heldout inference. This must produce actual
+semantically correct morphology before any production design is considered.

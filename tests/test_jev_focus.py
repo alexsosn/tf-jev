@@ -131,3 +131,20 @@ def test_feature_set_is_independent_bounded_choices_on_every_native_feature(tiny
     assert set(request.context) == {"request", "object_type", "role", "contract"}
     with pytest.raises(ValueError):
         feature_request(schema, "Return verbs.", "unknown-type", "output")
+
+
+def test_ranked_feature_is_only_a_proposal_until_independent_acceptance(tiny_api: Any) -> None:
+    schema = extract_schema(tiny_api)
+    selected = plan() | {"atom0.pred0.feature_check": "yes", "atom0.pred1.feature_check": "yes"}
+    good = FocusedParser(
+        schema, PlanBackend(selected, "atom0.pred0.feature"), variant="ranked"
+    ).parse("Return verbs.")
+    assert good.status is ParseStatus.SUPPORTED and good.confidence == pytest.approx(0.65)
+    selected["atom0.pred0.feature_check"] = "no"
+    rejected = FocusedParser(schema, PlanBackend(selected), variant="ranked").parse("Return verbs.")
+    assert rejected.query is None and rejected.ir is None and not rejected.projection
+    selected["atom0.pred0.feature_check"] = "yes"
+    uncertain = FocusedParser(
+        schema, PlanBackend(selected, "atom0.pred0.feature_check"), variant="ranked"
+    ).parse("Return verbs.")
+    assert uncertain.query is None and uncertain.reason == "low_confidence"

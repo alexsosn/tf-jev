@@ -9,8 +9,8 @@ from typing import TypeVar
 from tf_jev.decisions import ChoiceQuestion, DecisionRequest, Option
 from tf_jev.grounded import GRAMMAR, GroundedParser, _GroundedRun, _json
 from tf_jev.ir import PredicateOp
-from tf_jev.parser import _Run, _safe_description
-from tf_jev.schema import CorpusSchema
+from tf_jev.parser import ParseStatus, _Run, _safe_description, _Stop
+from tf_jev.schema import CorpusSchema, NodeFeature
 
 T = TypeVar("T")
 OPERATORS = {
@@ -29,7 +29,7 @@ class FocusedParser(GroundedParser):
 
     def __post_init__(self) -> None:
         super().__post_init__()
-        if self.variant not in ("control", "focused", "literal", "attested"):
+        if self.variant not in ("control", "focused", "literal", "attested", "ranked"):
             raise ValueError("unknown research variant")
 
     def _new_run(self, request: str) -> _Run:
@@ -47,7 +47,7 @@ class _FocusedRun(_GroundedRun):
         context = _Run.context(self)
         parser = self.parser
         assert isinstance(parser, FocusedParser)
-        if parser.variant == "attested" and self.stage.endswith(".type"):
+        if parser.variant in ("attested", "ranked") and self.stage.endswith(".type"):
             return {
                 "request": context["request"],
                 "contract": context["contract"],
@@ -66,11 +66,20 @@ class _FocusedRun(_GroundedRun):
             context["candidate"] = self._candidate
         return context
 
+    def gate(self, name: str) -> tuple[float, float]:
+        if (
+            isinstance(self.parser, FocusedParser)
+            and self.parser.variant == "ranked"
+            and name.endswith(".feature")
+        ):
+            return 0.0, 0.0  # proposal ranking only; semantic check below retains original gate
+        return super().gate(name)
+
     def choose(self, name: str, prompt: str, options: list[tuple[T, str]]) -> T:
         self.stage = name
         parser = self.parser
         assert isinstance(parser, FocusedParser)
-        if parser.variant == "attested" and name.endswith(".type"):
+        if parser.variant in ("attested", "ranked") and name.endswith(".type"):
             role = self.focus["index"]
             assert isinstance(role, int)
             target = (
@@ -83,7 +92,7 @@ class _FocusedRun(_GroundedRun):
             prompt = "Which corpus object type is being requested"
             prompt += f" for the {target}?" if target else "?"
             options = [(v, json.loads(d)["name"]) for v, d in options]
-        if parser.variant in ("literal", "attested") and name.endswith(".operator"):
+        if parser.variant in ("literal", "attested", "ranked") and name.endswith(".operator"):
             feature = json.loads(self.state[name.removesuffix(".operator") + ".feature"])
             prompt = (
                 f"For node role {self.focus['index']} of type {self.focus['object_type']}, "
@@ -97,7 +106,32 @@ class _FocusedRun(_GroundedRun):
                 else (value, description)
                 for value, description in options
             ]
-        return super().choose(name, prompt, options)
+        proposal = super().choose(name, prompt, options)
+        if parser.variant == "ranked" and name.endswith(".feature"):
+            role = self.focus["index"]
+            scope = (
+                ("returned parent" if role == 0 else "excluded child witness")
+                if self._shape == "without"
+                else ("first-mentioned node" if role == 0 else "second-mentioned node")
+                if self._shape == "relation"
+                else "requested output node"
+            )
+            kind = self.focus["object_type"]
+            question = (
+                f"Does the request explicitly constrain annotation {proposal.name} "
+                f"({proposal.description or proposal.dtype}) on the {scope} of type {kind}? "
+                "Judge this annotation on this node, not a constraint on another node."
+                if isinstance(proposal, NodeFeature)
+                else f"Have ALL annotation conditions requested on the {scope} of type {kind} "
+                "already been represented in the selected predicates? Ignore conditions "
+                "on other nodes. Answer no if any required annotation condition remains."
+            )
+            accepted = self.choose(
+                name + "_check", _safe_description(question), [("yes", "yes"), ("no", "no")]
+            )
+            if accepted != "yes":
+                raise _Stop(ParseStatus.ABSTAINED, "proposal_rejected")
+        return proposal
 
 
 def type_probe(request: DecisionRequest, variant: str) -> DecisionRequest:
