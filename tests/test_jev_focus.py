@@ -59,14 +59,17 @@ def test_focused_variant_retains_refusal_and_confidence_gate(tiny_api: Any) -> N
         FocusedParser(schema, PlanBackend(plan()), variant="unknown")
 
 
-def test_literal_variant_roundtrips_actual_sdk(tiny_api: Any, monkeypatch: Any) -> None:
+@pytest.mark.parametrize("variant", ["literal", "verified"])
+def test_literal_variant_roundtrips_actual_sdk(
+    tiny_api: Any, monkeypatch: Any, variant: str
+) -> None:
     # Reuse the real-SDK/native integration harness, changing only its parser.
     import tests.test_grounded_parser as integration
 
     monkeypatch.setattr(
         integration,
         "GroundedParser",
-        lambda schema, backend: FocusedParser(schema, backend, variant="literal"),
+        lambda schema, backend: FocusedParser(schema, backend, variant=variant),
     )
     integration.test_complete_parser_roundtrips_real_sdk(tiny_api)
 
@@ -224,3 +227,19 @@ def test_concrete_predicate_checks_preserve_parent_child_scope(tiny_api: Any) ->
     ]
     assert checks[0]["role"] == "returned parent"
     assert checks[1]["role"] == "excluded child witness"
+
+
+def test_verified_strategy_gates_complete_plan_not_nonexclusive_feature_rank(tiny_api: Any) -> None:
+    schema = extract_schema(tiny_api)
+    good = FocusedParser(
+        schema, PlanBackend(plan(), "atom0.pred0.feature"), variant="verified"
+    ).parse("Return verbs.")
+    assert good.status is ParseStatus.SUPPORTED and good.confidence == pytest.approx(0.65)
+    no = FocusedParser(schema, PlanBackend(plan(), "verify"), variant="verified").parse(
+        "Return verbs."
+    )
+    assert no.query is None and no.reason == "low_confidence"
+    op = FocusedParser(
+        schema, PlanBackend(plan(), "atom0.pred0.operator"), variant="verified"
+    ).parse("Return verbs.")
+    assert op.query is None and op.reason == "low_confidence"

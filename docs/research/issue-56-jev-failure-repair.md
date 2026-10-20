@@ -245,3 +245,34 @@ argmax errors hidden by early stops. These are untrusted hypotheses, NOT accepte
 user queries, policy selection or success claims. Compiler/schema/native bounds
 still apply; no gold is fed back into decoding. Record wrong/unsafe candidates
 and every distribution. Do not use this permissive mode in a production parser.
+
+## Full-trajectory finding and minimal correction
+
+The ungated diagnostic produces the EXACT full three-predicate intended IR/native
+results for cal-01 and cal-02. Both have strong final yes (.94/.88); feature ranking
+is .51/.58 and .44/.49. This directly demonstrates Jev can plan those complete
+morphology requests. It does not validate permissive deployment. Cal-05 emits only
+vs=nif, omitting explicit sp=verb (execution equivalent because nif annotations
+are on verbs); do not silently count that as full semantic coverage without an
+independent implication proof. Exclusion cases produce incomplete candidates that
+fidelity correctly rejects; cal-04 wrongly routes unsupported. All four diagnostic
+negatives withhold a query. Errors are mixed, not one universal confidence issue.
+
+Freeze `verified`: exactly the attested strategy, except next-feature/DONE Choice
+is candidate ranking only (no local probability gate). Every other single-valued
+stage retains .8/.2 and full-candidate fidelity retains .8/.2 before compilation/
+query emission. No separate abstract feature or predicate check (those measured
+worse); no automatic retry/repair. Keep every ranking distribution and unmodified
+weakest probability in evidence. This explicitly changes the semantic role of
+feature Choice, not its reported probability, and does not globally lower gates.
+A proposed feature or stop cannot emit a query before the complete candidate is
+verified; native compiler/schema validation and three-predicate boundary remain.
+
+One whole DEVELOPMENT run, all 12 original development requests plus four freshly
+frozen DEVELOPMENT witnesses: verb/substantive adjacent ordered pairs; returned
+phrases containing verb witnesses; explicit missing feature; unsupported lex regex.
+Freeze native gold and independent raw slot/annotation oracle before model calls.
+No fresh heldout/default claim; these witnesses become observed development data.
+Use exact same model/source/budget and independent semantic review of full emitted
+constraints/projection. Require actual morphology AND relation positives before
+promoting even an opt-in production strategy or installed-wheel positive claim.

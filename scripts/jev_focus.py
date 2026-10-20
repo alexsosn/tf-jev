@@ -29,7 +29,15 @@ class FocusedParser(GroundedParser):
 
     def __post_init__(self) -> None:
         super().__post_init__()
-        if self.variant not in ("control", "focused", "literal", "attested", "ranked", "concrete"):
+        if self.variant not in (
+            "control",
+            "focused",
+            "literal",
+            "attested",
+            "ranked",
+            "concrete",
+            "verified",
+        ):
             raise ValueError("unknown research variant")
 
     def _new_run(self, request: str) -> _Run:
@@ -50,7 +58,9 @@ class _FocusedRun(_GroundedRun):
         context = _Run.context(self)
         parser = self.parser
         assert isinstance(parser, FocusedParser)
-        if parser.variant in ("attested", "ranked", "concrete") and self.stage.endswith(".type"):
+        if parser.variant in ("attested", "ranked", "concrete", "verified") and self.stage.endswith(
+            ".type"
+        ):
             return {
                 "request": context["request"],
                 "contract": context["contract"],
@@ -72,7 +82,7 @@ class _FocusedRun(_GroundedRun):
     def gate(self, name: str) -> tuple[float, float]:
         if (
             isinstance(self.parser, FocusedParser)
-            and self.parser.variant in ("ranked", "concrete")
+            and self.parser.variant in ("ranked", "concrete", "verified")
             and name.endswith(".feature")
         ):
             return 0.0, 0.0  # proposal ranking only; semantic check below retains original gate
@@ -82,7 +92,9 @@ class _FocusedRun(_GroundedRun):
         self.stage = name
         parser = self.parser
         assert isinstance(parser, FocusedParser)
-        if parser.variant in ("attested", "ranked", "concrete") and name.endswith(".type"):
+        if parser.variant in ("attested", "ranked", "concrete", "verified") and name.endswith(
+            ".type"
+        ):
             role = self.focus["index"]
             assert isinstance(role, int)
             target = (
@@ -95,9 +107,13 @@ class _FocusedRun(_GroundedRun):
             prompt = "Which corpus object type is being requested"
             prompt += f" for the {target}?" if target else "?"
             options = [(v, json.loads(d)["name"]) for v, d in options]
-        if parser.variant in ("literal", "attested", "ranked", "concrete") and name.endswith(
-            ".operator"
-        ):
+        if parser.variant in (
+            "literal",
+            "attested",
+            "ranked",
+            "concrete",
+            "verified",
+        ) and name.endswith(".operator"):
             feature = json.loads(self.state[name.removesuffix(".operator") + ".feature"])
             prompt = (
                 f"For node role {self.focus['index']} of type {self.focus['object_type']}, "

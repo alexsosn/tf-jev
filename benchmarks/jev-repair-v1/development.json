@@ -1,0 +1,88 @@
+{
+  "cases": [
+    {
+      "expected": "supported",
+      "family": "repair-01",
+      "gold": {
+        "count": 15336,
+        "projection": [
+          0,
+          1
+        ],
+        "query": "n0:word sp=verb\nn1:word sp=subs\nn0 <: n1",
+        "signature": "8f77f3f70349bc80f25dcdc2c09c04f55af0f5991819ae8fdee03c957ce36be8"
+      },
+      "id": "repair-01",
+      "partition": "development",
+      "rationale": "Explicit native slot/containment relation and returned roles; independent raw annotations/oslots oracle agrees before model inference.",
+      "request": "Return ordered pairs of a verb word immediately followed by a substantive word."
+    },
+    {
+      "expected": "supported",
+      "family": "repair-02",
+      "gold": {
+        "count": 73459,
+        "projection": [
+          0
+        ],
+        "query": "n0:phrase\nn1:word sp=verb\nn0 [[ n1",
+        "signature": "10e135c37930ff1c5efb312498553778bd6c2fd6a57d2ce1d268ad2ad679512c"
+      },
+      "id": "repair-02",
+      "partition": "development",
+      "rationale": "Explicit native slot/containment relation and returned roles; independent raw annotations/oslots oracle agrees before model inference.",
+      "request": "Return phrase nodes containing at least one word annotated as a verb."
+    },
+    {
+      "expected": "unsupported",
+      "family": "repair-03",
+      "id": "repair-03",
+      "partition": "development",
+      "rationale": "Named annotation does not exist in the full loaded schema.",
+      "request": "Return word nodes whose missing_feature_jev56 annotation equals 'yes'."
+    },
+    {
+      "expected": "unsupported",
+      "family": "repair-04",
+      "id": "repair-04",
+      "partition": "development",
+      "rationale": "Regex exceeds the typed compiler subset even though native TF supports regex.",
+      "request": "Return word nodes whose lex annotation matches the regular expression '^B.*'."
+    }
+  ],
+  "corpus": {
+    "name": "BHSA",
+    "text_fabric": "13.1.0",
+    "version": "2021"
+  },
+  "features": [
+    "sp",
+    "gn",
+    "nu",
+    "vs",
+    "function",
+    "lex",
+    "language",
+    "number",
+    "qere",
+    "freq_lex",
+    "mother"
+  ],
+  "source_sha256": {
+    "freq_lex.tf": "b0403e48ef7b8a9f7844c119db89584a2fe95d836a7f1b0f6c943d2f8c707265",
+    "function.tf": "3b4f87ac5691826c48a71c71b6cb53a5318f779ca82402e48c1a5db2fbda60b2",
+    "gn.tf": "93b0b0281a4552a9bfb4723f0fc41a4300c27bd1db41c7994c6fcf3ebb61aab5",
+    "language.tf": "b6e9f2a855901d6d29c970c2710fd7189ad2b5fc5e457f1b4c92e54d8c77cd5a",
+    "lex.tf": "2469664dc71bcde35a916d6a85453a5567cff3dcbc3e3323204e1120bc5ed25a",
+    "mother.tf": "13d3340ed327aa7d739dfc5fc870d10de00308a8e5ed713fbe4c5eee717c5cfe",
+    "nu.tf": "e08c8cdf69a537ddaf137962ce8aa82f784ee629c0754b8d25684bddfb7cb25d",
+    "number.tf": "a417e8a6f1a3a36d3011505216162746af4aebc3561542c16e0328720192ea62",
+    "oslots.tf": "c4efaeed8047d4e75834cc94856d79eacc7a146aea01c34d8be88497d8fa303b",
+    "otext.tf": "20c1c41bc602804ecafbf56bfc88541b0af92afcc16fb594db6acfc6f3a846e9",
+    "otype.tf": "bb5da974a3b1dd7ff9ddab54dfb533059442642ab830b832a49eea8670aaa920",
+    "qere.tf": "3aa63d0061ffe37d22f07f105c187cc96507f859e1867ff2b3b283de4ee2393f",
+    "sp.tf": "7fa4a18e308531e6dfdc4793ab267587629d4b882f4a4a5d839f8bc896af7861",
+    "vs.tf": "db8efa910e185d226797ffd62270746d04f1bdc53fbe6a9dbacb65cbd41bf665"
+  },
+  "version": "nl-tf-v2"
+}
