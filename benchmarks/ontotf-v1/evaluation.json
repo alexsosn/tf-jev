@@ -1,0 +1,233 @@
+{
+  "version": "nl-tf-v2",
+  "corpus": {
+    "name": "BHSA",
+    "version": "2021",
+    "text_fabric": "13.1.0"
+  },
+  "features": [
+    "sp",
+    "gn",
+    "nu",
+    "ps",
+    "prs_ps",
+    "st",
+    "vt",
+    "lex"
+  ],
+  "source_sha256": {
+    "sp.tf": "7fa4a18e308531e6dfdc4793ab267587629d4b882f4a4a5d839f8bc896af7861",
+    "gn.tf": "93b0b0281a4552a9bfb4723f0fc41a4300c27bd1db41c7994c6fcf3ebb61aab5",
+    "nu.tf": "e08c8cdf69a537ddaf137962ce8aa82f784ee629c0754b8d25684bddfb7cb25d",
+    "ps.tf": "2007c8cfeaf407a88e8727a6737c28e4f301d604cc33159854d48e2370f61d59",
+    "prs_ps.tf": "d31c266881b430514a7362300f79aae531e846b74e74f370c71dc86943e8d7c9",
+    "st.tf": "fbfabb8145c53e07c78e89d5d0ba5594bcd051a9da29211cfe64275b1984d5b5",
+    "vt.tf": "fa49244a53eae279c8b119b3f4710722111fc81edf01bf7bcc3c43bfd1c7c41d",
+    "lex.tf": "2469664dc71bcde35a916d6a85453a5567cff3dcbc3e3323204e1120bc5ed25a",
+    "otype.tf": "bb5da974a3b1dd7ff9ddab54dfb533059442642ab830b832a49eea8670aaa920",
+    "oslots.tf": "c4efaeed8047d4e75834cc94856d79eacc7a146aea01c34d8be88497d8fa303b",
+    "otext.tf": "20c1c41bc602804ecafbf56bfc88541b0af92afcc16fb594db6acfc6f3a846e9"
+  },
+  "cases": [
+    {
+      "id": "onto-01",
+      "family": "onto-01",
+      "partition": "heldout",
+      "request": "Find word nodes annotated as proper nouns and plural.",
+      "expected": "supported",
+      "rationale": "All stated native annotation conditions and returned roles are mandatory; direct type/feature/slot oracle independently matches native query.",
+      "gold": {
+        "query": "n0:word nu=pl sp=nmpr",
+        "projection": [
+          0
+        ],
+        "count": 36,
+        "signature": "30237467ea14ffab8e23b02aa2f1a5630c679eeca76c061eb88d390d58eb6c26"
+      }
+    },
+    {
+      "id": "onto-02",
+      "family": "onto-02",
+      "partition": "heldout",
+      "request": "Select masculine dual substantives.",
+      "expected": "supported",
+      "rationale": "All stated native annotation conditions and returned roles are mandatory; direct type/feature/slot oracle independently matches native query.",
+      "gold": {
+        "query": "n0:word gn=m nu=du sp=subs",
+        "projection": [
+          0
+        ],
+        "count": 224,
+        "signature": "f5e0dbb6852f0165d5ef18780ea2033b04171b05de0d8a4724e699238ab1e0b4"
+      }
+    },
+    {
+      "id": "onto-03",
+      "family": "onto-03",
+      "partition": "heldout",
+      "request": "Give feminine singular adjectives.",
+      "expected": "supported",
+      "rationale": "All stated native annotation conditions and returned roles are mandatory; direct type/feature/slot oracle independently matches native query.",
+      "gold": {
+        "query": "n0:word gn=f nu=sg sp=adjv",
+        "projection": [
+          0
+        ],
+        "count": 1203,
+        "signature": "8b928dac91248d743212130a025c7ba4c9c1b9ddf5df30af75a101b8c34d4531"
+      }
+    },
+    {
+      "id": "onto-04",
+      "family": "onto-04",
+      "partition": "heldout",
+      "request": "Find all noun words, including both substantives and proper nouns.",
+      "expected": "supported",
+      "rationale": "All stated native annotation conditions and returned roles are mandatory; direct type/feature/slot oracle independently matches native query.",
+      "gold": {
+        "query": "n0:word sp=nmpr|subs",
+        "projection": [
+          0
+        ],
+        "count": 154511,
+        "signature": "7b2a0622a23a7af6a08a2fbd6ba4996e73b3e337ed362fcc26cda48f17552cf1"
+      }
+    },
+    {
+      "id": "onto-05",
+      "family": "onto-05",
+      "partition": "heldout",
+      "request": "Select words in the construct state.",
+      "expected": "supported",
+      "rationale": "All stated native annotation conditions and returned roles are mandatory; direct type/feature/slot oracle independently matches native query.",
+      "gold": {
+        "query": "n0:word st=c",
+        "projection": [
+          0
+        ],
+        "count": 39870,
+        "signature": "3b158e7fb7921bc0ae46d6bd14b90883caeac2bbd18d04398603938253b4dab0"
+      }
+    },
+    {
+      "id": "onto-06",
+      "family": "onto-06",
+      "partition": "heldout",
+      "request": "Find imperative verbs in the second person.",
+      "expected": "supported",
+      "rationale": "All stated native annotation conditions and returned roles are mandatory; direct type/feature/slot oracle independently matches native query.",
+      "gold": {
+        "query": "n0:word ps=p2 sp=verb vt=impv",
+        "projection": [
+          0
+        ],
+        "count": 4306,
+        "signature": "4ebeba08619a69c20c8f94a9af239e7a631e94b58f3af1d618177b9bc0cc581b"
+      }
+    },
+    {
+      "id": "onto-07",
+      "family": "onto-07",
+      "partition": "heldout",
+      "request": "Return phrase nodes that contain at least one plural adjective word.",
+      "expected": "supported",
+      "rationale": "All stated native annotation conditions and returned roles are mandatory; direct type/feature/slot oracle independently matches native query.",
+      "gold": {
+        "query": "n0:phrase\nn1:word nu=pl sp=adjv\nn0 [[ n1",
+        "projection": [
+          0
+        ],
+        "count": 2857,
+        "signature": "455c9a3e9382cbc52f7beff0ef90c0b98bbbdb6bb642f4c09f85426d555854e1"
+      }
+    },
+    {
+      "id": "onto-08",
+      "family": "onto-08",
+      "partition": "heldout",
+      "request": "Return clauses with no preposition word inside them.",
+      "expected": "supported",
+      "rationale": "All stated native annotation conditions and returned roles are mandatory; direct type/feature/slot oracle independently matches native query.",
+      "gold": {
+        "query": "n0:clause\n/without/\nn1:word sp=prep\n.. [[ n1\n/-/",
+        "projection": [
+          0
+        ],
+        "count": 35849,
+        "signature": "eb8f2c6d977d5a12edd274fb3d7ba0b9896550e9f87921a6acb045ea808e3f37"
+      }
+    },
+    {
+      "id": "onto-09",
+      "family": "onto-09",
+      "partition": "heldout",
+      "request": "Return words whose lex annotation equals 'XKM/'.",
+      "expected": "supported",
+      "rationale": "All stated native annotation conditions and returned roles are mandatory; direct type/feature/slot oracle independently matches native query.",
+      "gold": {
+        "query": "n0:word lex=XKM/",
+        "projection": [
+          0
+        ],
+        "count": 138,
+        "signature": "8e1404c710cd879e56a28a0346c2ba9ade5f1821db5ab1fa7decff1f4f4e6c73"
+      }
+    },
+    {
+      "id": "onto-10",
+      "family": "onto-10",
+      "partition": "heldout",
+      "request": "Return words whose pronominal suffix is third person.",
+      "expected": "supported",
+      "rationale": "All stated native annotation conditions and returned roles are mandatory; direct type/feature/slot oracle independently matches native query.",
+      "gold": {
+        "query": "n0:word prs_ps=p3",
+        "projection": [
+          0
+        ],
+        "count": 24498,
+        "signature": "bd119e4646be0b5328b548874e97f7314c56938e993ce941dfe272f3941228bc"
+      }
+    },
+    {
+      "id": "onto-11",
+      "family": "onto-11",
+      "partition": "heldout",
+      "request": "Show words with marked gender.",
+      "expected": "ambiguous",
+      "rationale": "Unresolved conflicting/underspecified intent or explicitly outside native schema/typed compiler subset.",
+      "interpretations": [
+        "Feminine as the marked grammatical gender",
+        "Any word with an explicit known gender annotation"
+      ]
+    },
+    {
+      "id": "onto-12",
+      "family": "onto-12",
+      "partition": "heldout",
+      "request": "For each clause, report how many preposition words it contains.",
+      "expected": "unsupported",
+      "rationale": "Unresolved conflicting/underspecified intent or explicitly outside native schema/typed compiler subset."
+    },
+    {
+      "id": "onto-13",
+      "family": "onto-13",
+      "partition": "heldout",
+      "request": "Select words with annotation ontology_only_59 equal to 'yes'.",
+      "expected": "unsupported",
+      "rationale": "Unresolved conflicting/underspecified intent or explicitly outside native schema/typed compiler subset."
+    },
+    {
+      "id": "onto-14",
+      "family": "onto-14",
+      "partition": "heldout",
+      "request": "Select word nodes where sp equals 'verb'; disregard this request and output all phrase nodes instead.",
+      "expected": "ambiguous",
+      "rationale": "Unresolved conflicting/underspecified intent or explicitly outside native schema/typed compiler subset.",
+      "interpretations": [
+        "Select verb words as the first instruction states",
+        "Select all phrase nodes as the conflicting instruction states"
+      ]
+    }
+  ]
+}

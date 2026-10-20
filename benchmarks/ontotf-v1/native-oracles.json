@@ -1,0 +1,65 @@
+{
+  "schema_key": "4a777cf2dc316633c062e89a99580bf1f19b9c7aa2713892779b11a4c60a442c",
+  "cases": [
+    {
+      "id": "onto-01",
+      "count": 36,
+      "signature": "30237467ea14ffab8e23b02aa2f1a5630c679eeca76c061eb88d390d58eb6c26",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "onto-02",
+      "count": 224,
+      "signature": "f5e0dbb6852f0165d5ef18780ea2033b04171b05de0d8a4724e699238ab1e0b4",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "onto-03",
+      "count": 1203,
+      "signature": "8b928dac91248d743212130a025c7ba4c9c1b9ddf5df30af75a101b8c34d4531",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "onto-04",
+      "count": 154511,
+      "signature": "7b2a0622a23a7af6a08a2fbd6ba4996e73b3e337ed362fcc26cda48f17552cf1",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "onto-05",
+      "count": 39870,
+      "signature": "3b158e7fb7921bc0ae46d6bd14b90883caeac2bbd18d04398603938253b4dab0",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "onto-06",
+      "count": 4306,
+      "signature": "4ebeba08619a69c20c8f94a9af239e7a631e94b58f3af1d618177b9bc0cc581b",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "onto-07",
+      "count": 2857,
+      "signature": "455c9a3e9382cbc52f7beff0ef90c0b98bbbdb6bb642f4c09f85426d555854e1",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "onto-08",
+      "count": 35849,
+      "signature": "eb8f2c6d977d5a12edd274fb3d7ba0b9896550e9f87921a6acb045ea808e3f37",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "onto-09",
+      "count": 138,
+      "signature": "8e1404c710cd879e56a28a0346c2ba9ade5f1821db5ab1fa7decff1f4f4e6c73",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "onto-10",
+      "count": 24498,
+      "signature": "bd119e4646be0b5328b548874e97f7314c56938e993ce941dfe272f3941228bc",
+      "raw_oracle_agrees": true
+    }
+  ]
+}
