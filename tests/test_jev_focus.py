@@ -115,3 +115,19 @@ def test_attested_type_context_uses_real_capabilities_without_shape_history(tiny
             < schema.domain(f.name, t["name"]).node_count
         }
     assert "selected" not in request.context and "focus" not in request.context
+
+
+def test_feature_set_is_independent_bounded_choices_on_every_native_feature(tiny_api: Any) -> None:
+    from scripts.jev_focus import feature_request
+
+    schema = extract_schema(tiny_api)
+    request = feature_request(schema, "Return feminine plural verbs.", "word", "output")
+    assert len(request.questions) == len(schema.node_features)
+    for feature, question in zip(schema.node_features, request.questions.values(), strict=True):
+        assert isinstance(question, ChoiceQuestion)
+        assert question.labels == ("o000", "o001")
+        assert feature.name in question.prompt
+        assert "explicit" in question.prompt
+    assert set(request.context) == {"request", "object_type", "role", "contract"}
+    with pytest.raises(ValueError):
+        feature_request(schema, "Return verbs.", "unknown-type", "output")

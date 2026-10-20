@@ -134,3 +134,28 @@ this extra scope requirement is necessary to avoid asking for the parent twice.
 Use all 12 development cases once, same model/gates/budget, native gold/source gates
 and public/private metering. No default change. All other choices/predicate limits,
 retrieval and verification remain unchanged. RED-first tests precede this helper.
+
+## Multi-label feature mismatch
+
+The attested variant passes all six attempted type decisions at the unchanged
+gate, yet emits only the same integer positive. On cal-01/cal-02, the winning
+feature is correctly gn at .46/.43: gn, nu and sp are ALL legitimate next choices.
+Our question explicitly permits ANY additional required feature but then demands
+.8 on one mutually exclusive choice. This is a design mismatch between a set-valued
+semantic task and exclusive classification; it is not evidence of an incorrect
+winner or a reason to fabricate confidence. Other failures remain (shape/stop/
+operator/fidelity); this finding does not explain them all.
+
+Freeze four feature-set probes before calls: cal-01, cal-02, cal-03 and cal-06,
+using their actual accepted predicted node type from the attested run (word,
+word, phrase, clause). For each, one batch of independent yes/no Choice questions,
+one per EVERY native node feature, asking whether the request constrains that
+specific annotation on that node/role. No gold feature set enters the question.
+Supply the request and explicit output/returned-parent scope, with each feature's
+native name/dtype/description in its own question. All features remain candidates,
+including unattested features for explicit absence tests. No values/passages.
+Maintain .8 top/.2 margin for each binary decision; report uncertain negatives
+rather than silently assume absent. Code counts selected features and enforces
+predicate limits. Independently adjudicate expected sets from NL/native gold only
+AFTER inference (3/3/1/0 required features). This is a mechanism probe, not a
+parser or quality success. Same 1.14/source/budget/no-retry/accounting policy.
