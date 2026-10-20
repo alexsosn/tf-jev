@@ -144,3 +144,10 @@ feature-stop sentinel and includes the full predicted IR/projection in fidelity
 context. `GroundedPolicy` has explicit finite per-stage gates and a conservative
 serialized-context byte budget. Its default gates are unchanged, and its fresh
 experiment failed usefulness. Production defaults remain the legacy research API.
+
+
+Candidate planning (#56): [extraction contract](docs/research/issue-56-candidate-parser.md)
+uses bounded proposals, unmodified weakest-proposal confidence and a separately
+gated complete-candidate fidelity verdict. The deterministic explanation describes
+validated IR; native TF still executes it. No per-field gate relaxation in legacy
+parsers, no alternative backend, and no change to defaults.

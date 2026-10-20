@@ -71,7 +71,7 @@ jobs:
           vpy="$RUNNER_TEMP/tf-jev-wheel-venv/bin/python"
           "$vpy" -m pip install "$RUNNER_TEMP"/wheels/tf_jev-*.whl
           cd "$RUNNER_TEMP"
-          "$vpy" -c "import importlib.util, tf_jev, tf_jev.compiler, tf_jev.schema, tf_jev.retrieval, tf_jev.parser, tf_jev.grounded; assert tf_jev.__version__ == '0.1.0.dev0'; assert importlib.util.find_spec('typesafe_sdk') is None"
+          "$vpy" -c "import importlib.util, tf_jev, tf_jev.compiler, tf_jev.schema, tf_jev.retrieval, tf_jev.parser, tf_jev.grounded, tf_jev.candidate; assert tf_jev.__version__ == '0.1.0.dev0'; assert importlib.util.find_spec('typesafe_sdk') is None"
 
 
       - name: Installed wheel native CLI end-to-end smoke

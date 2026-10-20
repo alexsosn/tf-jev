@@ -1,0 +1,50 @@
+{
+  "cases": [
+    {
+      "id": "cal-01",
+      "count": 57057,
+      "signature": "508748684efc3408f90418b38b1db9ae2e3b6ce53634dea68bdc420a66080172",
+      "raw_oracle_equivalent": true
+    },
+    {
+      "id": "cal-02",
+      "count": 312,
+      "signature": "19a3030538f1d57f2189e610aff87369454e7dcff3cb26fbcb722cad344281d6",
+      "raw_oracle_equivalent": true
+    },
+    {
+      "id": "cal-03",
+      "count": 4079,
+      "signature": "97ac27127d0f7434298b1a55fa9f3908ef18fa8c768825c5cc1c4ead2865e685",
+      "raw_oracle_equivalent": true
+    },
+    {
+      "id": "cal-05",
+      "count": 4145,
+      "signature": "1e7722c3e9494056a3fcd184dbf67c5fc926472ee777560dba124074ca91db19",
+      "raw_oracle_equivalent": true
+    },
+    {
+      "id": "cal-08",
+      "count": 167,
+      "signature": "152f214bcffc2686de955bf048ca4da2f3c51c53311a77c77fe0ec203a4ebdff",
+      "raw_oracle_equivalent": true
+    },
+    {
+      "id": "repair-02",
+      "count": 73459,
+      "signature": "10e135c37930ff1c5efb312498553778bd6c2fd6a57d2ce1d268ad2ad679512c",
+      "raw_oracle_equivalent": true
+    }
+  ],
+  "nif_words_all_have_sp_verb": true,
+  "native_metadata": {
+    "function": "\u2705 syntactic function of phrase (Cmpl; Objc; Pred; ...)",
+    "gn": "\u2705 grammatical gender (m; f; NA; unknown.)",
+    "nu": "\u2705 grammatical number (sg; du; pl; NA; unknown.)",
+    "number": "\u2705 sequence number of an object within its context",
+    "sp": "\u2705 part-of-speech (art; verb; subs; nmpr, ...)",
+    "vs": "\u2705 verbal stem (qal; piel; hif; apel; pael)"
+  },
+  "oracle_method": "Direct requested type intersections, annotation values and oslots membership; no compiler or gold query used to derive expected sets."
+}

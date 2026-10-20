@@ -1,0 +1,176 @@
+{
+  "phases": [
+    {
+      "path": "attested/development.json",
+      "rows": 12,
+      "calls": 28,
+      "input_tokens": 78042,
+      "output_tokens": 9699,
+      "errors": 0,
+      "supported": 1,
+      "equivalent": 1,
+      "safe_negative": 4
+    },
+    {
+      "path": "concrete/development.json",
+      "rows": 12,
+      "calls": 44,
+      "input_tokens": 87254,
+      "output_tokens": 10754,
+      "errors": 0,
+      "supported": 2,
+      "equivalent": 2,
+      "safe_negative": 4
+    },
+    {
+      "path": "development.json",
+      "rows": 36,
+      "calls": 60,
+      "input_tokens": 234573,
+      "output_tokens": 10583,
+      "errors": 0,
+      "supported": 1,
+      "equivalent": 1,
+      "safe_negative": 12
+    },
+    {
+      "path": "diagnostic/development.json",
+      "rows": 12,
+      "calls": 73,
+      "input_tokens": 200127,
+      "output_tokens": 24703,
+      "errors": 0,
+      "supported": 5,
+      "equivalent": 5,
+      "safe_negative": 4
+    },
+    {
+      "path": "feature-probes.json",
+      "rows": 4,
+      "calls": 4,
+      "input_tokens": 56235,
+      "output_tokens": 17724,
+      "errors": 0,
+      "supported": 0,
+      "equivalent": 0,
+      "safe_negative": 0
+    },
+    {
+      "path": "joint/development.json",
+      "rows": 16,
+      "calls": 123,
+      "input_tokens": 359031,
+      "output_tokens": 43873,
+      "errors": 0,
+      "supported": 4,
+      "equivalent": 4,
+      "safe_negative": 6
+    },
+    {
+      "path": "predicate-probes.json",
+      "rows": 10,
+      "calls": 10,
+      "input_tokens": 5101,
+      "output_tokens": 510,
+      "errors": 0,
+      "supported": 0,
+      "equivalent": 0,
+      "safe_negative": 0
+    },
+    {
+      "path": "property-probes.json",
+      "rows": 6,
+      "calls": 6,
+      "input_tokens": 2640,
+      "output_tokens": 246,
+      "errors": 0,
+      "supported": 0,
+      "equivalent": 0,
+      "safe_negative": 0
+    },
+    {
+      "path": "ranked/development.json",
+      "rows": 12,
+      "calls": 43,
+      "input_tokens": 94909,
+      "output_tokens": 11657,
+      "errors": 0,
+      "supported": 2,
+      "equivalent": 2,
+      "safe_negative": 4
+    },
+    {
+      "path": "routed/development.json",
+      "rows": 16,
+      "calls": 71,
+      "input_tokens": 184927,
+      "output_tokens": 22499,
+      "errors": 0,
+      "supported": 3,
+      "equivalent": 3,
+      "safe_negative": 6
+    },
+    {
+      "path": "scoped/development.json",
+      "rows": 16,
+      "calls": 62,
+      "input_tokens": 162230,
+      "output_tokens": 19426,
+      "errors": 0,
+      "supported": 2,
+      "equivalent": 2,
+      "safe_negative": 6
+    },
+    {
+      "path": "semantic/development.json",
+      "rows": 16,
+      "calls": 119,
+      "input_tokens": 336349,
+      "output_tokens": 41569,
+      "errors": 0,
+      "supported": 6,
+      "equivalent": 6,
+      "safe_negative": 6
+    },
+    {
+      "path": "type-capabilities.json",
+      "rows": 4,
+      "calls": 4,
+      "input_tokens": 5755,
+      "output_tokens": 608,
+      "errors": 0,
+      "supported": 0,
+      "equivalent": 0,
+      "safe_negative": 0
+    },
+    {
+      "path": "type-probes.json",
+      "rows": 16,
+      "calls": 16,
+      "input_tokens": 10252,
+      "output_tokens": 2432,
+      "errors": 0,
+      "supported": 0,
+      "equivalent": 0,
+      "safe_negative": 0
+    },
+    {
+      "path": "verified/development.json",
+      "rows": 16,
+      "calls": 61,
+      "input_tokens": 148881,
+      "output_tokens": 18279,
+      "errors": 0,
+      "supported": 3,
+      "equivalent": 3,
+      "safe_negative": 6
+    }
+  ],
+  "calls": 724,
+  "input_tokens": 1966306,
+  "output_tokens": 234562,
+  "errors": 0,
+  "unknown_input_usage": 0,
+  "backend_latency_s": 263.2407526207098,
+  "estimated_cost_usd": 0.082584852
+}

@@ -1,0 +1,5297 @@
+{
+  "complete": true,
+  "helper_sha256": "e20af23e3e32c218d2288f9ee6d4c054de6efe1b2666563bbbe3d30db12824f9",
+  "model": "jev-1.14.0",
+  "package_commit": "cddbd47c92f491d525012877e20290ca1aded113",
+  "rows": [
+    {
+      "call": {
+        "error_kind": null,
+        "input_tokens": 13894,
+        "latency_s": 0.5642459260125179,
+        "output_tokens": 4431,
+        "questions": [
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.9199999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.04,
+              0.96
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.96
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.8999999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.05,
+              0.95
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.95
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.8,
+            "option_count": 2,
+            "probabilities": [
+              0.1,
+              0.9
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.9
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.8999999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.05,
+              0.95
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.95
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.8,
+            "option_count": 2,
+            "probabilities": [
+              0.1,
+              0.9
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.9
+          },
+          {
+            "margin": 0.8200000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.09,
+              0.91
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.91
+          },
+          {
+            "margin": 0.8799999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.06,
+              0.94
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.94
+          },
+          {
+            "margin": 0.37999999999999995,
+            "option_count": 2,
+            "probabilities": [
+              0.31,
+              0.69
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.69
+          },
+          {
+            "margin": 0.94,
+            "option_count": 2,
+            "probabilities": [
+              0.03,
+              0.97
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.97
+          },
+          {
+            "margin": 0.8,
+            "option_count": 2,
+            "probabilities": [
+              0.1,
+              0.9
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.9
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.39999999999999997,
+            "option_count": 2,
+            "probabilities": [
+              0.3,
+              0.7
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.7
+          },
+          {
+            "margin": 0.76,
+            "option_count": 2,
+            "probabilities": [
+              0.12,
+              0.88
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.88
+          },
+          {
+            "margin": 0.9199999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.04,
+              0.96
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.96
+          },
+          {
+            "margin": 0.8600000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.93,
+              0.07
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.93
+          },
+          {
+            "margin": 0.020000000000000018,
+            "option_count": 2,
+            "probabilities": [
+              0.49,
+              0.51
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.51
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.72,
+            "option_count": 2,
+            "probabilities": [
+              0.14,
+              0.86
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.86
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.5800000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.21,
+              0.79
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.79
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.06000000000000005,
+            "option_count": 2,
+            "probabilities": [
+              0.53,
+              0.47
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.53
+          },
+          {
+            "margin": 0.78,
+            "option_count": 2,
+            "probabilities": [
+              0.11,
+              0.89
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.89
+          },
+          {
+            "margin": 0.9199999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.04,
+              0.96
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.96
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.9199999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.96,
+              0.04
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.96
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.94,
+            "option_count": 2,
+            "probabilities": [
+              0.97,
+              0.03
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.97
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.24,
+            "option_count": 2,
+            "probabilities": [
+              0.38,
+              0.62
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.62
+          },
+          {
+            "margin": 0.6399999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.82,
+              0.18
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.82
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.94,
+            "option_count": 2,
+            "probabilities": [
+              0.03,
+              0.97
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.97
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.42,
+            "option_count": 2,
+            "probabilities": [
+              0.71,
+              0.29
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.71
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.99,
+              0.01
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.8200000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.91,
+              0.09
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.91
+          },
+          {
+            "margin": 0.6399999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.82,
+              0.18
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.82
+          },
+          {
+            "margin": 0.9199999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.04,
+              0.96
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.96
+          },
+          {
+            "margin": 0.8,
+            "option_count": 2,
+            "probabilities": [
+              0.1,
+              0.9
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.9
+          },
+          {
+            "margin": 0.5,
+            "option_count": 2,
+            "probabilities": [
+              0.25,
+              0.75
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.75
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.30000000000000004,
+            "option_count": 2,
+            "probabilities": [
+              0.65,
+              0.35
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.65
+          },
+          {
+            "margin": 0.8400000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.08,
+              0.92
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.92
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.78,
+            "option_count": 2,
+            "probabilities": [
+              0.11,
+              0.89
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.89
+          },
+          {
+            "margin": 0.9199999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.04,
+              0.96
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.96
+          },
+          {
+            "margin": 0.8600000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.07,
+              0.93
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.93
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          }
+        ],
+        "requested_questions": [
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted"
+        ]
+      },
+      "id": "cal-01",
+      "selected_count": 10,
+      "set_correct": false,
+      "uncertain_indices": [
+        40,
+        52,
+        56,
+        62,
+        68,
+        78,
+        89,
+        96,
+        98
+      ]
+    },
+    {
+      "call": {
+        "error_kind": null,
+        "input_tokens": 13895,
+        "latency_s": 0.5170879010111094,
+        "output_tokens": 4431,
+        "questions": [
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.19999999999999996,
+            "option_count": 2,
+            "probabilities": [
+              0.6,
+              0.4
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.6
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.8400000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.08,
+              0.92
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.92
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.9199999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.04,
+              0.96
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.96
+          },
+          {
+            "margin": 0.9199999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.04,
+              0.96
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.96
+          },
+          {
+            "margin": 0.06000000000000005,
+            "option_count": 2,
+            "probabilities": [
+              0.53,
+              0.47
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.53
+          },
+          {
+            "margin": 0.48,
+            "option_count": 2,
+            "probabilities": [
+              0.26,
+              0.74
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.74
+          },
+          {
+            "margin": 0.48,
+            "option_count": 2,
+            "probabilities": [
+              0.26,
+              0.74
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.74
+          },
+          {
+            "margin": 0.76,
+            "option_count": 2,
+            "probabilities": [
+              0.12,
+              0.88
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.88
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.8400000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.08,
+              0.92
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.92
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.56,
+            "option_count": 2,
+            "probabilities": [
+              0.22,
+              0.78
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.78
+          },
+          {
+            "margin": 0.8600000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.07,
+              0.93
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.93
+          },
+          {
+            "margin": 0.8400000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.08,
+              0.92
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.92
+          },
+          {
+            "margin": 0.72,
+            "option_count": 2,
+            "probabilities": [
+              0.86,
+              0.14
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.86
+          },
+          {
+            "margin": 0.19999999999999996,
+            "option_count": 2,
+            "probabilities": [
+              0.6,
+              0.4
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.6
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.9199999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.04,
+              0.96
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.96
+          },
+          {
+            "margin": 0.10000000000000003,
+            "option_count": 2,
+            "probabilities": [
+              0.55,
+              0.45
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.55
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.94,
+            "option_count": 2,
+            "probabilities": [
+              0.03,
+              0.97
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.97
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.24,
+            "option_count": 2,
+            "probabilities": [
+              0.38,
+              0.62
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.62
+          },
+          {
+            "margin": 0.8799999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.06,
+              0.94
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.94
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.8600000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.93,
+              0.07
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.93
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.6799999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.84,
+              0.16
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.84
+          },
+          {
+            "margin": 0.94,
+            "option_count": 2,
+            "probabilities": [
+              0.03,
+              0.97
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.97
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.42,
+            "option_count": 2,
+            "probabilities": [
+              0.71,
+              0.29
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.71
+          },
+          {
+            "margin": 0.42,
+            "option_count": 2,
+            "probabilities": [
+              0.71,
+              0.29
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.71
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.21999999999999997,
+            "option_count": 2,
+            "probabilities": [
+              0.39,
+              0.61
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.61
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.15999999999999998,
+            "option_count": 2,
+            "probabilities": [
+              0.42,
+              0.58
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.58
+          },
+          {
+            "margin": 0.36000000000000004,
+            "option_count": 2,
+            "probabilities": [
+              0.68,
+              0.32
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.68
+          },
+          {
+            "margin": 0.6200000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.81,
+              0.19
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.81
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.19999999999999996,
+            "option_count": 2,
+            "probabilities": [
+              0.6,
+              0.4
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.6
+          },
+          {
+            "margin": 0.78,
+            "option_count": 2,
+            "probabilities": [
+              0.11,
+              0.89
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.89
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.6399999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.82,
+              0.18
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.82
+          },
+          {
+            "margin": 0.54,
+            "option_count": 2,
+            "probabilities": [
+              0.77,
+              0.23
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.77
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.36000000000000004,
+            "option_count": 2,
+            "probabilities": [
+              0.68,
+              0.32
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.68
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.5800000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.79,
+              0.21
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.79
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.9199999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.04,
+              0.96
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.96
+          },
+          {
+            "margin": 0.6799999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.16,
+              0.84
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.84
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          }
+        ],
+        "requested_questions": [
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted"
+        ]
+      },
+      "id": "cal-02",
+      "selected_count": 16,
+      "set_correct": false,
+      "uncertain_indices": [
+        28,
+        40,
+        41,
+        42,
+        52,
+        56,
+        62,
+        68,
+        78,
+        79,
+        82,
+        88,
+        89,
+        92,
+        96,
+        98,
+        103
+      ]
+    },
+    {
+      "call": {
+        "error_kind": null,
+        "input_tokens": 13893,
+        "latency_s": 0.4928652700036764,
+        "output_tokens": 4431,
+        "questions": [
+          {
+            "margin": 0.5,
+            "option_count": 2,
+            "probabilities": [
+              0.25,
+              0.75
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.75
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.9199999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.04,
+              0.96
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.96
+          },
+          {
+            "margin": 0.18,
+            "option_count": 2,
+            "probabilities": [
+              0.59,
+              0.41
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.59
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.9199999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.96,
+              0.04
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.96
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.56,
+            "option_count": 2,
+            "probabilities": [
+              0.22,
+              0.78
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.78
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.08000000000000002,
+            "option_count": 2,
+            "probabilities": [
+              0.46,
+              0.54
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.54
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.8999999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.05,
+              0.95
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.95
+          },
+          {
+            "margin": 0.28,
+            "option_count": 2,
+            "probabilities": [
+              0.36,
+              0.64
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.64
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.56,
+            "option_count": 2,
+            "probabilities": [
+              0.22,
+              0.78
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.78
+          },
+          {
+            "margin": 0.12000000000000005,
+            "option_count": 2,
+            "probabilities": [
+              0.44,
+              0.56
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.56
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.08000000000000002,
+            "option_count": 2,
+            "probabilities": [
+              0.54,
+              0.46
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.54
+          },
+          {
+            "margin": 0.30000000000000004,
+            "option_count": 2,
+            "probabilities": [
+              0.65,
+              0.35
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.65
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.37999999999999995,
+            "option_count": 2,
+            "probabilities": [
+              0.31,
+              0.69
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.69
+          },
+          {
+            "margin": 0.6799999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.16,
+              0.84
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.84
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.45999999999999996,
+            "option_count": 2,
+            "probabilities": [
+              0.27,
+              0.73
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.73
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.19999999999999996,
+            "option_count": 2,
+            "probabilities": [
+              0.4,
+              0.6
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.6
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.8200000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.09,
+              0.91
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.91
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          }
+        ],
+        "requested_questions": [
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted"
+        ]
+      },
+      "id": "cal-03",
+      "selected_count": 4,
+      "set_correct": false,
+      "uncertain_indices": [
+        0,
+        28,
+        54,
+        56,
+        62,
+        69,
+        70,
+        88,
+        89,
+        95,
+        98,
+        103
+      ]
+    },
+    {
+      "call": {
+        "error_kind": null,
+        "input_tokens": 14553,
+        "latency_s": 0.5898822099843528,
+        "output_tokens": 4431,
+        "questions": [
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.8,
+            "option_count": 2,
+            "probabilities": [
+              0.1,
+              0.9
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.9
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.8999999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.05,
+              0.95
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.95
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.8400000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.08,
+              0.92
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.92
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.76,
+            "option_count": 2,
+            "probabilities": [
+              0.12,
+              0.88
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.88
+          },
+          {
+            "margin": 0.94,
+            "option_count": 2,
+            "probabilities": [
+              0.03,
+              0.97
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.97
+          },
+          {
+            "margin": 0.76,
+            "option_count": 2,
+            "probabilities": [
+              0.12,
+              0.88
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.88
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.7,
+            "option_count": 2,
+            "probabilities": [
+              0.15,
+              0.85
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.85
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.9199999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.04,
+              0.96
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.96
+          },
+          {
+            "margin": 0.7,
+            "option_count": 2,
+            "probabilities": [
+              0.15,
+              0.85
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.85
+          },
+          {
+            "margin": 0.8999999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.05,
+              0.95
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.95
+          },
+          {
+            "margin": 0.74,
+            "option_count": 2,
+            "probabilities": [
+              0.13,
+              0.87
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.87
+          },
+          {
+            "margin": 0.94,
+            "option_count": 2,
+            "probabilities": [
+              0.03,
+              0.97
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.97
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 0.8799999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.06,
+              0.94
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.94
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.94,
+            "option_count": 2,
+            "probabilities": [
+              0.03,
+              0.97
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.97
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.94,
+            "option_count": 2,
+            "probabilities": [
+              0.03,
+              0.97
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.97
+          },
+          {
+            "margin": 0.9199999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.04,
+              0.96
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.96
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.96,
+            "option_count": 2,
+            "probabilities": [
+              0.02,
+              0.98
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.98
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          },
+          {
+            "margin": 0.94,
+            "option_count": 2,
+            "probabilities": [
+              0.03,
+              0.97
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.97
+          },
+          {
+            "margin": 0.8600000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.07,
+              0.93
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.93
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.8400000000000001,
+            "option_count": 2,
+            "probabilities": [
+              0.08,
+              0.92
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.92
+          },
+          {
+            "margin": 0.8799999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.06,
+              0.94
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.94
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.98,
+            "option_count": 2,
+            "probabilities": [
+              0.01,
+              0.99
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.99
+          },
+          {
+            "margin": 0.8799999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.06,
+              0.94
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.94
+          },
+          {
+            "margin": 0.8999999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.05,
+              0.95
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.95
+          },
+          {
+            "margin": 0.94,
+            "option_count": 2,
+            "probabilities": [
+              0.03,
+              0.97
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.97
+          },
+          {
+            "margin": 1.0,
+            "option_count": 2,
+            "probabilities": [
+              0.0,
+              1.0
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 1.0
+          }
+        ],
+        "requested_questions": [
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted",
+          "redacted"
+        ]
+      },
+      "id": "cal-06",
+      "selected_count": 0,
+      "set_correct": true,
+      "uncertain_indices": []
+    }
+  ]
+}

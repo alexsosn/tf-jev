@@ -1,0 +1,66 @@
+{
+  "wheel_sha256": "251a148d3879c69d25ba42d17cd43abd91e91c652c4a6bceae84a4b2312d119c",
+  "model": "jev-1.14.0",
+  "retries": 0,
+  "fixture": "native synthetic conformance corpus with documented morphology metadata",
+  "source_sha256": {
+    "dist.tf": "e2f6ea86d71a218002ea4c4b06ac39bfd2edfdb96dacc5725f4481701fc9d274",
+    "function.tf": "14b296f62a92c2f8eb23519d52b1712819a9f645cce07e9e1bf5495d3cbb9cc7",
+    "gloss.tf": "41ad5ff0073d9d8d2f3ccfb18db32d222f9ccfb3ee0232d9ad0a0f7da0cf9d5d",
+    "gn.tf": "1d15bceb19d8d2d8aa01a816984b90a08dabc5e39fae0129664282c2e9a99dd2",
+    "lex.tf": "d8fe4e76f6e21361a519653f747c797f1a11e6dcda2be229a2db535dcac307f1",
+    "mother.tf": "f288ea9d30f62e22de00eb4c6b4922ddbf1c375fce85190225a95e9fec58d04a",
+    "nu.tf": "3d68d22d159584fd9be0f9a86383997396410c636a124fd63ec608cb9f6fb2d6",
+    "number.tf": "36628c15f044d0206f19229f0a7eb7f77c2ee9ffa833f1c17ed7557716ded886",
+    "oslots.tf": "9de67bb5fbdcbcf809dfcf9bbc1e577577a5ecbde69a527451c3bdf16e38bc8b",
+    "otext.tf": "335499ada8ba97088c047022c90589d61e66dd76db27957b485c59cdb374d85c",
+    "otype.tf": "f3f7d5ee8d1d06dd7610cd627c5cd3e894e2baec5fc9ec1e99e58eed93da664a",
+    "rank.tf": "9094873f223c47da9ee3dea3effdafb503c3ecb9c8bbf7b2841a9bdeb9e7019e",
+    "sp.tf": "69783b7bb41bac711b34e2b0e8d7d6ee13b9a26b2e0e1d85d8aea2c993fcbeb1",
+    "suffix.tf": "e381a79117261e23f72c615ad68f1ad4a30a0b0f70c3f059e98a92cf7f6cc45a",
+    "typ.tf": "b17dc6dbb506526089bbaaf435bb3afad49884b5ef342bcd3e003cda2abbd34d"
+  },
+  "cases": [
+    {
+      "id": "morphology",
+      "status": "supported",
+      "reason": "accepted",
+      "passed": true,
+      "result_count": 1
+    },
+    {
+      "id": "containment",
+      "status": "supported",
+      "reason": "accepted",
+      "passed": true,
+      "result_count": 3
+    },
+    {
+      "id": "ambiguous",
+      "status": "ambiguous",
+      "reason": "intent",
+      "passed": true,
+      "result_count": null
+    },
+    {
+      "id": "unsupported",
+      "status": "unsupported",
+      "reason": "intent",
+      "passed": true,
+      "result_count": null
+    },
+    {
+      "id": "schema_mismatch",
+      "status": "abstained",
+      "reason": "candidate_mismatch",
+      "passed": true,
+      "result_count": null
+    }
+  ],
+  "quality_evidence": false,
+  "input_tokens": null,
+  "output_tokens": null,
+  "latency_s": null,
+  "estimated_cost_usd": null,
+  "accounting_note": "All five once-only live results passed before artifact assembly failed on the .tf cache directory. Preserved stdout proves statuses and native result comparisons; in-process receipt counters were lost. No inference repeated. Usage/latency/cost remain unknown, separately from fully accounted research. The live runner stopped before subsequent calls at $.01 known usage."
+}
