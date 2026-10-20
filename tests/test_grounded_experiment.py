@@ -66,6 +66,7 @@ def test_stages_preserve_proxy_and_failed_call_accounting() -> None:
     assert result.receipt.input_tokens == 11
     assert backend.requests == [request]
     assert meter.attempts[0]["stages"] == ["shape"]
+
     assert "private" not in str(meter.attempts)
 
     class Failure(PlanBackend):
@@ -77,3 +78,45 @@ def test_stages_preserve_proxy_and_failed_call_accounting() -> None:
         meter.decide(request)
     assert meter.attempts[0]["input_tokens"] is None
     assert meter.attempts[0]["stages"] == ["shape"]
+
+
+def test_failed_usage_never_becomes_zero_cost() -> None:
+    from types import SimpleNamespace
+
+    from scripts.grounded_experiment import account
+    from scripts.measure_comparison import RecordingParser
+
+    data: dict[str, Any] = {"cases": [{}]}
+    parser = RecordingParser(SimpleNamespace(schema=None), None)
+    parser.attempts = [
+        [dict(input_tokens=None, output_tokens=None, error_kind="timeout", stages=["shape"])]
+    ]
+    account(data, parser)
+    assert data["estimated_cost_usd"] is None
+    assert data["estimated_cost_usd_complete"] is False
+    assert data["cases"][0]["input_tokens"] is None
+
+
+def test_frozen_calibration_and_fresh_evaluation_remain_honest() -> None:
+    import hashlib
+    import json
+    from pathlib import Path
+
+    from scripts.grounded_experiment import BENCHMARK, DIGEST
+
+    root = Path(__file__).resolve().parents[1] / "reports/grounded-parser-2026-10-20"
+    assert hashlib.sha256(BENCHMARK.read_bytes()).hexdigest() == DIGEST
+    freeze = json.loads((root / "calibration-freeze.json").read_text())
+    reports = {
+        name: json.loads((root / "calibration" / (name + ".json")).read_text()) for name in POLICIES
+    }
+    assert select_policy(reports) == freeze["selected_policy"] == "strict"
+    for name, digest in freeze["artifacts_sha256"].items():
+        assert hashlib.sha256((root / "calibration" / name).read_bytes()).hexdigest() == digest
+    evaluation = json.loads((root / "evaluation/strict.json").read_text())
+    assert evaluation["total"] == 21 and evaluation["supported_gold"] == 12
+    assert evaluation["result_equivalent"] == 0 and evaluation["safe_negative"] == 9
+    assert evaluation["emitted_query_native_valid_rate"] is None
+    assert sum(r["attempted_backend_calls"] for r in evaluation["cases"]) == 52
+    assert sum(r["input_tokens"] for r in evaluation["cases"]) == 457086
+    assert all(r["dataset"] == "grounded-v1" for r in reports.values())

@@ -136,3 +136,11 @@ Grounded planning research (#48): [experimental strategy design](docs/design/iss
 replaces unaided predicate counting with bounded feature/DONE selection and adds
 explicit corpus/grammar context. Stage-specific policies remain research evidence;
 fresh native-gold evaluation and a separate implementation gate precede adoption.
+
+
+Grounded implementation (#51): `tf_jev.grounded.GroundedParser` is separately opt-in,
+shares checked choices/predicates/compilation with the legacy parser, uses a tagged
+feature-stop sentinel and includes the full predicted IR/projection in fidelity
+context. `GroundedPolicy` has explicit finite per-stage gates and a conservative
+serialized-context byte budget. Its default gates are unchanged, and its fresh
+experiment failed usefulness. Production defaults remain the legacy research API.
