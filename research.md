@@ -157,3 +157,10 @@ morphology and containment paths. CandidateParser is explicitly opt-in. The
 [adaptive development report](reports/jev-focus-2026-10-20/README.md) preserves
 failed experiments, uncertainty, costs and limits. Fresh evaluation precedes any
 quality/default claim; Jev remains the target backend.
+
+
+OntoTF context #59: [paired fresh-request pilot](reports/ontotf-context-2026-10-20/README.md)
+finds 7/10 versus 5/10 complete positives with a 27% input-cost increase and one
+regression. Exact native binding/target context helps selected decisions; no graph
+reasoner or second executor is needed. #60 tracks minimal opt-in production
+extraction; #57 remains the broader fresh usefulness/safety/default gate.

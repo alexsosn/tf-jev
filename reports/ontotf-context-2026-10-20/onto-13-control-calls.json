@@ -1,0 +1,211 @@
+[
+  {
+    "error_kind": null,
+    "input_tokens": 732,
+    "latency_s": 0.28009432801627554,
+    "output_tokens": 70,
+    "questions": [
+      {
+        "margin": 0.98,
+        "option_count": 5,
+        "probabilities": [
+          0.99,
+          0.0,
+          0.0,
+          0.01,
+          0.0
+        ],
+        "question": "shape",
+        "selected_index": 0,
+        "top_probability": 0.99
+      }
+    ],
+    "requested_questions": [
+      "shape"
+    ]
+  },
+  {
+    "error_kind": null,
+    "input_tokens": 1444,
+    "latency_s": 0.29670972799067385,
+    "output_tokens": 152,
+    "questions": [
+      {
+        "margin": 1.0,
+        "option_count": 13,
+        "probabilities": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "question": "atom0.type",
+        "selected_index": 12,
+        "top_probability": 1.0
+      }
+    ],
+    "requested_questions": [
+      "atom0.type"
+    ]
+  },
+  {
+    "error_kind": null,
+    "input_tokens": 8546,
+    "latency_s": 0.3578730279987212,
+    "output_tokens": 1114,
+    "questions": [
+      {
+        "margin": 0.38,
+        "option_count": 109,
+        "probabilities": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.02,
+          0.0,
+          0.0,
+          0.02,
+          0.0,
+          0.26,
+          0.0,
+          0.0,
+          0.02,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.01,
+          0.01,
+          0.01,
+          0.64
+        ],
+        "question": "atom0.pred0.feature",
+        "selected_index": 108,
+        "top_probability": 0.64
+      }
+    ],
+    "requested_questions": [
+      "atom0.pred0.feature"
+    ]
+  },
+  {
+    "error_kind": null,
+    "input_tokens": 678,
+    "latency_s": 0.37410980300046504,
+    "output_tokens": 40,
+    "questions": [
+      {
+        "margin": 1.0,
+        "option_count": 2,
+        "probabilities": [
+          0.0,
+          1.0
+        ],
+        "question": "verify",
+        "selected_index": 1,
+        "top_probability": 1.0
+      }
+    ],
+    "requested_questions": [
+      "verify"
+    ]
+  }
+]

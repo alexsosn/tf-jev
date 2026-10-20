@@ -1,0 +1,453 @@
+[
+  {
+    "error_kind": null,
+    "input_tokens": 732,
+    "latency_s": 0.3817006790195592,
+    "output_tokens": 70,
+    "questions": [
+      {
+        "margin": 0.23999999999999994,
+        "option_count": 5,
+        "probabilities": [
+          0.57,
+          0.09,
+          0.0,
+          0.01,
+          0.33
+        ],
+        "question": "shape",
+        "selected_index": 0,
+        "top_probability": 0.57
+      }
+    ],
+    "requested_questions": [
+      "shape"
+    ]
+  },
+  {
+    "error_kind": null,
+    "input_tokens": 1444,
+    "latency_s": 0.301303749991348,
+    "output_tokens": 152,
+    "questions": [
+      {
+        "margin": 0.96,
+        "option_count": 13,
+        "probabilities": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.02,
+          0.0,
+          0.98
+        ],
+        "question": "atom0.type",
+        "selected_index": 12,
+        "top_probability": 0.98
+      }
+    ],
+    "requested_questions": [
+      "atom0.type"
+    ]
+  },
+  {
+    "error_kind": null,
+    "input_tokens": 8546,
+    "latency_s": 0.35571613401407376,
+    "output_tokens": 1114,
+    "questions": [
+      {
+        "margin": 0.89,
+        "option_count": 109,
+        "probabilities": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.04,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.93,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.02
+        ],
+        "question": "atom0.pred0.feature",
+        "selected_index": 90,
+        "top_probability": 0.93
+      }
+    ],
+    "requested_questions": [
+      "atom0.pred0.feature"
+    ]
+  },
+  {
+    "error_kind": null,
+    "input_tokens": 644,
+    "latency_s": 0.25165750400628895,
+    "output_tokens": 64,
+    "questions": [
+      {
+        "margin": 0.8,
+        "option_count": 4,
+        "probabilities": [
+          0.89,
+          0.02,
+          0.09,
+          0.0
+        ],
+        "question": "atom0.pred0.operator",
+        "selected_index": 0,
+        "top_probability": 0.89
+      }
+    ],
+    "requested_questions": [
+      "atom0.pred0.operator"
+    ]
+  },
+  {
+    "error_kind": null,
+    "input_tokens": 538,
+    "latency_s": 0.246365237981081,
+    "output_tokens": 54,
+    "questions": [
+      {
+        "margin": 0.76,
+        "option_count": 3,
+        "probabilities": [
+          0.04,
+          0.86,
+          0.1
+        ],
+        "question": "atom0.pred0.count",
+        "selected_index": 1,
+        "top_probability": 0.86
+      }
+    ],
+    "requested_questions": [
+      "atom0.pred0.count"
+    ]
+  },
+  {
+    "error_kind": null,
+    "input_tokens": 774,
+    "latency_s": 0.24617863199091516,
+    "output_tokens": 165,
+    "questions": [
+      {
+        "margin": 0.43999999999999995,
+        "option_count": 14,
+        "probabilities": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.28,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.72,
+          0.0
+        ],
+        "question": "atom0.pred0.value0",
+        "selected_index": 12,
+        "top_probability": 0.72
+      }
+    ],
+    "requested_questions": [
+      "atom0.pred0.value0"
+    ]
+  },
+  {
+    "error_kind": null,
+    "input_tokens": 770,
+    "latency_s": 0.29964773697429337,
+    "output_tokens": 155,
+    "questions": [
+      {
+        "margin": 0.98,
+        "option_count": 13,
+        "probabilities": [
+          0.0,
+          0.0,
+          0.01,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.99,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "question": "atom0.pred0.value1",
+        "selected_index": 7,
+        "top_probability": 0.99
+      }
+    ],
+    "requested_questions": [
+      "atom0.pred0.value1"
+    ]
+  },
+  {
+    "error_kind": null,
+    "input_tokens": 8629,
+    "latency_s": 0.39643326902296394,
+    "output_tokens": 1104,
+    "questions": [
+      {
+        "margin": 0.98,
+        "option_count": 108,
+        "probabilities": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.01,
+          0.99
+        ],
+        "question": "atom0.pred1.feature",
+        "selected_index": 107,
+        "top_probability": 0.99
+      }
+    ],
+    "requested_questions": [
+      "atom0.pred1.feature"
+    ]
+  },
+  {
+    "error_kind": null,
+    "input_tokens": 754,
+    "latency_s": 0.25069845499820076,
+    "output_tokens": 40,
+    "questions": [
+      {
+        "margin": 0.43999999999999995,
+        "option_count": 2,
+        "probabilities": [
+          0.72,
+          0.28
+        ],
+        "question": "verify",
+        "selected_index": 0,
+        "top_probability": 0.72
+      }
+    ],
+    "requested_questions": [
+      "verify"
+    ]
+  }
+]

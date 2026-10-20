@@ -50,6 +50,12 @@ solves 6/10 supported requests, including complete morphology and containment;
 all six negative requests withhold queries. This is development evidence, not
 a fresh quality estimate or a default recommendation.
 
+A [frozen paired ontoTF-context pilot](reports/ontotf-context-2026-10-20/README.md)
+observes 7/10 correct positives with ontology context versus 5/10 control, with
+no ontology wrong emissions and all four negatives safely withheld. Input cost
+increases about 27%; one imperative case regresses. This is checkout-only
+research supporting a small opt-in integration in #60, not a default change.
+
 The first development goal is to establish whether the approach is accurate and cheap enough on real Text-Fabric queries, using a benchmark with gold natural-language ↔ native-query pairs and at least one real corpus.
 
 ## Intended public shape
