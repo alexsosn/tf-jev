@@ -44,6 +44,12 @@ The [fresh grounded-parser evaluation](reports/grounded-parser-2026-10-20/README
 also solves 0/12 supported requests. Both parsers remain experimental; the
 model-free typed compiler/CLI is available independently.
 
+[Jev repair research](reports/jev-focus-2026-10-20/README.md) identified integration
+failures and adds an opt-in CandidateParser. Its adaptive BHSA development run
+solves 6/10 supported requests, including complete morphology and containment;
+all six negative requests withhold queries. This is development evidence, not
+a fresh quality estimate or a default recommendation.
+
 The first development goal is to establish whether the approach is accurate and cheap enough on real Text-Fabric queries, using a benchmark with gold natural-language ↔ native-query pairs and at least one real corpus.
 
 ## Intended public shape
@@ -266,6 +272,27 @@ installed wheel's CI smoke creates a real tiny TF corpus and invokes the
 
 
 ## Experimental opt-in grounded parser
+
+The newer experimental `tf_jev.candidate.CandidateParser` uses bounded choices to
+propose a complete typed candidate and a deterministic explanation of that exact
+candidate for final fidelity verification. It preserves the .8/.2 final gate,
+all proposal distributions, schema checks and budgets. Result `confidence` is
+the weakest selected proposal probability, which may be below .8 even for an
+accepted candidate; it is **not calibrated whole-query confidence**. Stage-specific
+gates are rejected. Opt in explicitly:
+
+```python
+from tf_jev.candidate import CandidateParser
+from tf_jev.jev import JevBackend
+
+with JevBackend(model="jev-1.14.0") as backend:
+    result = CandidateParser(schema, backend).parse("Return feminine singular substantives.")
+```
+
+Use the actual loaded corpus schema; `result.query` exists only after acceptance.
+The legacy parser, grounded parser and default Jev version remain unchanged.
+See the [repair report](reports/jev-focus-2026-10-20/README.md) for remaining failures
+and the required fresh evaluation.
 
 `tf_jev.grounded.GroundedParser` adds actual corpus/grammar context and selects
 additional features or a tagged stop instead of guessing a predicate count. It

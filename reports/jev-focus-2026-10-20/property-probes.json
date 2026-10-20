@@ -1,0 +1,181 @@
+{
+  "complete": true,
+  "model": "jev-1.14.0",
+  "package_commit": "1bd1be2abdc2845ce26a912e76861812f73b9c93",
+  "rows": [
+    {
+      "accepted": false,
+      "call": {
+        "error_kind": null,
+        "input_tokens": 442,
+        "latency_s": 0.30263015200034715,
+        "output_tokens": 41,
+        "questions": [
+          {
+            "margin": 0.18,
+            "option_count": 2,
+            "probabilities": [
+              0.59,
+              0.41
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.59
+          }
+        ],
+        "requested_questions": [
+          "redacted"
+        ]
+      },
+      "correct": true,
+      "expected": true,
+      "feature_index": 72,
+      "id": "cal-01"
+    },
+    {
+      "accepted": false,
+      "call": {
+        "error_kind": null,
+        "input_tokens": 441,
+        "latency_s": 0.26738429302349687,
+        "output_tokens": 41,
+        "questions": [
+          {
+            "margin": 0.5,
+            "option_count": 2,
+            "probabilities": [
+              0.75,
+              0.25
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.75
+          }
+        ],
+        "requested_questions": [
+          "redacted"
+        ]
+      },
+      "correct": true,
+      "expected": true,
+      "feature_index": 55,
+      "id": "cal-02"
+    },
+    {
+      "accepted": false,
+      "call": {
+        "error_kind": null,
+        "input_tokens": 443,
+        "latency_s": 0.268734143988695,
+        "output_tokens": 41,
+        "questions": [
+          {
+            "margin": 0.0,
+            "option_count": 2,
+            "probabilities": [
+              0.5,
+              0.5
+            ],
+            "question": "redacted",
+            "selected_index": 1,
+            "top_probability": 0.5
+          }
+        ],
+        "requested_questions": [
+          "redacted"
+        ]
+      },
+      "correct": false,
+      "expected": true,
+      "feature_index": 106,
+      "id": "cal-05"
+    },
+    {
+      "accepted": false,
+      "call": {
+        "error_kind": null,
+        "input_tokens": 442,
+        "latency_s": 0.24468626800808124,
+        "output_tokens": 41,
+        "questions": [
+          {
+            "margin": 0.24,
+            "option_count": 2,
+            "probabilities": [
+              0.62,
+              0.38
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.62
+          }
+        ],
+        "requested_questions": [
+          "redacted"
+        ]
+      },
+      "correct": true,
+      "expected": true,
+      "feature_index": 35,
+      "id": "cal-03"
+    },
+    {
+      "accepted": true,
+      "call": {
+        "error_kind": null,
+        "input_tokens": 443,
+        "latency_s": 0.2747451799805276,
+        "output_tokens": 41,
+        "questions": [
+          {
+            "margin": 0.6599999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.83,
+              0.17
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.83
+          }
+        ],
+        "requested_questions": [
+          "redacted"
+        ]
+      },
+      "correct": false,
+      "expected": false,
+      "feature_index": 78,
+      "id": "cal-01"
+    },
+    {
+      "accepted": true,
+      "call": {
+        "error_kind": null,
+        "input_tokens": 429,
+        "latency_s": 0.24771846298244782,
+        "output_tokens": 41,
+        "questions": [
+          {
+            "margin": 0.6599999999999999,
+            "option_count": 2,
+            "probabilities": [
+              0.83,
+              0.17
+            ],
+            "question": "redacted",
+            "selected_index": 0,
+            "top_probability": 0.83
+          }
+        ],
+        "requested_questions": [
+          "redacted"
+        ]
+      },
+      "correct": false,
+      "expected": false,
+      "feature_index": 92,
+      "id": "cal-01"
+    }
+  ]
+}

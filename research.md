@@ -147,4 +147,13 @@ Explicit model versions (#50): [contract and development evidence](reports/model
 verify pinned 1.14 / preview response matching without default drift. Unchanged
 strict grounded planning solves 1/8 observed development positives with 1.14,
 versus 0/8 in its frozen 1.13 control; no new heldout or quality/default claim.
-A capable bounded planning backend is the main-feature research follow-up #54.
+Backend replacement #54 is deferred by user direction. Jev repair #56 investigates
+our integration before considering replacement.
+
+
+Jev repair #56: focused native-type capability context, explicit witness scope,
+property-local counts and whole-candidate semantic explanation recover complete
+morphology and containment paths. CandidateParser is explicitly opt-in. The
+[adaptive development report](reports/jev-focus-2026-10-20/README.md) preserves
+failed experiments, uncertainty, costs and limits. Fresh evaluation precedes any
+quality/default claim; Jev remains the target backend.

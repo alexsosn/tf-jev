@@ -58,3 +58,9 @@ If these conditions do not hold, preserve the benchmark and compiler work and re
 - #56 — diagnose and repair the Jev integration with controlled focused-state and
   literal-question experiments before another backend or confidence-policy change;
   freeze fresh evaluation before any new quality/default claim.
+- #56 implementation — opt-in CandidateParser proposes a complete typed candidate
+  before gated semantic fidelity verification; all uncertainty/schema/compiler
+  bounds remain explicit. Adaptive development successes do not change defaults.
+- #57 — fresh independently adjudicated native-gold evaluation of the repaired
+  Jev parser, including remaining exclusion/adjacency/exact-value failures and
+  adversarial safety; required before any quality/default recommendation.

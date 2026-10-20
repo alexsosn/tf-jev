@@ -363,3 +363,21 @@ conditions, broader alternatives, wrong scope/direction/output and unsupported
 operations. Source/native tests must show the explanation covers the actual IR,
 including negative containment, edge direction, distance and reversed projection,
 before this variant is inferred. No model/threshold changes or replacement runs.
+
+## Extraction outcome
+
+Semantic produces six native-equivalent positives out of ten supported development
+requests, with all six negatives safely withheld. Complete morphology and positive
+containment now work. Exact lexeme, negative containment and adjacency remain
+failures. Preserve all attempts; no fresh quality/default claim. #57 tracks fresh
+independent native-gold evaluation with Jev retained.
+
+Production CandidateParser is separately opt-in and rejects per-stage gate options.
+RED production import failed before source creation; native morphology, weak/final
+admission, complete explanation, SDK, witness, sentinel and bounded-failure tests
+pass. Native source inspection confirms inequality includes missing values and
+presence includes empty strings; production explanation explicitly states these.
+The installed wheel passed live NL morphology and containment with nonempty native
+results, plus all three safe negatives. Report assembly then failed on the .tf
+cache directory and lost receipt counters; smoke cost/latency/usage stay unknown,
+no calls repeated. Research accounting remains complete and separately reported.

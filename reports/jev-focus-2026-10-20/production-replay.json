@@ -1,0 +1,103 @@
+{
+  "schema_key": "4a777cf2dc316633c062e89a99580bf1f19b9c7aa2713892779b11a4c60a442c",
+  "request_equality": "structural equality; private serialization did not retain mapping insertion order",
+  "cases": [
+    {
+      "id": "cal-01",
+      "status": "supported",
+      "matched_requests": 16,
+      "native_equivalent": true
+    },
+    {
+      "id": "cal-02",
+      "status": "supported",
+      "matched_requests": 16,
+      "native_equivalent": true
+    },
+    {
+      "id": "cal-03",
+      "status": "supported",
+      "matched_requests": 8,
+      "native_equivalent": true
+    },
+    {
+      "id": "cal-04",
+      "status": "unsupported",
+      "matched_requests": 1,
+      "native_equivalent": null
+    },
+    {
+      "id": "cal-05",
+      "status": "supported",
+      "matched_requests": 8,
+      "native_equivalent": true
+    },
+    {
+      "id": "cal-06",
+      "status": "abstained",
+      "matched_requests": 6,
+      "native_equivalent": null
+    },
+    {
+      "id": "cal-07",
+      "status": "abstained",
+      "matched_requests": 6,
+      "native_equivalent": null
+    },
+    {
+      "id": "cal-08",
+      "status": "supported",
+      "matched_requests": 7,
+      "native_equivalent": true
+    },
+    {
+      "id": "cal-09",
+      "status": "ambiguous",
+      "matched_requests": 1,
+      "native_equivalent": null
+    },
+    {
+      "id": "cal-10",
+      "status": "abstained",
+      "matched_requests": 4,
+      "native_equivalent": null
+    },
+    {
+      "id": "cal-11",
+      "status": "unsupported",
+      "matched_requests": 1,
+      "native_equivalent": null
+    },
+    {
+      "id": "cal-12",
+      "status": "abstained",
+      "matched_requests": 12,
+      "native_equivalent": null
+    },
+    {
+      "id": "repair-01",
+      "status": "abstained",
+      "matched_requests": 16,
+      "native_equivalent": null
+    },
+    {
+      "id": "repair-02",
+      "status": "supported",
+      "matched_requests": 12,
+      "native_equivalent": true
+    },
+    {
+      "id": "repair-03",
+      "status": "abstained",
+      "matched_requests": 4,
+      "native_equivalent": null
+    },
+    {
+      "id": "repair-04",
+      "status": "unsupported",
+      "matched_requests": 1,
+      "native_equivalent": null
+    }
+  ],
+  "nif_words_all_verbal": true
+}

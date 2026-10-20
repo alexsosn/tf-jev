@@ -1,0 +1,160 @@
+{
+  "complete": true,
+  "model": "jev-1.14.0",
+  "protocol_sha256": "3488315ccae5a8dbca7f8e10b78aa2128f14e06d4d2875d0d9d9f95d7b6fdf9b",
+  "rows": [
+    {
+      "accepted": true,
+      "call": {
+        "error_kind": null,
+        "input_tokens": 1438,
+        "latency_s": 0.693763179006055,
+        "output_tokens": 152,
+        "questions": [
+          {
+            "margin": 0.88,
+            "option_count": 13,
+            "probabilities": [
+              0.0,
+              0.0,
+              0.02,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.02,
+              0.04,
+              0.92
+            ],
+            "question": "atom0.type",
+            "selected_index": 12,
+            "top_probability": 0.92
+          }
+        ],
+        "requested_questions": [
+          "atom0.type"
+        ]
+      },
+      "correct": true,
+      "id": "cal-01"
+    },
+    {
+      "accepted": true,
+      "call": {
+        "error_kind": null,
+        "input_tokens": 1439,
+        "latency_s": 0.3110261420079041,
+        "output_tokens": 152,
+        "questions": [
+          {
+            "margin": 0.97,
+            "option_count": 13,
+            "probabilities": [
+              0.0,
+              0.0,
+              0.01,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.01,
+              0.0,
+              0.98
+            ],
+            "question": "atom0.type",
+            "selected_index": 12,
+            "top_probability": 0.98
+          }
+        ],
+        "requested_questions": [
+          "atom0.type"
+        ]
+      },
+      "correct": true,
+      "id": "cal-02"
+    },
+    {
+      "accepted": true,
+      "call": {
+        "error_kind": null,
+        "input_tokens": 1437,
+        "latency_s": 0.3369784179958515,
+        "output_tokens": 152,
+        "questions": [
+          {
+            "margin": 0.96,
+            "option_count": 13,
+            "probabilities": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.98,
+              0.0,
+              0.0,
+              0.02
+            ],
+            "question": "atom0.type",
+            "selected_index": 9,
+            "top_probability": 0.98
+          }
+        ],
+        "requested_questions": [
+          "atom0.type"
+        ]
+      },
+      "correct": true,
+      "id": "cal-03"
+    },
+    {
+      "accepted": true,
+      "call": {
+        "error_kind": null,
+        "input_tokens": 1441,
+        "latency_s": 0.29232071500155143,
+        "output_tokens": 152,
+        "questions": [
+          {
+            "margin": 1.0,
+            "option_count": 13,
+            "probabilities": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "question": "atom0.type",
+            "selected_index": 7,
+            "top_probability": 1.0
+          }
+        ],
+        "requested_questions": [
+          "atom0.type"
+        ]
+      },
+      "correct": true,
+      "id": "cal-08"
+    }
+  ],
+  "runner_sha256": "f85bdfc32b1ed4d481b420b66e5f80a87552cac548f4e7b3ff719803bef69bd1"
+}

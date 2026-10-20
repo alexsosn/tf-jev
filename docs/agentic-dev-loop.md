@@ -85,3 +85,10 @@ Any behavior-changing fix invalidates the old review and requires re-review of t
 Merge only after the exact head is green and independently reviewed. Close the issue, reconcile the backlog and take the next unblocked item.
 
 If the feature backlog is empty or blocked, continue performance, stability, ergonomics, documentation, evaluation quality, security, release engineering and edge cases under the same loop.
+
+When diagnosing model failures, distinguish a wrong semantic choice from a correct
+proposal rejected by an admission gate. An exclusive-choice distribution over
+several equally valid required properties is not whole-query confidence. Inspect
+bounded complete hypotheses and native results before blaming/replacing the
+backend. Diagnostic hypotheses never count as accepted user successes. Preserve
+all observed failures; adaptive development cases cannot become fresh evaluation.
