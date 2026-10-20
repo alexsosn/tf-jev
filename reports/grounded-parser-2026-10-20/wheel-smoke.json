@@ -1,0 +1,29 @@
+{
+  "installed_wheel": true,
+  "editable_import": false,
+  "fixture": "synthetic native TF",
+  "results": [
+    {
+      "case": "positive",
+      "status": "abstained",
+      "reason": "low_confidence",
+      "query_emitted": false,
+      "result_count": null,
+      "calls": 3,
+      "input_tokens": 4251,
+      "output_tokens": 266
+    },
+    {
+      "case": "negative",
+      "status": "unsupported",
+      "reason": "intent",
+      "query_emitted": false,
+      "result_count": null,
+      "calls": 1,
+      "input_tokens": 1273,
+      "output_tokens": 70
+    }
+  ],
+  "wheel_sha256": "394990a36a6e3ad477c68ba552344ffa588ee4977895f403fc67c919a23be464",
+  "production_source_commit": "35eb04e"
+}

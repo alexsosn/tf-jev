@@ -40,6 +40,9 @@ Neither is recommended as a default natural-language parser.
 localized the blocking stages; simple prompt changes did not establish a safe fix.
 [Grounded stage research](reports/grounded-planning-2026-10-20/README.md) improves
 selective local decisions, but does not yet establish end-to-end parser quality.
+The [fresh grounded-parser evaluation](reports/grounded-parser-2026-10-20/README.md)
+also solves 0/12 supported requests. Both parsers remain experimental; the
+model-free typed compiler/CLI is available independently.
 
 The first development goal is to establish whether the approach is accurate and cheap enough on real Text-Fabric queries, using a benchmark with gold natural-language ↔ native-query pairs and at least one real corpus.
 
@@ -253,3 +256,35 @@ to interpret natural-language requests. The experimental natural-language parser
 failed the measured usefulness gate in #11/#12 and remains research-only. The
 installed wheel's CI smoke creates a real tiny TF corpus and invokes the
 `tf-jev` console command for compilation, bounded execution, and failure.
+
+
+## Experimental opt-in grounded parser
+
+`tf_jev.grounded.GroundedParser` adds actual corpus/grammar context and selects
+additional features or a tagged stop instead of guessing a predicate count. It
+preserves native compilation, bounded retrieval, diagnostics and explicit refusal.
+The legacy parser/default policy stays unchanged. This strategy **failed the fresh
+usefulness gate** and is available for research, not as a recommended NL interface.
+Full schema extraction is required and can be expensive on a large corpus.
+
+```python
+from tf_jev.grounded import GroundedParser
+from tf_jev.jev import JevBackend
+from tf_jev.schema import extract_schema
+
+schema = extract_schema(api)  # loaded native Text-Fabric API; full coverage
+with JevBackend() as backend:  # explicitly configured environment credential
+    result = GroundedParser(schema, backend).parse("Return words annotated as verbs.")
+    print(result.status.value, result.reason)
+    if result.query is not None:
+        print(result.query)  # compilation alone never executes it
+```
+
+Abstention is an expected outcome, including for this simple example. Every
+non-supported status clears the query/IR/projection. `GroundedPolicy` optionally
+accepts validated `Gate` objects for shape/type/feature stages; its defaults remain
+.8 probability/.2 margin. These gates and the weakest decision probability are not
+calibrated whole-query correctness. Its context budget counts conservative escaped
+SDK-shaped JSON bytes, including descriptions. No benchmark/gold or corpus passage
+enters production prompts. See [design/protocol](docs/research/issue-51-grounded-parser.md)
+and the [complete measured no-go](reports/grounded-parser-2026-10-20/README.md).

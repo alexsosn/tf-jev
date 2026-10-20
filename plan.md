@@ -50,6 +50,6 @@ If these conditions do not hold, preserve the benchmark and compiler work and re
 
 - #48 — completed grounded stage diagnostics and stage-specific development calibration;
   no production parser change or fresh end-to-end quality claim.
-- #51 — freeze fresh native-gold evaluation and implement the separately opt-in
-  grounded planner under the researched design and full rollout gates.
+- #51 — implemented the separately opt-in grounded planner; fresh native-gold
+  whole-trajectory evaluation failed usefulness (0/12 supported), so no default change.
 - #50 — explicit model-version support and separate Jev 1.14 preview comparison.

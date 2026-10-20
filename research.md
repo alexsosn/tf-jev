@@ -134,3 +134,10 @@ and [measured report](reports/grounded-planning-2026-10-20/README.md) find impro
 selective support acceptance, 24/24 correct type winners and 46/50 correct
 oracle-conditioned next-feature choices. Isolated stages are not parser success;
 no production prompt/threshold change or fresh end-to-end quality claim is made.
+
+
+Predicted grounded parser (#51): the [fresh whole-trajectory report](reports/grounded-parser-2026-10-20/README.md)
+finds 0/8 supported calibration successes under each of three preregistered policies
+and 0/12 fresh evaluation successes for the frozen strict tie winner. All negatives
+are withheld. The opt-in implementation does not change the no-default decision;
+local oracle-conditioned stage gains do not establish a working parser.
