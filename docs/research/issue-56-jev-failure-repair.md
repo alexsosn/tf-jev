@@ -297,3 +297,29 @@ all .8/.2 single-valued/fidelity gates, limits, values and compiler are unchange
 No threshold tuning or model/observation replacement. Require actual whole-query
 morphology and relation successes, inspect all constraints/ordered projection, and
 keep public default prohibition absent fresh evaluation.
+
+Routed classifies both new positive structures correctly (.97 relation/.80
+relation), retains full cal-01 morphology and all negatives safely. Adjacency
+stops at literal-alternative count: correct 1 wins only .55 because the request
+mentions verb and substantive values for DIFFERENT nodes; the count question
+never names its current node/feature. Containment and cal-06 stop at child type:
+they incorrectly repeat phrase/clause instead of word. Type context deleted all
+history, and 'being requested' primes the returned parent instead of the witness.
+These are separate scope omissions visible in actual prompts/distributions.
+
+Freeze scoped on the same 16 DEVELOPMENT cases once, inheriting routed:
+- child/second-node type context adds only the already-predicted first node type
+  and explicit target role; prompt asks about that child/witness rather than the
+  requested output. Same-type pairs remain allowed. First-type behavior unchanged.
+- alternative count names the current native property/meaning, node type and
+  explicit parent/child/first/second role; count criteria describe one/two/three
+  OR alternatives for THAT property, not values mentioned for other nodes/features.
+  Its context carries only original request and those local facts.
+No choices/domains, gates, model, retrieval/compiler or final fidelity change.
+
+Before scoped inference, source inspection also shows focused fidelity context
+removed the relation-token legend: candidate IR encodes containment/adjacency as
+native enum values such as [[ and <: without explaining them to the verifier.
+Restore the closed compiler-relation meaning map ONLY at verification. These are
+code-owned native semantics, not corpus passages or extra schema inventory.
+Add this prerequisite to scoped; keep older variants/outcomes byte-identical.

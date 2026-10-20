@@ -268,3 +268,46 @@ def test_routed_distinguishes_witness_structure_from_returned_column_count(tiny_
     assert isinstance(shape, ChoiceQuestion)
     assert "witness" in (shape.options[0].description or "")
     assert "containment" in (shape.options[1].description or "")
+
+
+def test_scoped_count_and_child_type_use_only_relevant_role_state(tiny_api: Any) -> None:
+    from tf_jev.ir import RelationOp
+
+    selected = plan() | {
+        "shape": "relation",
+        "atom0.type": "phrase",
+        "atom0.pred0.feature": "STOP",
+        "atom1.type": "word",
+        "atom1.pred0.feature": "sp",
+        "atom1.pred0.operator": "=",
+        "atom1.pred0.count": "1",
+        "atom1.pred0.value0": "verb",
+        "relation": RelationOp.EMBEDS.value,
+        "output": "[0]",
+    }
+    backend = PlanBackend(selected)
+    result = FocusedParser(extract_schema(tiny_api), backend, variant="scoped").parse(
+        "Return phrases containing a word annotated as a verb."
+    )
+    assert result.status is ParseStatus.SUPPORTED and result.query
+    assert run_template(tiny_api, result.query).results == ((10, 3), (12, 6), (13, 8))
+    child = next(r for r in backend.requests if "atom1.type" in r.questions)
+    assert child.context["planned_first_type"] == "phrase"
+    assert "second" in child.questions["atom1.type"].prompt
+    count = next(r for r in backend.requests if "atom1.pred0.count" in r.questions)
+    assert count.context["property_id"] == "sp"
+    assert "selected" not in count.context
+    assert "second" in count.questions["atom1.pred0.count"].prompt
+
+
+def test_scoped_verifier_gets_native_relation_meanings(tiny_api: Any) -> None:
+    import json
+
+    backend = PlanBackend(plan())
+    result = FocusedParser(extract_schema(tiny_api), backend, variant="scoped").parse(
+        "Return verbs."
+    )
+    assert result.status is ParseStatus.SUPPORTED
+    legend = json.loads(backend.requests[-1].context["relation_meanings"])
+    assert "contains" in legend["[["]
+    assert "immediately" in legend["<:"]

@@ -9,7 +9,7 @@ from typing import TypeVar
 from tf_jev.decisions import ChoiceQuestion, DecisionRequest, Option
 from tf_jev.grounded import GRAMMAR, GroundedParser, _GroundedRun, _json
 from tf_jev.ir import Predicate, PredicateOp
-from tf_jev.parser import ParseStatus, _Run, _safe_description, _Stop
+from tf_jev.parser import _RELATIONS, ParseStatus, _Run, _safe_description, _Stop
 from tf_jev.schema import CorpusSchema, NodeFeature
 
 T = TypeVar("T")
@@ -38,6 +38,7 @@ class FocusedParser(GroundedParser):
             "concrete",
             "verified",
             "routed",
+            "scoped",
         ):
             raise ValueError("unknown research variant")
 
@@ -65,12 +66,29 @@ class _FocusedRun(_GroundedRun):
             "concrete",
             "verified",
             "routed",
+            "scoped",
         ) and self.stage.endswith(".type"):
-            return {
+            type_context = {
                 "request": context["request"],
                 "contract": context["contract"],
                 "types": _json(json.loads(self.corpus())["types"]),
             }
+            if parser.variant == "scoped" and self.focus["index"] == 1:
+                type_context["planned_first_type"] = self.state["atom0.type"]
+                type_context["target_role"] = (
+                    "child witness" if self._shape == "without" else "second related node"
+                )
+            return type_context
+        if parser.variant == "scoped" and self.stage.endswith(".count"):
+            f = json.loads(self.state[self.stage.removesuffix(".count") + ".feature"])
+            return dict(
+                request=self.request,
+                contract=context["contract"],
+                object_type=str(self.focus["object_type"]),
+                property_id=f["name"],
+                property_meaning=_safe_description(f["description"] or f["name"]),
+                role=_scope(self._shape, self.focus["index"]),
+            )
         if self.stage in ("shape", "verify"):
             context["grammar"] = GRAMMAR
         if self.stage != "shape":
@@ -82,10 +100,15 @@ class _FocusedRun(_GroundedRun):
             context["focus"] = _json(self.focus)
         if self._candidate is not None:
             context["candidate"] = self._candidate
+        if parser.variant == "scoped" and self.stage == "verify":
+            context["relation_meanings"] = _json({r.value: d for r, d in _RELATIONS.items()})
         return context
 
     def shape(self) -> str:
-        if not isinstance(self.parser, FocusedParser) or self.parser.variant != "routed":
+        if not isinstance(self.parser, FocusedParser) or self.parser.variant not in (
+            "routed",
+            "scoped",
+        ):
             return super().shape()
         self._shape = self.choose(
             "shape",
@@ -126,7 +149,7 @@ class _FocusedRun(_GroundedRun):
     def gate(self, name: str) -> tuple[float, float]:
         if (
             isinstance(self.parser, FocusedParser)
-            and self.parser.variant in ("ranked", "concrete", "verified", "routed")
+            and self.parser.variant in ("ranked", "concrete", "verified", "routed", "scoped")
             and name.endswith(".feature")
         ):
             return 0.0, 0.0  # proposal ranking only; semantic check below retains original gate
@@ -142,6 +165,7 @@ class _FocusedRun(_GroundedRun):
             "concrete",
             "verified",
             "routed",
+            "scoped",
         ) and name.endswith(".type"):
             role = self.focus["index"]
             assert isinstance(role, int)
@@ -154,6 +178,15 @@ class _FocusedRun(_GroundedRun):
             )
             prompt = "Which corpus object type is being requested"
             prompt += f" for the {target}?" if target else "?"
+            if parser.variant == "scoped" and role == 1:
+                prompt = (
+                    "Select the native object type of the excluded child witness, "
+                    "NOT its returned parent."
+                    if self._shape == "without"
+                    else "Select the native object type of the second related node (the witness), "
+                    "which is not necessarily the returned node."
+                )
+                prompt += " The two node roles may have identical types."
             options = [(v, json.loads(d)["name"]) for v, d in options]
         if parser.variant in (
             "literal",
@@ -162,6 +195,7 @@ class _FocusedRun(_GroundedRun):
             "concrete",
             "verified",
             "routed",
+            "scoped",
         ) and name.endswith(".operator"):
             feature = json.loads(self.state[name.removesuffix(".operator") + ".feature"])
             prompt = (
@@ -175,6 +209,20 @@ class _FocusedRun(_GroundedRun):
                 if isinstance(value, PredicateOp)
                 else (value, description)
                 for value, description in options
+            ]
+        if parser.variant == "scoped" and name.endswith(".count"):
+            f = json.loads(self.state[name.removesuffix(".count") + ".feature"])
+            scope = _scope(self._shape, self.focus["index"])
+            prompt = _safe_description(
+                f"How many OR-alternative values are requested for annotation {f['name']} "
+                f"({f['description'] or f['name']}) on the {scope} "
+                f"of type {self.focus['object_type']}? "
+                "Count values of THIS property on THIS node only, "
+                "not values for other properties/nodes."
+            )
+            options = [
+                (v, f"{d}: exactly {d} OR-alternative value(s) for this property on this node")
+                for v, d in options
             ]
         proposal = super().choose(name, prompt, options)
         if parser.variant in ("ranked", "concrete") and name.endswith(".feature"):
@@ -237,6 +285,14 @@ class _FocusedRun(_GroundedRun):
             if accepted != "required":
                 raise _Stop(ParseStatus.ABSTAINED, "predicate_not_required")
         return predicate
+
+
+def _scope(shape: str | None, index: object) -> str:
+    if shape == "without":
+        return "returned parent" if index == 0 else "excluded child witness"
+    if shape == "relation":
+        return "first-mentioned node" if index == 0 else "second-mentioned node"
+    return "requested output node"
 
 
 def type_probe(request: DecisionRequest, variant: str) -> DecisionRequest:
