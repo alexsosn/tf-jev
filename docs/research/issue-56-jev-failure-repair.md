@@ -104,3 +104,33 @@ format elements and do not isolate their individual contribution. No gold is
 passed; no type is removed; no threshold changes; all observations/errors remain.
 These are diagnostic type choices, never end-to-end successes. Continue the .10
 USD cumulative known-usage budget; source hashes/version checks still precede calls.
+
+The 16 type probes returned without errors. Exact focused controls selected three
+wrong _atom types; removing predicted focus/history made all four winners correct.
+Plain native names/direct wording kept all four winners correct; two pass .8/.2.
+Reversing that same set keeps all four winners correct; three pass. This implicates
+our supplied planning history/format in wrong type selection, but confidence and
+ordering remain issues. No threshold is changed and type success is not parser
+success. The probe's initial test-only union-narrowing type errors were corrected
+without changing its runtime implementation or the recorded outcomes.
+
+Next fixed type probe, before calls: the same four cases, one call each, plain
+native names/direct prompt as above, adding ONLY compact native type capabilities
+(name, slot role, attested feature names) from each captured unchanged CONTROL's
+corpus context. No predicted shape/history, feature definitions, relation/operator
+lists or gold. This tests restoring relevant type evidence rather than deleting
+necessary grounding together with distracting state. Same gates/model/budget.
+
+All four compact-capability type probes choose the intended type and pass the
+unchanged gate (.92/.98/.98/1.00). This is development-only, fixed-order and small-N;
+it supports restoring relevant evidence, not a general accuracy claim.
+
+Next freeze one whole-trajectory development variant: `attested` uses focused state
+and literal operator criteria, except its type question uses request+contract,
+plain native names/direct prompt and compact type capabilities (slot role/attested
+feature names) from the FULL actual schema. No predicted history enters type
+classification. Parent/child target role wording is retained for two-node queries;
+this extra scope requirement is necessary to avoid asking for the parent twice.
+Use all 12 development cases once, same model/gates/budget, native gold/source gates
+and public/private metering. No default change. All other choices/predicate limits,
+retrieval and verification remain unchanged. RED-first tests precede this helper.
