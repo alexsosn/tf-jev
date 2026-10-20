@@ -111,3 +111,31 @@ $.042/M input and free output. Current ontoTF runtime consulted at the pinned
 commit: src/tfont/xml_mappings.py and researcher-first-xml-contract.xml. No graph
 reasoner, HTTP ontology fetching or second executor is introduced. This pilot
 measures additional native-binding/target-label context only.
+
+## Observed outcome (no post-result tuning)
+
+Complete 28-trial pilot: control 5/10 native-equivalent positives, 1 wrong emitted
+positive, 4/4 safe negatives; ontology 7/10 equivalent positives, 0 wrong emissions,
+4/4 safe negatives. Three ontology-only wins (proper-noun POS, explicit broad
+Noun alternatives, plural-adjective containment), one control-only win (imperative
+second-person), four shared positive wins. Negative containment and exact lexeme
+remain failures in both arms. Eight deterministic adapter/runner tests now pass.
+
+Known usage: 258 calls, 795,747 input / 88,815 output tokens, no API errors or
+unknown usage; estimated model cost $.033421374. Ontology input cost +26.9% with
+10 more calls; no efficiency improvement claim. Complete intent audit must
+corroborate native equivalence, including control's redundant sp=verb on the
+ImperativeVerb domain. A wrong control nametype-presence predicate is not proper-
+noun POS, even if both can be related to names.
+
+The predeclared opt-in adoption gate passes on this small pilot. Focused #60 owns
+production extraction with its own research/RED/exact-head/wheel/review gates;
+#57 retains broader fresh evaluation/default ownership. This PR remains research-
+only: no package/dependency/default change or broad quality claim.
+
+Adversarial review found a UTF-16 declaration bypass in the research XML byte
+check. RED test accepted a UTF-16 DTD; fix decodes strict UTF-8 before checking
+XML declarations, then GREEN. This was AFTER the once-only study, whose pinned
+catalog is UTF-8. Preserve original source commit in reports; replay every actual
+model request through the hardened adapter without new inference to verify the
+measured path is unchanged. No model outcome, catalog or gold was replaced.

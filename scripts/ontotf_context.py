@@ -44,8 +44,8 @@ def load_catalog(
 ) -> tuple[Binding, ...]:
     if schema.coverage.mode != "full" or path.stat().st_size > 65536:
         raise ValueError("catalog/schema budget")
-    raw = path.read_bytes()
-    if b"<!" in raw:
+    raw = path.read_bytes().decode("utf-8")
+    if "<!" in raw:
         raise ValueError("XML declarations/entities are not supported")
     root = ET.fromstring(raw)
     if (

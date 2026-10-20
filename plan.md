@@ -64,3 +64,8 @@ If these conditions do not hold, preserve the benchmark and compiler work and re
 - #57 — fresh independently adjudicated native-gold evaluation of the repaired
   Jev parser, including remaining exclusion/adjacency/exact-value failures and
   adversarial safety; required before any quality/default recommendation.
+
+- #59 — completed frozen paired ontoTF-context pilot; positive limited opt-in
+  adoption gate, with regression/cost limits and no package/default change.
+- #60 — extract only the measured bounded ontology metadata adapter into an
+  explicitly opt-in public boundary, with separate production RED/wheel/review gates.

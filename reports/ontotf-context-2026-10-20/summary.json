@@ -1,0 +1,89 @@
+{
+  "arms": {
+    "control": {
+      "supported": 6,
+      "equivalent": 5,
+      "safe_negative": 4,
+      "wrong_emissions": 1,
+      "calls": 124,
+      "input_tokens": 350674,
+      "output_tokens": 42926,
+      "errors": 0,
+      "unknown_usage": 0,
+      "backend_latency_s": 40.66132619229029,
+      "native_exact": 4,
+      "estimated_cost_usd": 0.014728308,
+      "independently_adjudicated_intent_correct": 5
+    },
+    "ontology": {
+      "supported": 7,
+      "equivalent": 7,
+      "safe_negative": 4,
+      "wrong_emissions": 0,
+      "calls": 134,
+      "input_tokens": 445073,
+      "output_tokens": 45889,
+      "errors": 0,
+      "unknown_usage": 0,
+      "backend_latency_s": 45.14152805603226,
+      "native_exact": 7,
+      "estimated_cost_usd": 0.018693066,
+      "independently_adjudicated_intent_correct": 7
+    }
+  },
+  "paired": [
+    {
+      "id": "onto-01",
+      "control": false,
+      "ontology": true
+    },
+    {
+      "id": "onto-02",
+      "control": true,
+      "ontology": true
+    },
+    {
+      "id": "onto-03",
+      "control": true,
+      "ontology": true
+    },
+    {
+      "id": "onto-04",
+      "control": false,
+      "ontology": true
+    },
+    {
+      "id": "onto-05",
+      "control": true,
+      "ontology": true
+    },
+    {
+      "id": "onto-06",
+      "control": true,
+      "ontology": false
+    },
+    {
+      "id": "onto-07",
+      "control": false,
+      "ontology": true
+    },
+    {
+      "id": "onto-08",
+      "control": false,
+      "ontology": false
+    },
+    {
+      "id": "onto-09",
+      "control": false,
+      "ontology": false
+    },
+    {
+      "id": "onto-10",
+      "control": true,
+      "ontology": true
+    }
+  ],
+  "ontology_only": 3,
+  "control_only": 1,
+  "both": 4
+}

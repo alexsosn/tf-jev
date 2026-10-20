@@ -1,0 +1,111 @@
+{
+  "raw_oracle_counts": {
+    "onto-01": 36,
+    "onto-02": 224,
+    "onto-03": 1203,
+    "onto-04": 154511,
+    "onto-05": 39870,
+    "onto-06": 4306,
+    "onto-07": 2857,
+    "onto-08": 35849,
+    "onto-09": 138,
+    "onto-10": 24498
+  },
+  "emissions": [
+    {
+      "id": "onto-01",
+      "arm": "control",
+      "native_set_equivalent": false,
+      "intent_equivalent": false,
+      "rationale": "Wrong property presence: nametype present is not the requested proper-noun POS category."
+    },
+    {
+      "id": "onto-01",
+      "arm": "ontology",
+      "native_set_equivalent": true,
+      "intent_equivalent": true,
+      "rationale": "All required native conditions/direction/columns exactly match independently reviewed gold."
+    },
+    {
+      "id": "onto-02",
+      "arm": "ontology",
+      "native_set_equivalent": true,
+      "intent_equivalent": true,
+      "rationale": "All required native conditions/direction/columns exactly match independently reviewed gold."
+    },
+    {
+      "id": "onto-02",
+      "arm": "control",
+      "native_set_equivalent": true,
+      "intent_equivalent": true,
+      "rationale": "All required native conditions/direction/columns exactly match independently reviewed gold."
+    },
+    {
+      "id": "onto-03",
+      "arm": "control",
+      "native_set_equivalent": true,
+      "intent_equivalent": true,
+      "rationale": "All required native conditions/direction/columns exactly match independently reviewed gold."
+    },
+    {
+      "id": "onto-03",
+      "arm": "ontology",
+      "native_set_equivalent": true,
+      "intent_equivalent": true,
+      "rationale": "All required native conditions/direction/columns exactly match independently reviewed gold."
+    },
+    {
+      "id": "onto-04",
+      "arm": "ontology",
+      "native_set_equivalent": true,
+      "intent_equivalent": true,
+      "rationale": "All required native conditions/direction/columns exactly match independently reviewed gold."
+    },
+    {
+      "id": "onto-05",
+      "arm": "control",
+      "native_set_equivalent": true,
+      "intent_equivalent": true,
+      "rationale": "All required native conditions/direction/columns exactly match independently reviewed gold."
+    },
+    {
+      "id": "onto-05",
+      "arm": "ontology",
+      "native_set_equivalent": true,
+      "intent_equivalent": true,
+      "rationale": "All required native conditions/direction/columns exactly match independently reviewed gold."
+    },
+    {
+      "id": "onto-06",
+      "arm": "control",
+      "native_set_equivalent": true,
+      "intent_equivalent": true,
+      "rationale": "ImperativeVerb is a verbal category by native vt metadata and pinned ontology mapping; sp=verb is redundant on the actual imperative word domain."
+    },
+    {
+      "id": "onto-07",
+      "arm": "ontology",
+      "native_set_equivalent": true,
+      "intent_equivalent": true,
+      "rationale": "All required native conditions/direction/columns exactly match independently reviewed gold."
+    },
+    {
+      "id": "onto-10",
+      "arm": "ontology",
+      "native_set_equivalent": true,
+      "intent_equivalent": true,
+      "rationale": "All required native conditions/direction/columns exactly match independently reviewed gold."
+    },
+    {
+      "id": "onto-10",
+      "arm": "control",
+      "native_set_equivalent": true,
+      "intent_equivalent": true,
+      "rationale": "All required native conditions/direction/columns exactly match independently reviewed gold."
+    }
+  ],
+  "actual_model_requests_replayed": 258,
+  "imperative_words_all_verbal": true,
+  "xml_hardening_preserves_recorded_requests": true,
+  "review_method": "Separate skeptical pass from NL intent/native feature definitions and raw type/feature/slot sets; no model calls or altered gold."
+}

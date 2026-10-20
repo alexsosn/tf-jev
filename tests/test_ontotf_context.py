@@ -178,3 +178,10 @@ def test_study_requires_explicit_network_opt_in(tmp_path: Path, monkeypatch: Any
             ]
         )
     assert not (tmp_path / "out").exists()
+
+
+def test_non_utf8_xml_cannot_bypass_declaration_guard(tiny_api: Any, tmp_path: Path) -> None:
+    p = tmp_path / "catalog.xml"
+    p.write_bytes(('<!DOCTYPE mappings [<!ENTITY x "ignored">]>' + xml(row())).encode("utf-16"))
+    with pytest.raises(ValueError):
+        load_catalog(p, extract_schema(tiny_api), corpus="tiny", version="1")
