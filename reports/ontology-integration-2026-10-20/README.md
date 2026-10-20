@@ -22,3 +22,30 @@ No native option is removed. This path is not claimed to improve semantic qualit
 The [design](../../docs/design/issue-60-ontology-context.md) records RED/implementation
 and installed-wheel once-only smoke protocol before inference. No ontoTF package,
 legacy release machinery, HTTP ontology fetch or second executor is added.
+
+## Installed-wheel live smoke (once only)
+
+[Smoke artifact](wheel-smoke.json) records exact source 4126a4f, wheel digest,
+synthetic fixture source hashes and catalog digest, all 27 API attempts, five
+case results, usage/errors/latency. The wheel ran outside the checkout with
+Jev 1.14.0 / SDK 0.7.4, no retries. It returned the intended nonempty feminine-
+singular noun result (node2); ambiguous complements, unsupported per-phrase
+counting and a named missing annotation all withheld queries safely.
+
+The additional positive containment case FAILED with unsupported/no_candidates.
+All five calls on that trajectory used unmapped scopes, so no added ontology
+context was sent there. No rerun/replacement, prompt tuning or claim of complete
+smoke success. Native/SDK tests and the historical BHSA containment replay pass,
+but this wording/fixture/model trajectory is a preserved live usability failure;
+#57 must investigate coverage before any quality/default recommendation.
+
+All 27 calls have complete returned usage and no API errors: 24,096 input /
+1,987 output tokens, 9.214 s summed measured backend time, estimated $0.001012032
+at the rechecked $.042/M input/free-output rate. Full accounting was saved after
+each call before another request. The live runner correctly exited failure for
+the containment miss; that result is not reclassified as a passed positive.
+
+The local package feature is explicitly opt-in and preserves the old measured
+request path. It is not a release/default recommendation or proof that growing
+ontology coverage solves structural planning. The overflow retrieval path remains
+deterministically tested only, not a new quality estimate.

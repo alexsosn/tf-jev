@@ -94,3 +94,13 @@ attempt's usage/error/latency atomically before a further call, save results per
 case, never replace outcomes. Inputs/results are packaging regression, not fresh
 quality evidence. Recheck official price before client creation. Native expected
 sets derive directly from fixture annotations/slots, with no gold in model context.
+
+## Live outcome
+
+Once-only installed wheel smoke: morphology positive and all three negatives
+pass; additional containment positive fails unsupported/no_candidates. Preserve
+that failure without rerun. All containment stage diagnostics were unmapped, so
+no ontology payload was added on that trajectory. Twenty-seven calls, all usage
+known, no API errors, $.001012032. #57 owns further usefulness/structural coverage;
+no default or complete-success claim. Exact historical production replay still
+matches all 134 requests/results.
