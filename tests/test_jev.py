@@ -389,7 +389,7 @@ def test_requested_model_requires_exact_researched_resolution(
                 result = adapter.decide(request())
                 assert result.receipt.model == expected
                 with pytest.raises(FrozenInstanceError):
-                    result.receipt.model = "changed"
+                    result.receipt.model = "changed"  # type: ignore[misc]
             else:
                 with pytest.raises(BackendError) as error:
                     adapter.decide(request())
