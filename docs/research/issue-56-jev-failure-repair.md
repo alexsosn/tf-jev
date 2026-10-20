@@ -81,3 +81,26 @@ Before a default/quality claim, freeze independently reviewed fresh native gold;
 observed v2/grounded-v1 remain regression evidence. Exact-head complete suite,
 logically independent skeptical review and genuine installed-wheel NL morphology
 and relation positive plus safe-negative smokes finish a successful dev episode.
+
+## First results and second fixed probe
+
+Frozen source bc0f055; all 36 scheduled trajectories returned, zero API errors.
+Control emits the correct cal-08 integer query (167 clauses); focused and literal
+emit none. All four negatives are withheld by every variant. Removing context is
+not a demonstrated fix. In the captured focused trajectories, cal-01/cal-02 type
+winners become sentence_atom and cal-03 becomes phrase_atom, all below the gate.
+The actual requested types are word/word/phrase. Current focus contains shape=atom
+and the selected shape description starts with atom; corpus type descriptions are
+JSON objects, many names contain _atom, and word is last in native type order.
+These are possible terminology/format/order interactions, not proven causes.
+
+Before further calls, freeze 16 type-only observations: cal-01, cal-02, cal-03,
+cal-08, using the ACTUAL type question captured from the focused predicted run.
+For each case, once in order: exact captured control; request+contract-only state
+(same prompt/options); that state plus direct 'Which corpus object type is being
+requested?' wording and plain native type-name descriptions; reverse the latter
+options with labels/mappings preserved. The last two change multiple wording/
+format elements and do not isolate their individual contribution. No gold is
+passed; no type is removed; no threshold changes; all observations/errors remain.
+These are diagnostic type choices, never end-to-end successes. Continue the .10
+USD cumulative known-usage budget; source hashes/version checks still precede calls.

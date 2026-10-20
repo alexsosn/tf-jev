@@ -66,3 +66,26 @@ def test_literal_variant_roundtrips_actual_sdk(tiny_api: Any, monkeypatch: Any) 
         lambda schema, backend: FocusedParser(schema, backend, variant='literal'),
     )
     integration.test_complete_parser_roundtrips_real_sdk(tiny_api)
+
+
+@pytest.mark.parametrize('variant', ['control', 'request_only', 'plain', 'reverse'])
+def test_type_probe_keeps_all_corpus_types_and_local_labels(tiny_api: Any, variant: str) -> None:
+    from scripts.jev_focus import type_probe
+
+    backend = PlanBackend(plan())
+    FocusedParser(extract_schema(tiny_api), backend).parse('Return verbs.')
+    base = backend.requests[1]
+    changed = type_probe(base, variant)
+    question = next(iter(changed.questions.values()))
+    original = next(iter(base.questions.values()))
+    assert set(question.labels) == set(original.labels)
+    if variant == 'control':
+        assert changed == base
+    else:
+        assert set(changed.context) == {'request', 'contract'}
+        assert changed.context['request'] == 'Return verbs.'
+        if variant in ('plain', 'reverse'):
+            import json
+            mapping = {o.label: json.loads(o.description)['name'] for o in original.options}
+            assert {o.label: o.description for o in question.options} == mapping
+            assert 'atom' not in question.prompt

@@ -5,6 +5,7 @@ import json
 from dataclasses import dataclass
 from typing import TypeVar
 
+from tf_jev.decisions import ChoiceQuestion, DecisionRequest, Option
 from tf_jev.grounded import GRAMMAR, GroundedParser, _GroundedRun, _json
 from tf_jev.ir import PredicateOp
 from tf_jev.parser import _Run
@@ -73,3 +74,24 @@ class _FocusedRun(_GroundedRun):
                 for value, description in options
             ]
         return super().choose(name, prompt, options)
+
+
+def type_probe(request: DecisionRequest, variant: str) -> DecisionRequest:
+    """Ablate a captured predicted type question without adding/removing a type."""
+    if variant not in ('control', 'request_only', 'plain', 'reverse'):
+        raise ValueError('unknown type probe')
+    if len(request.questions) != 1:
+        raise ValueError('one type question required')
+    name, question = next(iter(request.questions.items()))
+    if not name.endswith('.type') or not isinstance(question, ChoiceQuestion):
+        raise ValueError('type question required')
+    if variant == 'control':
+        return request
+    context = {k: request.context[k] for k in ('request', 'contract')}
+    if variant in ('plain', 'reverse'):
+        options = tuple(Option(o.label, json.loads(o.description or '')['name'])
+                        for o in question.options)
+        if variant == 'reverse':
+            options = tuple(reversed(options))
+        question = ChoiceQuestion('Which corpus object type is being requested?', options)
+    return DecisionRequest(context, {name: question})
