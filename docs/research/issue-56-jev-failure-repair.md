@@ -205,3 +205,19 @@ Question asks for semantic restriction on property_meaning and explicitly says t
 technical ID need not appear in the request. No annotation is accepted from these
 probes; expected labels are adjudicated after inference. Same .8/.2, model, source,
 no retries and metering. Test both positive and misleading related-property cases.
+
+The six pointwise property probes also fail usefulness/scope safety: no correct
+positive passes .8/.2, and both suffix-property negatives incorrectly pass as yes
+(.83). Therefore do NOT promote abstract property relevance as acceptance.
+
+Next fixed diagnostic: judge a COMPLETE concrete proposed predicate rather than
+whether a property is relevant. Ten single calls: cal-01 gn=m, nu=sg, sp=subs;
+cal-02 gn=f, nu=pl; cal-05 vs=nif (required); cal-01 gn=f, nu=pl (contradicted),
+prs_gn=m and suffix_gender=m (not stated). These are explicitly conditioned probes,
+not predicted parser success; this conditioning must be disclosed. All symbols/
+values are checked against the actual schema before calls. No gold query is sent.
+Three bounded outcomes distinguish required, contradicted and merely related/
+not stated. Context contains only original request, native node/role, exact native
+feature meaning/operator/value. Require .8/.2 on the right category; report unsafe
+required predictions on negatives. Same model/source/accounting/budget. This tests
+whether our abstract-field question discards the concrete condition Jev needs.

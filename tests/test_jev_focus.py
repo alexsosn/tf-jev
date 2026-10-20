@@ -160,3 +160,18 @@ def test_property_probe_names_meaning_without_planning_history(tiny_api: Any) ->
     assert request.context["property_meaning"] == (feature.description or feature.name)
     assert "selected" not in request.context and "focus" not in request.context
     assert "need not appear" in next(iter(request.questions.values())).prompt
+
+
+def test_predicate_probe_distinguishes_required_from_merely_related(tiny_api: Any) -> None:
+    from scripts.jev_focus import predicate_probe
+    from tf_jev.ir import Predicate, PredicateOp
+
+    schema = extract_schema(tiny_api)
+    feature = next(f for f in schema.node_features if f.name == "gn")
+    request = predicate_probe(
+        "Return feminine verbs.", "word", feature, Predicate("gn", PredicateOp.EQ, ("f",))
+    )
+    question = next(iter(request.questions.values()))
+    assert isinstance(question, ChoiceQuestion) and len(question.options) == 3
+    assert "not stated" in (question.options[2].description or "")
+    assert "candidate" in request.context and "selected" not in request.context
