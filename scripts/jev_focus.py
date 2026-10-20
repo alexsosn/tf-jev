@@ -243,7 +243,7 @@ def predicate_probe(
                     role="requested output node itself",
                     property_id=feature.name,
                     property_meaning=feature.description or feature.name,
-                    operator=predicate.op.value,
+                    operator=predicate.operator.value,
                     values=predicate.values,
                 )
             ),
