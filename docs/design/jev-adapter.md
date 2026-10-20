@@ -7,8 +7,12 @@ The optional module gives an actionable ImportError if the extra is absent.
 
 Explicit key wins; otherwise a nonblank JEV_API_KEY wins, then SDK
 TYPESAFE_API_KEY. No automatic .env loading. Key validation belongs to the SDK.
-Only the researched version and explicit jev-latest/jev-preview aliases are
-accepted; response.model must be jev-1.13.0 so alias drift fails visibly.
+The default stays pinned to jev-1.13.0. Explicit jev-1.14.0 is also supported.
+Requests require the exact researched response: 1.13 -> 1.13, 1.14 -> 1.14,
+jev-latest -> 1.13, jev-preview -> 1.14. An immutable mapping supplies a per-instance
+expected model; future/unknown IDs and alias drift fail visibly rather than float.
+Receipts record the actual validated version, never relabel 1.14 as 1.13. See the
+[#50 contract research](../research/issue-50-model-versions.md).
 Capabilities: 255 hard options, 0.01 probability resolution. Retrieval's stricter
 32-option policy remains independent. Batched questions share one context and
 produce one receipt. Dependent decisions require separate calls by the caller.

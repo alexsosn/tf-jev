@@ -1,0 +1,8 @@
+{
+  "case_id": "cal-08",
+  "count": 167,
+  "signature": "152f214bcffc2686de955bf048ca4da2f3c51c53311a77c77fe0ec203a4ebdff",
+  "intent_verified": true,
+  "method": "raw numeric annotation and object type filter; no compiler/search",
+  "other_predictions_withhold_query": 11
+}

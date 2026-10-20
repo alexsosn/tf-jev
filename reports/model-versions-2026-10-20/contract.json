@@ -1,0 +1,29 @@
+{
+  "complete": true,
+  "package_commit": "7b425a3ad99de2cec4a2e9f7410643b2496a6e7c",
+  "python": "3.12.11",
+  "rows": [
+    {
+      "answer_contract_valid": true,
+      "error_kind": null,
+      "expected_model": "jev-1.14.0",
+      "input_tokens": 330,
+      "latency_s": 0.435419161018217,
+      "output_tokens": 53,
+      "requested_model": "jev-1.14.0",
+      "resolved_model": "jev-1.14.0"
+    },
+    {
+      "answer_contract_valid": true,
+      "error_kind": null,
+      "expected_model": "jev-1.14.0",
+      "input_tokens": 330,
+      "latency_s": 0.556637411005795,
+      "output_tokens": 53,
+      "requested_model": "jev-preview",
+      "resolved_model": "jev-1.14.0"
+    }
+  ],
+  "text_fabric": "13.1.0",
+  "typesafe_sdk": "0.7.4"
+}
