@@ -141,3 +141,10 @@ finds 0/8 supported calibration successes under each of three preregistered poli
 and 0/12 fresh evaluation successes for the frozen strict tie winner. All negatives
 are withheld. The opt-in implementation does not change the no-default decision;
 local oracle-conditioned stage gains do not establish a working parser.
+
+
+Explicit model versions (#50): [contract and development evidence](reports/model-versions-2026-10-20/README.md)
+verify pinned 1.14 / preview response matching without default drift. Unchanged
+strict grounded planning solves 1/8 observed development positives with 1.14,
+versus 0/8 in its frozen 1.13 control; no new heldout or quality/default claim.
+A capable bounded planning backend is the main-feature research follow-up #54.

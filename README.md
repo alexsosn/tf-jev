@@ -175,6 +175,13 @@ Set `JEV_API_KEY` (or `TYPESAFE_API_KEY`) explicitly; the adapter does not load
 [adapter contract](docs/design/jev-adapter.md) for failure and model pinning policy.
 The adapter stays independent of semantic parsing.
 
+The default remains pinned to `jev-1.13.0`. To explicitly use the researched newer
+version, construct `JevBackend(model="jev-1.14.0")`. `jev-latest` currently requires
+1.13.0 and `jev-preview` requires 1.14.0; unexpected resolved versions fail instead
+of silently changing results. Receipts retain the actual validated version. Version
+support alone does not establish parser quality or change the no-default decision.
+
+
 Live synthetic contract smoke is opt-in and excluded from normal CI:
 
 ```bash

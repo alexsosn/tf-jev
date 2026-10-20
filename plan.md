@@ -52,4 +52,7 @@ If these conditions do not hold, preserve the benchmark and compiler work and re
   no production parser change or fresh end-to-end quality claim.
 - #51 — implemented the separately opt-in grounded planner; fresh native-gold
   whole-trajectory evaluation failed usefulness (0/12 supported), so no default change.
-- #50 — explicit model-version support and separate Jev 1.14 preview comparison.
+- #50 — explicit 1.14/preview support with strict resolved-version checks; observed
+  development comparison remains insufficient for a parser recommendation.
+- #54 — research a capable bounded planning backend before further orchestration
+  work; freeze fresh evaluation before any new quality/default claim.
