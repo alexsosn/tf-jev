@@ -69,3 +69,6 @@ If these conditions do not hold, preserve the benchmark and compiler work and re
   adoption gate, with regression/cost limits and no package/default change.
 - #60 — extract only the measured bounded ontology metadata adapter into an
   explicitly opt-in public boundary, with separate production RED/wheel/review gates.
+- #60 implementation — optional schema-bound XML catalogs, data-driven growth,
+  bounded complete-target retrieval/omission diagnostics and exact pilot replay;
+  live containment miss remains a #57 usability investigation, not a passed smoke.

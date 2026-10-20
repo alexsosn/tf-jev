@@ -164,3 +164,10 @@ finds 7/10 versus 5/10 complete positives with a 27% input-cost increase and one
 regression. Exact native binding/target context helps selected decisions; no graph
 reasoner or second executor is needed. #60 tracks minimal opt-in production
 extraction; #57 remains the broader fresh usefulness/safety/default gate.
+
+Optional catalog integration #60: [production contract](docs/design/issue-60-ontology-context.md)
+accepts updated XML snapshots as data with no concept/feature registry edits,
+records actual catalog/schema identity and skipped dispositions, and retrieves
+bounded complete-target context when catalogs grow. All 134 historical ontology
+requests replay identically. Installed-wheel morphology and three safe negatives
+pass; additional containment fails and is preserved. [Evidence](reports/ontology-integration-2026-10-20/README.md).
