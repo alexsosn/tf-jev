@@ -29,7 +29,7 @@ class FocusedParser(GroundedParser):
 
     def __post_init__(self) -> None:
         super().__post_init__()
-        if self.variant not in ("control", "focused", "literal", "attested", "ranked"):
+        if self.variant not in ("control", "focused", "literal", "attested", "ranked", "concrete"):
             raise ValueError("unknown research variant")
 
     def _new_run(self, request: str) -> _Run:
@@ -40,14 +40,17 @@ class FocusedParser(GroundedParser):
 
 class _FocusedRun(_GroundedRun):
     stage = ""
+    _predicate_context: dict[str, str] | None = None
 
     def context(self) -> dict[str, str]:
         # Keep precisely the same selected history, request and untrusted-data
         # contract. Choice descriptions still enumerate the FULL admissible domain.
+        if self.stage.endswith(".predicate_check") and self._predicate_context is not None:
+            return self._predicate_context
         context = _Run.context(self)
         parser = self.parser
         assert isinstance(parser, FocusedParser)
-        if parser.variant in ("attested", "ranked") and self.stage.endswith(".type"):
+        if parser.variant in ("attested", "ranked", "concrete") and self.stage.endswith(".type"):
             return {
                 "request": context["request"],
                 "contract": context["contract"],
@@ -69,7 +72,7 @@ class _FocusedRun(_GroundedRun):
     def gate(self, name: str) -> tuple[float, float]:
         if (
             isinstance(self.parser, FocusedParser)
-            and self.parser.variant == "ranked"
+            and self.parser.variant in ("ranked", "concrete")
             and name.endswith(".feature")
         ):
             return 0.0, 0.0  # proposal ranking only; semantic check below retains original gate
@@ -79,7 +82,7 @@ class _FocusedRun(_GroundedRun):
         self.stage = name
         parser = self.parser
         assert isinstance(parser, FocusedParser)
-        if parser.variant in ("attested", "ranked") and name.endswith(".type"):
+        if parser.variant in ("attested", "ranked", "concrete") and name.endswith(".type"):
             role = self.focus["index"]
             assert isinstance(role, int)
             target = (
@@ -92,7 +95,9 @@ class _FocusedRun(_GroundedRun):
             prompt = "Which corpus object type is being requested"
             prompt += f" for the {target}?" if target else "?"
             options = [(v, json.loads(d)["name"]) for v, d in options]
-        if parser.variant in ("literal", "attested", "ranked") and name.endswith(".operator"):
+        if parser.variant in ("literal", "attested", "ranked", "concrete") and name.endswith(
+            ".operator"
+        ):
             feature = json.loads(self.state[name.removesuffix(".operator") + ".feature"])
             prompt = (
                 f"For node role {self.focus['index']} of type {self.focus['object_type']}, "
@@ -107,7 +112,9 @@ class _FocusedRun(_GroundedRun):
                 for value, description in options
             ]
         proposal = super().choose(name, prompt, options)
-        if parser.variant == "ranked" and name.endswith(".feature"):
+        if parser.variant in ("ranked", "concrete") and name.endswith(".feature"):
+            if parser.variant == "concrete" and isinstance(proposal, NodeFeature):
+                return proposal
             role = self.focus["index"]
             scope = (
                 ("returned parent" if role == 0 else "excluded child witness")
@@ -132,6 +139,39 @@ class _FocusedRun(_GroundedRun):
             if accepted != "yes":
                 raise _Stop(ParseStatus.ABSTAINED, "proposal_rejected")
         return proposal
+
+    def predicate(self, kind: str, feature: NodeFeature, stage: str) -> Predicate:
+        predicate = super().predicate(kind, feature, stage)
+        if isinstance(self.parser, FocusedParser) and self.parser.variant == "concrete":
+            probe = predicate_probe(self.request, kind, feature, predicate)
+            question = next(iter(probe.questions.values()))
+            assert isinstance(question, ChoiceQuestion)
+            self._predicate_context = dict(probe.context)
+            candidate = json.loads(self._predicate_context["candidate"])
+            role = self.focus["index"]
+            if self._shape == "without":
+                candidate["role"] = "returned parent" if role == 0 else "excluded child witness"
+            elif self._shape == "relation":
+                candidate["role"] = "first-mentioned node" if role == 0 else "second-mentioned node"
+            self._predicate_context["candidate"] = _json(candidate)
+            try:
+                accepted = self.choose(
+                    stage + ".predicate_check",
+                    question.prompt,
+                    [
+                        (value, option.description or "")
+                        for value, option in zip(
+                            ("required", "contradicted", "not stated"),
+                            question.options,
+                            strict=True,
+                        )
+                    ],
+                )
+            finally:
+                self._predicate_context = None
+            if accepted != "required":
+                raise _Stop(ParseStatus.ABSTAINED, "predicate_not_required")
+        return predicate
 
 
 def type_probe(request: DecisionRequest, variant: str) -> DecisionRequest:

@@ -175,3 +175,52 @@ def test_predicate_probe_distinguishes_required_from_merely_related(tiny_api: An
     assert isinstance(question, ChoiceQuestion) and len(question.options) == 3
     assert "not stated" in (question.options[2].description or "")
     assert "candidate" in request.context and "selected" not in request.context
+
+
+def test_concrete_strategy_accepts_only_complete_required_predicates(tiny_api: Any) -> None:
+    schema = extract_schema(tiny_api)
+    selected = plan() | {
+        "atom0.pred0.predicate_check": "required",
+        "atom0.pred1.feature_check": "yes",
+    }
+    good = FocusedParser(
+        schema, PlanBackend(selected, "atom0.pred0.feature"), variant="concrete"
+    ).parse("Return verbs.")
+    assert good.status is ParseStatus.SUPPORTED and good.confidence == pytest.approx(0.65)
+    assert all(e.id != "atom0.pred0.feature_check" for e in good.evidence)
+    selected["atom0.pred0.predicate_check"] = "not stated"
+    no = FocusedParser(schema, PlanBackend(selected), variant="concrete").parse("Return verbs.")
+    assert no.query is None and no.ir is None and not no.projection
+
+
+def test_concrete_predicate_checks_preserve_parent_child_scope(tiny_api: Any) -> None:
+    import json
+
+    selected = plan() | {
+        "shape": "without",
+        "atom0.type": "phrase",
+        "atom0.pred0.feature": "function",
+        "atom0.pred0.value0": "Objc",
+        "atom0.pred0.predicate_check": "required",
+        "atom0.pred1.feature_check": "yes",
+        "atom1.type": "word",
+        "atom1.pred0.feature": "sp",
+        "atom1.pred0.operator": "=",
+        "atom1.pred0.count": "1",
+        "atom1.pred0.value0": "adjv",
+        "atom1.pred0.predicate_check": "required",
+        "atom1.pred1.feature_check": "yes",
+    }
+    backend = PlanBackend(selected)
+    result = FocusedParser(extract_schema(tiny_api), backend, variant="concrete").parse(
+        "Select object phrases containing no adjective words."
+    )
+    assert result.status is ParseStatus.SUPPORTED and result.query
+    assert run_template(tiny_api, result.query).results == ((12,),)
+    checks = [
+        json.loads(r.context["candidate"])
+        for r in backend.requests
+        if next(iter(r.questions)).endswith(".predicate_check")
+    ]
+    assert checks[0]["role"] == "returned parent"
+    assert checks[1]["role"] == "excluded child witness"

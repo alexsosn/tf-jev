@@ -221,3 +221,27 @@ not stated. Context contains only original request, native node/role, exact nati
 feature meaning/operator/value. Require .8/.2 on the right category; report unsafe
 required predictions on negatives. Same model/source/accounting/budget. This tests
 whether our abstract-field question discards the concrete condition Jev needs.
+
+Concrete predicate probes accept all three cal-01 required predicates at .83/.89/.90,
+cal-02 nu=pl at .86, and both contradictory values correctly at .97/.98. Cal-02
+gn=f is wrong/uncertain (.53), vs=nif is correct/uncertain (.70), prs_gn=m correctly
+not-stated/uncertain (.51), and suffix_gender=m is wrongly required at .80. Thus
+concrete entailment improves some judgments but is NOT a proven safety solution.
+The initial probe invocation failed before ANY API call on an attribute-name bug;
+RED/fix/GREEN preceded the completed ten-call run; no model observation was replaced.
+
+Freeze `concrete` whole trajectories on all 12 development cases once: feature
+Choice is a proposal; construct the complete predicate with existing operator/
+value gates, then require the three-way concrete predicate check's `required`
+outcome at .8/.2 before accepting it. Stop completeness and full-candidate fidelity
+retain .8/.2. No abstract feature relevance call; no retry after a rejected predicate.
+Only the OWN predicted predicate enters the check. Retain ranking evidence and
+weakest probability. Keep exact candidate/scope/native semantic review separate
+from result equality, given the known unsafe suffix contrast.
+
+Also freeze one `attested` predicted trajectory per DEVELOPMENT case with
+probability/margin gates zero **for diagnosis only**, to inspect downstream
+argmax errors hidden by early stops. These are untrusted hypotheses, NOT accepted
+user queries, policy selection or success claims. Compiler/schema/native bounds
+still apply; no gold is fed back into decoding. Record wrong/unsafe candidates
+and every distribution. Do not use this permissive mode in a production parser.
