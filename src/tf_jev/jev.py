@@ -6,7 +6,7 @@ import logging
 import os
 import time
 from contextvars import ContextVar
-from types import TracebackType
+from types import MappingProxyType, TracebackType
 from typing import Annotated, NoReturn, Self
 
 try:
@@ -45,7 +45,14 @@ from tf_jev.decisions import (
 )
 
 DEFAULT_MODEL = "jev-1.13.0"
-_REQUEST_MODELS = frozenset({DEFAULT_MODEL, "jev-latest", "jev-preview"})
+_MODEL_RESOLUTION = MappingProxyType(
+    {
+        DEFAULT_MODEL: DEFAULT_MODEL,
+        "jev-1.14.0": "jev-1.14.0",
+        "jev-latest": DEFAULT_MODEL,
+        "jev-preview": "jev-1.14.0",
+    }
+)
 _QUIET: ContextVar[bool] = ContextVar("tf_jev_sdk_quiet", default=False)
 
 
@@ -99,7 +106,7 @@ class JevBackend:
         timeout: float | None = None,
         retry: RetryPolicy | None = None,
     ) -> None:
-        if type(model) is not str or model not in _REQUEST_MODELS:
+        if type(model) is not str or model not in _MODEL_RESOLUTION:
             _fail(BackendError("configuration"))
         if api_key is not None and type(api_key) is not str:
             _fail(BackendError("configuration"))
@@ -108,6 +115,7 @@ class JevBackend:
         if isinstance(timeout, bool):
             _fail(BackendError("configuration"))
         self._model = model
+        self._expected_model = _MODEL_RESOLUTION[model]
         self._timeout = timeout
         self._retry = retry
         self._closed = False
@@ -161,7 +169,7 @@ class JevBackend:
                 retry=self._retry,
                 response_model=_Response,
             )
-            if response.model != DEFAULT_MODEL:
+            if response.model != self._expected_model:
                 _fail(BackendError("response"))
             for count in (response.usage.input_tokens, response.usage.output_tokens):
                 if count is not None and (type(count) is not int or count < 0):

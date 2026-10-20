@@ -360,3 +360,82 @@ def test_explicit_alias_still_requires_researched_resolved_model() -> None:
         with JevBackend(client=client, model="jev-latest") as adapter:
             assert adapter.decide(request()).receipt.model == DEFAULT_MODEL
         assert calls[0]["body"]["model"] == "jev-latest"
+
+
+@pytest.mark.parametrize(
+    "requested,expected",
+    [
+        ("jev-1.13.0", "jev-1.13.0"),
+        ("jev-1.14.0", "jev-1.14.0"),
+        ("jev-latest", "jev-1.13.0"),
+        ("jev-preview", "jev-1.14.0"),
+    ],
+)
+@pytest.mark.parametrize(
+    "returned", ["jev-1.13.0", "jev-1.14.0", "jev-1.15.0", "jev-preview", SECRET]
+)
+def test_requested_model_requires_exact_researched_resolution(
+    requested: str,
+    expected: str,
+    returned: str,
+) -> None:
+    from dataclasses import FrozenInstanceError
+
+    payload = response()
+    payload["model"] = returned
+    with backend(payload) as (_, calls, client):
+        with JevBackend(client=client, model=requested) as adapter:
+            if returned == expected:
+                result = adapter.decide(request())
+                assert result.receipt.model == expected
+                with pytest.raises(FrozenInstanceError):
+                    result.receipt.model = "changed"
+            else:
+                with pytest.raises(BackendError) as error:
+                    adapter.decide(request())
+                assert error.value.kind == "response"
+                assert SECRET not in str(error.value) and error.value.__context__ is None
+        assert not client._http_client.is_closed
+        assert len(calls) == 1 and calls[0]["body"]["model"] == requested
+
+
+def test_unknown_future_request_fails_before_transport() -> None:
+    with backend(response()) as (_, calls, client):
+        with pytest.raises(BackendError) as error:
+            JevBackend(client=client, model="jev-1.15.0")
+        assert error.value.kind == "configuration" and calls == []
+
+
+def test_new_model_schema_choice_compiles_and_executes_native(tiny_api: Any) -> None:
+    from tests.conformance.tf_harness import run_template
+    from tf_jev.compiler import compile_query
+    from tf_jev.ir import Atom, Predicate, PredicateOp, Query
+    from tf_jev.schema import extract_schema
+
+    schema = extract_schema(tiny_api)
+    values = ("verb", "subs")
+    for value in values:
+        schema.validate_value("sp", "word", value)
+    req = DecisionRequest(
+        {"request": "select the verb annotation"},
+        {
+            "value": ChoiceQuestion(
+                "Select an actual corpus value.",
+                tuple(Option(f"c{i}", v) for i, v in enumerate(values)),
+            )
+        },
+    )
+    payload = response()
+    payload["model"] = "jev-1.14.0"
+    del payload["answers"]["binary"]
+    with backend(payload) as (_, calls, client):
+        with JevBackend(client=client, model="jev-1.14.0") as adapter:
+            result = adapter.decide(req)
+        answer = result.decisions["value"]
+        assert isinstance(answer, ChoiceDecision)
+        value = values[req.questions["value"].labels.index(answer.selected)]  # type: ignore[union-attr]
+        query = compile_query(
+            Query((Atom("word", (Predicate("sp", PredicateOp.EQ, (value,)),)),)), schema
+        )
+        assert run_template(tiny_api, query).results == ((3,), (6,), (8,))
+        assert calls[0]["body"]["model"] == result.receipt.model == "jev-1.14.0"
