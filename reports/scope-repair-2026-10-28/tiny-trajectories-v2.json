@@ -1,0 +1,484 @@
+{
+  "complete": true,
+  "development_diagnostic_not_fresh_evaluation": true,
+  "original_containment_failure_preserved": true,
+  "package_commit": "uncommitted-research",
+  "research_only": true,
+  "wheel_sha256": "ae4eac1f24a2a672f29b8c006a310fc72c679c13fff7ac31afbc4c0748febf53",
+  "model": "jev-1.14.0",
+  "text_fabric": "13.1.0",
+  "typesafe_sdk": "0.7.4",
+  "retries": 0,
+  "schema_key": "b56c6b8515c56c339b495aa84a03a11c84485fdf3a9f0a2fd772371bdc4c50b9",
+  "catalog_sha256": "a7b42fbc5fc5998da14f659f67854d468b13a4ba00ba962afca5c5cff2b07451",
+  "source_sha256": {
+    "dist.tf": "b1175cb89a77b3c442772816d9e3d4effe191418f6a6b4978d386e61d9325aa6",
+    "function.tf": "90818d421dee6831174be641f46342e027e8753279a91193ee35f2dd422d80fc",
+    "gloss.tf": "41da0d7a9a12e4d44d0feccbbb5b4fc85640e343f591cf1991376e6faed64929",
+    "gn.tf": "baf6b6382d8ac8af165fcfbfd87e6ebbc3d60f148aa25e94050478c4003e6b16",
+    "lex.tf": "93596e855c2e56e709b885435a16a8edbb03b7af61ebf3a7ef6ef2797b84ce3b",
+    "mother.tf": "276804e1bf47415df781e11f98a2811e45fb8853985436f99ed29ae9eed31cba",
+    "nu.tf": "1ec9ee175f73c4fec9e740cc5f5e6f7ef89c96775f93b6a24f5fd5d1e3b9dd98",
+    "number.tf": "9a92bae927779eb13e17d6e4d0ada261adc68ca4421b967498debd51806ce5a3",
+    "oslots.tf": "8f4f78e6057c3832da26f603fcab913f17f183ef075a435d812b52cc3d83ebd1",
+    "otext.tf": "1e2a71d703ba19982b92bc10a3bf6c4966dacca41e2523bcd78ed22d13b69fee",
+    "otype.tf": "dac0f5cda40bc75b1681b731c73ceab9cacf9e11520c8a93cd8daa248ddb08c0",
+    "rank.tf": "f5ab60f679431be420dfc0a98c296b097f23e19e729e8114cd627320c4aa3b83",
+    "sp.tf": "b345163ef51abac38dfcaa62ddf5470d2f8405713c4484ec8a05e17892e2a791",
+    "suffix.tf": "c9a4678c4a8c55478f99d3d7984d09e425a60cc89df57c2419c32d9fa3fa3e2a",
+    "typ.tf": "2bf9084f68c353f17b5495bae552420ca97076ff8730642346e7ae5786b1c7f0"
+  },
+  "attempts": [
+    {
+      "case": "containment",
+      "stage": "shape",
+      "error_kind": null,
+      "input_tokens": 726,
+      "output_tokens": 70,
+      "selected_index": 1,
+      "probabilities": [
+        0.17,
+        0.79,
+        0.01,
+        0.02,
+        0.01
+      ],
+      "latency_s": 0.31554346600023564
+    },
+    {
+      "case": "containment",
+      "stage": "nodes.types",
+      "error_kind": null,
+      "input_tokens": 903,
+      "output_tokens": 181,
+      "selected_index": 11,
+      "probabilities": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "latency_s": 0.21788705099606887
+    },
+    {
+      "case": "containment",
+      "stage": "atom0.pred0.feature",
+      "error_kind": null,
+      "input_tokens": 869,
+      "output_tokens": 134,
+      "selected_index": 7,
+      "probabilities": [
+        0.01,
+        0.0,
+        0.0,
+        0.01,
+        0.0,
+        0.0,
+        0.01,
+        0.85,
+        0.0,
+        0.06,
+        0.06
+      ],
+      "latency_s": 0.20703857100306777
+    },
+    {
+      "case": "containment",
+      "stage": "atom0.pred0.role",
+      "error_kind": null,
+      "input_tokens": 479,
+      "output_tokens": 44,
+      "selected_index": 1,
+      "probabilities": [
+        0.06,
+        0.94
+      ],
+      "latency_s": 0.2376256249990547
+    },
+    {
+      "case": "containment",
+      "stage": "atom0.pred0.operator",
+      "error_kind": null,
+      "input_tokens": 786,
+      "output_tokens": 64,
+      "selected_index": 0,
+      "probabilities": [
+        0.99,
+        0.0,
+        0.01,
+        0.0
+      ],
+      "latency_s": 0.20686992899572942
+    },
+    {
+      "case": "containment",
+      "stage": "atom0.pred0.count",
+      "error_kind": null,
+      "input_tokens": 814,
+      "output_tokens": 54,
+      "selected_index": 0,
+      "probabilities": [
+        0.96,
+        0.03,
+        0.01
+      ],
+      "latency_s": 0.26404595500207506
+    },
+    {
+      "case": "containment",
+      "stage": "atom0.pred0.value0",
+      "error_kind": null,
+      "input_tokens": 716,
+      "output_tokens": 65,
+      "selected_index": 3,
+      "probabilities": [
+        0.01,
+        0.01,
+        0.05,
+        0.93
+      ],
+      "latency_s": 0.2564284550026059
+    },
+    {
+      "case": "containment",
+      "stage": "atom0.pred1.feature",
+      "error_kind": null,
+      "input_tokens": 886,
+      "output_tokens": 134,
+      "selected_index": 10,
+      "probabilities": [
+        0.03,
+        0.0,
+        0.0,
+        0.01,
+        0.0,
+        0.0,
+        0.01,
+        0.02,
+        0.0,
+        0.11,
+        0.81
+      ],
+      "latency_s": 0.2258094600038021
+    },
+    {
+      "case": "containment",
+      "stage": "relation",
+      "error_kind": null,
+      "input_tokens": 1079,
+      "output_tokens": 190,
+      "selected_index": 0,
+      "probabilities": [
+        0.35,
+        0.04,
+        0.01,
+        0.01,
+        0.02,
+        0.01,
+        0.01,
+        0.0,
+        0.02,
+        0.01,
+        0.04,
+        0.01,
+        0.0,
+        0.0,
+        0.26,
+        0.15,
+        0.06
+      ],
+      "latency_s": 0.19740290199843002
+    },
+    {
+      "case": "containment",
+      "stage": "output",
+      "error_kind": null,
+      "input_tokens": 752,
+      "output_tokens": 60,
+      "selected_index": 2,
+      "probabilities": [
+        0.41,
+        0.09,
+        0.44,
+        0.06
+      ],
+      "latency_s": 0.2208205659990199
+    },
+    {
+      "case": "containment",
+      "stage": "verify",
+      "error_kind": null,
+      "input_tokens": 989,
+      "output_tokens": 40,
+      "selected_index": 0,
+      "probabilities": [
+        0.69,
+        0.31
+      ],
+      "latency_s": 0.19956025300052715
+    },
+    {
+      "case": "presence",
+      "stage": "shape",
+      "error_kind": null,
+      "input_tokens": 731,
+      "output_tokens": 70,
+      "selected_index": 0,
+      "probabilities": [
+        0.91,
+        0.05,
+        0.0,
+        0.03,
+        0.01
+      ],
+      "latency_s": 0.2319311489991378
+    },
+    {
+      "case": "presence",
+      "stage": "atom0.type",
+      "error_kind": null,
+      "input_tokens": 520,
+      "output_tokens": 62,
+      "selected_index": 3,
+      "probabilities": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "latency_s": 0.18993474199669436
+    },
+    {
+      "case": "presence",
+      "stage": "atom0.pred0.feature",
+      "error_kind": null,
+      "input_tokens": 870,
+      "output_tokens": 134,
+      "selected_index": 8,
+      "probabilities": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.88,
+        0.0,
+        0.12
+      ],
+      "latency_s": 0.19970625700079836
+    },
+    {
+      "case": "presence",
+      "stage": "atom0.pred0.operator",
+      "error_kind": null,
+      "input_tokens": 599,
+      "output_tokens": 64,
+      "selected_index": 2,
+      "probabilities": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "latency_s": 0.1956478749998496
+    },
+    {
+      "case": "presence",
+      "stage": "atom0.pred1.feature",
+      "error_kind": null,
+      "input_tokens": 834,
+      "output_tokens": 124,
+      "selected_index": 9,
+      "probabilities": [
+        0.0,
+        0.02,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.98
+      ],
+      "latency_s": 0.19918376099667512
+    },
+    {
+      "case": "presence",
+      "stage": "verify",
+      "error_kind": null,
+      "input_tokens": 741,
+      "output_tokens": 40,
+      "selected_index": 0,
+      "probabilities": [
+        0.57,
+        0.43
+      ],
+      "latency_s": 0.2279875140011427
+    },
+    {
+      "case": "absence",
+      "stage": "shape",
+      "error_kind": null,
+      "input_tokens": 728,
+      "output_tokens": 70,
+      "selected_index": 0,
+      "probabilities": [
+        0.9,
+        0.01,
+        0.07,
+        0.01,
+        0.01
+      ],
+      "latency_s": 0.20527439200668596
+    },
+    {
+      "case": "absence",
+      "stage": "atom0.type",
+      "error_kind": null,
+      "input_tokens": 517,
+      "output_tokens": 62,
+      "selected_index": 3,
+      "probabilities": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "latency_s": 0.2699107410007855
+    },
+    {
+      "case": "absence",
+      "stage": "atom0.pred0.feature",
+      "error_kind": null,
+      "input_tokens": 867,
+      "output_tokens": 134,
+      "selected_index": 8,
+      "probabilities": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.91,
+        0.0,
+        0.09
+      ],
+      "latency_s": 0.3085726249992149
+    },
+    {
+      "case": "absence",
+      "stage": "atom0.pred0.operator",
+      "error_kind": null,
+      "input_tokens": 596,
+      "output_tokens": 64,
+      "selected_index": 3,
+      "probabilities": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "latency_s": 0.23647660500137135
+    },
+    {
+      "case": "absence",
+      "stage": "atom0.pred1.feature",
+      "error_kind": null,
+      "input_tokens": 832,
+      "output_tokens": 124,
+      "selected_index": 9,
+      "probabilities": [
+        0.01,
+        0.01,
+        0.0,
+        0.01,
+        0.0,
+        0.0,
+        0.0,
+        0.01,
+        0.01,
+        0.95
+      ],
+      "latency_s": 0.23500665099709295
+    },
+    {
+      "case": "absence",
+      "stage": "verify",
+      "error_kind": null,
+      "input_tokens": 735,
+      "output_tokens": 40,
+      "selected_index": 0,
+      "probabilities": [
+        0.97,
+        0.03
+      ],
+      "latency_s": 0.20024133400147548
+    },
+    {
+      "case": "unsupported",
+      "stage": "shape",
+      "error_kind": null,
+      "input_tokens": 730,
+      "output_tokens": 70,
+      "selected_index": 4,
+      "probabilities": [
+        0.02,
+        0.0,
+        0.0,
+        0.0,
+        0.98
+      ],
+      "latency_s": 0.21507252000446897
+    }
+  ],
+  "cases": [
+    {
+      "id": "containment",
+      "status": "abstained",
+      "reason": "low_confidence",
+      "passed": false,
+      "result_count": null
+    },
+    {
+      "id": "presence",
+      "status": "abstained",
+      "reason": "low_confidence",
+      "passed": false,
+      "result_count": null
+    },
+    {
+      "id": "absence",
+      "status": "supported",
+      "reason": "accepted",
+      "passed": true,
+      "result_count": 4
+    },
+    {
+      "id": "unsupported",
+      "status": "unsupported",
+      "reason": "intent",
+      "passed": true,
+      "result_count": null
+    }
+  ],
+  "estimated_cost_usd": 0.000768558
+}

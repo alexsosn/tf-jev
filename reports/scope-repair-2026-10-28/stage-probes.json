@@ -1,0 +1,102 @@
+{
+  "cases": [
+    {
+      "correct": false,
+      "id": "tiny-parent",
+      "selected_description": "{\"kind\": \"feature\", \"name\": \"sp\", \"dtype\": \"str\", \"description\": \"part of speech: verb=verb, subs=substantive or noun, adjv=adjective, prep=preposition\", \"attested_on_type\": false}",
+      "source_sha256": "7a74613becf0102bf04c82422792f089ddafd8e39c82a4645b2e5943ac3827ae",
+      "stage": "atom0.pred0.feature",
+      "variant": "control"
+    },
+    {
+      "correct": false,
+      "id": "tiny-parent",
+      "selected_description": "{\"kind\": \"feature\", \"name\": \"sp\", \"dtype\": \"str\", \"description\": \"part of speech: verb=verb, subs=substantive or noun, adjv=adjective, prep=preposition\", \"attested_on_type\": false}",
+      "source_sha256": "7a74613becf0102bf04c82422792f089ddafd8e39c82a4645b2e5943ac3827ae",
+      "stage": "atom0.pred0.feature",
+      "variant": "scope"
+    },
+    {
+      "correct": false,
+      "id": "child-type",
+      "selected_description": "clause",
+      "source_sha256": "8736c24f15bc9a964520f6f3efe0f8dba7e42852ec3d0d17bdf927bfd91d2976",
+      "stage": "atom1.type",
+      "variant": "control"
+    },
+    {
+      "correct": false,
+      "id": "child-type",
+      "selected_description": "clause_atom",
+      "source_sha256": "8736c24f15bc9a964520f6f3efe0f8dba7e42852ec3d0d17bdf927bfd91d2976",
+      "stage": "atom1.type",
+      "variant": "scope"
+    },
+    {
+      "correct": false,
+      "id": "child-feature",
+      "selected_description": "{\"kind\": \"stop\", \"meaning\": \"All required features on THIS node have already been selected.\"}",
+      "source_sha256": "aa4ef030a5c6ce3bd24688848ccc22ecc0841dc05f253544cd2ea6c62905e6f2",
+      "stage": "atom1.pred0.feature",
+      "variant": "control"
+    },
+    {
+      "correct": false,
+      "id": "child-feature",
+      "selected_description": "{\"kind\": \"stop\", \"meaning\": \"All required features on THIS node have already been selected.\"}",
+      "source_sha256": "aa4ef030a5c6ce3bd24688848ccc22ecc0841dc05f253544cd2ea6c62905e6f2",
+      "stage": "atom1.pred0.feature",
+      "variant": "scope"
+    },
+    {
+      "correct": true,
+      "id": "pos-present",
+      "selected_description": "=: annotation equals the requested literal value(s)",
+      "source_sha256": "bc9551d9ff038345143105fba6c839567d01a408e3b4305d0e3a5e5e1a970442",
+      "stage": "atom0.pred1.operator",
+      "variant": "control"
+    },
+    {
+      "correct": true,
+      "id": "pos-present",
+      "selected_description": "=: annotation equals the requested literal value(s)",
+      "source_sha256": "bc9551d9ff038345143105fba6c839567d01a408e3b4305d0e3a5e5e1a970442",
+      "stage": "atom0.pred1.operator",
+      "variant": "scope"
+    },
+    {
+      "correct": true,
+      "id": "pos-absent",
+      "selected_description": "=: annotation equals the requested literal value(s)",
+      "source_sha256": "9eed8fe00f19cfd15cc304759011df4b4d2cedfb09984010652ec5caebf6b7ee",
+      "stage": "atom0.pred0.operator",
+      "variant": "control"
+    },
+    {
+      "correct": true,
+      "id": "pos-absent",
+      "selected_description": "=: annotation equals the requested literal value(s)",
+      "source_sha256": "9eed8fe00f19cfd15cc304759011df4b4d2cedfb09984010652ec5caebf6b7ee",
+      "stage": "atom0.pred0.operator",
+      "variant": "scope"
+    },
+    {
+      "correct": true,
+      "id": "qere-present",
+      "selected_description": "present: annotation exists, regardless of its value",
+      "source_sha256": "bc9551d9ff038345143105fba6c839567d01a408e3b4305d0e3a5e5e1a970442",
+      "stage": "atom0.pred0.operator",
+      "variant": "control"
+    },
+    {
+      "correct": true,
+      "id": "qere-present",
+      "selected_description": "present: annotation exists, regardless of its value",
+      "source_sha256": "bc9551d9ff038345143105fba6c839567d01a408e3b4305d0e3a5e5e1a970442",
+      "stage": "atom0.pred0.operator",
+      "variant": "scope"
+    }
+  ],
+  "complete": true,
+  "development_only": true
+}

@@ -1,0 +1,35 @@
+[
+  {
+    "error_kind": null,
+    "input_tokens": 1486,
+    "latency_s": 0.23479629699431825,
+    "output_tokens": 152,
+    "questions": [
+      {
+        "margin": 0.08999999999999997,
+        "option_count": 13,
+        "probabilities": [
+          0.01,
+          0.01,
+          0.01,
+          0.03,
+          0.01,
+          0.02,
+          0.01,
+          0.39999999999999997,
+          0.16,
+          0.01,
+          0.01,
+          0.01,
+          0.31
+        ],
+        "question": "atom1.type",
+        "selected_index": 7,
+        "top_probability": 0.39999999999999997
+      }
+    ],
+    "requested_questions": [
+      "atom1.type"
+    ]
+  }
+]

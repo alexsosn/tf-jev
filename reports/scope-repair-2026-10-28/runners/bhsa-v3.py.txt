@@ -1,0 +1,41 @@
+import json,os,pickle,hashlib
+from pathlib import Path
+from dataclasses import replace
+from tf.fabric import Fabric
+from typesafe_sdk import RetryPolicy
+from tf_jev.jev import JevBackend
+from tf_jev.ontology import load_catalog
+from scripts.scope_repair import CoordinatedV3Parser,ScopeV3Backend
+from scripts.candidate_evaluation import BENCHMARK,CATALOG,BENCHMARK_SHA,CATALOG_SHA
+from scripts.diagnose_abstention import verify_sources,_write
+from scripts.nl_benchmark_v2 import load_benchmark,execute
+from scripts.ontotf_experiment import Budget,DurableTrace
+from scripts.semantic_evaluation import evaluate
+from scripts.measure_comparison import RecordingParser
+root=Path('reports/scope-repair-2026-10-28');output=root/'bhsa-trajectories-v3.json';private=Path('/private/tmp/tf-jev-64-trajectory-bhsa-v3');assert not output.exists() and not private.exists();private.mkdir(mode=0o700)
+corpus=Path('/Users/alexandersosnovschenko/text-fabric-data/github/ETCBC/bhsa/tf/2021');sources=verify_sources(corpus)
+assert hashlib.sha256(BENCHMARK.read_bytes()).hexdigest()==BENCHMARK_SHA
+assert hashlib.sha256(CATALOG.read_bytes()).hexdigest()==CATALOG_SHA
+with open('/private/tmp/tf-jev-64-schema.pickle','rb') as f:schema=pickle.load(f)
+assert schema.identity.key=='4a777cf2dc316633c062e89a99580bf1f19b9c7aa2713892779b11a4c60a442c'
+catalog=load_catalog(CATALOG,schema,corpus='bhsa',version='2021',expected_sha256=CATALOG_SHA)
+benchmark=load_benchmark(BENCHMARK);api=Fabric(locations=str(corpus),silent='deep').load(' '.join(benchmark.features),silent='deep');ids={2,5,6,7,8,9,10,11,13,14,15,16,17,18,20};cases=[c for c in benchmark.cases if int(c['id'].split('-')[1]) in ids]
+for c in cases:
+ if c['expected']=='supported':
+  g=c['gold'];assert execute(api,g['query'],tuple(g['projection']))==(g['count'],g['signature'])
+print('Sources/schema/native gold verified',flush=True)
+for line in Path('.env').read_text().splitlines():
+ n,s,v=line.partition('=')
+ if s and n in ('JEV_API_KEY','TYPESAFE_API_KEY'):os.environ[n]=v.strip().strip('\"\'')
+rows=[];meta=dict(development_only=True,research_only=True,schema_key=schema.identity.key,source_sha256=sources,benchmark_sha256=BENCHMARK_SHA,catalog_sha256=CATALOG_SHA,research_source_sha256=hashlib.sha256(Path('scripts/scope_repair.py').read_bytes()).hexdigest(),model='jev-1.14.0',retries=0)
+_write(output,dict(meta,complete=False,cases=rows))
+with JevBackend(model='jev-1.14.0',retry=RetryPolicy(max_retries=0),timeout=30.) as backend:
+ budget=Budget(backend)
+ for c in cases:
+  if budget.calls>=400:raise ValueError('call cap')
+  id=c['id'];trace=DurableTrace(budget,root/(id+'-v3-calls.json'),private/(id+'-requests.json'))
+  parser=RecordingParser(CoordinatedV3Parser(schema,ScopeV3Backend(trace,catalog)),None)
+  report=evaluate(replace(benchmark,cases=(c,)),parser,api,partition='heldout',input_usd_per_million=.042,output_usd_per_million=0.)
+  row=report['cases'][0];rows.append(row);_write(private/(id+'-prediction.json'),parser.predictions[0]);_write(output,dict(meta,complete=False,cases=rows));print(id,row['predicted'],row['reason'],row['result_equivalent'],flush=True)
+  if trace.persist_failed or budget.failed or row['predicted']=='error':raise ValueError('accounting/transport stop')
+_write(output,dict(meta,complete=True,cases=rows))

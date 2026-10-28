@@ -1,0 +1,35 @@
+[
+  {
+    "error_kind": null,
+    "input_tokens": 1447,
+    "latency_s": 0.23201351600437192,
+    "output_tokens": 150,
+    "questions": [
+      {
+        "margin": 0.44000000000000006,
+        "option_count": 13,
+        "probabilities": [
+          0.01,
+          0.01,
+          0.01,
+          0.0,
+          0.01,
+          0.01,
+          0.0,
+          0.67,
+          0.05,
+          0.0,
+          0.0,
+          0.0,
+          0.23
+        ],
+        "question": "redacted",
+        "selected_index": 7,
+        "top_probability": 0.67
+      }
+    ],
+    "requested_questions": [
+      "redacted"
+    ]
+  }
+]

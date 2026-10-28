@@ -1,0 +1,78 @@
+{
+  "cases": [
+    {
+      "correct": false,
+      "id": "tiny-parent",
+      "selected_description": "{\"kind\": \"feature\", \"name\": \"sp\", \"dtype\": \"str\", \"description\": \"part of speech: verb=verb, subs=substantive or noun, adjv=adjective, prep=preposition\", \"attested_on_type\": false}",
+      "source_sha256": "7a74613becf0102bf04c82422792f089ddafd8e39c82a4645b2e5943ac3827ae",
+      "stage": "atom0.pred0.feature",
+      "variant": "neutral"
+    },
+    {
+      "correct": false,
+      "id": "tiny-parent",
+      "selected_description": "The phrase node itself must satisfy a condition on sp: part of speech: verb=verb, subs=substantive or noun, adjv=adjective, prep=preposition. Native annotation attested on phrase: False.",
+      "source_sha256": "7a74613becf0102bf04c82422792f089ddafd8e39c82a4645b2e5943ac3827ae",
+      "stage": "atom0.pred0.feature",
+      "variant": "prose"
+    },
+    {
+      "correct": true,
+      "id": "tiny-parent",
+      "selected_description": "No further annotation condition is requested on the phrase node itself.",
+      "source_sha256": "7a74613becf0102bf04c82422792f089ddafd8e39c82a4645b2e5943ac3827ae",
+      "stage": "atom0.pred0.feature",
+      "variant": "polarity"
+    },
+    {
+      "correct": false,
+      "id": "child-type",
+      "selected_description": "clause",
+      "source_sha256": "8736c24f15bc9a964520f6f3efe0f8dba7e42852ec3d0d17bdf927bfd91d2976",
+      "stage": "atom1.type",
+      "variant": "neutral"
+    },
+    {
+      "correct": true,
+      "id": "child-type",
+      "selected_description": "word",
+      "source_sha256": "8736c24f15bc9a964520f6f3efe0f8dba7e42852ec3d0d17bdf927bfd91d2976",
+      "stage": "atom1.type",
+      "variant": "prose"
+    },
+    {
+      "correct": false,
+      "id": "child-type",
+      "selected_description": "clause",
+      "source_sha256": "8736c24f15bc9a964520f6f3efe0f8dba7e42852ec3d0d17bdf927bfd91d2976",
+      "stage": "atom1.type",
+      "variant": "polarity"
+    },
+    {
+      "correct": true,
+      "id": "child-feature",
+      "selected_description": "{\"kind\": \"feature\", \"name\": \"sp\", \"dtype\": \"str\", \"description\": \"\\u2705 part-of-speech (art; verb; subs; nmpr, ...)\", \"attested_on_type\": true}",
+      "source_sha256": "aa4ef030a5c6ce3bd24688848ccc22ecc0841dc05f253544cd2ea6c62905e6f2",
+      "stage": "atom1.pred0.feature",
+      "variant": "neutral"
+    },
+    {
+      "correct": false,
+      "id": "child-feature",
+      "selected_description": "No further annotation condition is requested on the word node itself.",
+      "source_sha256": "aa4ef030a5c6ce3bd24688848ccc22ecc0841dc05f253544cd2ea6c62905e6f2",
+      "stage": "atom1.pred0.feature",
+      "variant": "prose"
+    },
+    {
+      "correct": false,
+      "id": "child-feature",
+      "selected_description": "No further annotation condition is requested on the word node itself.",
+      "source_sha256": "aa4ef030a5c6ce3bd24688848ccc22ecc0841dc05f253544cd2ea6c62905e6f2",
+      "stage": "atom1.pred0.feature",
+      "variant": "polarity"
+    }
+  ],
+  "complete": true,
+  "development_only": true
+}

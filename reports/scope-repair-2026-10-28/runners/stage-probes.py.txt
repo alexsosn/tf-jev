@@ -1,0 +1,28 @@
+import json, os, hashlib
+from pathlib import Path
+from tf_jev.decisions import DecisionRequest, ChoiceQuestion, Option
+from tf_jev.jev import JevBackend
+from typesafe_sdk import RetryPolicy
+from scripts.scope_repair import scoped
+from scripts.ontotf_experiment import Budget, DurableTrace
+from scripts.diagnose_abstention import _write
+root=Path('reports/scope-repair-2026-10-28');private=Path('/private/tmp/tf-jev-64-probes');private.mkdir(mode=0o700)
+for line in Path('.env').read_text().splitlines():
+ n,s,v=line.partition('=')
+ if s and n in ('JEV_API_KEY','TYPESAFE_API_KEY'):os.environ[n]=v.strip().strip('\"\'')
+probes=[('tiny-parent','diagnostic-private/containment','atom0.pred0.feature',None),('child-type','private/fresh-07','atom1.type','word'),('child-feature','private/fresh-08','atom1.pred0.feature','sp'),('pos-present','private/fresh-09','atom0.pred1.operator','='),('pos-absent','private/fresh-10','atom0.pred0.operator','='),('qere-present','private/fresh-09','atom0.pred0.operator','present')]
+rows=[]
+with JevBackend(model='jev-1.14.0',retry=RetryPolicy(max_retries=0),timeout=30.) as b:
+ budget=Budget(b)
+ for id,source,stage,expected in probes:
+  path=Path('/private/tmp/tf-jev-57')/(source+'-requests.json');data=json.loads(path.read_text());raw=next(r for r in data if stage in r['questions']);q=raw['questions'][stage]
+  request=DecisionRequest(raw['context'],{stage:ChoiceQuestion(q['prompt'],tuple(Option(**o) for o in q['options']))})
+  for variant,r in [('control',request),('scope',scoped(request))]:
+   if budget.calls>=12 or (budget.input_tokens+70000)*.042/1e6>.01:raise ValueError('cap')
+   name=id+'-'+variant;pub=root/(name+'-calls.json');priv=private/(name+'-requests.json');assert not pub.exists() and not priv.exists()
+   trace=DurableTrace(budget,pub,priv);answer=trace.decide(r).decisions[stage];desc=next(o.description for o in r.questions[stage].options if o.label==answer.selected)
+   try: obj=json.loads(desc);correct=obj.get('kind')=='stop' if expected is None else obj.get('name')==expected
+   except (ValueError,AttributeError):correct=desc==expected or desc.startswith(expected+':')
+   rows.append(dict(id=id,variant=variant,stage=stage,correct=correct,selected_description=desc,source_sha256=hashlib.sha256(path.read_bytes()).hexdigest()))
+   _write(root/'stage-probes.json',dict(complete=False,development_only=True,cases=rows));print(id,variant,correct,desc[:110],flush=True)
+_write(root/'stage-probes.json',dict(complete=True,development_only=True,cases=rows))

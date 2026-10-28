@@ -1,0 +1,139 @@
+{
+  "bhsa_phases": [
+    {
+      "negatives": 7,
+      "positive_successes": 2,
+      "positives": 8,
+      "safe_negatives": 7,
+      "variant": 2
+    },
+    {
+      "negatives": 7,
+      "positive_successes": 3,
+      "positives": 8,
+      "safe_negatives": 7,
+      "variant": 3
+    },
+    {
+      "negatives": 7,
+      "positive_successes": 3,
+      "positives": 8,
+      "safe_negatives": 7,
+      "variant": 4
+    }
+  ],
+  "complete": true,
+  "emissions": [
+    {
+      "count": 1414,
+      "id": "fresh-05",
+      "raw_native_equivalent": true,
+      "variant": 2
+    },
+    {
+      "count": 3128,
+      "id": "fresh-06",
+      "raw_native_equivalent": true,
+      "variant": 2
+    },
+    {
+      "count": 2711,
+      "id": "fresh-02",
+      "raw_native_equivalent": true,
+      "variant": 3
+    },
+    {
+      "count": 4306,
+      "id": "fresh-07",
+      "raw_native_equivalent": true,
+      "variant": 3
+    },
+    {
+      "count": 66445,
+      "id": "fresh-11",
+      "raw_native_equivalent": true,
+      "variant": 3
+    },
+    {
+      "count": 2711,
+      "id": "fresh-02",
+      "raw_native_equivalent": true,
+      "variant": 4
+    },
+    {
+      "count": 4306,
+      "id": "fresh-07",
+      "raw_native_equivalent": true,
+      "variant": 4
+    },
+    {
+      "count": 9438,
+      "id": "fresh-10",
+      "raw_native_equivalent": true,
+      "variant": 4
+    }
+  ],
+  "method": "Independent raw feature/type/oslots sets, exact full-set native equality; NL output roles and all emitted IR predicates independently inspected. No acceptance from result counts alone.",
+  "raw_oracles": [
+    {
+      "count": 2711,
+      "id": "fresh-02",
+      "signature": "23514407d3b08dd22933b00ed4bb2a326ee2720e6cf9be339bb67aa4cf6d139b"
+    },
+    {
+      "count": 1414,
+      "id": "fresh-05",
+      "signature": "5269023085ceca90638916dab56fa8268b3536882b7072a4e9c3d876bc874a58"
+    },
+    {
+      "count": 3128,
+      "id": "fresh-06",
+      "signature": "92348584de46494e89a4673ec12a3a92a6ab4b8f432c51a4693cc9adec7ab5f3"
+    },
+    {
+      "count": 4306,
+      "id": "fresh-07",
+      "signature": "15b96980b52b6c159c7e1ef8625bc1674ce9d1c58e661d6c00ec096d33811383"
+    },
+    {
+      "count": 194050,
+      "id": "fresh-08",
+      "signature": "d3434ecc974cd1c16e6167a4c28444f418fd26082d9e4f3ed213b3516f73e49b"
+    },
+    {
+      "count": 557,
+      "id": "fresh-09",
+      "signature": "e12481cc172e159bad645802a0e465268c9dde09a935f0f97f94c20fe91e606b"
+    },
+    {
+      "count": 9438,
+      "id": "fresh-10",
+      "signature": "c0f47e7ae893a3a9a2d203027e0cfab9ef5328a25b2e124c11b9cd6436a5d439"
+    },
+    {
+      "count": 66445,
+      "id": "fresh-11",
+      "signature": "803f33c952fc848218e1d2c24ea6444e977ddb7fcfe9df8b0e794a4085b4d95e"
+    }
+  ],
+  "tiny_emissions": [
+    {
+      "count": 4,
+      "id": "absence",
+      "raw_native_equivalent": true,
+      "variant": 2
+    },
+    {
+      "count": 3,
+      "id": "containment",
+      "raw_native_equivalent": true,
+      "variant": 3
+    },
+    {
+      "count": 4,
+      "id": "absence",
+      "raw_native_equivalent": true,
+      "variant": 3
+    }
+  ]
+}

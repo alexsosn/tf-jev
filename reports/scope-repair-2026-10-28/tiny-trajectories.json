@@ -1,0 +1,86 @@
+{
+  "complete": false,
+  "development_diagnostic_not_fresh_evaluation": true,
+  "original_containment_failure_preserved": true,
+  "package_commit": "uncommitted-research",
+  "research_only": true,
+  "wheel_sha256": "ae4eac1f24a2a672f29b8c006a310fc72c679c13fff7ac31afbc4c0748febf53",
+  "model": "jev-1.14.0",
+  "text_fabric": "13.1.0",
+  "typesafe_sdk": "0.7.4",
+  "retries": 0,
+  "schema_key": "b56c6b8515c56c339b495aa84a03a11c84485fdf3a9f0a2fd772371bdc4c50b9",
+  "catalog_sha256": "a7b42fbc5fc5998da14f659f67854d468b13a4ba00ba962afca5c5cff2b07451",
+  "source_sha256": {
+    "dist.tf": "b1175cb89a77b3c442772816d9e3d4effe191418f6a6b4978d386e61d9325aa6",
+    "function.tf": "90818d421dee6831174be641f46342e027e8753279a91193ee35f2dd422d80fc",
+    "gloss.tf": "41da0d7a9a12e4d44d0feccbbb5b4fc85640e343f591cf1991376e6faed64929",
+    "gn.tf": "baf6b6382d8ac8af165fcfbfd87e6ebbc3d60f148aa25e94050478c4003e6b16",
+    "lex.tf": "93596e855c2e56e709b885435a16a8edbb03b7af61ebf3a7ef6ef2797b84ce3b",
+    "mother.tf": "276804e1bf47415df781e11f98a2811e45fb8853985436f99ed29ae9eed31cba",
+    "nu.tf": "1ec9ee175f73c4fec9e740cc5f5e6f7ef89c96775f93b6a24f5fd5d1e3b9dd98",
+    "number.tf": "9a92bae927779eb13e17d6e4d0ada261adc68ca4421b967498debd51806ce5a3",
+    "oslots.tf": "8f4f78e6057c3832da26f603fcab913f17f183ef075a435d812b52cc3d83ebd1",
+    "otext.tf": "1e2a71d703ba19982b92bc10a3bf6c4966dacca41e2523bcd78ed22d13b69fee",
+    "otype.tf": "dac0f5cda40bc75b1681b731c73ceab9cacf9e11520c8a93cd8daa248ddb08c0",
+    "rank.tf": "f5ab60f679431be420dfc0a98c296b097f23e19e729e8114cd627320c4aa3b83",
+    "sp.tf": "b345163ef51abac38dfcaa62ddf5470d2f8405713c4484ec8a05e17892e2a791",
+    "suffix.tf": "c9a4678c4a8c55478f99d3d7984d09e425a60cc89df57c2419c32d9fa3fa3e2a",
+    "typ.tf": "2bf9084f68c353f17b5495bae552420ca97076ff8730642346e7ae5786b1c7f0"
+  },
+  "attempts": [
+    {
+      "case": "containment",
+      "stage": "shape",
+      "error_kind": null,
+      "input_tokens": 726,
+      "output_tokens": 70,
+      "selected_index": 1,
+      "probabilities": [
+        0.23,
+        0.69,
+        0.03,
+        0.03,
+        0.02
+      ],
+      "latency_s": 0.3404334890001337
+    },
+    {
+      "case": "containment",
+      "stage": "nodes.types",
+      "error_kind": null,
+      "input_tokens": 903,
+      "output_tokens": 181,
+      "selected_index": 11,
+      "probabilities": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "latency_s": 0.23438370900112204
+    }
+  ],
+  "cases": [
+    {
+      "id": "containment",
+      "status": "error",
+      "reason": "backend_or_contract",
+      "passed": false,
+      "result_count": null
+    }
+  ],
+  "estimated_cost_usd": 6.841800000000001e-05
+}

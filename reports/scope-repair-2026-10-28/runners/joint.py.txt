@@ -1,0 +1,23 @@
+import json,os,itertools
+from pathlib import Path
+from typesafe_sdk import RetryPolicy
+from tf_jev.jev import JevBackend
+from scripts.scope_repair import joint_types,joint_features
+from scripts.ontotf_experiment import Budget,DurableTrace
+from scripts.diagnose_abstention import _write
+root=Path('reports/scope-repair-2026-10-28');private=Path('/private/tmp/tf-jev-64-joint');private.mkdir(mode=0o700)
+for line in Path('.env').read_text().splitlines():
+ n,s,v=line.partition('=')
+ if s and n in ('JEV_API_KEY','TYPESAFE_API_KEY'):os.environ[n]=v.strip().strip('\"\'')
+rows=[]
+with JevBackend(model='jev-1.14.0',retry=RetryPolicy(max_retries=0),timeout=30.) as b:
+ budget=Budget(b)
+ for id,source,gold,goldfeature in [('tiny','diagnostic-private/containment',('phrase','word'),'sp'),('imperative','private/fresh-07',('clause','word'),'vt'),('exclusion','private/fresh-08',('phrase','word'),'sp')]:
+  data=json.loads((Path('/private/tmp/tf-jev-57')/(source+'-requests.json')).read_text());text=data[0]['context']['request']
+  raw=next(r for r in data if 'atom0.type' in r['questions']);types=tuple(o['description'] for o in raw['questions']['atom0.type']['options'])
+  raw=next(r for r in data if 'atom0.pred0.feature' in r['questions']);features=tuple(f for o in raw['questions']['atom0.pred0.feature']['options'] if (f:=json.loads(o['description']))['kind']=='feature')
+  req=joint_types(text,types);trace=DurableTrace(budget,root/(id+'-joint-types-calls.json'),private/(id+'-types-requests.json'));ans=trace.decide(req).decisions['types'];i=req.questions['types'].labels.index(ans.selected);pair=tuple(itertools.product(types,repeat=2))[i]
+  rows.append(dict(id=id,stage='types',correct=pair==gold,selected=list(pair)));_write(root/'joint-probes.json',dict(complete=False,cases=rows));print(id,'types',pair,pair==gold,flush=True)
+  req=joint_features(text,pair,features);trace=DurableTrace(budget,root/(id+'-joint-features-calls.json'),private/(id+'-features-requests.json'));ans=trace.decide(req).decisions['features'];i=req.questions['features'].labels.index(ans.selected);selected=None if i==2*len(features) else (i//len(features),features[i%len(features)]['name'])
+  rows.append(dict(id=id,stage='features',correct=selected==(1,goldfeature),selected=selected));_write(root/'joint-probes.json',dict(complete=False,cases=rows));print(id,'feature',selected,flush=True)
+_write(root/'joint-probes.json',dict(complete=True,development_only=True,cases=rows))

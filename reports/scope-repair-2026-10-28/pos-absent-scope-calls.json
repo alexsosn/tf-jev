@@ -1,0 +1,26 @@
+[
+  {
+    "error_kind": null,
+    "input_tokens": 1343,
+    "latency_s": 0.23653019499761285,
+    "output_tokens": 64,
+    "questions": [
+      {
+        "margin": 0.89,
+        "option_count": 4,
+        "probabilities": [
+          0.93,
+          0.02,
+          0.01,
+          0.04
+        ],
+        "question": "atom0.pred0.operator",
+        "selected_index": 0,
+        "top_probability": 0.93
+      }
+    ],
+    "requested_questions": [
+      "atom0.pred0.operator"
+    ]
+  }
+]
