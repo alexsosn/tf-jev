@@ -92,3 +92,27 @@ Current alias drift is recorded separately in #63; explicit model/default unchan
 The metadata fingerprint identifies the complete effective node/edge feature-
 description pairs; base native schema key identifies native domains. Their pair
 makes the hostile description overlay explicit rather than falsely corpus-authored.
+
+
+## Outcome (no tuning)
+
+All20 once-only fresh cases completed: 5/13 accepted complete positive intents/
+native sets; 7/7 safe negatives; zero wrong emissions in this sample. The frozen
+>=11/13 usefulness gate fails. All13 raw native gold sets were independently
+re-derived and all5 emitted semantics audited; reversed-role adjacency preserves
+all conditions/output order. Three correct complete proposals miss .8 final yes;
+five other failed positives have wrong/incomplete proposals, including missing
+singular that would admit1026 extra words if its .61 yes were accepted.
+
+The separately dated installed-wheel diagnostic FAILS containment and presence,
+passes missing annotation and unsupported regex. New full trace reproduces
+parent/witness POS transfer on phrase (unattested domain), explaining this new
+no_candidates trajectory without pretending the old missing trace is recoverable.
+Empty-string presence candidate is correct but .65 final yes refuses it. No
+favorable rerun or outcome replacement. #64 records demonstrated scope repair;
+#63 is separate alias maintenance. Production source/defaults remain unchanged.
+
+Fresh179 calls cost $.025591986; diagnostic18 calls cost $.000635418. All usage
+known and no API errors; durable records precede each further call. Public report
+contains numeric/static stages only, with raw requests privately retained. Final
+exact-head tests and independent review precede merge of evaluation evidence.

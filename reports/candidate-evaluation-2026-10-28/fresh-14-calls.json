@@ -1,0 +1,27 @@
+[
+  {
+    "error_kind": null,
+    "input_tokens": 733,
+    "latency_s": 0.19634030499582877,
+    "output_tokens": 70,
+    "questions": [
+      {
+        "margin": 1.0,
+        "option_count": 5,
+        "probabilities": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "question": "shape",
+        "selected_index": 4,
+        "top_probability": 1.0
+      }
+    ],
+    "requested_questions": [
+      "shape"
+    ]
+  }
+]
