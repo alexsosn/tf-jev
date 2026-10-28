@@ -1,0 +1,60 @@
+{
+  "cases": [
+    {
+      "correct": true,
+      "id": "tiny",
+      "selected": [
+        "phrase",
+        "word"
+      ],
+      "stage": "types"
+    },
+    {
+      "correct": true,
+      "id": "tiny",
+      "selected": [
+        1,
+        "sp"
+      ],
+      "stage": "features"
+    },
+    {
+      "correct": true,
+      "id": "imperative",
+      "selected": [
+        "clause",
+        "word"
+      ],
+      "stage": "types"
+    },
+    {
+      "correct": false,
+      "id": "imperative",
+      "selected": [
+        0,
+        "vt"
+      ],
+      "stage": "features"
+    },
+    {
+      "correct": true,
+      "id": "exclusion",
+      "selected": [
+        "phrase",
+        "word"
+      ],
+      "stage": "types"
+    },
+    {
+      "correct": true,
+      "id": "exclusion",
+      "selected": [
+        1,
+        "sp"
+      ],
+      "stage": "features"
+    }
+  ],
+  "complete": true,
+  "development_only": true
+}

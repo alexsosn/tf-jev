@@ -1,0 +1,13 @@
+{
+  "tiny_reports": {
+    "files": [
+      "tiny-trajectories.json",
+      "tiny-trajectories-v4.json",
+      "tiny-trajectories-v3.json",
+      "tiny-trajectories-v2.json"
+    ],
+    "wheel_sha256": "Inherited from #57 diagnostic runner; historical wheel was NOT the executed research package. Do not use this field as runtime attestation.",
+    "actual_runtime": "Checkout CandidateParser plus scripts.scope_repair named research variant. Base production code unchanged; all inference is development evidence."
+  },
+  "budget_implementation": "BHSA400-call stop was checked between cases, not before each call; tiny had its own100-call/$0.01 guard. Observed combined calls/cost in each complete phase stayed below declared400/$0.05; do not reuse these archived guards as a strict future shared budget."
+}

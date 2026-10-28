@@ -79,3 +79,9 @@ If these conditions do not hold, preserve the benchmark and compiler work and re
   per-feature bounded Jev proposals; no global threshold lowering/provider pivot.
 - #63 — separate bounded alias-contract refresh after upstream jev-latest drift;
   pinned model and default remain unchanged.
+
+#64 development episode: no production extraction after2/8–3/8 positive results
+from observed scope variants. Continue focused exclusion/POS-scope research;
+[#66](https://github.com/alexsosn/tf-jev/issues/66) isolates correct-candidate
+verification false refusals. Preserve final gates and require wheel positives
+plus safe negatives before any eventual user-facing fix.

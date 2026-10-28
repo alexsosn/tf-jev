@@ -1,0 +1,14 @@
+{
+  "api_calls": 421,
+  "input_tokens": 1225369,
+  "output_tokens": 159464,
+  "backend_latency_s": 105.47884048100241,
+  "api_errors": 0,
+  "unknown_usage": 0,
+  "input_usd_per_million": 0.042,
+  "output_usd_per_million": 0.0,
+  "local_integration_errors": 1,
+  "development_only": true,
+  "production_adoption": false,
+  "estimated_cost_usd": 0.051465498
+}

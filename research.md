@@ -180,3 +180,10 @@ trace transfers the word's POS predicate to its parent phrase, whose domain is
 empty; presence/absence requests also transfer operators between properties.
 #64 targets scope repair while retaining Jev and final gates; #63 separately
 records upstream alias drift. No production/default change in this evaluation.
+
+Scope repair #64: [observed development experiments](reports/scope-repair-2026-10-28/README.md)
+recover individual containment and multi-property absence paths, but the joint
+coordinator regressions and repeated double-negated exclusion prevent production
+adoption. All emitted sets pass independent native oracles; #64 remains open.
+Correct-candidate final false refusals are separately tracked in #66. No default,
+provider, production parser or acceptance-gate change.

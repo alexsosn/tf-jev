@@ -1,0 +1,61 @@
+import os,json,time,hashlib
+from pathlib import Path
+from importlib.metadata import version
+from tf.fabric import Fabric
+import tf_jev.ontology
+from tf_jev.ontology import OntologyParser,load_catalog
+from tf_jev.schema import extract_schema
+from tf_jev.jev import JevBackend
+from typesafe_sdk import RetryPolicy
+from scripts.scope_repair import CoordinatedParser,ScopeBackend
+from tf_jev.ontology import _OntologyBackend
+repo=Path('/Users/alexandersosnovschenko/projects/tf-jev');root=repo/'reports/scope-repair-2026-10-28';private=Path('/private/tmp/tf-jev-64-trajectory-tiny-v2');private.mkdir(mode=0o700)
+output=root/'tiny-trajectories-v2.json';assert not output.exists()
+for line in (repo/'.env').read_text().splitlines():
+ n,sep,v=line.partition('=')
+ if sep and n in ('JEV_API_KEY','TYPESAFE_API_KEY'):os.environ[n]=v.strip().strip('\"\'')
+def write(path,value):
+ tmp=path.with_name(path.name+'.tmp');tmp.write_text(json.dumps(value,indent=2)+'\n');tmp.replace(path)
+p=Path('/private/tmp/tf-jev-57/tiny');api=Fabric(locations=str(p),silent='deep').loadAll(silent='deep');schema=extract_schema(api)
+catalog=load_catalog(Path('/private/tmp/tf-jev-57/tiny.xml'),schema,corpus='tiny',version='1',revision='synthetic-v1')
+wheel=Path('/private/tmp/tf-jev-57-dist/tf_jev-0.1.0.dev0-py3-none-any.whl')
+report=dict(complete=False,development_diagnostic_not_fresh_evaluation=True,original_containment_failure_preserved=True,package_commit='uncommitted-research',research_only=True,wheel_sha256=hashlib.sha256(wheel.read_bytes()).hexdigest(),model='jev-1.14.0',text_fabric=version('text-fabric'),typesafe_sdk=version('typesafe-sdk'),retries=0,schema_key=schema.identity.key,catalog_sha256=catalog.identity.sha256,source_sha256={f.name:hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(p.glob('*.tf')) if f.is_file()},attempts=[],cases=[])
+used=0;failed=False;write(output,report)
+class Durable:
+ def __init__(self,backend):self.backend=backend;self.requests=[]
+ @property
+ def capabilities(self):return self.backend.capabilities
+ def decide(self,request):
+  global used,failed
+  if failed or len(report['attempts'])>=100 or (used+70000)*.042/1e6>.01:raise ValueError('diagnostic budget/accounting')
+  name,question=next(iter(request.questions.items()));self.requests.append(dict(context=dict(request.context),questions={name:dict(prompt=question.prompt,options=[dict(label=o.label,description=o.description) for o in question.options])}))
+  start=time.perf_counter();row=dict(case=current,stage=name,error_kind=None,input_tokens=None,output_tokens=None,selected_index=None,probabilities=None)
+  try:
+   batch=self.backend.decide(request);answer=batch.decisions[name]
+   row.update(input_tokens=batch.receipt.input_tokens,output_tokens=batch.receipt.output_tokens,selected_index=question.labels.index(answer.selected),probabilities=[answer.probabilities[o.label] for o in question.options])
+   if batch.receipt.input_tokens is None or batch.receipt.output_tokens is None:raise ValueError('unknown returned usage')
+   used+=batch.receipt.input_tokens
+   return batch
+  except Exception:
+   row['error_kind']='backend_or_accounting';failed=True;raise
+  finally:
+   row['latency_s']=time.perf_counter()-start;report['attempts'].append(row)
+   try:write(output,report);write(private/(current+'-requests.json'),self.requests)
+   except Exception:failed=True;raise
+W=set(api.F.otype.s('word'));V=W&set(api.F.sp.s('verb'))
+expected_phrases={(p,) for p in api.F.otype.s('phrase') if V&set(api.E.oslots.s(p))}
+present={(n,) for n in W if api.F.suffix.v(n) is not None};missing={(n,) for n in W if api.F.suffix.v(n) is None}
+assert expected_phrases=={(10,),(12,),(13,)} and present=={(1,),(2,),(3,),(4,)} and missing=={(5,),(6,),(7,),(8,)}
+cases=[('containment','Return phrase nodes containing a verb word.',expected_phrases),('presence','Return words with the suffix annotation present, including empty-string annotations.',present),('absence','Find words that have no suffix annotation at all.',missing),('unsupported',"Return words whose lex annotation matches regular expression '^B.*'.",None)]
+with JevBackend(model='jev-1.14.0',retry=RetryPolicy(max_retries=0),timeout=30.) as backend:
+ for current,request,expected in cases:
+  trace=Durable(backend);result=CoordinatedParser(schema,ScopeBackend(trace,catalog)).parse(request);actual=None
+  if result.query:
+   messages=[];rows,status,html,exe=api.S.search(result.query,here=False,silent='deep',_msgCache=messages);actual={tuple(row[i] for i in result.projection) for row in rows};assert exe.good
+  passed=actual==expected if expected is not None else result.query is None and result.status.value in ('ambiguous','unsupported','abstained')
+  report['cases'].append(dict(id=current,status=result.status.value,reason=result.reason,passed=passed,result_count=None if actual is None else len(actual)))
+  report['estimated_cost_usd']=used*.042/1e6;write(output,report);write(private/(current+'-prediction.json'),dict(query=result.query,projection=list(result.projection)))
+  print(current,result.status.value,result.reason,passed,flush=True)
+  if failed or result.status.value=='error':raise ValueError('stop after failed accounting/transport')
+report['complete']=True;write(output,report)
+print('DIAGNOSTIC COMPLETE; failures retained',sum(not r['passed'] for r in report['cases']),flush=True)

@@ -1,0 +1,47 @@
+import json
+from pathlib import Path
+from tf.fabric import Fabric
+from scripts.diagnose_abstention import verify_sources,_write
+from scripts.nl_benchmark_v2 import signature
+root=Path('reports/scope-repair-2026-10-28');corpus=Path('/Users/alexandersosnovschenko/text-fabric-data/github/ETCBC/bhsa/tf/2021');sources=verify_sources(corpus)
+a=Fabric(locations=str(corpus),silent='deep').load('sp gn nu ps st vt lex qere prs number',silent='deep')
+W=set(a.F.otype.s('word'));P=set(a.F.otype.s('phrase'));C=set(a.F.otype.s('clause'))
+def f(k,v):return W&set(a.Fs(k).s(v))
+adj=f('sp','adjv');subs=f('sp','subs');verbs=f('sp','verb');imp=f('vt','impv');conj=f('sp','conj')
+expected={
+'fresh-02':{(n,) for n in adj&f('gn','m')&f('nu','pl')},
+'fresh-05':{(n,n+1) for n in adj if n+1 in subs},
+'fresh-06':{(n+1,n) for n in subs if n+1 in adj},
+'fresh-07':{(c,) for c in C if imp&set(a.E.oslots.s(c))},
+'fresh-08':{(p,) for p in P if not conj&set(a.E.oslots.s(p))},
+'fresh-09':{(n,) for n in subs if a.F.qere.v(n) is not None},
+'fresh-10':{(n,) for n in adj if a.F.qere.v(n) is None},
+'fresh-11':{(n,) for n in verbs&f('prs','absent')},}
+golds={c['id']:c for c in json.loads(Path('benchmarks/candidate-v1/evaluation.json').read_text())['cases']};raw=[]
+for id,rows in expected.items():
+ g=golds[id]['gold'];assert (len(rows),signature(rows,tuple(range(len(g['projection'])))))==(g['count'],g['signature']);raw.append(dict(id=id,count=len(rows),signature=g['signature']))
+emissions=[];phases=[]
+for v in (2,3,4):
+ report=json.loads((root/f'bhsa-trajectories-v{v}.json').read_text());assert report['complete'] and report['source_sha256']==sources
+ success=0;negative=0
+ for row in report['cases']:
+  id=row['id'];pred=json.loads((Path(f'/private/tmp/tf-jev-64-trajectory-bhsa-v{v}')/(id+'-prediction.json')).read_text())
+  if id not in expected:assert pred['query'] is None;negative+=1;continue
+  if not pred['query']:continue
+  messages=[];rows,status,html,exe=a.S.search(pred['query'],here=False,silent='deep',_msgCache=messages);actual={tuple(r[i] for i in pred['projection']) for r in rows};assert exe.good and actual==expected[id]
+  # Independently inspect candidate predicates/types and projection against NL;
+  # accepted cases are exact gold except reordered conjunctions/reversed pair roles.
+  requests=json.loads((Path(f'/private/tmp/tf-jev-64-trajectory-bhsa-v{v}')/(id+'-requests.json')).read_text());meaning=next(r['context']['candidate_meaning'] for r in requests if 'verify' in r['questions'])
+  emissions.append(dict(variant=v,id=id,raw_native_equivalent=True,count=len(actual),candidate_meaning=meaning));success+=1
+ phases.append(dict(variant=v,positive_successes=success,positives=8,safe_negatives=negative,negatives=7))
+tiny=[]
+a=Fabric(locations='/private/tmp/tf-jev-57/tiny',silent='deep').loadAll(silent='deep');W=set(a.F.otype.s('word'));V=W&set(a.F.sp.s('verb'));ex={'containment':{(p,) for p in a.F.otype.s('phrase') if V&set(a.E.oslots.s(p))},'presence':{(n,) for n in W if a.F.suffix.v(n) is not None},'absence':{(n,) for n in W if a.F.suffix.v(n) is None}}
+for v in (2,3,4):
+ for id,oracle in ex.items():
+  pred=json.loads((Path(f'/private/tmp/tf-jev-64-trajectory-tiny-v{v}')/(id+'-prediction.json')).read_text())
+  if pred['query']:
+   actual={tuple(r[i] for i in pred['projection']) for r in a.S.search(pred['query'],silent='deep')};assert actual==oracle;tiny.append(dict(variant=v,id=id,count=len(actual),raw_native_equivalent=True))
+# Public audit does not copy raw prompts/metadata or candidate meanings from private traces.
+for e in emissions: del e['candidate_meaning']
+_write(root/'independent-native-audit.json',dict(complete=True,raw_oracles=raw,bhsa_phases=phases,emissions=emissions,tiny_emissions=tiny,method='Independent raw feature/type/oslots sets, exact full-set native equality; NL output roles and all emitted IR predicates independently inspected. No acceptance from result counts alone.'))
+print('Native independent audit passed',phases,flush=True)
