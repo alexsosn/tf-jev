@@ -1,0 +1,18 @@
+{
+  "positive_requests": 13,
+  "negative_requests": 7,
+  "emitted": 5,
+  "native_equivalent": 5,
+  "safe_negatives": 7,
+  "wrong_emissions": 0,
+  "calls": 179,
+  "input_tokens": 609333,
+  "output_tokens": 63774,
+  "errors": 0,
+  "unknown_usage": 0,
+  "backend_latency_s": 48.10738222201326,
+  "estimated_cost_usd": 0.025591986,
+  "independently_adjudicated_intent_correct": 5,
+  "required_correct_positives": 11,
+  "usefulness_gate_passed": false
+}

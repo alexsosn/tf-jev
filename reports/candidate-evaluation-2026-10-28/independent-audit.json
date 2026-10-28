@@ -1,0 +1,124 @@
+{
+  "raw_oracles": [
+    {
+      "id": "fresh-01",
+      "count": 5934,
+      "signature": "02d6e176d998dff2185ef0a8ba5bd74848d4e3148750dcaaa584cd35554b4b7f",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "fresh-02",
+      "count": 2711,
+      "signature": "23514407d3b08dd22933b00ed4bb2a326ee2720e6cf9be339bb67aa4cf6d139b",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "fresh-03",
+      "count": 793,
+      "signature": "bea0557c0fe19ce84cdc01f96399474f219505671c186bcbae508e22e42193b3",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "fresh-04",
+      "count": 389,
+      "signature": "3aad8e6bf24e28ba1dbd710d1f2d644538b693ca80d4116c2655e62b4f21f875",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "fresh-05",
+      "count": 1414,
+      "signature": "5269023085ceca90638916dab56fa8268b3536882b7072a4e9c3d876bc874a58",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "fresh-06",
+      "count": 3128,
+      "signature": "92348584de46494e89a4673ec12a3a92a6ab4b8f432c51a4693cc9adec7ab5f3",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "fresh-07",
+      "count": 4306,
+      "signature": "15b96980b52b6c159c7e1ef8625bc1674ce9d1c58e661d6c00ec096d33811383",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "fresh-08",
+      "count": 194050,
+      "signature": "d3434ecc974cd1c16e6167a4c28444f418fd26082d9e4f3ed213b3516f73e49b",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "fresh-09",
+      "count": 557,
+      "signature": "e12481cc172e159bad645802a0e465268c9dde09a935f0f97f94c20fe91e606b",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "fresh-10",
+      "count": 9438,
+      "signature": "c0f47e7ae893a3a9a2d203027e0cfab9ef5328a25b2e124c11b9cd6436a5d439",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "fresh-11",
+      "count": 66445,
+      "signature": "803f33c952fc848218e1d2c24ea6444e977ddb7fcfe9df8b0e794a4085b4d95e",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "fresh-12",
+      "count": 85921,
+      "signature": "ae7906077d232f351fb88fde7d5e88f7ef1e6e5eee2c62658479a1f7d6158bf3",
+      "raw_oracle_agrees": true
+    },
+    {
+      "id": "fresh-19",
+      "count": 6960,
+      "signature": "7ac260ba55d0f3bb4c296fe2b63eac4fa8705d4ed1ea5fd472605c53ffc65152",
+      "raw_oracle_agrees": true
+    }
+  ],
+  "emissions": [
+    {
+      "id": "fresh-02",
+      "intent_correct": true,
+      "raw_native_equivalent": true,
+      "exact_text": true,
+      "rationale": "All native predicates/types and output columns exactly match frozen intent."
+    },
+    {
+      "id": "fresh-03",
+      "intent_correct": true,
+      "raw_native_equivalent": true,
+      "exact_text": true,
+      "rationale": "All native predicates/types and output columns exactly match frozen intent."
+    },
+    {
+      "id": "fresh-06",
+      "intent_correct": true,
+      "raw_native_equivalent": true,
+      "exact_text": false,
+      "rationale": "Adjective node0 immediately FOLLOWS substantive node1; projection(0,1) returns adjective then substantive. Inverting node roles/adjacency preserves every request condition and ordered output, not just counts."
+    },
+    {
+      "id": "fresh-11",
+      "intent_correct": true,
+      "raw_native_equivalent": true,
+      "exact_text": true,
+      "rationale": "All native predicates/types and output columns exactly match frozen intent."
+    },
+    {
+      "id": "fresh-12",
+      "intent_correct": true,
+      "raw_native_equivalent": true,
+      "exact_text": true,
+      "rationale": "All native predicates/types and output columns exactly match frozen intent."
+    }
+  ],
+  "complete_intent_correct": 5,
+  "native_equivalent": 5,
+  "adversarial_overlay_is_explicit": true,
+  "broader_missing_singular_difference": 1026,
+  "method": "Separate skeptical pass from native type/feature/slot maps and NL intent; raw sets independent of compiler/gold text, output roles independently adjudicated."
+}

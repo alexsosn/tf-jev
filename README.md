@@ -57,6 +57,13 @@ increases about 27%; one imperative case regresses. This is checkout-only
 research supporting the experimental opt-in integration described below, not a
 default change.
 
+The [fresh production-parser evaluation](reports/candidate-evaluation-2026-10-28/README.md)
+solves **5/13** new supported requests, safely withholding all seven negatives.
+It fails the frozen usefulness gate. Actual traces identify parent/witness and
+per-feature scope failures; #64 owns the focused Jev repair. Defaults remain
+unchanged. The separate wheel diagnostic preserves containment and presence
+failures rather than treating refusals as passed positives.
+
 The first development goal is to establish whether the approach is accurate and cheap enough on real Text-Fabric queries, using a benchmark with gold natural-language ↔ native-query pairs and at least one real corpus.
 
 ## Intended public shape

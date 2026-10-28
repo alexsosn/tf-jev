@@ -72,3 +72,10 @@ If these conditions do not hold, preserve the benchmark and compiler work and re
 - #60 implementation — optional schema-bound XML catalogs, data-driven growth,
   bounded complete-target retrieval/omission diagnostics and exact pilot replay;
   live containment miss remains a #57 usability investigation, not a passed smoke.
+
+- #57 — completed fresh-request evaluation: 5/13 positives, 7/7 safe negatives;
+  usefulness gate fails. Containment/presence diagnostic failures preserved.
+- #64 — highest feature priority: research scope-preserving parent/witness and
+  per-feature bounded Jev proposals; no global threshold lowering/provider pivot.
+- #63 — separate bounded alias-contract refresh after upstream jev-latest drift;
+  pinned model and default remain unchanged.

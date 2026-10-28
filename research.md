@@ -171,3 +171,12 @@ records actual catalog/schema identity and skipped dispositions, and retrieves
 bounded complete-target context when catalogs grow. All 134 historical ontology
 requests replay identically. Installed-wheel morphology and three safe negatives
 pass; additional containment fails and is preserved. [Evidence](reports/ontology-integration-2026-10-20/README.md).
+
+
+Fresh production evaluation #57: [frozen report](reports/candidate-evaluation-2026-10-28/README.md)
+finds 5/13 complete correct positives, 7/7 safe negatives and no wrong emissions
+in the small sample. The predeclared usefulness gate fails. Actual containment
+trace transfers the word's POS predicate to its parent phrase, whose domain is
+empty; presence/absence requests also transfer operators between properties.
+#64 targets scope repair while retaining Jev and final gates; #63 separately
+records upstream alias drift. No production/default change in this evaluation.
