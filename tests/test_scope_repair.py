@@ -184,3 +184,29 @@ def test_concrete_predicate_does_not_confuse_literal_and_absence(tiny_api: Any) 
     )
     assert result.query
     assert run_template(tiny_api, result.query).results == ((1,), (2,), (3,), (4,))
+
+
+def test_concrete_absence_retains_unattested_native_feature(tiny_api: Any) -> None:
+    from scripts.scope_repair import CoordinatedV4Parser
+    from tests.conformance.tf_harness import run_template
+    from tests.test_grounded_parser import PlanBackend
+    from tf_jev.schema import extract_schema
+
+    schema = extract_schema(tiny_api)
+    domain = schema.domain("suffix", "phrase")
+    assert domain.missing_count == domain.node_count
+    backend = PlanBackend(
+        {
+            "shape": "atom",
+            "atom0.type": "phrase",
+            "atom0.pred0.feature": "suffix",
+            "atom0.pred0.condition": "ABSENT",
+            "atom0.pred1.feature": "STOP",
+            "verify": "yes",
+        }
+    )
+    result = CoordinatedV4Parser(schema, backend).parse(
+        "Return phrases without a suffix annotation."
+    )
+    assert result.query and result.projection == (0,)
+    assert run_template(tiny_api, result.query).results == ((9,), (10,), (11,), (12,), (13,))
