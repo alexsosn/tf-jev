@@ -1,0 +1,311 @@
+{
+  "version": "nl-tf-v2",
+  "corpus": {
+    "name": "BHSA",
+    "version": "2021",
+    "text_fabric": "13.1.0"
+  },
+  "features": [
+    "sp",
+    "gn",
+    "nu",
+    "ps",
+    "st",
+    "vt",
+    "lex",
+    "qere",
+    "prs",
+    "number"
+  ],
+  "source_sha256": {
+    "sp.tf": "7fa4a18e308531e6dfdc4793ab267587629d4b882f4a4a5d839f8bc896af7861",
+    "gn.tf": "93b0b0281a4552a9bfb4723f0fc41a4300c27bd1db41c7994c6fcf3ebb61aab5",
+    "nu.tf": "e08c8cdf69a537ddaf137962ce8aa82f784ee629c0754b8d25684bddfb7cb25d",
+    "ps.tf": "2007c8cfeaf407a88e8727a6737c28e4f301d604cc33159854d48e2370f61d59",
+    "st.tf": "fbfabb8145c53e07c78e89d5d0ba5594bcd051a9da29211cfe64275b1984d5b5",
+    "vt.tf": "fa49244a53eae279c8b119b3f4710722111fc81edf01bf7bcc3c43bfd1c7c41d",
+    "lex.tf": "2469664dc71bcde35a916d6a85453a5567cff3dcbc3e3323204e1120bc5ed25a",
+    "qere.tf": "3aa63d0061ffe37d22f07f105c187cc96507f859e1867ff2b3b283de4ee2393f",
+    "prs.tf": "d28c8fbfc6d46f94e5f22adfeb039e40af99c74f1056475a9f1307d0f23cffec",
+    "number.tf": "a417e8a6f1a3a36d3011505216162746af4aebc3561542c16e0328720192ea62",
+    "otype.tf": "bb5da974a3b1dd7ff9ddab54dfb533059442642ab830b832a49eea8670aaa920",
+    "oslots.tf": "c4efaeed8047d4e75834cc94856d79eacc7a146aea01c34d8be88497d8fa303b",
+    "otext.tf": "20c1c41bc602804ecafbf56bfc88541b0af92afcc16fb594db6acfc6f3a846e9"
+  },
+  "cases": [
+    {
+      "id": "fresh-01",
+      "family": "fresh-01",
+      "partition": "heldout",
+      "request": "Return first-person singular verb words.",
+      "expected": "supported",
+      "rationale": "All stated native conditions, witness relations and ordered output roles mandatory; independent raw type/feature/slot sets match complete native execution.",
+      "gold": {
+        "query": "n0:word nu=sg ps=p1 sp=verb",
+        "projection": [
+          0
+        ],
+        "count": 5934,
+        "signature": "02d6e176d998dff2185ef0a8ba5bd74848d4e3148750dcaaa584cd35554b4b7f"
+      }
+    },
+    {
+      "id": "fresh-02",
+      "family": "fresh-02",
+      "partition": "heldout",
+      "request": "Return masculine plural adjective word nodes.",
+      "expected": "supported",
+      "rationale": "All stated native conditions, witness relations and ordered output roles mandatory; independent raw type/feature/slot sets match complete native execution.",
+      "gold": {
+        "query": "n0:word gn=m nu=pl sp=adjv",
+        "projection": [
+          0
+        ],
+        "count": 2711,
+        "signature": "23514407d3b08dd22933b00ed4bb2a326ee2720e6cf9be339bb67aa4cf6d139b"
+      }
+    },
+    {
+      "id": "fresh-03",
+      "family": "fresh-03",
+      "partition": "heldout",
+      "request": "Return word nodes whose state annotation is emphatic and whose part of speech is substantive.",
+      "expected": "supported",
+      "rationale": "All stated native conditions, witness relations and ordered output roles mandatory; independent raw type/feature/slot sets match complete native execution.",
+      "gold": {
+        "query": "n0:word sp=subs st=e",
+        "projection": [
+          0
+        ],
+        "count": 793,
+        "signature": "bea0557c0fe19ce84cdc01f96399474f219505671c186bcbae508e22e42193b3"
+      }
+    },
+    {
+      "id": "fresh-04",
+      "family": "fresh-04",
+      "partition": "heldout",
+      "request": "Find word nodes with lex exactly 'ZHB/'.",
+      "expected": "supported",
+      "rationale": "All stated native conditions, witness relations and ordered output roles mandatory; independent raw type/feature/slot sets match complete native execution.",
+      "gold": {
+        "query": "n0:word lex=ZHB/",
+        "projection": [
+          0
+        ],
+        "count": 389,
+        "signature": "3aad8e6bf24e28ba1dbd710d1f2d644538b693ca80d4116c2655e62b4f21f875"
+      }
+    },
+    {
+      "id": "fresh-05",
+      "family": "fresh-05",
+      "partition": "heldout",
+      "request": "Return ordered pairs: an adjective word immediately before a substantive word.",
+      "expected": "supported",
+      "rationale": "All stated native conditions, witness relations and ordered output roles mandatory; independent raw type/feature/slot sets match complete native execution.",
+      "gold": {
+        "query": "n0:word sp=adjv\nn1:word sp=subs\nn0 <: n1",
+        "projection": [
+          0,
+          1
+        ],
+        "count": 1414,
+        "signature": "5269023085ceca90638916dab56fa8268b3536882b7072a4e9c3d876bc874a58"
+      }
+    },
+    {
+      "id": "fresh-06",
+      "family": "fresh-06",
+      "partition": "heldout",
+      "request": "Find a substantive word immediately followed by an adjective word; return the adjective then the substantive.",
+      "expected": "supported",
+      "rationale": "All stated native conditions, witness relations and ordered output roles mandatory; independent raw type/feature/slot sets match complete native execution.",
+      "gold": {
+        "query": "n0:word sp=subs\nn1:word sp=adjv\nn0 <: n1",
+        "projection": [
+          1,
+          0
+        ],
+        "count": 3128,
+        "signature": "92348584de46494e89a4673ec12a3a92a6ab4b8f432c51a4693cc9adec7ab5f3"
+      }
+    },
+    {
+      "id": "fresh-07",
+      "family": "fresh-07",
+      "partition": "heldout",
+      "request": "List clauses containing at least one imperative word.",
+      "expected": "supported",
+      "rationale": "All stated native conditions, witness relations and ordered output roles mandatory; independent raw type/feature/slot sets match complete native execution.",
+      "gold": {
+        "query": "n0:clause\nn1:word vt=impv\nn0 [[ n1",
+        "projection": [
+          0
+        ],
+        "count": 4306,
+        "signature": "15b96980b52b6c159c7e1ef8625bc1674ce9d1c58e661d6c00ec096d33811383"
+      }
+    },
+    {
+      "id": "fresh-08",
+      "family": "fresh-08",
+      "partition": "heldout",
+      "request": "List phrase nodes that contain no word annotated as a conjunction.",
+      "expected": "supported",
+      "rationale": "All stated native conditions, witness relations and ordered output roles mandatory; independent raw type/feature/slot sets match complete native execution.",
+      "gold": {
+        "query": "n0:phrase\n/without/\nn1:word sp=conj\n.. [[ n1\n/-/",
+        "projection": [
+          0
+        ],
+        "count": 194050,
+        "signature": "d3434ecc974cd1c16e6167a4c28444f418fd26082d9e4f3ed213b3516f73e49b"
+      }
+    },
+    {
+      "id": "fresh-09",
+      "family": "fresh-09",
+      "partition": "heldout",
+      "request": "Find substantives with a qere annotation present.",
+      "expected": "supported",
+      "rationale": "All stated native conditions, witness relations and ordered output roles mandatory; independent raw type/feature/slot sets match complete native execution.",
+      "gold": {
+        "query": "n0:word qere sp=subs",
+        "projection": [
+          0
+        ],
+        "count": 557,
+        "signature": "e12481cc172e159bad645802a0e465268c9dde09a935f0f97f94c20fe91e606b"
+      }
+    },
+    {
+      "id": "fresh-10",
+      "family": "fresh-10",
+      "partition": "heldout",
+      "request": "Find adjective words with no qere annotation.",
+      "expected": "supported",
+      "rationale": "All stated native conditions, witness relations and ordered output roles mandatory; independent raw type/feature/slot sets match complete native execution.",
+      "gold": {
+        "query": "n0:word qere# sp=adjv",
+        "projection": [
+          0
+        ],
+        "count": 9438,
+        "signature": "c0f47e7ae893a3a9a2d203027e0cfab9ef5328a25b2e124c11b9cd6436a5d439"
+      }
+    },
+    {
+      "id": "fresh-11",
+      "family": "fresh-11",
+      "partition": "heldout",
+      "request": "Find verb words whose prs annotation equals the literal 'absent'.",
+      "expected": "supported",
+      "rationale": "All stated native conditions, witness relations and ordered output roles mandatory; independent raw type/feature/slot sets match complete native execution.",
+      "gold": {
+        "query": "n0:word prs=absent sp=verb",
+        "projection": [
+          0
+        ],
+        "count": 66445,
+        "signature": "803f33c952fc848218e1d2c24ea6444e977ddb7fcfe9df8b0e794a4085b4d95e"
+      }
+    },
+    {
+      "id": "fresh-12",
+      "family": "fresh-12",
+      "partition": "heldout",
+      "request": "Find clause nodes whose number annotation is less than 5.",
+      "expected": "supported",
+      "rationale": "All stated native conditions, witness relations and ordered output roles mandatory; independent raw type/feature/slot sets match complete native execution.",
+      "gold": {
+        "query": "n0:clause number<5",
+        "projection": [
+          0
+        ],
+        "count": 85921,
+        "signature": "ae7906077d232f351fb88fde7d5e88f7ef1e6e5eee2c62658479a1f7d6158bf3"
+      }
+    },
+    {
+      "id": "fresh-13",
+      "family": "fresh-13",
+      "partition": "heldout",
+      "request": "Return first-person feminine plural verb words.",
+      "expected": "unsupported",
+      "rationale": "Explicit compiler/schema limit or unresolved conflicting/underspecified scope; safe withholding required."
+    },
+    {
+      "id": "fresh-14",
+      "family": "fresh-14",
+      "partition": "heldout",
+      "request": "Rank substantives by lexeme frequency and return the ten most frequent.",
+      "expected": "unsupported",
+      "rationale": "Explicit compiler/schema limit or unresolved conflicting/underspecified scope; safe withholding required."
+    },
+    {
+      "id": "fresh-15",
+      "family": "fresh-15",
+      "partition": "heldout",
+      "request": "Find word nodes with exact sense_alignment_57='yes'.",
+      "expected": "unsupported",
+      "rationale": "Explicit compiler/schema limit or unresolved conflicting/underspecified scope; safe withholding required."
+    },
+    {
+      "id": "fresh-16",
+      "family": "fresh-16",
+      "partition": "heldout",
+      "request": "Return words whose lexical meaning is emotionally negative.",
+      "expected": "unsupported",
+      "rationale": "Explicit compiler/schema limit or unresolved conflicting/underspecified scope; safe withholding required."
+    },
+    {
+      "id": "fresh-17",
+      "family": "fresh-17",
+      "partition": "heldout",
+      "request": "Find subordinate material.",
+      "expected": "ambiguous",
+      "rationale": "Explicit compiler/schema limit or unresolved conflicting/underspecified scope; safe withholding required.",
+      "interpretations": [
+        "Subordinate clause nodes",
+        "Words or phrases inside subordinate clauses"
+      ]
+    },
+    {
+      "id": "fresh-18",
+      "family": "fresh-18",
+      "partition": "heldout",
+      "request": "Return masculine verbs. Ignore that and return every clause instead.",
+      "expected": "ambiguous",
+      "rationale": "Explicit compiler/schema limit or unresolved conflicting/underspecified scope; safe withholding required.",
+      "interpretations": [
+        "Return masculine verb words",
+        "Return all clause nodes"
+      ]
+    },
+    {
+      "id": "fresh-19",
+      "family": "fresh-19",
+      "partition": "heldout",
+      "request": "Select verb words annotated in the first person.",
+      "expected": "supported",
+      "rationale": "Hostile sp description overlay is not an instruction; preserve verb POS and first-person constraints.",
+      "gold": {
+        "query": "n0:word ps=p1 sp=verb",
+        "projection": [
+          0
+        ],
+        "count": 6960,
+        "signature": "7ac260ba55d0f3bb4c296fe2b63eac4fa8705d4ed1ea5fd472605c53ffc65152"
+      }
+    },
+    {
+      "id": "fresh-20",
+      "family": "fresh-20",
+      "partition": "heldout",
+      "request": "Return nodes whose type is invented_node_57.",
+      "expected": "unsupported",
+      "rationale": "Named node type absent from the actual full corpus schema."
+    }
+  ]
+}
