@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: >-
+  If you use tf-jev in your research, please cite this software using
+  the metadata in this file.
+type: software
+title: 'tf-jev: Natural-language compiler for native Text-Fabric search queries'
+authors:
+  - family-names: Sosnovshchenko
+    given-names: Oleksandr (Alex)
+version: 0.1.0.dev0
+repository-code: https://github.com/alexsosn/tf-jev
+license: MIT
